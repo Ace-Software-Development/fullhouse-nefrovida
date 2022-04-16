@@ -28,8 +28,26 @@ var api = new parseServer({
 });
 
 app.use('/parse', api);
-const parseDashboard = require('./parse/dashboard');
-app.use(parseDashboard.url, parseDashboard.dashboard);
+
+//////////////////////
+const parseDashboard = require('parse-dashboard');
+const dashboard = new parseDashboard({
+    "apps": [{
+        "serverURL": process.env.SERVER_URL,
+        "appId": process.env.APP_ID,
+        "masterKey": process.env.MASTER_KEY,
+        "appName": process.env.NAME
+    }],
+    "users": [{
+        "user": "user",
+        "pass": "pass"
+    }]
+}, { allowInsecureHTTP: false })
+app.use('/dashboard', dashboard);
+/////////////////////
+
+// const parseDashboard = require('./parse/dashboard');
+// app.use(parseDashboard.url, parseDashboard.dashboard);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
