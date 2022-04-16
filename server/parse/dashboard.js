@@ -11,7 +11,7 @@ const dashboard = new parseDashboard({
         "user": "user",
         "pass": "pass"
     }]
-}, { allowInsecureHTTP: true })
+}, { allowInsecureHTTP: false })
 
 module.exports = {
     dashboard: dashboard,
