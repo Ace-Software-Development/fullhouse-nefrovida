@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({
+router.get('/', (request, response) => {
+    response.json({
         status: 'Hello World'
     });
 });
