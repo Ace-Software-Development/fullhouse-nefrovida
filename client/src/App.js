@@ -39,6 +39,18 @@ const BtnEditRegis = ({icono = "help", texto = "Cargando", url = "/registrar"}) 
   )
 }
 
+const BtnRegresar = ({icono = "arrow_back", texto = "Regresar", url = "/regresar"}) => {
+  return(
+    <a className="waves-effect waves-dark btn btn-regresar white amber lighten-3 grey-text text-darken-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
+  )
+}
+
+const BtnGuardar = ({icono = "save", texto = "Guardar", url = "/guardar"}) => {
+  return(
+    <a className="waves-effect waves-dark btn btn-guardar green darken-1 white-text text-accent-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
+  )
+}
+
 const App = () => {
   return (
     <>
@@ -47,6 +59,8 @@ const App = () => {
       </Main>
       <BtnEditRegis></BtnEditRegis>
       <BtnEditRegis icono="edit" texto = "Editar paciente" url = "/editar"></BtnEditRegis>
+      <BtnRegresar></BtnRegresar>
+      <BtnGuardar></BtnGuardar>
     </>
   )
 }
