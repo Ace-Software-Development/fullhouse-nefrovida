@@ -1,6 +1,12 @@
 import logo from './img/logo.png';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
+import BtnCerrarSesion from './components/BtnCerrarSesion';
+import BtnRegresar from './components/BtnRegresar';
+import BtnAnadirParametro from './components/BtnAnadirParametro';
+import BtnEditRegis from './components/BtnEditRegis';
+import BtnGuardar from './components/BtnGuardar';
+import BtnEliminar from './components/BtnEliminar';
 
 const Navbar = () => {
   return(
@@ -33,40 +39,6 @@ const Main = () => {
   )
 }
 
-const BtnEditRegis = ({icono = "help", texto = "Cargando", url = "/registrar"}) => {
-  return(
-    <a className="waves-effect waves-dark btn btn-editar-registrar blue darken-1 white-text text-accent-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
-  )
-}
-
-const BtnRegresar = ({icono = "arrow_back", texto = "Regresar", url = "/regresar"}) => {
-  return(
-    <a className="waves-effect waves-dark btn btn-regresar white amber lighten-3 grey-text text-darken-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
-  )
-}
-
-const BtnGuardar = ({icono = "save", texto = "Guardar", url = "/guardar"}) => {
-  return(
-    <a className="waves-effect waves-dark btn btn-guardar green darken-1 white-text text-accent-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
-  )
-}
-
-const BtnCerrarSesion = ({ icono = "logout", texto = "Cerrar Sesión", url ="/Cerrar/Sesión"}) => {
-  return(
-    <a className="waves-effect waves-dark btn btn-logout white red-text text-accent-4" href={url}>{texto}<i className="material-icons right">{icono}</i></a>
-  )
-
-}
-const BtnAnadirParametro = ({ icono = "add", texto = "Añadir Parámetro", url ="/Añadir/Parámetro"}) => {
-  return (
-    <a className="waves-effect waves-dark btn btn-parametro white green lighten-3 grey-text text-darken-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
-  )
-}
-const BtnEliminar = ({ icono = "delete", texto = "Eliminar", url = "/Eliminar"}) => {
-  return (
-    <a className="z-depth-0 waves-effect waves-dark btn btn-eliminar c_Transparente red-text text-darken-2 subrayado" href = {url}>{texto}<i className="material-icons left">{icono}</i></a>
-  )
-}
 
 const App = () => {
   return (
