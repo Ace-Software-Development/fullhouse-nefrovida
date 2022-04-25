@@ -8,8 +8,8 @@ const Navbar = () => {
     <div className="navbar-fixed">
       <nav className="z-depth-2">
         <div className="nav-wrapper c_F9F9F9">
-          <a href="#!" className="brand-logo"><img className="logotipo" src={logo}/></a>
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger black-text"><i className="material-icons">menu</i></a>
+          <a href="/home" className="brand-logo"><img className="logotipo" alt="NefroVida Logo" src={logo}/></a>
+          <a href="/menu" data-target="mobile-demo" className="sidenav-trigger black-text"><i className="material-icons">menu</i></a>
           <ul className="right">
             <li><a className="hide-on-small-and-down waves-effect waves-dark btn btn-logout white red-text text-accent-4">Cerrar sesión<i className="material-icons right">logout</i></a></li>
             <li><a className="hide-on-med-and-up waves-effect waves-dark btn btn-logout white red-text text-accent-4"><i className="material-icons right">logout</i></a></li>
@@ -27,8 +27,8 @@ const Navbar = () => {
 
 const Main = () => {
   return(
-    <main className="center container">
-      
+    <main className="center container"> 
+
     </main>
   )
 }
@@ -55,16 +55,32 @@ const BtnCerrarSesion = ({ icono = "logout", texto = "Cerrar Sesión", url ="/Ce
   return(
     <a className="waves-effect waves-dark btn btn-logout white red-text text-accent-4" href={url}>{texto}<i className="material-icons right">{icono}</i></a>
   )
-
 }
+
 const BtnAnadirParametro = ({ icono = "add", texto = "Añadir Parámetro", url ="/Añadir/Parámetro"}) => {
   return (
     <a className="waves-effect waves-dark btn btn-parametro white green lighten-3 grey-text text-darken-4" href={url}>{texto}<i className="material-icons left">{icono}</i></a>
   )
 }
+
 const BtnEliminar = ({ icono = "delete", texto = "Eliminar", url = "/Eliminar"}) => {
   return (
     <a className="z-depth-0 waves-effect waves-dark btn btn-eliminar c_Transparente red-text text-darken-2 subrayado" href = {url}>{texto}<i className="material-icons left">{icono}</i></a>
+  )
+}
+
+const Card = ({icono = "person", titulo = "Empleados", subtitulo = "Doctores"}) => {
+  return(
+    <div className="card">
+      <div className="card-vacia">
+        <div className="card-titulo">
+          <i className="material-icons sidenav-button icon-separator">{icono}</i>{titulo}
+        </div>
+        <div className="card-subtitulo">
+          {subtitulo}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -73,6 +89,7 @@ const App = () => {
     <>
       <Navbar></Navbar>
       <Main>
+        
       </Main>
       <BtnEditRegis></BtnEditRegis>
       <BtnEditRegis icono="edit" texto = "Editar paciente" url = "/editar"></BtnEditRegis>
@@ -81,6 +98,8 @@ const App = () => {
       <BtnCerrarSesion></BtnCerrarSesion>
       <BtnAnadirParametro></BtnAnadirParametro>
       <BtnEliminar></BtnEliminar>
+      <BtnEliminar texto="Eliminar paciente"></BtnEliminar>
+      <Card></Card>
     </>
   )
 }
