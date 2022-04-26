@@ -6,3 +6,4 @@ const BtnEliminar = ({ icono = "delete", texto = "Eliminar", url = "/Eliminar"})
 }
 
 export default BtnEliminar
+
