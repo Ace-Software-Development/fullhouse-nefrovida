@@ -67,6 +67,8 @@ app.use(function(req, res, next) {
 
 app.use('/home', require('./routes/home'));
 
+app.use('/paciente', require('./routes/pacienteRouter'))
+
 app.get('*', function(request, response){
     response.status(404)
     html = "";

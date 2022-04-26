@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const controles = require('../controllers/pacienteController')
+const pacienteController = require('../controllers/pacienteController')
 
-router.post('/registrar-paciente', controller.crearPaciente)
+router.post('/', pacienteController.crearPaciente)
 
 module.exports = router
