@@ -70,7 +70,7 @@ app.use(function(req, res, next) {
 
 app.use('/home', require('./routes/home'));
 
-app.use('/colaboradores', require('./routes/colaboradores/colaboradorRouter'));
+app.use('/colaboradores', require('./routes/colaboradorRouter'));
 
 app.get('*', function(request, response){
 
