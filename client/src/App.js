@@ -20,8 +20,7 @@ import ContainerForm from './components/ContainerForm'
 import Input from './components/Input'
 import Datepicker from './components/Datepicker';
 import Select from './components/Select'
-import FormColaborador from './Pages/FormColaborador';
-import FormPaciente from './Pages/FormPaciente';
+import FormColaborador from './Pages/FormColaborador'
 
 function App() {
   return (

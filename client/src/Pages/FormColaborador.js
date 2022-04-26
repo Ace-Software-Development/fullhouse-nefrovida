@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import Form from '../components/Form';
-import LineaCampos from '../components/LineaCampos';
-import ContainerForm from '../components/ContainerForm'
 import Input from '../components/Input'
 import Datepicker from '../components/Datepicker';
 import Select from '../components/Select'
+import LineaCampos from '../components/LineaCampos';
+import ContainerForm from '../components/ContainerForm'
 import BtnRegresar from '../components/BtnRegresar';
 import BtnGuardar from '../components/BtnGuardar';
-import { useState } from 'react';
 
 const FormColaborador = () => {
     
