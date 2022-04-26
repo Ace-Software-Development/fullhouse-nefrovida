@@ -10,39 +10,27 @@ import BtnEditRegis from './components/BtnEditRegis';
 import BtnGuardar from './components/BtnGuardar';
 import BtnEliminar from './components/BtnEliminar';
 import Navbar from './Pages/Navbar';
-import Main from './Pages/Main';
-import Card from './Pages/Card';
+import Main from './components/Main'
+import Card from './components/Card';
 import CardTitulo from './components/CardTitulo';
 import Cardsubtitulo from './components/CardSubtitulo';
-import FormularioColaborador from './Pages/FormularioColaborador';
-
-
-
+import Form from './components/Form';
+import LineaCampos from './components/LineaCampos';
+import ContainerForm from './components/ContainerForm'
+import Input from './components/Input'
+import Datepicker from './components/Datepicker';
+import Select from './components/Select'
+import FormColaborador from './Pages/FormColaborador';
+import FormPaciente from './Pages/FormPaciente';
 
 function App() {
   return (
     <>
-      <header>
-        <div className="navbar-fixed">
-          <nav className="z-depth-2">
-            <div className="nav-wrapper c_F9F9F9">
-              <a href="/home" className="brand-logo"><img className="logotipo" alt="NefroVida Logo" src={logo}/></a>
-              <a href="/menu" data-target="mobile-demo" className="sidenav-trigger black-text"><i className="material-icons">menu</i></a>
-              <ul className="right">
-                <li><a className="hide-on-small-and-down waves-effect waves-dark btn btn-logout white red-text text-accent-4">Cerrar sesión<i className="material-icons right">logout</i></a></li>
-                <li><a className="hide-on-med-and-up waves-effect waves-dark btn btn-logout white red-text text-accent-4"><i className="material-icons right">logout</i></a></li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </header>
-
-      <main className="center container"> 
-
+      <Navbar/>
+      <Main>
         <br/><br/>
-        <FormularioColaborador/>
-
-      </main>
+        <FormColaborador/>
+      </Main>
     </>
   )
 }

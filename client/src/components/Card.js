@@ -1,3 +1,4 @@
+// Crea la card sin nada dentro, lista para meter contenido.
 
 const Card = ({children}) => {
     return(
