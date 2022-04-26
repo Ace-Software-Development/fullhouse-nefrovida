@@ -4,4 +4,5 @@ const BtnGuardar = ({icono = "save", texto = "Guardar"}) => {
     )
 }
 
+
 export default BtnGuardar
