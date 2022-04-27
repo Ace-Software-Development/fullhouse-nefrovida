@@ -100,14 +100,10 @@ app.get('*', function(request, response){
 
 
 // Start the server
-// var httpServer = http.createServer(app);
 const PORT = process.env.PORT;
-console.log("Server running in port: ", PORT);
 app.set("port", PORT);
-// httpServer.listen(PORT);
 app.listen(PORT, function(){
-    
-
+    console.log("Server running in port: ", PORT);
 });
 
 module.exports = app;

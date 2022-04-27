@@ -1,7 +1,10 @@
 module.exports = Object.freeze({
+    // Parse General
+    OBJECTID: "objectId",
+    IDROL: "idRol",
+    ACTIVO: "activo",
     // Tabla Colaborador
     COLABORADOR: "Colaborador",
-    OBJECTID: "objectId",
     CONTRASENA: "contrasena",
     IDCOLABORADOR: "idColaborador",
     NOMBRE: "nombre",
@@ -10,7 +13,5 @@ module.exports = Object.freeze({
     FECHANACIMIENTO: "fechaNacimiento",
     SEXO: "sexo",
     CORREO: "correo",
-    TELEFONO: "telefono",
-    ACTIVO: "activo",
-    IDROL: "idRol"
+    TELEFONO: "telefono"   
 })

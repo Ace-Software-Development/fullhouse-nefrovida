@@ -19,18 +19,18 @@ exports.obtenerTodos = async(callback) => {
 
 exports.registrarColaborador = function(params){
     return new Promise(function(resolve, reject){
-        exports.asyncRegistrarColaborador(params, function(error){
+        exports.asyncRegistrarColaborador(params, function(colaborador, error){
             if(error){
-                console.log('Error al intentar crear colaborador: ${error.message}');
                 return resolve({
                     type: 'REGISTRO',
+                    colaborador: colaborador,
                     error: error.message
                 });
             }
 
-            console.log('Colaborador creado con objectId: ' + colaborador.id);
             return resolve({
                 type: 'REGISTRO',
+                colaborador: colaborador,
                 error: null
             });
         });
@@ -40,7 +40,7 @@ exports.registrarColaborador = function(params){
 exports.asyncRegistrarColaborador = async(params, callback) => {
     const colaborador = new Colaborador();
 
-    colaborador.set(CONSTANTS.IDCOLABORADOR, "usuario");
+    colaborador.set(CONSTANTS.IDCOLABORADOR, params.usuario);
     colaborador.set(CONSTANTS.NOMBRE, params.nombre);
     colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
     colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
@@ -50,12 +50,12 @@ exports.asyncRegistrarColaborador = async(params, callback) => {
     colaborador.set(CONSTANTS.TELEFONO, params.telefono);
     colaborador.set(CONSTANTS.CONTRASENA, params.password)
     colaborador.set(CONSTANTS.ACTIVO, true);
-    colaborador.set(CONSTANTS.IDROL, 1);
+    colaborador.set(CONSTANTS.IDROL, params.idRol);
 
     try {
-        await colaborador.save();
-        callback(null);
+        var colab = await colaborador.save();
+        callback(colab, null);
     } catch (error) {
-        callback(error);
+        callback(null, error);
     }
 }
