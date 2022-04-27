@@ -19,16 +19,37 @@ const RegistrarPaciente = () => {
         apellidoPaterno: '',
         apellidoMaterno: '',
         fechaNacimiento: '',
-        telefono: '',
+        telefono: null,
         correo: '',
         sexo: '',
-        estatura: '',
-        peso: '',
+        estatura: null,
+        peso: null,
     })
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {
+        formulario.estatura = Number(formulario.estatura)
+        formulario.peso = Number(formulario.peso)
+        formulario.telefono = Number(formulario.telefono)
+        formulario.fechaNacimiento = String(formulario.fechaNacimiento)
+
+        const data = Array.from(new FormData())
+
+        console.log(formulario)
         e.preventDefault()
-        fetch('/paciente', { method: 'POST', body: formulario })
+        await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify({ title: 'React POST Request Example' }), headers: {'Content-Type': 'application/json'} })
+            .then((response) => {
+                response.json()
+                console.log(response)
+            })
+        
+            //Then with the data from the response in JSON...
+            .then((data) => {
+            console.log('Success:', data);
+            })
+            .catch(err => {
+                window.alert(err);
+                return;
+            });
     }
 
     return(
@@ -40,70 +61,75 @@ const RegistrarPaciente = () => {
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
                     <BtnRegresar/><br/><br/>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <LineaCampos>
-                        <Input 
-                            id="nombre" 
-                            label="Nombre" 
-                            value={formulario.nombre}
-                            onChange={handleChange}
-                            tamano="m4 s12"/>
-                        <Input 
-                            id="apellidoPaterno" 
-                            label="Apellido Paterno" 
-                            value={formulario.apellidoPaterno}
-                            onChange={handleChange}
-                            tamano="m4 s12"/>
-                        <Input 
-                            id="apellidoMaterno" 
-                            label="Apellido Materno" 
-                            value={formulario.apellidoMaterno}
-                            onChange={handleChange}
-                            tamano="m4 s12"/>
-                        <Datepicker 
-                            id="fechaNacimiento" 
-                            label="Fecha de nacimiento" 
-                            value={formulario.fechaNacimiento}
-                            onChange={handleChange}
-                            tamano="s8 m4"/>
-                        <Select 
-                            id="sexo" 
-                            label="Sexo" 
-                            handleChange={handleChange}
-                            value={formulario.sexo}
-                            arr={[{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}]}/>
-                        <Input 
-                            id="telefono" 
-                            label="Telefono" 
-                            value={formulario.telefono}
-                            onChange={handleChange}
-                            tamano="s8 m4"/>
-                        <Input 
-                            id="correo" 
-                            label="Correo electrónico" 
-                            value={formulario.correo}
-                            onChange={handleChange}
-                            tamano="s12 m4"/>
-                        <Input 
-                            id="curp" 
-                            label="curp" 
-                            value={formulario.curp}
-                            onChange={handleChange}
-                            tamano="s12 m4"/>
-                        <Input 
-                            id="peso" 
-                            label="Peso"
-                            value={formulario.peso}
-                            onChange={handleChange} 
-                            tamano="s12 m2" 
-                            type="text"/>
-                        <Input 
-                            id="estatura" 
-                            label="Estatura" 
-                            value={formulario.estatura}
-                            onChange={handleChange}
-                            tamano="s12 m2" 
-                            type="text"/>
+                            <Input 
+                                id="nombre" 
+                                label="Nombre" 
+                                value={formulario.nombre}
+                                onChange={handleChange}
+                                tamano="m4 s12"/>
+                            <Input 
+                                id="apellidoPaterno" 
+                                label="Apellido Paterno" 
+                                value={formulario.apellidoPaterno}
+                                onChange={handleChange}
+                                tamano="m4 s12"/>
+                            <Input 
+                                id="apellidoMaterno" 
+                                label="Apellido Materno" 
+                                value={formulario.apellidoMaterno}
+                                onChange={handleChange}
+                                tamano="m4 s12"/>
+                        </LineaCampos>
+                        <LineaCampos>
+                            <Datepicker 
+                                id="fechaNacimiento" 
+                                label="Fecha de nacimiento" 
+                                value={formulario.fechaNacimiento}
+                                onChange={handleChange}
+                                tamano="s8 m4"/>
+                            <Select 
+                                id="sexo" 
+                                label="Sexo" 
+                                handleChange={handleChange}
+                                value={formulario.sexo}
+                                arr={[{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}]}/>
+                            <Input 
+                                id="telefono" 
+                                label="Telefono" 
+                                type="number"
+                                value={formulario.telefono}
+                                onChange={handleChange}
+                                tamano="s8 m4"/>
+                        </LineaCampos>
+                        <LineaCampos>
+                            <Input 
+                                id="correo" 
+                                label="Correo electrónico" 
+                                value={formulario.correo}
+                                onChange={handleChange}
+                                tamano="s12 m4"/>
+                            <Input 
+                                id="curp" 
+                                label="curp" 
+                                value={formulario.curp}
+                                onChange={handleChange}
+                                tamano="s12 m4"/>
+                            <Input 
+                                id="peso" 
+                                label="Peso"
+                                type="number"
+                                value={formulario.peso}
+                                onChange={handleChange} 
+                                tamano="s12 m2"/>
+                            <Input 
+                                id="estatura" 
+                                label="Estatura" 
+                                type="number"
+                                value={formulario.estatura}
+                                onChange={handleChange}
+                                tamano="s12 m2" />
                         </LineaCampos>
                         <BtnGuardar/>
                     </form>

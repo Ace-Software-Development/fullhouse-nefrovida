@@ -7,7 +7,7 @@ const Select = ({value, tamano = "s4 m2", id, label, arr, handleChange}) => {
           <option value="" disabled selected>{label}</option>
             {
                 arr.map((item, index) => 
-                    <option value={item.value}>{item.option}</option>
+                    <option key={index} value={item.value}>{item.option}</option>
                 )
             }
         </select>
