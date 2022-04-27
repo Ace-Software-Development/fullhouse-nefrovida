@@ -9,7 +9,7 @@ import BtnAnadirParametro from './components/BtnAnadirParametro';
 import BtnEditRegis from './components/BtnEditRegis';
 import BtnGuardar from './components/BtnGuardar';
 import BtnEliminar from './components/BtnEliminar';
-import Navbar from './Pages/Navbar';
+import Navbar from './components/Navbar';
 import Main from './components/Main'
 import Card from './components/Card';
 import CardTitulo from './components/CardTitulo';
