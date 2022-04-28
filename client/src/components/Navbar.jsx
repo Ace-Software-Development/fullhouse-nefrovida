@@ -12,7 +12,8 @@ const Navbar = ({children}) => {
           >
             <img 
               className="logotipo" 
-              src={logo}/>
+              src={logo}
+              alr="Logotipo Nefrovida"/>
           </a>
           <a 
             href="#"
