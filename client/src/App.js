@@ -14,21 +14,27 @@ import Main from './components/Main'
 import Card from './components/Card';
 import CardTitulo from './components/CardTitulo';
 import Cardsubtitulo from './components/CardSubtitulo';
-import Form from './components/Form';
 import LineaCampos from './components/LineaCampos';
 import ContainerForm from './components/ContainerForm'
 import Input from './components/Input'
 import Datepicker from './components/Datepicker';
 import Select from './components/Select'
-import FormColaborador from './Pages/FormColaborador'
+import FormColaborador from './pages/FormColaborador'
+import Sidenav from './components/Sidenav'
+import Tabla from './components/Tabla'
 
 function App() {
   return (
     <>
       <Navbar/>
-      <Main>
-        <br/><br/>
-        <FormColaborador/>
+      <Sidenav/>
+      <Main> 
+        <Card> 
+         <CardTitulo/>
+        
+        <Cardsubtitulo/>
+        <Tabla/> <BtnAnadirParametro/> <BtnEliminar/> <BtnRegresar/>
+        </Card>
       </Main>
     </>
   )

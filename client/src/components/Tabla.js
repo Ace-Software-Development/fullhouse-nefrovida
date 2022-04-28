@@ -21,7 +21,7 @@ const Tabla = (arr) => {
 
                     <tr>
                         <td className="tabla-padding"><a href="http://www.google.com">Cont col1</a><br/><g className="tabla-sexo">Subtexto</g></td>
-                        <td><a href="http://www.google.com"></a>Cont col2</td>
+                        <td><a href="http://www.google.com">Cont col2</a></td>
                         <td className="center"><a href="http://www.google.com"><i class="material-icons">insert_drive_file</i></a></td>
                     </tr>
 
