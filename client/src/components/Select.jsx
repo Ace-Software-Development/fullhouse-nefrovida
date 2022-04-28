@@ -10,11 +10,20 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr =
 
   return (
   <div className={"input-field col " + tamano}>
-    <select value={value} id={id} name={id} onChange={handleChange}>
+    <select 
+      value={value} 
+      id={id} 
+      name={id} 
+      onChange={handleChange}
+    >
       <option value="" disabled selected>{label}</option>
       {
         arr.map((item, index) => 
-          <option key={index} value={item.value}>{item}</option>
+          <option 
+            key={index} 
+            value={item.value}>
+              {item}
+          </option>
         )
       }
     </select>
