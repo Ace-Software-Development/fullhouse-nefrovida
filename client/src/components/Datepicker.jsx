@@ -1,6 +1,6 @@
 const Datepicker = ({tamano = "s12 m4", id = "nombre", label = "Nombre", ...rest}) => {
   return(
-    <div className={"input-field col " + tamano}>
+    <div className={"input-field col " + tamano}  >
       <input
         name={id}
         id={id} 

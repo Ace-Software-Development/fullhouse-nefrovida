@@ -5,7 +5,7 @@ const BtnAnadirParametro = ({ icono = "add", texto = "Añadir Parámetro", url =
       href={url}
     >
       {texto}
-      <i className="material-icons left">{icono}</i>
+      <i className="material-icons left"  >{icono}</i>
     </button>
   )
 }

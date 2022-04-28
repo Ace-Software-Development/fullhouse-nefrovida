@@ -8,26 +8,51 @@ const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Ho
 const Tabla = (arr) => {
   return(
     <>
-      <div className="card contenedor tabla-altura">
-        <table id="doctores" className="highlight">
+      <div className="card contenedor tabla-altura"  >
+        <table id="doctores" className="highlight"  >
             
-          <thead>
-            <tr className="figma">
-                <th class="tabla-padding">Columna 1</th>
-                <th>Columna 2</th>
-                <th className="center">Columna 3</th>
+          <thead  >
+            <tr className="figma"  >
+                <th class="tabla-padding"  >
+                  Columna 1
+                </th>
+                <th  >
+                  Columna 2
+                </th>
+                <th className="center"  >
+                  Columna 3
+                </th>
             </tr>
           </thead>
 
-          <tr>
-            <td className="tabla-padding"><a href="http://www.google.com">Cont col1</a><br/><g className="tabla-sexo">Subtexto</g></td>
-            <td><a href="http://www.google.com">Cont col2</a></td>
-            <td className="center"><a href="http://www.google.com"><i class="material-icons">insert_drive_file</i></a></td>
+          <tr  >
+            <td className="tabla-padding"  >
+              <a href="http://www.google.com"  >
+                Cont col1
+              </a>
+              <br/>
+              <g className="tabla-sexo"  >
+                Subtexto
+              </g>
+            </td>
+            <td  >
+              <a href="http://www.google.com"  >
+                Cont col2
+              </a>
+            </td>
+            <td className="center"  >
+              <a href="http://www.google.com"  >
+                <i class="material-icons"  >
+                  insert_drive_file
+                </i>
+              </a>
+            </td>
           </tr>
 
         </table>
       </div>  
-      <br/><br/>
+      <br  />
+      <br  />
     </>
   )
 }

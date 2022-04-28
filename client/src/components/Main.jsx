@@ -1,6 +1,6 @@
 const Main = ({children}) => {
   return(
-    <main className="center container">
+    <main className="center container"  >
       {children}
     </main>
   )

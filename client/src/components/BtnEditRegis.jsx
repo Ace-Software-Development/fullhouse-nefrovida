@@ -5,7 +5,7 @@ const BtnEditRegis = ({icono = "help", texto = "Cargando", url = "/registrar", p
       href={url}
     >
     {texto}
-    <i className="material-icons left">{icono}</i>
+    <i className="material-icons left"  >{icono}</i>
     </button>
   )
 }

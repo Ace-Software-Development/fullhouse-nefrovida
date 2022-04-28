@@ -5,7 +5,7 @@ const BtnCerrarSesion = ({ icono = "logout", texto = "Cerrar Sesión", url ="/lo
       href={url}
     >
       {texto}
-      <i className="material-icons right">{icono}</i>
+      <i className="material-icons right"  >{icono}</i>
     </button>
   )
 }

@@ -5,7 +5,7 @@ const BtnRegresar = ({icono = "arrow_back", texto = "Regresar", url = "/regresar
       href={url}
     >
       {texto}
-      <i className="material-icons left">{icono}</i>
+      <i className="material-icons left"  >{icono}</i>
     </button>
   )
 }

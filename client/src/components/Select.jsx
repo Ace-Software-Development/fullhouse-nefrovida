@@ -9,14 +9,16 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr =
   }, []);
 
   return (
-  <div className={"input-field col " + tamano}>
+  <div className={"input-field col " + tamano}  >
     <select 
       value={value} 
       id={id} 
       name={id} 
       onChange={handleChange}
     >
-      <option value="" disabled selected>{label}</option>
+      <option value="" disabled selected  >
+        {label}
+      </option>
       {
         arr.map((item, index) => 
           <option 
@@ -27,7 +29,9 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr =
         )
       }
     </select>
-    <label>{label}</label>
+    <label  >
+      {label}
+    </label>
   </div>
   )
 }
