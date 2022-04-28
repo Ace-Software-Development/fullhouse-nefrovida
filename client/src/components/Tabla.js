@@ -1,20 +1,9 @@
 // Datos de ejemplo
-const column = [
-    "Nombre",
-    "Rol",
-    "Teléfono",
-    "Detalle"
-]
-
-const arr = ["Eduardo Pete Gil", "Hombre", "Dueño de pepe", "4641063915", "http://store.steampowered.com/",
-             "Andrea Pineapple", "Mujer",  "La PPAP, chii", "4425672356", "http://www.google.com/",
-             "Coraline Herrera", "Mujer",  "La acabadota ", "0553455663", "http://www.youtube.com/",
-             "David GuzLolero ", "Lolero", "El lolero lol", "5674447535", "http://lan.leagueoflegends.com/",
-             "Felipe Pollos RLP","Pistola","El Felipollos", "5674567746", "http://www.furaffiny.net/",
-             "Manolo furry pto","Furrencio","El pinche furro","4641238080","http://e621.net/"
+const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Hombre"}, {rol: "Dueño de pepe"}, {telefono:"4641063915"}, {detalle:"http://store.steampowered.com/"},
+             {nombre: "Andrea"}, {materno: "Pineapple"}, {paterno: "Pen"}, {sexo:"Mujer"}, {rol: "La PPAP"}, {telefono: "4425672356"}, {detalle:"http://www.youtube.com/"},
+             {nombre: "David"}, {materno: "Guz"}, {paterno: "Lolero"}, {sexo:"Hombre"}, {rol: "El Lolero"}, {telefono:"5674447535"}, {detalle:"http://lan.leagueoflegends.com/"},
+             {nombre: "Feli"}, {materno: "Pollos"}, {paterno: "Feliz"}, {sexo: "Hombre"}, {rol: "El Felipollos"}, {telefono: "9311901105"}, {detalle:"https://pollofelizslp.com/"}
             ]
-
-const columnlen = column.length;
 
 const Tabla = (arr) => {
     return(
@@ -26,16 +15,14 @@ const Tabla = (arr) => {
                         <tr className="figma">
                             <th class="tabla-padding">Columna 1</th>
                             <th>Columna 2</th>
-                            <th>Columna 3</th>
-                            <th className="center">Columna 4</th>
+                            <th className="center">Columna 3</th>
                         </tr>
                     </thead>
 
                     <tr>
-                        <td className="tabla-padding"><a href={arr[0+4]}>{arr[0]}</a><br/><g className="tabla-sexo">{arr[0+1]}</g></td>
-                        <td><a href={arr[0+4]}>{arr[0+2]}</a></td>
-                        <td><a href={arr[0+4]}>{arr[0+3]}</a></td>
-                        <td className="center"><a href={arr[0+4]}><i class="material-icons">insert_drive_file</i></a></td>
+                        <td className="tabla-padding"><a href="http://www.google.com">Cont col1</a><br/><g className="tabla-sexo">Subtexto</g></td>
+                        <td><a href="http://www.google.com"></a>Cont col2</td>
+                        <td className="center"><a href="http://www.google.com"><i class="material-icons">insert_drive_file</i></a></td>
                     </tr>
 
                 </table>
