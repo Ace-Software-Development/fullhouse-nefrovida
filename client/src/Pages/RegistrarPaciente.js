@@ -32,24 +32,19 @@ const RegistrarPaciente = () => {
         formulario.telefono = Number(formulario.telefono)
         formulario.fechaNacimiento = String(formulario.fechaNacimiento)
 
-        const data = Array.from(new FormData())
-
-        console.log(formulario)
         e.preventDefault()
-        await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify({ title: 'React POST Request Example' }), headers: {'Content-Type': 'application/json'} })
-            .then((response) => {
-                response.json()
-                console.log(response)
-            })
+        const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(formulario), headers: {'Content-Type': 'application/json'} })
+        const paciente = await response.json()
+        if(!response.ok) {
+            window.alert(paciente.message);
+            return;
+        }
+        else {
+            window.alert(paciente.message);
+        }
+        console.log(paciente)
+
         
-            //Then with the data from the response in JSON...
-            .then((data) => {
-            console.log('Success:', data);
-            })
-            .catch(err => {
-                window.alert(err);
-                return;
-            });
     }
 
     return(
@@ -60,7 +55,7 @@ const RegistrarPaciente = () => {
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
-                    <BtnRegresar/><br/><br/>
+                    <BtnRegresar url="/"/><br/><br/>
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             <Input 
