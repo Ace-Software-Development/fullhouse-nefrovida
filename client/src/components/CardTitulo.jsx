@@ -1,4 +1,4 @@
-const CardTitulo = ({icono = "help", titulo = "título default no se lo que sea"}) => {
+const CardTitulo = ({icono = "help", titulo }) => {
   return (
     <div className="card-titulo"  >
       <i 

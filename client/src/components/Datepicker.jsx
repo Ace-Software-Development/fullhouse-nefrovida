@@ -1,4 +1,4 @@
-const Datepicker = ({tamano = "s12 m4", id = "nombre", label = "Nombre", ...rest}) => {
+const Datepicker = ({tamano = "s12 m4", id, label, ...rest}) => {
   return(
     <div className={"input-field col " + tamano}  >
       <input
