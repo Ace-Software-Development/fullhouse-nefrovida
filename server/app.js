@@ -10,6 +10,7 @@ const parseServer = require('parse-server').ParseServer;
 // Middlewares
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json());
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());

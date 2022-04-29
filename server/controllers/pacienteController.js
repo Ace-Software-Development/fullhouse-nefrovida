@@ -1,15 +1,16 @@
 const pacienteModel = require('../models/pacienteModel')
 
-module.exports.crearPaciente = async(req, res) => {
-    pacienteModel.crearPaciente(req.body).then(function(results) {
-        if (response.error) {
-            return res.status(400).send({
+module.exports.crearPaciente = async(request, response) => {
+    console.log("REEEQ", request)
+    pacienteModel.registrarPaciente(request.body)
+    .then(function(results) {
+        if (results.error) {
+            return response.status(400).send({
                 status: 'error',
-                message: "Error al crear un paciente. " + response.error
+                message: "Error. " + results.error
             })
         }
-    
-        res.status(200).send({
+        response.status(200).send({
             success: 'true',
             message: "Paciente creado exitosamente"
         })
