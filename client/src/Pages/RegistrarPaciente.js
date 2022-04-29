@@ -12,6 +12,7 @@ import Main from '../components/Main'
 import useFormulario from '../hooks/useFormulario'
 
 const RegistrarPaciente = () => {
+    let submitted = false
 
     const [formulario, handleChange, reset] = useFormulario({
         curp: '',
@@ -27,6 +28,7 @@ const RegistrarPaciente = () => {
     })
 
     async function handleSubmit (e) {
+        submitted = true
         formulario.estatura = Number(formulario.estatura)
         formulario.peso = Number(formulario.peso)
         formulario.telefono = Number(formulario.telefono)
@@ -64,6 +66,9 @@ const RegistrarPaciente = () => {
                                 value={formulario.nombre}
                                 onChange={handleChange}
                                 tamano="m4 s12"/>
+                            { !formulario.nombre && submitted ? 
+                                ? <
+                                }
                             <Input 
                                 id="apellidoPaterno" 
                                 label="Apellido Paterno" 
@@ -104,7 +109,8 @@ const RegistrarPaciente = () => {
                                 label="Correo electrónico" 
                                 value={formulario.correo}
                                 onChange={handleChange}
-                                tamano="s12 m4"/>
+                                tamano="s12 m4"
+                                type="email"/>
                             <Input 
                                 id="curp" 
                                 label="curp" 
