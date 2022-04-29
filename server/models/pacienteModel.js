@@ -14,7 +14,6 @@ function initializeParse() {
 
 exports.registrarPaciente = function(data) {
     initializeParse()
-    console.log("data", data)
     return new Promise( function (resolve, reject) {
         exports.buscarPorCurp(data.curp).then(function(results){
             if(results.error !== "No se encontró un paciente con ese CURP") {

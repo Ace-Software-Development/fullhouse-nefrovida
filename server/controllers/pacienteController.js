@@ -1,7 +1,6 @@
 const pacienteModel = require('../models/pacienteModel')
 
 module.exports.crearPaciente = async(request, response) => {
-    console.log("REEEQ", request)
     pacienteModel.registrarPaciente(request.body)
     .then(function(results) {
         if (results.error) {
