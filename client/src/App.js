@@ -1,16 +1,18 @@
-import { Session } from "./util/Auth0";
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./css/materialize-mod.css";
+import "materialize-css/dist/js/materialize.min.js";
+import Tabla from './components/Tabla'
 
 function App() {
+  const arr = [{nombre: "Eduardo", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" },
+              {nombre: "yO", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" },
+              {nombre: "Otro", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" }
+            ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Session />
-      </header>
-    </div>
-  );
+    <>
+      <Tabla arr= {arr} id="nombres"/>
+    </>
+  )
 }
 
 export default App;
