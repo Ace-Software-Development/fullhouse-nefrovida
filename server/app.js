@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const parseServer = require('parse-server').ParseServer;
-
+const {authUsuario, authRol} = require('./rbac/Authentication')
+let CONSTANTS = require("./constantsProject");
 
 // Middlewares
 const app = express();
@@ -43,7 +44,7 @@ const dashboard = new parseDashboard({
         "pass": "pass"
     }]
 }, { allowInsecureHTTP: false })
-app.use('/dashboard', dashboard);
+app.use('/dashboard', authUsuario, authRol(CONSTANTS.ROLADMIN), dashboard);
 /////////////////////
 
 // const parseDashboard = require('./parse/dashboard');
