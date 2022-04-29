@@ -8,8 +8,8 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   //Datos de cuenta de Auth0
   <Auth0Provider
-    domain="dev-gpna0ck9.us.auth0.com"
-    clientId="BGzVB44MR3IKTpRUxIlh30o2vLzI5S5a"
+    domain="dev-yrtsuw1m.us.auth0.com"
+    clientId="TDft59VYKdJtAaS84MJwyyzVeyg5cvrz"
     redirectUri={window.location.origin}
   >
     <App />
