@@ -1,4 +1,4 @@
-const Cardsubtitulo = ({subtitulo = "subtítulo default no se lo que sea"}) => {
+const Cardsubtitulo = ({ subtitulo }) => {
   return (
     <div className="card-subtitulo"  >
     {subtitulo}

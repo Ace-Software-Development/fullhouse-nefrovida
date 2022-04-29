@@ -1,7 +1,7 @@
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useEffect } from "react";
 
-const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr = ["Hombre", "Mujer"], handleChange}) => {
+const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr, handleChange}) => {
   
   useEffect(() => {
     var elems = document.querySelectorAll('select');
@@ -24,7 +24,7 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr =
           <option 
             key={index} 
             value={item.value}>
-              {item}
+              {item.option}
           </option>
         )
       }
