@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import Main from '../components/Main'
 import FormColaborador from './FormColaborador'
 

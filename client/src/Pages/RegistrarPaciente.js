@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import LineaCampos from '../components/LineaCampos';
@@ -7,14 +8,15 @@ import Datepicker from '../components/Datepicker';
 import Select from '../components/Select'
 import BtnRegresar from '../components/BtnRegresar';
 import BtnGuardar from '../components/BtnGuardar';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import Main from '../components/Main'
 import useFormulario from '../hooks/useFormulario'
+import validarRegistrarPaciente from '../util/validators/validarRegistrarPaciente'
 
 const RegistrarPaciente = () => {
     let submitted = false
 
-    const [formulario, handleChange, reset] = useFormulario({
+    const [formulario, handleChange, reset, errors] = useFormulario({
         curp: '',
         nombre: '',
         apellidoPaterno: '',
@@ -25,10 +27,11 @@ const RegistrarPaciente = () => {
         sexo: '',
         estatura: null,
         peso: null,
-    })
+    }, validarRegistrarPaciente)
+
+    //const [errors, setErrors] = useState({})
 
     async function handleSubmit (e) {
-        submitted = true
         formulario.estatura = Number(formulario.estatura)
         formulario.peso = Number(formulario.peso)
         formulario.telefono = Number(formulario.telefono)
@@ -66,9 +69,9 @@ const RegistrarPaciente = () => {
                                 value={formulario.nombre}
                                 onChange={handleChange}
                                 tamano="m4 s12"/>
-                            { !formulario.nombre && submitted ? 
-                                ? <
-                                }
+                            { errors.nombre 
+                                ? <p>Nombre requerido</p>
+                                : null}
                             <Input 
                                 id="apellidoPaterno" 
                                 label="Apellido Paterno" 
