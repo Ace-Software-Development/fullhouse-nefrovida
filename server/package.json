@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "parse": "^3.4.1",
+    "parse-dashboard": "^4.1.0",
+    "parse-server": "^5.2.0"
+  }
+}
