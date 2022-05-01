@@ -10,5 +10,6 @@ module.exports = Object.freeze({
     ROLTRABAJOSOCIAL: "trabajoSocial",
     ROLQUIMICO: "quimico",
     ROLDOCTOR: "doctor",
+    ROLNUTRIOLOGO: "nutriologo",
     ROLPSICOLOGO: "psicologo"
 })

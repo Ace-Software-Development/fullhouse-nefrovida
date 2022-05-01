@@ -30,25 +30,13 @@ var api = new parseServer({
 
 app.use('/parse', api);
 
-//////////////////////
-const parseDashboard = require('parse-dashboard');
-const dashboard = new parseDashboard({
-    "apps": [{
-        "serverURL": process.env.SERVER_URL,
-        "appId": process.env.APP_ID,
-        "masterKey": process.env.MASTER_KEY,
-        "appName": process.env.NAME
-    }],
-    "users": [{
-        "user": "user",
-        "pass": "pass"
-    }]
-}, { allowInsecureHTTP: false })
-app.use('/dashboard', authUsuario, authRol(CONSTANTS.ROLADMIN), dashboard);
-/////////////////////
+// Validar que usuario haya iniciado sesión en el sistema
+// app.use(authUsuario);
 
-// const parseDashboard = require('./parse/dashboard');
-// app.use(parseDashboard.url, parseDashboard.dashboard);
+const parseDashboard = require('./parse/dashboard');
+app.use(parseDashboard.url, 
+    // authRol([CONSTANTS.ROLDOCTOR]), 
+    parseDashboard.dashboard);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -72,18 +60,16 @@ app.get('*', function(request, response){
     response.status(404)
     html = "";
     html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
-    html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1><a href='http://localhost:6535/home'>Home</a><br><a href='http://localhost:6535/dashboard'>Parse Dashboard</a></body></html>";
+    html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1></body></html>";
     response.status(404);
     response.send(html);
 })
 
 
 // Start the server
-// var httpServer = http.createServer(app);
 const PORT = process.env.PORT;
 console.log("Server running in port: ", PORT);
 app.set("port", PORT);
-// httpServer.listen(PORT);
 app.listen(PORT);
 
 module.exports = app;
