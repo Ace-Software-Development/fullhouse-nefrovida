@@ -70,7 +70,9 @@ app.use(function(req, res, next) {
 
 app.use('/home', require('./routes/home'));
 
-app.use('/colaboradores', require('./routes/colaboradorRouter'));
+app.use('/registrarColaboradores', require('./routes/registrarColaboradorRouter'));
+
+app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 
 app.get('*', function(request, response){
 

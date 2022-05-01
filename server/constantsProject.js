@@ -13,5 +13,10 @@ module.exports = Object.freeze({
     FECHANACIMIENTO: "fechaNacimiento",
     SEXO: "sexo",
     CORREO: "correo",
-    TELEFONO: "telefono"   
+    TELEFONO: "telefono",
+    // ParseUser
+    USERNAME: "username",
+    PASSWORD: "password",
+    EMAIL: "email",
+    PHONE: "phone"
 })
