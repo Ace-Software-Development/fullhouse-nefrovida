@@ -1,5 +1,6 @@
 const parse = require('parse/node');
 const parseServer = require('parse-server').ParseServer;
+let CONSTANTS = require("../constantsProject");
 
 const Paciente = Parse.Object.extend('Paciente');
 
@@ -91,7 +92,6 @@ exports.buscarPorCurp = function (curp) {
     })
 }
 
-
 exports.asyncBuscarPorCurp = async (curp, callback) => {
     initializeParse()
     
@@ -99,11 +99,54 @@ exports.asyncBuscarPorCurp = async (curp, callback) => {
     var query = new Parse.Query(Table)
     query.equalTo("curp", curp)
 
-    try{
+    try {
         var results = await query.first()
 
         callback(results, null)
     } catch (error) {
         callback(null, error)
     }
+}
+
+exports.consultarPacientes = function() {
+    return new Promise( function (resolve, reject) {
+        exports.asyncConsultarPacientes(function(object, error) {
+            if (error) {
+                return resolve ({
+                    type: 'CONSULTA',
+                    data: null,
+                    error: error.message
+                })
+            }
+
+            if ( !object ) {
+                return resolve ({
+                    type: 'CONSULTA',
+                    data: null,
+                    error: 'No hay pacientes registrados actualmente'
+                })
+            }
+
+            return resolve ({
+                type: 'CONSULTA',
+                data: object,
+                error: null
+            })
+        })
+    })
+}
+
+exports.asyncConsultarPacientes = async (callback) => {
+    initializeParse()
+
+    var table = Parse.Object.extend(CONSTANTS.PACIENTE)
+    var query = new Parse.Query(table)
+    
+    try {
+        var results = await query.find()
+        callback(results, null)
+    } catch (error) {
+        callback(null, error)
+    }
+    
 }
