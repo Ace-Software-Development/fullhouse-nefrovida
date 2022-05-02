@@ -2810,7 +2810,7 @@ video.responsive-video {
   -webkit-font-smoothing: antialiased;
 }
 
-.breadcrumb:first-child:before {
+.breadrumb:first-:before {
   display: none;
 }
 

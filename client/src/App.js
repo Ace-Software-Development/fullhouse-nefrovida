@@ -2,7 +2,7 @@ import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import IniciarSesion from './Pages/IniciarSesion';
+import IniciarSesion from './pages/IniciarSesion';
 
 function App() {
   return (
