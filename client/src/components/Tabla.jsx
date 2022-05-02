@@ -38,7 +38,7 @@ const Tabla = (datos) => {
                   Teléfono
                 </th>
                 <th className="center"  >
-                  Detalles
+                  Detalle
                 </th>
             </tr>
           </thead>
