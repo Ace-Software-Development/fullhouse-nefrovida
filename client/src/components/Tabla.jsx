@@ -1,4 +1,5 @@
 // Datos de ejemplo
+import ContenidoTablaPx from "./ContenidoTablaPx";
 const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Hombre"}, {rol: "Dueño de pepe"}, {telefono:"4641063915"}, {detalle:"http://store.steampowered.com/"},
              {nombre: "Andrea"}, {materno: "Pineapple"}, {paterno: "Pen"}, {sexo:"Mujer"}, {rol: "La PPAP"}, {telefono: "4425672356"}, {detalle:"http://www.youtube.com/"},
              {nombre: "David"}, {materno: "Guz"}, {paterno: "Lolero"}, {sexo:"Hombre"}, {rol: "El Lolero"}, {telefono:"5674447535"}, {detalle:"http://lan.leagueoflegends.com/"},
@@ -6,39 +7,12 @@ const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Ho
             ]
 
 const Tabla = (datos) => {
-  const titulos = Object.keys(datos.datos[0]);
+  
   
 
   const tableContent = datos.datos.map((paciente)=>(
-
-    <tr  >
-    <td className="tabla-padding"  >
-      <a href="http://www.google.com"  >
-        {paciente.nombre} {paciente.materno} {paciente.paterno}
-      </a>
-      <br/>
-      <g className="tabla-sexo"  >
-       {paciente.sexo}
-      </g>
-    </td>
-    <td  >
-      <a href="http://www.google.com"  >
-       { paciente.correo}
-      </a>
-    </td>
-    <td  >
-      <a href="http://www.google.com"  >
-       { paciente.telefono}
-      </a>
-    </td>
-    <td className="center"  >
-      <a href="http://www.google.com"  >
-        <i class="material-icons"  >
-          insert_drive_file
-        </i>
-      </a>
-    </td>
-  </tr>
+  <ContenidoTablaPx paciente= {paciente} />
+    
 
   )
 
