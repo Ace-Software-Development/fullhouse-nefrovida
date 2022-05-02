@@ -4473,7 +4473,7 @@ nav .input-field label.active i {
 
 .navbar-fixed {
   position: relative;
-  height: 56px;
+  height: 52px;
   z-index: 997;
 }
 
@@ -4928,6 +4928,21 @@ small {
   padding-bottom: 1px;
 }
 
+.card-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F3F3F3;
+  border-radius: 12px 12px 0px 0px; 
+  font-weight: 500;
+  color: #000000;
+  font-size: x-large;
+  font-weight: bold;
+  letter-spacing: .2px;
+  line-height: 54px;
+}
+
+
 .card-titulo {
   display: flex;
   align-items: center;
@@ -5217,6 +5232,16 @@ o
   line-height: 36px;
   padding: 0 16px;
   text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-login{
+  border:#ffffff 2px solid;
+  border-radius: 12px;
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 16px;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 }

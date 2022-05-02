@@ -10,6 +10,4 @@ const BtnCerrarSesion = ({ icono = "logout", texto = "Cerrar Sesión", url ="/lo
   )
 }
 
-
-
 export default BtnCerrarSesion
