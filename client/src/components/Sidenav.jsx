@@ -1,3 +1,5 @@
+import M from "materialize-css/dist/js/materialize.min.js";
+import { useEffect } from "react";
 const Sidenav = () =>{
     
   useEffect(() => {
