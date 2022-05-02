@@ -43,3 +43,25 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
         })
     })
 }
+
+module.exports.cerrarSesionColaborador = async(request, response) => {
+    colaboradorModel.cerrarSesionColaborador(request.body.data)
+    .then(function(results){
+        if(results.error){
+            return response.status(404).send({
+                status: "error",
+                message: results.error
+            })
+        }
+        response.status(200).send({
+            status: "success",
+            colaborador: results.colaborador,
+            message: "Sesion cerrada exitosamente!!"
+        })
+    }).catch((error) => {
+        response.status(404).send({
+            status: "error catch",
+            message: error
+        })
+    })
+}

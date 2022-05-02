@@ -57,6 +57,26 @@ exports.iniciarSesionColaborador = function(params){
     });
 }
 
+exports.cerrarSesionColaborador = function(params){
+    return new Promise(function(resolve, reject){
+        exports.asyncCerrarSesionColaborador(params, function(colaborador, error){
+            if(error){
+                return resolve({
+                    type: 'REGISTRO',
+                    colaborador: colaborador,
+                    error: error.message
+                });
+            }
+
+            return resolve({
+                type: 'REGISTRO',
+                colaborador: colaborador,
+                error: null
+            });
+        });
+    });
+}
+
 /*exports.asyncRegistrarColaborador = async(params, callback) => {
     const colaborador = new Colaborador();
 
@@ -88,9 +108,10 @@ exports.asyncRegistrarColaborador = async(params, callback) => {
 
     // other fields can be set just like with Parse.Object
     user.set(CONSTANTS.PHONE, params.phone);
+    //user.ser(CONSTANTS.EMAILVERIFIED, params.emailVerified);
     
     try {
-        var colab = await user.save();
+        var colab = await user.signUp();
         callback(colab, null);
     } catch (error) {
         // Show the error message somewhere and let the user try again.
@@ -101,6 +122,16 @@ exports.asyncRegistrarColaborador = async(params, callback) => {
 exports.asyncIniciarSesionColaborador = async(params, callback) => {    
     try {
         const colab = await Parse.User.logIn(params.username, params.password);
+        callback(colab, null);
+    } catch (error) {
+        // Show the error message somewhere and let the user try again.
+        callback(null, error);
+    }
+}
+
+exports.asyncCerrarSesionColaborador = async(params, callback) => {    
+    try {
+        const colab = await Parse.User.logOut(params.username, params.password);
         callback(colab, null);
     } catch (error) {
         // Show the error message somewhere and let the user try again.

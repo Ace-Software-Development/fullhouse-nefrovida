@@ -18,5 +18,6 @@ module.exports = Object.freeze({
     USERNAME: "username",
     PASSWORD: "password",
     EMAIL: "email",
-    PHONE: "phone"
+    PHONE: "phone",
+    EMAILVERIFIED: "emailVerified"
 })
