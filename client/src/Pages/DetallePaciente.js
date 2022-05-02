@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import Main from '../components/Main'
 import CardTitulo from '../components/CardTitulo'
@@ -14,7 +15,9 @@ const detallesPx= <ContenidoDetallesPx paciente= {px}/>
             <Navbar/>
             <Main>
             <br/><br/>
-            <BtnRegresar/>
+            <Link to = '/'>
+                <BtnRegresar/>
+            </Link>
             <br/><br/>
             <CardTitulo icono="person" titulo="Detalle de paciente"/>
             <Card children= {detallesPx}/> 

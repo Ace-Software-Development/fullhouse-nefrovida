@@ -4,8 +4,7 @@ import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import RegistrarPaciente from './pages/RegistrarPaciente'
-import ConsultarInfPaciente from './pages/ConsultarInfPaciente'
-import VistaDetalle from './pages/VistaDetalle'
+import DetallePaciente from './pages/DetallePaciente'
 
 
 function App() {
@@ -14,8 +13,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/paciente' element={<RegistrarPaciente />} />
-        <Route exact path= '/Verpacientes' element={<ConsultarInfPaciente />}/>
-        <Route exact path= '/VistaDetalle' element={<VistaDetalle/>}/>
+        <Route exact path= '/:curp' element={<DetallePaciente/>}/>
       </Routes>
     </BrowserRouter>
   )
