@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const parseServer = require('parse-server').ParseServer;
+const {authUsuario, authRol} = require('./rbac/Authentication')
 let CONSTANTS = require("./constantsProject");
-
 
 // Middlewares
 const app = express();
@@ -31,26 +31,13 @@ var api = new parseServer({
 
 app.use('/parse', api);
 
-//////////////////////
-const parseDashboard = require('parse-dashboard');
-const { query } = require('express');
-const dashboard = new parseDashboard({
-    "apps": [{
-        "serverURL": process.env.SERVER_URL,
-        "appId": process.env.APP_ID,
-        "masterKey": process.env.MASTER_KEY,
-        "appName": process.env.NAME
-    }],
-    "users": [{
-        "user": "user",
-        "pass": "pass"
-    }]
-}, { allowInsecureHTTP: false })
-app.use('/dashboard', dashboard);
-/////////////////////
+// Validar que usuario haya iniciado sesión en el sistema
+// app.use(authUsuario);
 
-// const parseDashboard = require('./parse/dashboard');
-// app.use(parseDashboard.url, parseDashboard.dashboard);
+const parseDashboard = require('./parse/dashboard');
+app.use(parseDashboard.url, 
+    // authRol([CONSTANTS.ROLDOCTOR]), 
+    parseDashboard.dashboard);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -73,29 +60,12 @@ app.use('/home', require('./routes/home'));
 app.use('/colaboradores', require('./routes/colaboradorRouter'));
 
 app.get('*', function(request, response){
-
-    const Colaboradores = Parse.Object.extend(CONSTANTS.COLABORADOR);
-    const query = new Parse.Query(Colaboradores);
-    query.get("JORDFXpiec")
-    .then((colaborador) => {
-        const {
-            idColaborador, nombre, apellidoPaterno, 
-            apellidoMaterno, fechaNacimiento, sexo, 
-            correo, telefono, contrasena, activo, idRol
-        } = colaborador.attributes;
-        // response.send(idColaborador + nombre);
-        response.json(colaborador);
-    }, (error) => {
-        console.log('Error al obtener colaborador: ' + error.message);
-        response.send(error);
-    })
-
-    // response.status(404)
-    // html = "";
-    // html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
-    // html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1><a href='http://localhost:6535/home'>Home</a><br><a href='http://localhost:6535/dashboard'>Parse Dashboard</a></body></html>";
-    // response.status(404);
-    // response.send(html);
+    response.status(404)
+    html = "";
+    html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
+    html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1></body></html>";
+    response.status(404);
+    response.send(html);
 })
 
 

@@ -14,4 +14,14 @@ module.exports = Object.freeze({
     SEXO: "sexo",
     CORREO: "correo",
     TELEFONO: "telefono"   
+    // Roles
+    ROL: "Rol",
+    NOMBREROL: "nombre",
+    DESCRIPCIONROL: "descripcion",
+    ROLADMIN: "admin",
+    ROLTRABAJOSOCIAL: "trabajoSocial",
+    ROLQUIMICO: "quimico",
+    ROLDOCTOR: "doctor",
+    ROLNUTRIOLOGO: "nutriologo",
+    ROLPSICOLOGO: "psicologo"
 })
