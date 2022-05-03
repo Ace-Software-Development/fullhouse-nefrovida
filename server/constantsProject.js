@@ -3,16 +3,13 @@ module.exports = Object.freeze({
     OBJECTID: "objectId",
     IDROL: "idRol",
     ACTIVO: "activo",
-    // Tabla Colaborador
-    COLABORADOR: "Colaborador",
-    CONTRASENA: "contrasena",
-    IDCOLABORADOR: "idColaborador",
+    // Tabla User
+    USUARIO: "username",
+    CONTRASENA: "password",
+    CORREO: "email",
     NOMBRE: "nombre",
     APELLIDOPATERNO: "apellidoPaterno",
     APELLIDOMATERNO: "apellidoMaterno",
-    FECHANACIMIENTO: "fechaNacimiento",
-    SEXO: "sexo",
-    CORREO: "correo",
     TELEFONO: "telefono",
     // Roles
     ROL: "Rol",

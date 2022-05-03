@@ -1,10 +1,8 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
 
-const Colaborador = Parse.Object.extend(CONSTANTS.COLABORADOR);
-
 exports.obtenerTodos = async() => {
-    var queryObtenerTodos = new Parse.Query(Colaborador);
+    var queryObtenerTodos = new Parse.Query(Parse.User);
     queryObtenerTodos.include(CONSTANTS.IDROL);
     queryObtenerTodos.select(CONSTANTS.NOMBRE, CONSTANTS.APELLIDOPATERNO /
         CONSTANTS.APELLIDOMATERNO, CONSTANTS.FECHANACIMIENTO, CONSTANTS.SEXO,
@@ -32,50 +30,53 @@ function resultsRegistrarColaborador(colab, error){
 }
 
 exports.registrarColaborador = async(params) => {
-    const queryCorreoUnico = new Parse.Query(Colaborador);
-    queryCorreoUnico.equalTo(CONSTANTS.CORREO, params.correo);
-    
+    const queryTelefonoUnico = new Parse.Query(Parse.User);
+    queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
+
     try {
-        const colaboradorC = await queryCorreoUnico.first();
-        if (colaboradorC) {
-            return resultsRegistrarColaborador(colaboradorC, "Ya existe un empleado registrado con dicho correo electrónico.");
+        const colaboradorT = await queryTelefonoUnico.first();
+        if (colaboradorT) {
+            return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
         }
-        // Si no existe un empleado con dicho correo aún.
-        const queryTelefonoUnico = new Parse.Query(Colaborador);
-        queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
+        // Si no existe un empleado con dicho teléfono aún, crear registro.
+        const colaborador = new Parse.User();
+        colaborador.set(CONSTANTS.USUARIO, params.usuario);
+        colaborador.set(CONSTANTS.NOMBRE, params.nombre);
+        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
+        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+        colaborador.set(CONSTANTS.CORREO, params.correo);
+        colaborador.set(CONSTANTS.TELEFONO, params.telefono);
+        colaborador.set(CONSTANTS.CONTRASENA, params.password)
+        colaborador.set(CONSTANTS.ACTIVO, true);
+        colaborador.set(CONSTANTS.IDROL, params.idRol);
 
         try {
-            const colaboradorT = await queryTelefonoUnico.first();
-            if (colaboradorT) {
-                return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
-            }
-            // Si no existe un empleado con dicho teléfono aún, crear registro.
-            const colaborador = new Colaborador();
-            colaborador.set(CONSTANTS.IDCOLABORADOR, params.usuario);
-            colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-            colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-            colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
-            colaborador.set(CONSTANTS.FECHANACIMIENTO, params.nacimiento);
-            colaborador.set(CONSTANTS.SEXO, params.sexo);
-            colaborador.set(CONSTANTS.CORREO, params.correo);
-            colaborador.set(CONSTANTS.TELEFONO, params.telefono);
-            colaborador.set(CONSTANTS.CONTRASENA, params.password)
-            colaborador.set(CONSTANTS.ACTIVO, true);
-            colaborador.set(CONSTANTS.IDROL, params.idRol);
+            const colab = await colaborador.signUp();
+            return resultsRegistrarColaborador(colab, null);
 
-            try {
-                const colab = await colaborador.save();
-                return resultsRegistrarColaborador(colab, null);
-
-            } catch(error) {
-                return resultsRegistrarColaborador(null, error.message);
+        } catch(error) {
+            if (error.code === Parse.Error.INVALID_EMAIL_ADDRESS) {
+                return resultsRegistrarColaborador(null, "El correo electrónico ingresado es inválido.");
             }
-            
-        } catch(errorT) {
-            return resultsRegistrarColaborador(null, errorT.message);
+            else if (error.code === Parse.Error.USERNAME_MISSING) {
+                return resultsRegistrarColaborador(null, "El usuario ingresado es inválido o está faltante.");
+            }
+            else if (error.code === Parse.Error.PASSWORD_MISSING) {
+                return resultsRegistrarColaborador(null, "La contraseña ingresada es inválida o está faltante.");
+            }
+            else if (error.code === Parse.Error.USERNAME_TAKEN) {
+                return resultsRegistrarColaborador(null, "El usuario ingresado ya se encuentra en uso.");
+            }
+            else if (error.code === Parse.Error.EMAIL_TAKEN) {
+                return resultsRegistrarColaborador(null, "El correo electrónico ingresado ya se encuentra en uso.");
+            }
+            else if (error.code === Parse.Error.EMAIL_MISSING) {
+                return resultsRegistrarColaborador(null, "Correo electrónico faltante.");
+            }
+            return resultsRegistrarColaborador(null, error.message + " " + error.code);
         }
-
-    } catch(errorC) {
-        return resultsRegistrarColaborador(null, errorC.message);
+        
+    } catch(errorT) {
+        return resultsRegistrarColaborador(null, errorT.message);
     }
 }
