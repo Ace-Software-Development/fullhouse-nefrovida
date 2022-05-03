@@ -69,7 +69,7 @@ const FormColaborador = () => {
     )
 }
 
-export default FormColaborador
+export default FormColaborador;
 
 /* <Input id="usuario" label="Usuario" tamano="m3 s12" handleInputChange/>
 <Input id="nombre" label="Nombre" tamano="m3 s12"/>

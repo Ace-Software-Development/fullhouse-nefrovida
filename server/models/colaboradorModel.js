@@ -120,6 +120,7 @@ exports.asyncRegistrarColaborador = async(params, callback) => {
 }
 
 exports.asyncIniciarSesionColaborador = async(params, callback) => {    
+    console.log(params.username);
     try {
         const colab = await Parse.User.logIn(params.username, params.password);
         callback(colab, null);
