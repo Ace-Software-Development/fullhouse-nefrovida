@@ -5306,6 +5306,16 @@ o
   text-decoration: underline red;
 }
 
+.btn-restablecer{
+  border-radius: 12px;
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 16px;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: underline blue;
+}
+
 .btn.disabled, .disabled.btn-large, .disabled.btn-small,
 .btn-floating.disabled,
 .btn-large.disabled,
