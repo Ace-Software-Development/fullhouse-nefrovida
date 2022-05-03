@@ -1,40 +1,32 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
 
-const Colaborador = Parse.Object.extend(CONSTANTS.COLABORADOR);
-
-exports.obtenerTodos = async(callback) => {
-    var queryObtenerTodos = new Parse.Query(Colaborador);
+exports.obtenerTodos = async() => {
+    var queryObtenerTodos = new Parse.Query(Parse.User);
     queryObtenerTodos.include(CONSTANTS.IDROL);
     queryObtenerTodos.select(CONSTANTS.NOMBRE, CONSTANTS.APELLIDOPATERNO /
         CONSTANTS.APELLIDOMATERNO, CONSTANTS.FECHANACIMIENTO, CONSTANTS.SEXO,
         CONSTANTS.CORREO, CONSTANTS.TELEFONO, CONSTANTS.ACTIVO, CONSTANTS.IDROL);
     try {
-        const results = await queryObtenerTodos.find();
-        callback(results, null);
+        const colabs = await queryObtenerTodos.find();
+        return {
+            colaboradores: colabs,
+            error: null
+        }
     } catch (error) {
-        callback(null, error);
+        return {
+            colaboradores: null,
+            error: error.message
+        }
     }
 }
 
-exports.registrarColaborador = function(params){
-    return new Promise(function(resolve, reject){
-        exports.asyncRegistrarColaborador(params, function(colaborador, error){
-            if(error){
-                return resolve({
-                    type: 'REGISTRO',
-                    colaborador: colaborador,
-                    error: error.message
-                });
-            }
 
-            return resolve({
-                type: 'REGISTRO',
-                colaborador: colaborador,
-                error: null
-            });
-        });
-    });
+function resultsRegistrarColaborador(colab, error){
+    return {
+        colaborador: colab,
+        error: error
+    };
 }
 
 exports.iniciarSesionColaborador = function(params){
@@ -77,45 +69,55 @@ exports.cerrarSesionColaborador = function(params){
     });
 }
 
-/*exports.asyncRegistrarColaborador = async(params, callback) => {
-    const colaborador = new Colaborador();
-
-    colaborador.set(CONSTANTS.IDCOLABORADOR, params.idColaborador);
-    colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-    colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-    colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
-    colaborador.set(CONSTANTS.FECHANACIMIENTO, params.nacimiento);
-    colaborador.set(CONSTANTS.SEXO, params.sexo);
-    colaborador.set(CONSTANTS.CORREO, params.correo);
-    colaborador.set(CONSTANTS.TELEFONO, params.telefono);
-    colaborador.set(CONSTANTS.CONTRASENA, params.contrasena)
-    colaborador.set(CONSTANTS.ACTIVO, true);
-    colaborador.set(CONSTANTS.IDROL, params.idRol);
+exports.registrarColaborador = async(params) => {
+    const queryTelefonoUnico = new Parse.Query(Parse.User);
+    queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
 
     try {
-        var colab = await colaborador.save();
-        callback(colab, null);
-    } catch (error) {
-        callback(null, error);
-    }
-}*/
+        const colaboradorT = await queryTelefonoUnico.first();
+        if (colaboradorT) {
+            return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
+        }
+        // Si no existe un empleado con dicho teléfono aún, crear registro.
+        const colaborador = new Parse.User();
+        colaborador.set(CONSTANTS.USUARIO, params.usuario);
+        colaborador.set(CONSTANTS.NOMBRE, params.nombre);
+        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
+        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+        colaborador.set(CONSTANTS.CORREO, params.correo);
+        colaborador.set(CONSTANTS.TELEFONO, params.telefono);
+        colaborador.set(CONSTANTS.CONTRASENA, params.password)
+        colaborador.set(CONSTANTS.ACTIVO, true);
+        colaborador.set(CONSTANTS.IDROL, params.idRol);
 
-exports.asyncRegistrarColaborador = async(params, callback) => {
-    const user = new Parse.User();
-    user.set(CONSTANTS.USERNAME, params.username);
-    user.set(CONSTANTS.PASSWORD, params.password);
-    user.set(CONSTANTS.EMAIL, params.email);
+        try {
+            const colab = await colaborador.signUp();
+            return resultsRegistrarColaborador(colab, null);
 
-    // other fields can be set just like with Parse.Object
-    user.set(CONSTANTS.PHONE, params.phone);
-    //user.ser(CONSTANTS.EMAILVERIFIED, params.emailVerified);
-    
-    try {
-        var colab = await user.signUp();
-        callback(colab, null);
-    } catch (error) {
-        // Show the error message somewhere and let the user try again.
-        callback(null, error);
+        } catch(error) {
+            if (error.code === Parse.Error.INVALID_EMAIL_ADDRESS) {
+                return resultsRegistrarColaborador(null, "El correo electrónico ingresado es inválido.");
+            }
+            else if (error.code === Parse.Error.USERNAME_MISSING) {
+                return resultsRegistrarColaborador(null, "El usuario ingresado es inválido o está faltante.");
+            }
+            else if (error.code === Parse.Error.PASSWORD_MISSING) {
+                return resultsRegistrarColaborador(null, "La contraseña ingresada es inválida o está faltante.");
+            }
+            else if (error.code === Parse.Error.USERNAME_TAKEN) {
+                return resultsRegistrarColaborador(null, "El usuario ingresado ya se encuentra en uso.");
+            }
+            else if (error.code === Parse.Error.EMAIL_TAKEN) {
+                return resultsRegistrarColaborador(null, "El correo electrónico ingresado ya se encuentra en uso.");
+            }
+            else if (error.code === Parse.Error.EMAIL_MISSING) {
+                return resultsRegistrarColaborador(null, "Correo electrónico faltante.");
+            }
+            return resultsRegistrarColaborador(null, error.message + " " + error.code);
+        }
+        
+    } catch(errorT) {
+        return resultsRegistrarColaborador(null, errorT.message);
     }
 }
 
