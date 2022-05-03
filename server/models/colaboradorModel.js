@@ -3,17 +3,23 @@ let CONSTANTS = require("../constantsProject");
 
 const Colaborador = Parse.Object.extend(CONSTANTS.COLABORADOR);
 
-exports.obtenerTodos = async(callback) => {
+exports.obtenerTodos = async() => {
     var queryObtenerTodos = new Parse.Query(Colaborador);
     queryObtenerTodos.include(CONSTANTS.IDROL);
     queryObtenerTodos.select(CONSTANTS.NOMBRE, CONSTANTS.APELLIDOPATERNO /
         CONSTANTS.APELLIDOMATERNO, CONSTANTS.FECHANACIMIENTO, CONSTANTS.SEXO,
         CONSTANTS.CORREO, CONSTANTS.TELEFONO, CONSTANTS.ACTIVO, CONSTANTS.IDROL);
     try {
-        const results = await queryObtenerTodos.find();
-        callback(results, null);
+        const colabs = await queryObtenerTodos.find();
+        return {
+            colaboradores: colabs,
+            error: null
+        }
     } catch (error) {
-        callback(null, error);
+        return {
+            colaboradores: null,
+            error: error.message
+        }
     }
 }
 
@@ -25,12 +31,12 @@ function resultsRegistrarColaborador(colab, error){
     };
 }
 
-exports.asyncRegistrarColaborador = async(params) => {
+exports.registrarColaborador = async(params) => {
     const queryCorreoUnico = new Parse.Query(Colaborador);
     queryCorreoUnico.equalTo(CONSTANTS.CORREO, params.correo);
     
     try {
-        var colaboradorC = await queryCorreoUnico.first();
+        const colaboradorC = await queryCorreoUnico.first();
         if (colaboradorC) {
             return resultsRegistrarColaborador(colaboradorC, "Ya existe un empleado registrado con dicho correo electrónico.");
         }
@@ -39,7 +45,7 @@ exports.asyncRegistrarColaborador = async(params) => {
         queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
 
         try {
-            var colaboradorT = await queryTelefonoUnico.first();
+            const colaboradorT = await queryTelefonoUnico.first();
             if (colaboradorT) {
                 return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
             }
@@ -58,7 +64,7 @@ exports.asyncRegistrarColaborador = async(params) => {
             colaborador.set(CONSTANTS.IDROL, params.idRol);
 
             try {
-                var colab = await colaborador.save();
+                const colab = await colaborador.save();
                 return resultsRegistrarColaborador(colab, null);
 
             } catch(error) {
