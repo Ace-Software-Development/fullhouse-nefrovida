@@ -28,7 +28,6 @@ var api = new parseServer({
     serverURL: process.env.SERVER_URL,
     appName: process.env.APP_NAME,
 });
-
 app.use('/parse', api);
 
 // Validar que usuario haya iniciado sesión en el sistema
@@ -36,7 +35,7 @@ app.use('/parse', api);
 
 const parseDashboard = require('./parse/dashboard');
 app.use(parseDashboard.url, 
-    // authRol([CONSTANTS.ROLDOCTOR]), 
+    // authRol([CONSTANTS.ROLADMIN]), 
     parseDashboard.dashboard);
 
 app.use(function(req, res, next) {

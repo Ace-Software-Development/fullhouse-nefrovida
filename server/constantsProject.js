@@ -13,7 +13,7 @@ module.exports = Object.freeze({
     FECHANACIMIENTO: "fechaNacimiento",
     SEXO: "sexo",
     CORREO: "correo",
-    TELEFONO: "telefono"   
+    TELEFONO: "telefono",
     // Roles
     ROL: "Rol",
     NOMBREROL: "nombre",
