@@ -14,13 +14,18 @@ const detallesPx= <ContenidoDetallesPx paciente= {px}/>
         <div>
             <Navbar/>
             <Main>
-            <br/><br/>
+            <br/><br/> 
             <Link to = '/'>
                 <BtnRegresar/>
             </Link>
             <br/><br/>
-            <CardTitulo icono="person" titulo="Detalle de paciente"/>
-            <Card children= {detallesPx}/> 
+            
+
+            
+            <Card>
+                <CardTitulo icono="person" titulo="Detalle de paciente"/>
+                <ContenidoDetallesPx/>
+            </Card>
             </Main>
         </div>
     )
