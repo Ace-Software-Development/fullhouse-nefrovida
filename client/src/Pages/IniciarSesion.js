@@ -9,6 +9,7 @@ import BtnIniciarSesion from '../components/BtnIniciarSesion';
 import logo from "../img/logo.png";
 import useLogin from '../hooks/useLogin';
 import validarIniciarSesion from '../util/validators/validarIniciarSesion';
+import BtnRestablecer from '../components/BtnRestablecer';
 
 export default function IniciarSesion() {
 
@@ -84,6 +85,9 @@ export default function IniciarSesion() {
                         </LineaCampos>
                         <br></br>
                         <BtnIniciarSesion/>
+                        <br></br>
+                        <br></br>
+                        <BtnRestablecer/>
                         </form>
                     </ContainerForm>
                 </Card>
