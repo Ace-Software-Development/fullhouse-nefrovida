@@ -29,45 +29,6 @@ function resultsRegistrarColaborador(colab, error){
     };
 }
 
-exports.iniciarSesionColaborador = function(params){
-    return new Promise(function(resolve, reject){
-        exports.asyncIniciarSesionColaborador(params, function(colaborador, error){
-            if(error){
-                return resolve({
-                    type: 'REGISTRO',
-                    colaborador: colaborador,
-                    error: error.message
-                });
-            }
-
-            return resolve({
-                type: 'REGISTRO',
-                colaborador: colaborador,
-                error: null
-            });
-        });
-    });
-}
-
-exports.cerrarSesionColaborador = function(params){
-    return new Promise(function(resolve, reject){
-        exports.asyncCerrarSesionColaborador(params, function(colaborador, error){
-            if(error){
-                return resolve({
-                    type: 'REGISTRO',
-                    colaborador: colaborador,
-                    error: error.message
-                });
-            }
-
-            return resolve({
-                type: 'REGISTRO',
-                colaborador: colaborador,
-                error: null
-            });
-        });
-    });
-}
 
 exports.registrarColaborador = async(params) => {
     const queryTelefonoUnico = new Parse.Query(Parse.User);
@@ -121,23 +82,35 @@ exports.registrarColaborador = async(params) => {
     }
 }
 
-exports.asyncIniciarSesionColaborador = async(params, callback) => {    
-    console.log(params.username);
+exports.iniciarSesionColaborador = async(params) => {    
+    //console.log(params.correo);
     try {
-        const colab = await Parse.User.logIn(params.username, params.password);
-        callback(colab, null);
+        const colab = await Parse.User.logIn(params.correo, params.password);
+        return {
+            colaboradores: colab,
+            error: null
+        }
     } catch (error) {
         // Show the error message somewhere and let the user try again.
-        callback(null, error);
+        return {
+            colaboradores: null,
+            error: error.message
+        }
     }
 }
 
-exports.asyncCerrarSesionColaborador = async(params, callback) => {    
+exports.cerrarSesionColaborador = async() => {    
     try {
-        const colab = await Parse.User.logOut(params.username, params.password);
-        callback(colab, null);
+        const colab = await Parse.User.logOut();
+        return {
+            colaboradores: colab,
+            error: null
+        }
     } catch (error) {
         // Show the error message somewhere and let the user try again.
-        callback(null, error);
+        return {
+            colaboradores: null,
+            error: error.message
+        }
     }
 }

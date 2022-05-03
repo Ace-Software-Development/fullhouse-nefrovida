@@ -45,45 +45,45 @@ module.exports.registrarColaborador = async(request, response) => {
 }
 
 module.exports.iniciarSesionColaborador = async(request, response) => {
-    colaboradorModel.iniciarSesionColaborador(request.body.data)
-    .then(function(results){
-        if(results.error){
-            return response.status(404).send({
-                status: "error",
+    try {
+        const results = await colaboradorModel.iniciarSesionColaborador(request.body.data);
+        if (results.error) {
+            return response.status(404).send( {
+                colaborador: null,
                 message: results.error
-            })
+            });
         }
-        response.status(200).send({
-            status: "success",
+        response.status(200).send( {
             colaborador: results.colaborador,
-            message: "Inicio de sesión exitoso!!"
-        })
-    }).catch((error) => {
-        response.status(404).send({
-            status: "error catch",
-            message: error
-        })
-    })
+            message: "Inicio de Sesion exitoso!!"
+        });
+        
+    } catch(error) {
+        response.status(404).send( {
+            colaborador: null,
+            message: error.message
+        });
+    }
 }
 
 module.exports.cerrarSesionColaborador = async(request, response) => {
-    colaboradorModel.cerrarSesionColaborador(request.body.data)
-    .then(function(results){
-        if(results.error){
-            return response.status(404).send({
-                status: "error",
+    try {
+        const results = await colaboradorModel.cerrarSesionColaborador(request.body.data);
+        if (results.error) {
+            return response.status(404).send( {
+                colaborador: null,
                 message: results.error
-            })
+            });
         }
-        response.status(200).send({
-            status: "success",
+        response.status(200).send( {
             colaborador: results.colaborador,
-            message: "Sesion cerrada exitosamente!!"
-        })
-    }).catch((error) => {
-        response.status(404).send({
-            status: "error catch",
-            message: error
-        })
-    })
+            message: "Sesion Cerrada correctamente"
+        });
+        
+    } catch(error) {
+        response.status(404).send( {
+            colaborador: null,
+            message: error.message
+        });
+    }
 }
