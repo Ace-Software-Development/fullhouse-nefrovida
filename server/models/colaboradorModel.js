@@ -17,45 +17,59 @@ exports.obtenerTodos = async(callback) => {
     }
 }
 
-exports.registrarColaborador = function(params){
-    return new Promise(function(resolve, reject){
-        exports.asyncRegistrarColaborador(params, function(colaborador, error){
-            if(error){
-                return resolve({
-                    type: 'REGISTRO',
-                    colaborador: colaborador,
-                    error: error.message
-                });
-            }
 
-            return resolve({
-                type: 'REGISTRO',
-                colaborador: colaborador,
-                error: null
-            });
-        });
-    });
+function resultsRegistrarColaborador(colab, error){
+    return {
+        colaborador: colab,
+        error: error
+    };
 }
 
-exports.asyncRegistrarColaborador = async(params, callback) => {
-    const colaborador = new Colaborador();
-
-    colaborador.set(CONSTANTS.IDCOLABORADOR, params.usuario);
-    colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-    colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-    colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
-    colaborador.set(CONSTANTS.FECHANACIMIENTO, params.nacimiento);
-    colaborador.set(CONSTANTS.SEXO, params.sexo);
-    colaborador.set(CONSTANTS.CORREO, params.correo);
-    colaborador.set(CONSTANTS.TELEFONO, params.telefono);
-    colaborador.set(CONSTANTS.CONTRASENA, params.password)
-    colaborador.set(CONSTANTS.ACTIVO, true);
-    colaborador.set(CONSTANTS.IDROL, params.idRol);
-
+exports.asyncRegistrarColaborador = async(params) => {
+    const queryCorreoUnico = new Parse.Query(Colaborador);
+    queryCorreoUnico.equalTo(CONSTANTS.CORREO, params.correo);
+    
     try {
-        var colab = await colaborador.save();
-        callback(colab, null);
-    } catch (error) {
-        callback(null, error);
+        var colaboradorC = await queryCorreoUnico.first();
+        if (colaboradorC) {
+            return resultsRegistrarColaborador(colaboradorC, "Ya existe un empleado registrado con dicho correo electrónico.");
+        }
+        // Si no existe un empleado con dicho correo aún.
+        const queryTelefonoUnico = new Parse.Query(Colaborador);
+        queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
+
+        try {
+            var colaboradorT = await queryTelefonoUnico.first();
+            if (colaboradorT) {
+                return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
+            }
+            // Si no existe un empleado con dicho teléfono aún, crear registro.
+            const colaborador = new Colaborador();
+            colaborador.set(CONSTANTS.IDCOLABORADOR, params.usuario);
+            colaborador.set(CONSTANTS.NOMBRE, params.nombre);
+            colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
+            colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+            colaborador.set(CONSTANTS.FECHANACIMIENTO, params.nacimiento);
+            colaborador.set(CONSTANTS.SEXO, params.sexo);
+            colaborador.set(CONSTANTS.CORREO, params.correo);
+            colaborador.set(CONSTANTS.TELEFONO, params.telefono);
+            colaborador.set(CONSTANTS.CONTRASENA, params.password)
+            colaborador.set(CONSTANTS.ACTIVO, true);
+            colaborador.set(CONSTANTS.IDROL, params.idRol);
+
+            try {
+                var colab = await colaborador.save();
+                return resultsRegistrarColaborador(colab, null);
+
+            } catch(error) {
+                return resultsRegistrarColaborador(null, error.message);
+            }
+            
+        } catch(errorT) {
+            return resultsRegistrarColaborador(null, errorT.message);
+        }
+
+    } catch(errorC) {
+        return resultsRegistrarColaborador(null, errorC.message);
     }
 }
