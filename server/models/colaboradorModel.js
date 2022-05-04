@@ -21,7 +21,6 @@ exports.obtenerTodos = async() => {
     }
 }
 
-
 function resultsRegistrarColaborador(colab, error){
     return {
         colaborador: colab,
@@ -82,13 +81,54 @@ exports.registrarColaborador = async(params) => {
     }
 }
 
-exports.iniciarSesionColaborador = async(params) => {    
-    //console.log(params.correo);
+exports.obtenerRolColaborador = async() => {
+    const queryObtenerRol = new Parse.Query(CONSTANTS.ROL);
+    queryObtenerRol.equalTo("objectId", objectId);
+    try{
+        const datosColab = await queryObtenerRol.find();
+        for(let i=0; i<datosColab.length; i++){
+            rolColab = datosColab[i].get(CONSTANTS.NOMBRE);
+        }
+        return rolColab;
+    } catch (error) {
+        // Show the error message somewhere and let the user try again.
+        return error.message;
+    }
+}
+
+exports.iniciarSesionColaborador = async(params, idRolColab, rol) => {    
     try {
         const colab = await Parse.User.logIn(params.correo, params.password);
-        return {
-            colaboradores: colab,
-            error: null
+
+        const queryObtenerColaborador = new Parse.Query(Parse.User);
+        queryObtenerColaborador.equalTo(CONSTANTS.CORREO, params.correo);
+
+        try{
+            const datosColab = await queryObtenerColaborador.first();
+            idRolColab = datosColab.get(CONSTANTS.IDROL);
+            console.log(idRolColab);
+
+            const queryObtenerRolColab = new Parse.Query(CONSTANTS.ROL);
+            queryObtenerRolColab.equalTo("objectId", idRolColab);
+    
+            try{
+                const rolColab = await queryObtenerRolColab.first();
+                rol = rolColab.get(CONSTANTS.NOMBRE);
+                console.log(rol);
+
+                return {
+                    colaboradores: rol,
+                    error: null
+                }
+    
+            } catch (error) {
+                // Show the error message somewhere and let the user try again.
+                return error.message;
+            }
+
+        } catch (error) {
+            // Show the error message somewhere and let the user try again.
+            return error.message;
         }
     } catch (error) {
         // Show the error message somewhere and let the user try again.

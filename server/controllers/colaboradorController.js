@@ -54,7 +54,7 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
             });
         }
         response.status(200).send( {
-            colaborador: results.colaborador,
+            colaborador: results,
             message: "Inicio de Sesion exitoso!!"
         });
         
