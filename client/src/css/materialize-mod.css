@@ -9356,3 +9356,32 @@ thead {
 .no-border {
   border:none;
 }
+
+.detalles-lista {
+  display: contents;
+}
+
+.negrita-grande {
+  font-weight: bold;
+  font-size:x-large;
+  line-height: 40px;
+}
+
+.negrita-pequeno {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.light-pequeno {
+  font-weight: lighter;
+  font-size: medium;
+}
+
+.identificacion-usuario {
+  border-right: 1px solid #B9B9B9;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: left;
+  height: 130px;
+}
