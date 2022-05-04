@@ -12,7 +12,7 @@
             "APP_NAME": "NefroWeb Server DEV",
             "PORT": 6535,
             "NODE_ENV": "development",
-            "DATABASE_URI": "mongodb://127.0.0.1:27017/nefrowebDEV",
+            "DATABASE_URI": "mongodb://localhost:27017/nefrowebDEV",
             "APP_ID": "app_id",
             "MASTER_KEY": "master_key",
             "SECRET_KEY_USERS": "secret_key",
