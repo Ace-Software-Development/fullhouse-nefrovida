@@ -1,25 +1,11 @@
 // Datos de ejemplo
-import ContenidoTablaPx from "./ContenidoTablaPx";
-const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Hombre"}, {rol: "Dueño de pepe"}, {telefono:"4641063915"}, {detalle:"http://store.steampowered.com/"},
-             {nombre: "Andrea"}, {materno: "Pineapple"}, {paterno: "Pen"}, {sexo:"Mujer"}, {rol: "La PPAP"}, {telefono: "4425672356"}, {detalle:"http://www.youtube.com/"},
-             {nombre: "David"}, {materno: "Guz"}, {paterno: "Lolero"}, {sexo:"Hombre"}, {rol: "El Lolero"}, {telefono:"5674447535"}, {detalle:"http://lan.leagueoflegends.com/"},
-             {nombre: "Feli"}, {materno: "Pollos"}, {paterno: "Feliz"}, {sexo: "Hombre"}, {rol: "El Felipollos"}, {telefono: "9311901105"}, {detalle:"https://pollofelizslp.com/"}
-            ]
+import FilaTablaPaciente from "./FilaTablaPaciente";
 
-const Tabla = (datos) => {
-  
-  
+const Tabla = ({ datos }) => {
 
-  const tableContent = datos.datos.map((paciente)=>(
-  <ContenidoTablaPx paciente= {paciente} />
-    
-
-  )
-
-
-
-
-  )
+  const tableContent = datos.map((paciente)=>(
+    <FilaTablaPaciente paciente= { paciente } />
+  ))
 
   return(
     <>
@@ -44,7 +30,7 @@ const Tabla = (datos) => {
           </thead>
 
         
-          {tableContent}
+          { tableContent }
         </table>
       </div>  
       <br  />

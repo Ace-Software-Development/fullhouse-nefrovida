@@ -36,7 +36,6 @@ module.exports.consultarPacientes = async(request, response) => {
 
 module.exports.consutarDetallePaciente = async(request, response) => {
     let curp = request.body.data.curp
-    console.log(request.body.data.curp)
     pacienteModel.buscarPorCurp(curp)
     .then (function (results) {
         if (results.error) {

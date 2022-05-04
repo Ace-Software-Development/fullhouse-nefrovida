@@ -1,9 +1,9 @@
 // Datos de ejemplo
-import ContenidoTablaPx from "./FilaTablaPaciente";
-const Tabla = ({datos}) => {
+import FilaTablaPaciente from "./FilaTablaPaciente";
+const Tabla = ({ datos }) => {
 
   const tableContent = datos.map((paciente) =>(
-    <ContenidoTablaPx paciente= {paciente} />
+    <FilaTablaPaciente paciente= { paciente } />
   ))
 
   return(
@@ -27,7 +27,7 @@ const Tabla = ({datos}) => {
                 </th>
             </tr>
           </thead>
-          {tableContent}
+          { tableContent }
         </table>
       </div>  
       <br/>

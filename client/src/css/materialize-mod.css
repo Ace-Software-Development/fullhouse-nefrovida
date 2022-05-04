@@ -9355,3 +9355,10 @@ thead {
   font-weight: lighter;
   font-size: medium;
 }
+
+.input-pequeno{
+  width: 100px !important;
+  height: 22px !important;
+  margin-top: 3px !important;
+  margin-right: 5px !important;
+}

@@ -1,11 +1,14 @@
 import Navbar from '../components/Navbar';
+import Sidenav from '../components/Sidenav'
 import Main from '../components/Main'
 import ConsultarPacientes from './ConsultarPacientes'
 
 function Home() {
     return (
         <div>
-            <Navbar/>
+            <Navbar>
+                <Sidenav/>
+            </Navbar>
             <Main>
             <ConsultarPacientes/>
             </Main>

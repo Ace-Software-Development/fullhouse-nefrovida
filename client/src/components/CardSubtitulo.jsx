@@ -1,9 +1,13 @@
-const Cardsubtitulo = ({ subtitulo }) => {
+import Input from './Input'
+
+const CardSubtitulo = ({ subtitulo, children}) => {
   return (
     <div className="card-subtitulo"  >
-    {subtitulo}
+      { children 
+        ? <div> { subtitulo } { children } </div> 
+        : <div> { subtitulo } </div> }
     </div>
   )
 }
 
-export default Cardsubtitulo
+export default CardSubtitulo

@@ -1,5 +1,6 @@
 import React from 'react';
 import "./css/materialize-mod.css";
+import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'

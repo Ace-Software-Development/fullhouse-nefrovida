@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 
 
-const ContenidoTablaPx = ({paciente}) => {
+const FilaTablaPaciente = ({ paciente }) => {
   paciente = paciente;
   const route = "/" + paciente.curp
 
@@ -10,25 +10,25 @@ const ContenidoTablaPx = ({paciente}) => {
       <tr  >
         <td className="tabla-padding"  >
           <a href="http://www.google.com"  >
-            {paciente.nombre} {paciente.materno} {paciente.paterno}
+            { paciente.nombre } { paciente.apellidoMaterno } { paciente.apellidoPaterno }
           </a>
           <br/>
           <g className="tabla-sexo"  >
-            {paciente.sexo}
+            { paciente.sexo }
           </g>
         </td>
         <td  >
           <a href="http://www.google.com"  >
-            { paciente.correo}
+            { paciente.correo }
           </a>
         </td>
         <td  >
           <a href="http://www.google.com"  >
-            { paciente.telefono}
+            { paciente.telefono }
           </a>
         </td>
         <td className="center"  >
-          <Link to = {route}  >
+          <Link to = { route }  >
             <i class="material-icons"  >
               insert_drive_file
             </i>
@@ -39,4 +39,4 @@ const ContenidoTablaPx = ({paciente}) => {
   )
 }
   
-  export default ContenidoTablaPx
+  export default FilaTablaPaciente
