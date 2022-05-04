@@ -24,6 +24,7 @@ module.exports.getRegistrarColaborador = async(request, response) => {
 
 module.exports.registrarColaborador = async(request, response) => {
     try {
+
         const results = await colaboradorModel.registrarColaborador(request.body.data);
         if (results.error) {
             return response.status(404).send( {
@@ -53,6 +54,10 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
                 message: results.error
             });
         }
+        request.session.isLoggedIn = true;
+        request.session.usuario = results.correo;
+        request.session.rol = results.rol;
+        //console.log(request.session);
         response.status(200).send( {
             colaborador: results,
             message: "Inicio de Sesion exitoso!!"
@@ -71,18 +76,18 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
         const results = await colaboradorModel.cerrarSesionColaborador(request.body.data);
         if (results.error) {
             return response.status(404).send( {
-                colaborador: null,
                 message: results.error
             });
         }
+        request.session.destroy((err) => {
+            response.redirect('/'); //Este código se ejecuta cuando la sesión se elimina.
+        });
         response.status(200).send( {
-            colaborador: results.colaborador,
             message: "Sesion Cerrada correctamente"
         });
         
     } catch(error) {
         response.status(404).send( {
-            colaborador: null,
             message: error.message
         });
     }

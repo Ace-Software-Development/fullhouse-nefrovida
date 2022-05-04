@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 // Para enviar archivos HTML como respuesta desde express
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const parseServer = require('parse-server').ParseServer;
 const {authUsuario, authRol} = require('./rbac/Authentication')
 let CONSTANTS = require("./constantsProject");
@@ -29,6 +30,12 @@ var api = new parseServer({
     appName: process.env.APP_NAME,
 });
 app.use('/parse', api);
+
+app.use(session({
+    secret: 'kñsjdnrkncllñkm', 
+    resave: false, //La sesión no se guardará en cada petición, sino sólo se guardará si algo cambió 
+    saveUninitialized: false, //Asegura que no se guarde una sesión para una petición que no lo necesita
+}));
 
 // Validar que usuario haya iniciado sesión en el sistema
 // app.use(authUsuario);

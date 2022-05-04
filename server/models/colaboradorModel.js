@@ -117,7 +117,8 @@ exports.iniciarSesionColaborador = async(params, idRolColab, rol) => {
                 console.log(rol);
 
                 return {
-                    colaboradores: rol,
+                    correo: params.correo,
+                    rol: rol,
                     error: null
                 }
     
@@ -143,13 +144,11 @@ exports.cerrarSesionColaborador = async() => {
     try {
         const colab = await Parse.User.logOut();
         return {
-            colaboradores: colab,
             error: null
         }
     } catch (error) {
         // Show the error message somewhere and let the user try again.
         return {
-            colaboradores: null,
             error: error.message
         }
     }
