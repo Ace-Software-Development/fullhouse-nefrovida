@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
+import M from "materialize-css/dist/js/materialize.min.js";
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import LineaCampos from '../components/LineaCampos';
@@ -13,6 +15,8 @@ import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 
 const RegistrarPaciente = () => {
+    const [errorSubmit, setErrorSubmit] = useState("")
+    const [isLoading, setIsLoading] = useState("")
 
     useEffect(() => {
         register('nombre', {
@@ -142,6 +146,8 @@ const RegistrarPaciente = () => {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
     async function onSubmit(data, e) {
+        setIsLoading(true)
+        setErrorSubmit("")
         data.estatura = Number(data.estatura)
         data.peso = Number(data.peso)
         data.telefono = Number(data.telefono)
@@ -150,19 +156,25 @@ const RegistrarPaciente = () => {
         console.log(data);
 
         e.preventDefault()
-        const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-        console.log(response);
-        const paciente = await response.json()
-
-        console.log("Reponse", response)
-        if(!response.ok) {
-            window.alert(paciente.message);
-            return;
+        try {
+            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
+            console.log("response", response)
+            const paciente = await response.json()
+            setIsLoading(false)
+    
+            if (!response.ok) {
+                setErrorSubmit(paciente.message)
+                return;
+            }
+            else {
+                await M.toast({ html: paciente.message });
+                window.location.href = "/"
+            }
+            console.log(paciente)
+        } catch(e) {
+            setIsLoading(false)
+            setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
         }
-        else {
-            window.alert(paciente.message);
-        }
-        console.log(paciente)
     };
 
     console.log("errores", errors)
@@ -174,7 +186,24 @@ const RegistrarPaciente = () => {
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
-                    <BtnRegresar url="/"/><br/><br/>
+                    <Link to = "/">
+                        <BtnRegresar />
+                    </Link>
+                    {
+                        isLoading &&
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    }
+                    <br/><br/>
                     <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
                             <Input 
@@ -267,7 +296,10 @@ const RegistrarPaciente = () => {
                                 elError = { errors.estatura && errors.estatura?.message }
                             />
                         </LineaCampos>
-                        <div className='red-text right'> ERROR: Este CURP ya está registrado.  </div><br/><br/>
+                        { errorSubmit 
+                            && <div> <div className='red-text right'> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
+                        }
+            
                         <BtnGuardar/>
                     </form>
                     </ContainerForm>
