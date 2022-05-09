@@ -1,16 +1,19 @@
 /**
- * Funciones de autenticación para validar si usuario ha iniciado sesión o no en el sistema.
+ * Función para validar que usuario se haya autenticado en el sistema.
 */
 function authUsuario(request, response, next) {
-    if (request.usuario == null) {
+    if (!request.session.isPopulated || (request.session.isPopulated && !request.session.usuario) ) {
         response.status(403)
         return response.send('Necesita iniciar sesión primero')
     }
     next()
 }
 
+/**
+ * Función para validar que usuario no se haya autenticado aún en el sistema.
+*/
 function noAuthUsuario(request, response, next) {
-    if (request.usuario !== null) {
+    if (request.session.isPopulated && request.session.isLoggedIn) {
         return response.send('Ya hay una sesión de usuario activa.')
     }
     next()
@@ -21,7 +24,7 @@ function noAuthUsuario(request, response, next) {
 */
 function authRol(roles) {
     return (request, response, next) => {
-        if (!roles.includes(request.usuario.rol)) {
+        if (!roles.includes(request.session.rol)) {
             response.status(401)
             return response.send('Acceso no autorizado')
         }

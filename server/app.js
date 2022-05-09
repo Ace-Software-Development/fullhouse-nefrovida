@@ -3,19 +3,29 @@ const http = require('http');
 const bodyParser = require('body-parser');
 // Para enviar archivos HTML como respuesta desde express
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+var cookieSession = require('cookie-session');
 const parseServer = require('parse-server').ParseServer;
-const {authUsuario, authRol} = require('./rbac/Authentication')
+const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication')
 let CONSTANTS = require("./constantsProject");
 
 // Middlewares
 const app = express();
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
+
+// Crear sessión en cookie del lado del cliente
+const jornadaLaboral8h = 1000 * 60 * 60 * 8;
+app.use(
+    cookieSession( {
+        name: 'session',
+        secret: 'kñsjdnrkncjjbu83jjbjs83njbb4uir3jbkjbh8hll4ñkm',
+        cookie: { 
+            maxAge: jornadaLaboral8h,
+            secure: true
+        }
+    })
+);
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
@@ -31,19 +41,17 @@ var api = new parseServer({
 });
 app.use('/parse', api);
 
-app.use(session({
-    secret: 'kñsjdnrkncllñkm', 
-    resave: false, //La sesión no se guardará en cada petición, sino sólo se guardará si algo cambió 
-    saveUninitialized: false, //Asegura que no se guarde una sesión para una petición que no lo necesita
-}));
-
-// Validar que usuario haya iniciado sesión en el sistema
-// app.use(authUsuario);
+app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
+// Validar que usuario esté autenticado
+app.use(authUsuario);
 
 const parseDashboard = require('./parse/dashboard');
-app.use(parseDashboard.url, 
-    // authRol([CONSTANTS.ROLADMIN]), 
-    parseDashboard.dashboard);
+app.use(
+    parseDashboard.url, 
+    authRol([CONSTANTS.ROLADMIN]),
+    parseDashboard.dashboard
+);
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -65,11 +73,9 @@ app.use('/home', require('./routes/home'));
 
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
-app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
-
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
-app.get('*', function(request, response){
+app.get('*', function(request, response) {
     response.status(404)
     html = "";
     html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
