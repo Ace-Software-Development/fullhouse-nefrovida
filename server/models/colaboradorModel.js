@@ -1,5 +1,6 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
+const rolModel = require('../models/rolModel');
 
 exports.obtenerTodos = async() => {
     var queryObtenerTodos = new Parse.Query(Parse.User);
@@ -17,6 +18,24 @@ exports.obtenerTodos = async() => {
         return {
             colaboradores: null,
             error: error.message
+        }
+    }
+}
+
+exports.obtenerColaborador = async(id) => {
+    const queryColab = new Parse.Query(Parse.User);
+    queryColab.equalTo(CONSTANTS.OBJECTID, id);
+
+    try {
+        var colab = await queryColab.first();
+        return {
+            colaborador: colab,
+            error: null
+        }
+    } catch(error) {
+        return {
+            colaborador: null,
+            error: error
         }
     }
 }
@@ -81,60 +100,30 @@ exports.registrarColaborador = async(params) => {
     }
 }
 
-exports.obtenerRolColaborador = async() => {
-    const queryObtenerRol = new Parse.Query(CONSTANTS.ROL);
-    queryObtenerRol.equalTo("objectId", objectId);
-    try{
-        const datosColab = await queryObtenerRol.find();
-        for(let i=0; i<datosColab.length; i++){
-            rolColab = datosColab[i].get(CONSTANTS.NOMBRE);
-        }
-        return rolColab;
-    } catch (error) {
-        // Show the error message somewhere and let the user try again.
-        return error.message;
-    }
-}
-
-exports.iniciarSesionColaborador = async(params, idRolColab, rol) => {    
+exports.iniciarSesionColaborador = async(params) => {
     try {
-        const colab = await Parse.User.logIn(params.correo, params.password);
-
-        const queryObtenerColaborador = new Parse.Query(Parse.User);
-        queryObtenerColaborador.equalTo(CONSTANTS.CORREO, params.correo);
-
-        try{
-            const datosColab = await queryObtenerColaborador.first();
-            idRolColab = datosColab.get(CONSTANTS.IDROL);
-            console.log(idRolColab);
-
-            const queryObtenerRolColab = new Parse.Query(CONSTANTS.ROL);
-            queryObtenerRolColab.equalTo("objectId", idRolColab);
-    
-            try{
-                const rolColab = await queryObtenerRolColab.first();
-                rol = rolColab.get(CONSTANTS.NOMBRE);
-                console.log(rol);
-
-                return {
-                    correo: params.correo,
-                    rol: rol,
-                    error: null
-                }
-    
-            } catch (error) {
-                // Show the error message somewhere and let the user try again.
-                return error.message;
+        const colab = await Parse.User.logIn(params.usuario, params.password);
+        const colaborador = colab.toJSON();
+        try{            
+            const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
+            const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
+            return {
+                colaborador: colaborador,
+                rol: nombreRol,
+                error: null
             }
 
-        } catch (error) {
-            // Show the error message somewhere and let the user try again.
-            return error.message;
+        } catch(error) {
+            return {
+                colaborador: colaborador,
+                rol: null,
+                error: error.message
+            }
         }
     } catch (error) {
-        // Show the error message somewhere and let the user try again.
         return {
-            colaboradores: null,
+            colaborador: null,
+            rol: null,
             error: error.message
         }
     }
