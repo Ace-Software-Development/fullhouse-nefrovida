@@ -108,35 +108,7 @@ exports.asyncBuscarPorCurp = async (curp, callback) => {
     }
 }
 
-exports.consultarPacientes = function() {
-    return new Promise( function (resolve, reject) {
-        exports.asyncConsultarPacientes(function(object, error) {
-            if (error) {
-                return resolve ({
-                    type: 'CONSULTA',
-                    data: null,
-                    error: error.message
-                })
-            }
-
-            if ( !object ) {
-                return resolve ({
-                    type: 'CONSULTA',
-                    data: null,
-                    error: 'No hay pacientes registrados actualmente'
-                })
-            }
-
-            return resolve ({
-                type: 'CONSULTA',
-                data: object,
-                error: null
-            })
-        })
-    })
-}
-
-exports.asyncConsultarPacientes = async (callback) => {
+exports.consultarPacientes = async () => {
     initializeParse()
 
     var table = Parse.Object.extend(CONSTANTS.PACIENTE)
@@ -144,9 +116,23 @@ exports.asyncConsultarPacientes = async (callback) => {
     
     try {
         var results = await query.find()
-        callback(results, null)
+
+        if (!results) {
+            return {
+                data: null,
+                error: 'No hay pacientes registrados actualmente'
+            }
+        }
+
+        return {
+            data: results,
+            error: null
+        }
     } catch (error) {
-        callback(null, error)
+        return {
+            data: null,
+            error: error.message
+        }
     }
     
 }
