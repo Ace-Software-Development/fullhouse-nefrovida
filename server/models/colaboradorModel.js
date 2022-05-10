@@ -102,7 +102,7 @@ exports.registrarColaborador = async(params) => {
 
 exports.iniciarSesionColaborador = async(params) => {
     try {
-        const colab = await Parse.User.logIn(params.usuario, params.password);
+        const colab = await Parse.User.logIn(params.username, params.password);
         const colaborador = colab.toJSON();
         try{            
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);

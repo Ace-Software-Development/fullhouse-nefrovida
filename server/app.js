@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 var cookieSession = require('cookie-session');
 const parseServer = require('parse-server').ParseServer;
+const cors = require('cors');
 const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication')
 let CONSTANTS = require("./constantsProject");
 
@@ -51,7 +52,12 @@ app.use(
     authRol([CONSTANTS.ROLADMIN]),
     parseDashboard.dashboard
 );
-
+app.use(cors());
+app.use(
+    cors({
+        origin: ["/.*localhost.*/"]
+    })
+); 
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -59,7 +65,7 @@ app.use(function(req, res, next) {
     res.header('Cross-Origin-Resource-Policy', 'same-site');
     res.header("Access-Control-Allow-Credentials", "true ");
     res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
 
     res.header('Cross-Origin-Resource-Policy', 'cross-origin');
     res.header('Cross-Origin-Embedder-Policy', 'credentialless');

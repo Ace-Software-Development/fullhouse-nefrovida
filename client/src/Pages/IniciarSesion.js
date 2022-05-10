@@ -49,24 +49,25 @@ const IniciarSesion = () => {
 
             e.preventDefault()
             try {
-            const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-            const iniciarSesion = await response.json()
-            console.log(response);
-            console.log(iniciarSesion);
-            if(!response.ok) {
-                setErrorSubmit(iniciarSesion.message);
-                return;
-            }
-            else {
-                await M.toast({ html: iniciarSesion.message });
-                window.location.href = "/"
-            }
-        } 
-        catch(e) {
-                setIsLoading(false)
-                setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
-            }
-        };
+                console.log(JSON.stringify(data));
+                const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', mode: 'cors', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
+                const iniciarSesion = await response.json()
+                console.log(response);
+                console.log(iniciarSesion);
+                if(!response.ok) {
+                    setErrorSubmit(iniciarSesion.message);
+                    return;
+                }
+                else {
+                    await M.toast({ html: iniciarSesion.message });
+                    window.location.href = "/"
+                }
+            } 
+            catch(e) {
+                    setIsLoading(false)
+                    setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
+                }
+            };
 
         console.log("errores", errors)
 

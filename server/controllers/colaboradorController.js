@@ -46,7 +46,10 @@ module.exports.registrarColaborador = async(request, response) => {
 
 module.exports.iniciarSesionColaborador = async(request, response) => {
     try {
-        const results = await colaboradorModel.iniciarSesionColaborador(request.body.data);
+        console.log(request);
+        console.log(request.body);
+        console.log(request.body.data);
+        const results = await colaboradorModel.iniciarSesionColaborador(request.body);
         if (results.error) {
             return response.status(404).send( {
                 colaborador: null,
@@ -73,7 +76,9 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
 
 module.exports.cerrarSesionColaborador = async(request, response) => {
     try {
-        const results = await colaboradorModel.cerrarSesionColaborador(request.body.data);
+        console.log(request.body);
+        console.log(request.body.data);
+        const results = await colaboradorModel.cerrarSesionColaborador(request.body);
         if (results.error) {
             return response.status(404).send( {
                 message: results.error
