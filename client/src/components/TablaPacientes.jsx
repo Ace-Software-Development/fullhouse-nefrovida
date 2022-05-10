@@ -1,9 +1,9 @@
 // Datos de ejemplo
-import FilaTablaPaciente from "./FilaTablaPaciente";
+import FilaTablaPaciente from './FilaTablaPaciente';
 const Tabla = ({ datos }) => {
 
-  const tableContent = datos.map((paciente) =>(
-    <FilaTablaPaciente paciente= { paciente } />
+  const tableContent = datos.map((paciente, index) =>(
+    <FilaTablaPaciente key = { index } paciente = { paciente } />
   ))
 
   return(

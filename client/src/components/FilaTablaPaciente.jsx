@@ -10,7 +10,7 @@ const FilaTablaPaciente = ({ paciente }) => {
       <tr  >
         <td className="tabla-padding"  >
           <a href="http://www.google.com"  >
-            { paciente.nombre } { paciente.apellidoMaterno } { paciente.apellidoPaterno }
+            { paciente.nombre } { paciente.apellidoPaterno } { paciente.apellidoMaterno }
           </a>
           <br/>
           <g className="tabla-sexo"  >

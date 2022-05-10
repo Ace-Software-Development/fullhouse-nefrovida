@@ -1,36 +1,39 @@
 import { useEffect, useState } from 'react';
-import Tabla from '../components/TablaPacientes'
-import Card from '../components/Card'
-import CardTitulo from '../components/CardTitulo'
-import CardSubtitulo from '../components/CardSubtitulo'
-import InputSearch from '../components/InputSearch'
+import Tabla from '../components/TablaPacientes';
+import Card from '../components/Card';
+import CardTitulo from '../components/CardTitulo';
+import CardSubtitulo from '../components/CardSubtitulo';
+import InputSearch from '../components/InputSearch';
 
 function ConsultarPacientes() {
-    const [isLoadind, setIsLoading] = useState(true)
-    const [pacientes, setPacientes] = useState([])
-    const [buscar, setBuscar] = useState("")
+    const [isLoadind, setIsLoading] = useState(true);
+    const [pacientes, setPacientes] = useState([]);
+    const [errorFetch, setErrorFetch] = useState('');
 
     useEffect(() => {
-        getPacientes();
+        getPacientes('');
     }, [])
 
-    async function getPacientes() {
-        const response = await fetch('http://localhost:6535/paciente', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
-        const listaPacientes = await response.json()
-        setIsLoading(false)
-        if(!response.ok) {
-            window.alert(listaPacientes.message);
-            return;
+    async function getPacientes(buscar) {
+        setErrorFetch('')
+        try {
+            const response = await fetch('http://localhost:6535/paciente/' + buscar, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            const listaPacientes = await response.json();
+            setIsLoading(false);
+            if (!response.ok) {
+                setErrorFetch(listaPacientes.message);
+                return;
+            }
+            setPacientes(listaPacientes.data.data);
+        } catch(e) {
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.')
         }
-        setPacientes(listaPacientes.data.data)
-        console.log(pacientes)
     }
 
     function handleChange(e) {
-        setBuscar(e.target.value)
+        getPacientes(e.target.value);
     }
-
-    console.log(buscar)
 
     return (
         <div>
@@ -41,11 +44,13 @@ function ConsultarPacientes() {
                     <InputSearch
                         id = "buscar"
                         label = "Buscar"
-                        value = { buscar }
                         onChange = { handleChange }
                     />
                 </CardSubtitulo>
                 { isLoadind ?  <div> Cargando... </div> : <Tabla datos= { pacientes }/>}
+                { errorFetch 
+                    && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                }
             </Card>
         </div>
     )

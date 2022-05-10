@@ -26,9 +26,6 @@ function VistaDetalle() {
         }
         setPaciente(detallePaciente.data.data)
     }
-    //const paciente= {nombre: "Quehuevos", materno: "lostuyos", paterno: "cocidos", sexo:"hHUEVOTES", rol: "La PPAP", telefono: "4425672356", detalle:"http://www.youtube.com/", correo: "ayuda@sos.com"}
-
-    //const detallesPx= <ContenidoDetallesPx paciente= {px}/>
 
     return (
         <div>
@@ -39,9 +36,6 @@ function VistaDetalle() {
                 <BtnRegresar/>
             </Link>
             <br/><br/>
-            
-
-            
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
                 { isLoading ? <div>Cargado...</div> : <ContenidoDetallesPx paciente={paciente}/>}

@@ -9,9 +9,16 @@ const ContenidoDetallesPx = ({  paciente }) => {
           <div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.curp } </div>
       </div>
       <div className="col s5 l6">
-        <div className="detalles-usuario">
-          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { `${ paciente.peso }Kg, ${ paciente.estatura }m` }</div>
-        </div>
+        {
+          paciente.peso || paciente.estatura ?
+          <div className="detalles-usuario">
+            <i className="material-icons icon-separator small c-908F98"> person </i>
+            <div className="detalles-lista left-align c-908F98 light-pequeno"> 
+              { paciente.peso ? `${ paciente.peso } kg  ` : null}  { paciente.estatura ? `${ paciente.estatura } kg  ` : null}
+            </div>
+          </div>
+          : null
+        }
         <br/>
         <div className="detalles-usuario">
           <i className="material-icons icon-separator small c-908F98"> female </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.sexo } </div>
@@ -21,9 +28,13 @@ const ContenidoDetallesPx = ({  paciente }) => {
           <i className="material-icons icon-separator small c-908F98"> cake </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.fechaNacimiento } </div>
         </div>
         <br/>
-        <div className="detalles-usuario">
-          <i className="material-icons icon-separator small c-908F98"> phone </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.telefono } </div>
-        </div>
+        {
+          paciente.telefono ?
+          <div className="detalles-usuario">
+            <i className="material-icons icon-separator small c-908F98"> phone </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.telefono } </div>
+          </div>
+          : null
+        }
       </div>
     </div>
     )
