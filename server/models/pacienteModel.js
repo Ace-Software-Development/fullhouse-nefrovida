@@ -80,9 +80,10 @@ exports.buscarPorCurp = function (curp) {
                 return resolve({
                     type: 'CONSULTA',
                     data: null,
-                    error: 'El objeto fue eliminado anteriormente.'
+                    error: 'El paciente fue eliminado anteriormente.'
                 })
             }
+
             return resolve({
                 type: 'CONSULTA',
                 data: object,
@@ -95,13 +96,12 @@ exports.buscarPorCurp = function (curp) {
 exports.asyncBuscarPorCurp = async (curp, callback) => {
     initializeParse()
     
-    var Table = Parse.Object.extend('Paciente')
-    var query = new Parse.Query(Table)
+    var table = Parse.Object.extend('Paciente')
+    var query = new Parse.Query(table)
     query.equalTo("curp", curp)
 
     try {
         var results = await query.first()
-
         callback(results, null)
     } catch (error) {
         callback(null, error)
@@ -149,4 +149,54 @@ exports.asyncConsultarPacientes = async (callback) => {
         callback(null, error)
     }
     
+}
+
+exports.buscarPorNombre = async(nombre) => {
+    initializeParse();
+
+    nombre = nombre.toLowerCase();
+    const palabras = nombre.split(' ');
+
+    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    var query = new Parse.Query(table);
+
+    try {
+        var pacientes = await query.find();
+        var results = []
+
+        var json_res = JSON.parse(JSON.stringify(pacientes));
+
+        for (let i = 0; i < json_res.length; i++){
+            var nombreCompleto = json_res[i].nombre + " " + json_res[i].apellidoPaterno + " ";
+
+            if (json_res[i].apellidoMaterno) {
+                nombreCompleto += json_res[i].apellidoMaterno
+            }
+
+            nombreCompleto = nombreCompleto.toLowerCase();
+            
+            let includes = true;
+            for (let j = 0; j < palabras.length; j++) {
+                if (!nombreCompleto.includes(palabras[j])) {
+                    includes = false;
+                }
+            }
+            if (includes) {
+                results.push(json_res[i]);
+            }
+            results.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+        }
+
+        return {
+            data: results,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            data: null,
+            error: error.message
+        }
+    }
+
 }

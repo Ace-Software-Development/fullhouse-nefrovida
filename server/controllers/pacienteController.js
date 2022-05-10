@@ -52,3 +52,28 @@ module.exports.consutarDetallePaciente = async(request, response) => {
         })
     })
 }
+
+module.exports.consultarPorNombre = async(request, response) => {
+    try {
+        let nombre = request.params.nombre;
+        const results = await pacienteModel.buscarPorNombre(nombre)
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: "Error. " + results.error
+            })
+        }
+        response.status(200).send({
+            status: 'success',
+            data: results,
+            message: "Paciente obtenido exitosamente"
+        })
+    } catch(error) {
+        response.status(200).send({
+            status: 'success',
+            data: results,
+            message: "Paciente obtenido exitosamente"
+        })
+    }
+}
