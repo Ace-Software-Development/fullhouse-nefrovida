@@ -2,7 +2,6 @@ import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom'
 import Main from '../components/Main'
 import BtnEditRegis from '../components/BtnEditRegis'
-import FormColaborador from './FormColaborador'
 
 function Home() {
     return (
@@ -15,7 +14,6 @@ function Home() {
             </Link>
             <br></br>
             <br></br>
-            <FormColaborador/>
             </Main>
         </div>
     )
