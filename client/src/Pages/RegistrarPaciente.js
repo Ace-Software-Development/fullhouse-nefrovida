@@ -15,8 +15,8 @@ import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 
 const RegistrarPaciente = () => {
-    const [errorSubmit, setErrorSubmit] = useState("")
-    const [isLoading, setIsLoading] = useState("")
+    const [errorSubmit, setErrorSubmit] = useState("");
+    const [isLoading, setIsLoading] = useState("");
 
     useEffect(() => {
         register('nombre', {
@@ -140,44 +140,39 @@ const RegistrarPaciente = () => {
 
 
     const handleChange = (e) => {
-        setValue(e.target.name, e.target.value)
+        setValue(e.target.name, e.target.value);
     }
 
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
     async function onSubmit(data, e) {
-        setIsLoading(true)
-        setErrorSubmit("")
-        data.estatura = Number(data.estatura)
-        data.peso = Number(data.peso)
-        data.telefono = Number(data.telefono)
-        data.fechaNacimiento = String(data.fechaNacimiento)
-
-        console.log(data);
+        setIsLoading(true);
+        setErrorSubmit("");
+        data.estatura = Number(data.estatura);
+        data.peso = Number(data.peso);
+        data.telefono = Number(data.telefono);
+        data.fechaNacimiento = String(data.fechaNacimiento);
 
         e.preventDefault()
         try {
-            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-            console.log("response", response)
-            const paciente = await response.json()
-            setIsLoading(false)
+            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} });
+            const paciente = await response.json();
+            setIsLoading(false);
     
             if (!response.ok) {
-                setErrorSubmit(paciente.message)
+                setErrorSubmit(paciente.message);
                 return;
             }
             else {
+                window.location.href = "/";
                 await M.toast({ html: paciente.message });
-                window.location.href = "/"
             }
-            console.log(paciente)
         } catch(e) {
-            setIsLoading(false)
-            setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
+            setIsLoading(false);
+            setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
         }
     };
 
-    console.log("errores", errors)
     return(
         <div>
             <Navbar/>
