@@ -1,7 +1,7 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
 
-const Paciente = Parse.Object.extend('Paciente');
+const Paciente = Parse.Object.extend(CONSTANTS.PACIENTE);
 
 function resultsPaciente(data, error) {
     return {
@@ -20,21 +20,21 @@ exports.registrarPaciente = async(data) => {
 
         const paciente = new Paciente();
 
-        paciente.set('curp', data.curp);
-        paciente.set('nombre', data.nombre);
-        paciente.set('apellidoPaterno', data.apellidoPaterno);
-        paciente.set('apellidoMaterno', data.apellidoMaterno);
-        paciente.set('fechaNacimiento', data.fechaNacimiento);
-        paciente.set('correo', data.correo);
-        paciente.set('sexo', data.sexo);
-        paciente.set('estatura', data.estatura);
-        paciente.set('peso', data.peso);
-        paciente.set('telefono', data.telefono);
-        paciente.set('activo', true);
+        paciente.set(CONSTANTS.CURP, data.curp);
+        paciente.set(CONSTANTS.NOMBRE, data.nombre);
+        paciente.set(CONSTANTS.APELLIDOPATERNO, data.apellidoPaterno);
+        paciente.set(CONSTANTS.APELLIDOMATERNO, data.apellidoMaterno);
+        paciente.set(CONSTANTS.FECHANACIMIENTO, data.fechaNacimiento);
+        paciente.set(CONSTANTS.CORREO, data.correo);
+        paciente.set(CONSTANTS.SEXO, data.sexo);
+        paciente.set(CONSTANTS.ESTATURA, data.estatura);
+        paciente.set(CONSTANTS.PESO, data.peso);
+        paciente.set(CONSTANTS.TELEFONO, data.telefono);
+        paciente.set(CONSTANTS.ACTIVO, true);
 
         try {
             const results = await paciente.save()
-            return resultsPaciente(paciente, null);
+            return resultsPaciente(results, null);
         } catch (error) {
             return resultsPaciente(null, error.message);
 
