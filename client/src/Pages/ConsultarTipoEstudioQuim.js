@@ -12,7 +12,7 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar'
 import ParametroTipoEstudio from '../components/ParametroTipoEstudio';
 
-export default function ConsultarTipoEstudioAdmin() {
+export default function ConsultarTipoEstudioQuim() {
 
     const [formulario, handleChange, reset, errors] = useLogin({
         username: '',
@@ -73,9 +73,7 @@ export default function ConsultarTipoEstudioAdmin() {
                         <div className='identificacion-registrar'/>
                         <br/>
                         
-                        <br></br>
-                        <BtnEliminar texto='Eliminar estudio' posicion='right'/>
-                        <BtnEditRegis icono='create' texto='Editar estudio'/>              
+                        <br></br>           
                         </form>
                     </ContainerForm>
                 </Card>

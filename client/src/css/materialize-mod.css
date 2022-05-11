@@ -9392,6 +9392,19 @@ thead {
   font-size: medium;
 }
 
+.espacio-3vw {
+  font-weight: bold;
+  font-size: 42px;
+  line-height: 40px;
+  word-spacing: 0.30em;
+}
+
+.espacio-pequeno {
+  font-weight: lighter;
+  font-size: medium;
+  word-spacing: 2.2em;
+}
+
 .identificacion-usuario {
   border-right: 1px solid #B9B9B9;
   display: flex;
@@ -9436,3 +9449,4 @@ thead {
 .espacio-vertical {
   line-height: 20px;
 }
+
