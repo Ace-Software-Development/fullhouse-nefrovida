@@ -3,6 +3,9 @@ let CONSTANTS = require("../constantsProject");
 
 const Paciente = Parse.Object.extend(CONSTANTS.PACIENTE);
 
+/**
+ * Función auxiliar para retornar los datos y el error.
+ */
 function resultsPaciente(data, error) {
     return {
         data: data,
@@ -10,6 +13,10 @@ function resultsPaciente(data, error) {
     }
 }
 
+/**
+ * asyncRegistrarPaciente Función asíncrona para registrar un nuevo paciente, 
+ * recibe los datos del paciente a guardar.
+ */
 exports.registrarPaciente = async(data) => {
     
     try {
@@ -45,6 +52,11 @@ exports.registrarPaciente = async(data) => {
     }
 }
 
+/**
+ * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por curp. 
+ * Recibe la curp del paciente y regresa el objeto del paciente en caso de encontrarlo
+ * o un error si no existe un paciente con este nombre
+ */
 exports.buscarPorCurp = async (curp) => {
     
     var Table = Parse.Object.extend('Paciente');
