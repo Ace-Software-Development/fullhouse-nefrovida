@@ -17,8 +17,19 @@ import { useForm } from 'react-hook-form';
 const RegistrarPaciente = () => {
     const [errorSubmit, setErrorSubmit] = useState("");
     const [isLoading, setIsLoading] = useState("");
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
+    /**
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+     */
     useEffect(() => {
+        validation();
+    }, []);
+
+    /**
+     * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
+     */
+    function validation() {
         register('nombre', {
             required: {
                 value: true,
@@ -136,38 +147,53 @@ const RegistrarPaciente = () => {
                 message: "¿La estatura es correcta? 😐"
             }
         });
-    }, []);
+    }
 
-
+    /**
+     * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
+     * @param {event} e - Evento del cambio
+     */
     const handleChange = (e) => {
         setValue(e.target.name, e.target.value);
     }
 
-    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-
+    /**
+     * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
+     * base de datos haciendo un fetch a la ruta de back.
+     * @param {object} data - Datos del paciente en el formulario 
+     * @param {evento} e - Evento para submit
+     * @returns 
+     */
     async function onSubmit(data, e) {
+        // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
         setIsLoading(true);
         setErrorSubmit("");
+        // Cambiar los valores necesarios de string a número.
         data.estatura = Number(data.estatura);
         data.peso = Number(data.peso);
         data.telefono = Number(data.telefono);
         data.fechaNacimiento = String(data.fechaNacimiento);
 
         e.preventDefault()
+
         try {
+            // Hacer fetch a la ruta de back, enviando la información del formulario.
             const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} });
             const paciente = await response.json();
             setIsLoading(false);
     
+            // Mostrar error en caso de ser necesario
             if (!response.ok) {
                 setErrorSubmit(paciente.message);
                 return;
             }
+            // Mostrar mensaje de éxito y redireccionar a la página principal
             else {
                 window.location.href = "/";
                 await M.toast({ html: paciente.message });
             }
         } catch(e) {
+            // Mostrar mensaje de error en la conexión con la base de datos.
             setIsLoading(false);
             setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
         }

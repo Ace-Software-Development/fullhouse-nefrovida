@@ -13,9 +13,6 @@ function Home() {
             <Link to = "/paciente">
                 <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
             </Link>
-            <br></br>
-            <br></br>
-            <FormColaborador/>
             </Main>
         </div>
     )

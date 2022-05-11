@@ -1,5 +1,12 @@
 const pacienteModel = require('../models/pacienteModel')
 
+/**
+ * asyncCrearPaciente Función asíncrona para registrar un nuevo paciente, 
+ * llama a la función registrarPaciente en el modelo de paciente.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
 module.exports.crearPaciente = async(request, response) => {
     try {
         const results = await pacienteModel.registrarPaciente(request.body);

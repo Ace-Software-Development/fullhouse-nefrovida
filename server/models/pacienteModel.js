@@ -5,6 +5,9 @@ const Paciente = Parse.Object.extend(CONSTANTS.PACIENTE);
 
 /**
  * Función auxiliar para retornar los datos y el error.
+ * @param {Object} data - Datos a retornar
+ * @param {string} error - Mensaje de error en caso de existir
+ * @returns 
  */
 function resultsPaciente(data, error) {
     return {
@@ -16,6 +19,8 @@ function resultsPaciente(data, error) {
 /**
  * asyncRegistrarPaciente Función asíncrona para registrar un nuevo paciente, 
  * recibe los datos del paciente a guardar.
+ * @param {object} data - Objeto que contenga la información del nuevo paciente
+ * @returns Información del nuevo paciente o un error en caso de existir.
  */
 exports.registrarPaciente = async(data) => {
     
@@ -53,22 +58,22 @@ exports.registrarPaciente = async(data) => {
 }
 
 /**
- * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por curp. 
- * Recibe la curp del paciente y regresa el objeto del paciente en caso de encontrarlo
- * o un error si no existe un paciente con este nombre
+ * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por su curp. 
+ * @param {string} curp - Curp del paciente a buscar
+ * @returns Información del paciente en caso de encontrarlo o un error en caso de no existir.
  */
 exports.buscarPorCurp = async (curp) => {
     
-    var Table = Parse.Object.extend('Paciente');
+    var Table = Parse.Object.extend(CONSTANTS.PACIENTE);
     var query = new Parse.Query(Table);
-    query.equalTo('curp', curp);
+    query.equalTo(CONSTANTS.CURP, curp);
 
     try {
         var results = await query.first();
         if ( !results ) {
             return resultsPaciente(null, 'No se encontró un paciente con ese CURP');
         }
-        if ( !results.get('activo')) {
+        if ( !results.get(CONSTANTS.ACTIVO)) {
             return resultsPaciente(null, 'El objeto fue eliminado anteriormente.');
         }
         return resultsPaciente(results, null);
