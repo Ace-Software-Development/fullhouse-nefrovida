@@ -9372,8 +9372,18 @@ thead {
   line-height: 40px;
 }
 
+.negrita-3vw {
+  font-weight: bold;
+  font-size:2.7vw;
+  line-height: 40px;
+}
+
 .negrita-pequeno {
   font-weight: bold;
+  font-size: medium;
+}
+
+.sn-pequeno {
   font-size: medium;
 }
 
@@ -9390,6 +9400,12 @@ thead {
   height: 130px;
 }
 
+.identificacion-prueba {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
 .identificacion-registrar {
   border-bottom: 1px solid #B9B9B9;
   display: flex;
@@ -9399,6 +9415,22 @@ thead {
 
 .c-2E7EC8 {
   color: #2E7EC8;
+}
+
+.c-908F98 {
+  color: #908F98;
+}
+
+.c-64646A {
+  color: #64646A;
+}
+
+.c-393939 {
+  color: #393939;
+}
+
+.c-000000 {
+  color: #000000;
 }
 
 .espacio-vertical {
