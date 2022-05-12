@@ -1,3 +1,14 @@
+/**
+ * Registrar paciente:
+ * Esta vista se utiliza para el trabajador social con la finalidad de registrar a un paciente. 
+ * Se trata de un formulario con ciertos campos obligatorios.
+ * 
+ * Para la verificación en el front para los formularios utilizamos useEffect, useState y 
+ * useForm de react-hook-form.
+ * 
+ * Para capturar los datos y mandarlos al onSubmit() también utilizamos useState, así como una
+ * petición de tipo POST al servidor que se ejecuta al mismo tiempo que esta app web.
+ */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -30,6 +41,8 @@ const RegistrarPaciente = () => {
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
      */
     function validation() {
+        
+        // Variable para el nombre, requerido, con patrón.
         register('nombre', {
             required: {
                 value: true,
@@ -40,6 +53,8 @@ const RegistrarPaciente = () => {
                 message: "Nombre inválido"
             }
         });
+
+        // Variable para el apellido, requerido, con patrón.
         register('apellidoPaterno', {
             required: {
                 value: true,
@@ -50,6 +65,8 @@ const RegistrarPaciente = () => {
                 message: "Nombre inválido"
             }
         });
+
+        // Variable para el apellido materno, no requerido, con patrón.
         register('apellidoMaterno', {
             required: {
                 value: false,
@@ -60,6 +77,8 @@ const RegistrarPaciente = () => {
                 message: "Nombre inválido"
             }
         });
+
+        // Variable para la fecha de nacimiento, requerida, con patrón.
         register('fechaNacimiento', {
             required: {
                 value: true,
@@ -70,12 +89,16 @@ const RegistrarPaciente = () => {
                 message: "Fecha Inválida"
             }
         });
+
+        // Variable para el sexo, requerido.
         register('sexo', {
             required: {
                 value: true,
                 message: "El sexo es requerido"
             }
         });
+
+        // Variable para el teléfono, no requerido y con longitud fija.
         register('telefono', {
             required: {
                 value: false,
@@ -90,6 +113,8 @@ const RegistrarPaciente = () => {
                 message: "El teléfono debe tener 10 digitos"
             },
         });
+
+        // Variable para el correo, requerido y con patrón.
         register('correo', {
             required: {
                 value: true,
@@ -100,6 +125,8 @@ const RegistrarPaciente = () => {
                 message: "Correo inválido"
             }
         });
+
+        // Variable para el curp, requerido y con patrón.
         register('curp', {
             required: {
                 value: true,
@@ -118,6 +145,8 @@ const RegistrarPaciente = () => {
                 message: "CURP inválido"
             }
         });
+
+        // Variable para el peso, no requerido, con limites humanos.
         register('peso', {
             required: {
                 value: false,
@@ -132,6 +161,8 @@ const RegistrarPaciente = () => {
                 message: "¿El peso es correcto? 😐"
             }
         });
+
+        // Variable para el peso, no requerido, con limites humanos.
         register('estatura', {
             required: {
                 value: false,
@@ -146,6 +177,7 @@ const RegistrarPaciente = () => {
                 value: 65,
                 message: "¿La estatura es correcta? 😐"
             }
+
         });
     }
 
