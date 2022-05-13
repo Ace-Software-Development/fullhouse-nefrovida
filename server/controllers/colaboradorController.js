@@ -46,9 +46,6 @@ module.exports.registrarColaborador = async(request, response) => {
 
 module.exports.iniciarSesionColaborador = async(request, response) => {
     try {
-        console.log(request);
-        console.log(request.body);
-        console.log(request.body.data);
         const results = await colaboradorModel.iniciarSesionColaborador(request.body);
         if (results.error) {
             return response.status(404).send( {
@@ -63,28 +60,27 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
         
         return response.status(200).send( {
             colaborador: results.colaborador,
-            message: "Inicio de Sesion exitoso!!"
+            message: "Inicio de Sesion exitoso!!",
+            rol: request.session.rol
         });
         
     } catch(error) {
         return response.status(404).send( {
             colaborador: null,
-            message: error.message
+            message: error.message,
+            rol: null
         });
     }
 }
 
 module.exports.cerrarSesionColaborador = async(request, response) => {
     try {
-        console.log(request.body);
-        console.log(request.body.data);
         const results = await colaboradorModel.cerrarSesionColaborador(request.body);
         if (results.error) {
             return response.status(404).send( {
                 message: results.error
             });
         }
-
         // Destruir session
         request.session = null;
 

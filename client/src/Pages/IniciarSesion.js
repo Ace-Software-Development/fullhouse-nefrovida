@@ -10,11 +10,12 @@ import BtnIniciarSesion from '../components/BtnIniciarSesion';
 import logo from "../img/logo.png";
 import BtnRestablecer from '../components/BtnRestablecer';
 import { useForm } from 'react-hook-form';
+import { ReactSession } from 'react-client-session';
 
 const IniciarSesion = () => {
 
-    const [errorSubmit, setErrorSubmit] = useState("")
-    const [isLoading, setIsLoading] = useState("")
+    const [errorSubmit, setErrorSubmit] = useState("");
+    const [isLoading, setIsLoading] = useState("");
 
     useEffect(() => {
         register('username', {
@@ -27,6 +28,7 @@ const IniciarSesion = () => {
                 message: "Usuario o Correo inválido"
             }
         });
+
         register('password', {
             required: {
                 value: true,
@@ -36,117 +38,133 @@ const IniciarSesion = () => {
     }, []);
 
     const handleChange = (e) => {
-        setValue(e.target.name, e.target.value)
-        setErrorSubmit("")
+        setValue(e.target.name, e.target.value);
+        setErrorSubmit("");
     }
 
-    const {register, formState: {errors}, handleSubmit, setValue} = useForm();
+    const {register, formState: { errors }, handleSubmit, setValue} = useForm();
 
 
         async function onSubmit (data, e) {
-            setIsLoading(true)
-            setErrorSubmit("")
+            setIsLoading(true);
+            setErrorSubmit("");
 
-            e.preventDefault()
+            e.preventDefault();
             try {
-                console.log(JSON.stringify(data));
-                const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', mode: 'cors', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-                const iniciarSesion = await response.json()
-                console.log(response);
-                console.log(iniciarSesion);
+                const response = await fetch(
+                    'http://localhost:6535/iniciarSesion', 
+                    {
+                        method: 'POST', 
+                        mode: 'cors', 
+                        body: JSON.stringify(data), 
+                        headers: {
+                            'Content-Type': 'application/json'
+                        } 
+                    });
+
+                const iniciarSesion = await response.json();
                 if(!response.ok) {
                     setErrorSubmit(iniciarSesion.message);
                     return;
                 }
                 else {
+                    // Asignar a session rol, nombre y apellido de usuario autenticado
+                    ReactSession.set("rol", iniciarSesion.rol);
+                    ReactSession.set("nombre", iniciarSesion.colaborador.nombre);
+                    ReactSession.set("apellido", iniciarSesion.colaborador.apellidoPaterno);
                     await M.toast({ html: iniciarSesion.message });
-                    window.location.href = "/"
+                    window.location.href = "/";
                 }
             } 
             catch(e) {
-                    setIsLoading(false)
-                    setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
+                    setIsLoading(false);
+                    setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
                 }
             };
-
-        console.log("errores", errors)
 
     return(
         <div>
             <Main>
                 <br></br>
                 <a 
-                href="#!"
-                className="brand-logo"
+                    href="#!"
+                    className="brand-logo"
                 >
                     <img 
-                    height= "100px"
-                    className="logotipo" 
-                    src={logo}
-                    alr="Logotipo Nefrovida"/>
+                        height= "100px"
+                        className="logotipo" 
+                        src={logo}
+                        alr="Logotipo Nefrovida"
+                    />
                 </a>
                 
                 <Card>
-                <CardLogin titulo="Login"/>
+                <CardLogin titulo="Login" />
                     <ContainerForm>
-
-                    {
-                        isLoading &&
-                        <div class="preloader-wrapper small active">
-                            <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                            </div>
-                        </div>
-                    }
-                    <br/><br/>
-
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <LineaCampos>
-                            <div align="left">
-                            <Input
-                                id="username" 
-                                label="Usuario o Correo electrónico" 
-                                tamano="m12 s12"
-                                type="text"
-                                onChange={ handleChange }
-                                elError={ errors.username && errors.username?.message }
-                                requerido = { true }/>
+                        {
+                            isLoading &&
+                            <div class="preloader-wrapper small active">
+                                <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
                                 </div>
-                        </LineaCampos>
-                        <LineaCampos>
-                            <div align="left">
-                            <Input 
-                                id="password" 
-                                label="Contraseña" 
-                                tamano="m12 s12"
-                                type="password"
-                                onChange = { handleChange }
-                                elError = { errors.password && errors.password?.message }
-                                maxlength = "50"
-                                requerido = { true }/>
                                 </div>
-                                
-                        </LineaCampos>
-                        { errorSubmit 
-                            && <div> <div className='red-text right'> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
+                            </div>
                         }
-                        <br></br>
-                        <BtnIniciarSesion/>
-                        <br></br>
-                        <br></br>
-                        <BtnRestablecer/>
+                        <br />
+                        <br />
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <LineaCampos>
+                                <div align="left">
+                                    <Input
+                                        id="username" 
+                                        label="Usuario o Correo electrónico" 
+                                        tamano="m12 s12"
+                                        type="text"
+                                        onChange={ handleChange }
+                                        elError={ errors.username && errors.username?.message }
+                                        requerido = { true } 
+                                    />
+                                </div>
+                            </LineaCampos>
+                            <LineaCampos>
+                                <div align="left">
+                                    <Input 
+                                        id="password" 
+                                        label="Contraseña" 
+                                        tamano="m12 s12"
+                                        type="password"
+                                        onChange = { handleChange }
+                                        elError = { errors.password && errors.password?.message }
+                                        maxlength = "50"
+                                        requerido = { true }
+                                    />
+                                </div>
+                            </LineaCampos>
+                            { errorSubmit && 
+                                <div>
+                                    <div className='red-text right'>
+                                        <strong> { errorSubmit } </strong>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            }
+                            <br> </br>
+                            <BtnIniciarSesion />
+                            <br></br>
+                            <br></br>
+                            <BtnRestablecer />
                         </form>
                     </ContainerForm>
                 </Card>
             </Main>
         </div>
-        )
-    }
+    )
+}
 
 export default IniciarSesion

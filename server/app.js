@@ -12,6 +12,7 @@ let CONSTANTS = require("./constantsProject");
 // Middlewares
 const app = express();
 app.use(express.json());
+app.use(cors());
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,23 +43,6 @@ var api = new parseServer({
 });
 app.use('/parse', api);
 
-app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
-// Validar que usuario esté autenticado
-app.use(authUsuario);
-
-const parseDashboard = require('./parse/dashboard');
-app.use(
-    parseDashboard.url, 
-    authRol([CONSTANTS.ROLADMIN]),
-    parseDashboard.dashboard
-);
-app.use(cors());
-app.use(
-    cors({
-        origin: ["/.*localhost.*/"]
-    })
-); 
-
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -74,6 +58,17 @@ app.use(function(req, res, next) {
 
     next();
 });
+
+app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
+// Validar que usuario esté autenticado
+app.use(authUsuario);
+
+const parseDashboard = require('./parse/dashboard');
+app.use(
+    parseDashboard.url, 
+    authRol([CONSTANTS.ROLADMIN]),
+    parseDashboard.dashboard
+);
 
 app.use('/home', require('./routes/home'));
 

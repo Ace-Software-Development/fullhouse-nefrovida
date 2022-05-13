@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import Main from '../components/Main'
-import FormColaborador from './FormColaborador'
+import FormColaborador from './formColaborador'
+import { ReactSession } from 'react-client-session';
 
 function Home() {
     return (
@@ -8,6 +9,7 @@ function Home() {
             <Navbar/>
             <Main>
             <br/><br/>
+            <p>Bienvenido: {ReactSession.get("nombre")} {ReactSession.get("apellido")} , usted tiene rol de {ReactSession.get("rol")}</p>
             <FormColaborador/>
             </Main>
         </div>
