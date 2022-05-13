@@ -50,7 +50,8 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
         if (results.error) {
             return response.status(404).send( {
                 colaborador: null,
-                message: results.error
+                message: results.error,
+                rol: null
             });
         }
 
