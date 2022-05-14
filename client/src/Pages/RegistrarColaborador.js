@@ -1,3 +1,15 @@
+/**
+ * Registrar colaborador:
+ * Esta vista se utiliza para el admininistrador con la finalidad de registrar a un colaborador.
+ * Puede ser un Químico, Doctor, Nutriólogo, Psicólogo o un Trabajador Social. 
+ * Se trata de un formulario con ciertos campos obligatorios.
+ * 
+ * Para la verificación en el front para los formularios utilizamos useEffect, useState y 
+ * useForm de react-hook-form.
+ * 
+ * Para capturar los datos y mandarlos al onSubmit() también utilizamos useState, así como una
+ * petición de tipo POST al servidor que se ejecuta al mismo tiempo que esta app web.
+ */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -15,18 +27,25 @@ import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 
 const RegistrarColaborador = () => {
-    
     const [errorSubmit, setErrorSubmit] = useState("")
     const [isLoading, setIsLoading] = useState("")
-
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
+     /**
+      * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
+      * @param {event} e - Evento del cambio
+      */
     const handleChange = (e) => {
         setValue(e.target.name, e.target.value)
         console.log(e.target.name, e.target.value)
     }
 
+    /**
+      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+    */
     useEffect(() => {
+        
+        // Variable para el usuario, requerido, con patrón.
         register('usuario', {
             required: {
                 value: true,
@@ -38,6 +57,7 @@ const RegistrarColaborador = () => {
             }
         });
 
+        // Variable para el nombre, requerido, con patrón.
         register('nombre', {
             required: {
                 value: true,
@@ -49,6 +69,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para el apellido paterno, requerido, con patrón.
         register('apellidoPaterno', {
             required: {
                 value: true,
@@ -60,6 +81,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para el apellido materno, requerido, con patrón.
         register('apellidoMaterno', {
             required: {
                 value: false,
@@ -71,6 +93,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para la fecha de nacimiento, requerida, con patrón.
         register('fechaNacimiento', {
             required: {
                 value: true,
@@ -82,6 +105,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para el sexo, requerido.
         register('sexo', {
             required: {
                 value: true,
@@ -89,6 +113,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para el teléfono, no requerido y con longitud fija.
         register('telefono', {
             required: {
                 value: false,
@@ -104,6 +129,7 @@ const RegistrarColaborador = () => {
             },
         });
 
+        // Variable para el rol, requerido.
         register('rol', {
             required: {
                 value: true,
@@ -111,6 +137,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para el correo, requerido y con patrón.
         register('correo', {
             required: {
                 value: true,
@@ -122,6 +149,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para la contraseña, requerido.
         register('password', {
             required: {
                 value: true,
@@ -133,6 +161,7 @@ const RegistrarColaborador = () => {
             }
         });
         
+        // Variable para confirmar la contraseña, compara el valor y es requerido.
         register('confPassword', {
             required: {
                 value: true,
@@ -144,10 +173,20 @@ const RegistrarColaborador = () => {
         });
     }, []);
 
+     /**
+      * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
+      * base de datos haciendo un fetch a la ruta de back.
+      * @param {object} data - Datos del paciente en el formulario 
+      * @param {evento} e - Evento para submit
+      * @returns 
+      */
     async function onSubmit(data, e) {
+        // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
         onSubmit="document.getElementById('submit').disabled=true"
         setIsLoading(true)
         setErrorSubmit("")
+        
+        // Cambiar los valores necesarios de string a número.
         data.telefono = Number(data.telefono)
         data.fechaNacimiento = String(data.fechaNacimiento)
 
@@ -155,21 +194,26 @@ const RegistrarColaborador = () => {
 
         e.preventDefault()
         try {
+            // Hacer fetch a la ruta de back, enviando la información del formulario.
             const response = await fetch('http://localhost:6535/colaboradores', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
             console.log("response", response)
             const colaborador = await response.json()
             setIsLoading(false)
-    
+            
+            // Mostrar error en caso de ser necesario
             if (!response.ok) {
                 setErrorSubmit(colaborador.message)
                 return;
             }
+
+            // Mostrar mensaje de éxito y redireccionar a la página principal
             else {
                 await M.toast({ html: colaborador.message });
                 window.location.href = "/"
             }
             console.log(colaborador)
         } catch(e) {
+            // Mostrar mensaje de error en la conexión con la base de datos.
             setIsLoading(false)
             setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
         }
