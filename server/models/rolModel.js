@@ -3,9 +3,10 @@ let CONSTANTS = require("../constantsProject");
 const Rol = Parse.Object.extend(CONSTANTS.ROL);
 
 /**
- * asyncObtenerRol Función asíncrona que retorna rol a buscar en base de datos.
- * recibe id del rol a buscar
-*/
+ * obtenerRol Función asíncrona que retorna rol a buscar en base de datos.
+ * @param {number} id identificador del rol a buscar
+ * @returns json conteniendo el rol o mensaje de error.
+ */
 exports.obtenerRol = async(id) => {
     const queryRol = new Parse.Query(Rol);
     queryRol.equalTo(CONSTANTS.OBJECTID, id);
@@ -25,8 +26,9 @@ exports.obtenerRol = async(id) => {
 }
 
 /**
- * asyncObtenerRoles Función asíncrona que retorna lista completa de roles existentes en base de datos
-*/
+ * obtenerRoles Función asíncrona que retorna lista de roles exitentes en base de datos.
+ * @returns json con lista de roles o mensaje de error.
+ */
 exports.obtenerRoles = async() => {
     const queryRoles = new Parse.Query(Rol);
 

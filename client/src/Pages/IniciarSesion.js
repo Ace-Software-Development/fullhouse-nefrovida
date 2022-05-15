@@ -1,3 +1,19 @@
+/**
+ * Iniciar Sesión:
+ * Esta vista es la pantalla principal con la que se 
+ * encuentra un colaborador de Nefrovida para darse de 
+ * alta en el sistema. 
+ * 
+ * Antes de enviar los datos al servidor, se verifican 
+ * los datos del formulario con useEffect, useState y 
+ * useForm de react'hook'form.
+ * 
+ * Para obtener los datos ingresados se usa onSubmit y 
+ * useState previo a realizar una petición del tipo POST 
+ * al servidor para que se validen las credenciales de
+ * usuario en la base de datos y se le asignen los 
+ * permisos respectivos dentro de la aplicación.
+*/
 import { useEffect, useState } from 'react';
 import M from "materialize-css/dist/js/materialize.min.js";
 import Main from '../components/Main';
@@ -17,7 +33,11 @@ const IniciarSesion = () => {
     const [errorSubmit, setErrorSubmit] = useState("");
     const [isLoading, setIsLoading] = useState("");
 
+    /**
+     * Hook para asignar las validaciones necesarias a los campos.
+     */
     useEffect(() => {
+        // Variable para la campo de usuario, requerido con patrón.
         register('username', {
             required: {
                 value: true,
@@ -29,6 +49,7 @@ const IniciarSesion = () => {
             }
         });
 
+        // Variable para campo de contraseña, requerido.
         register('password', {
             required: {
                 value: true,
@@ -37,6 +58,10 @@ const IniciarSesion = () => {
         });
     }, []);
 
+    /**
+     * Fucnión para manejar cambios en datos ingresados al formulario.
+     * @param {event} e - Evento del cambio
+     */
     const handleChange = (e) => {
         setValue(e.target.name, e.target.value);
         setErrorSubmit("");
@@ -44,12 +69,25 @@ const IniciarSesion = () => {
 
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
 
-
+        /**
+         * Función que se ejecuta al envia formulario para
+         * validar credenciales de usuario en base de datos.
+         * 
+         * Se obtiene información del colaborador de Nefrovida y 
+         * se la almacena en una sesión dentro de una cookie.
+         * 
+         * @param {object} data - Credenciales de inicio de sesión. 
+         * @param {*} e - Evento de submit.
+         * @returns Mensaje de error en caso de haberlo o 
+         * redirección a página inicial.
+         */
         async function onSubmit (data, e) {
+            // Mostrar que se está cargando información.
             setIsLoading(true);
             setErrorSubmit("");
 
             e.preventDefault();
+            // Realizar petición al servidor enviando datos del formulario.
             try {
                 const response = await fetch(
                     'http://localhost:6535/iniciarSesion', 
@@ -61,12 +99,14 @@ const IniciarSesion = () => {
                             'Content-Type': 'application/json'
                         } 
                     });
-
+                
                 const iniciarSesion = await response.json();
+                // Si petición retornó error, desplegarlo.
                 if(!response.ok) {
                     setErrorSubmit(iniciarSesion.message);
                     return;
                 }
+                // Si petición fue correcta almacenar sesión y redirigir página principal.
                 else {
                     // Asignar a session rol, nombre y apellido de usuario autenticado
                     ReactSession.set("rol", iniciarSesion.rol);
@@ -76,6 +116,7 @@ const IniciarSesion = () => {
                     window.location.href = "/";
                 }
             } 
+            // En caso de que haya surgido un error mostrarlo.
             catch(e) {
                     setIsLoading(false);
                     setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
