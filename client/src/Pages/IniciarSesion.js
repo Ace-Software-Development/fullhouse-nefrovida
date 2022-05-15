@@ -195,10 +195,10 @@ const IniciarSesion = () => {
                                     <br />
                                 </div>
                             }
-                            <br> </br>
+                            <br />
                             <BtnIniciarSesion />
-                            <br></br>
-                            <br></br>
+                            <br />
+                            <br />
                             <BtnRestablecer />
                         </form>
                     </ContainerForm>
