@@ -2,11 +2,11 @@ import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Pages/Home';
-import IniciarSesion from './Pages/IniciarSesion';
-import RegistrarEstudio from './Pages/RegistrarEstudio';
-import ConsultarTipoEstudioAdmin from './Pages/ConsultarTipoEstudioAdmin';
-import ConsultarTipoEstudioQuim from './Pages/ConsultarTipoEstudioQuim';
+import Home from './pages/Home';
+import IniciarSesion from './pages/IniciarSesion';
+import RegistrarEstudio from './pages/RegistrarEstudio';
+import ConsultarTipoEstudioAdmin from './pages/ConsultarTipoEstudioAdmin';
+import ConsultarTipoEstudioQuim from './pages/ConsultarTipoEstudioQuim';
 
 function App() {
   return (

@@ -1,3 +1,12 @@
+/**
+ * Consultar tipo de Estudio (Quimico):
+ * En esta vista, el químico puede ver los detalles
+ * del tipo de estudio, pero, a diferencia del administrador,
+ * este no puede editar y ni eliminar el estudio. Sólo consultar
+ * lo que contiene para revisar si está lo que necesita.
+ * 
+ * Los datos llegan desde la base de datos y se muestran.
+*/
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
@@ -51,10 +60,10 @@ export default function ConsultarTipoEstudioQuim() {
                     <BtnRegresar url="/"/>
                     <br/><br/><br/><br/><br/>    
                     
-                        <div className="col s7 l6 identificacion-prueba">
+                        <div className="col s7 l6 identificacion-prueba left-align">
                             <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
-                            <div className="detalles-lista negrita-grande c-393939 left-align">Biometría Hemática</div><br/>
-                            <div className="detalles-lista negrita-pequeno c-908F98 left-align">Examen de sangre que inspecciona las células que la componen</div>
+                            <div className="detalles-lista negrita-grande c-393939 left">Biometría Hemática</div><br/>
+                            <div className="detalles-lista negrita-pequeno c-908F98 left">Examen de sangre que inspecciona las células que la componen</div>
                         </div>
                         <div className='detalles-usuario'>
                         <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">2 parámetros</div>
