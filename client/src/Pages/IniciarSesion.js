@@ -104,6 +104,7 @@ const IniciarSesion = () => {
                 // Si petición retornó error, desplegarlo.
                 if(!response.ok) {
                     setErrorSubmit(iniciarSesion.message);
+                    setIsLoading(false);
                     return;
                 }
                 // Si petición fue correcta almacenar sesión y redirigir página principal.

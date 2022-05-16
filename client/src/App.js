@@ -2,8 +2,8 @@ import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Pages/home';
-import IniciarSesion from './Pages/iniciarSesion';
+import Home from './pages/home';
+import IniciarSesion from './pages/iniciarSesion';
 import { ReactSession } from 'react-client-session';
 
 function App() {
