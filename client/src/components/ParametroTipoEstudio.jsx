@@ -1,6 +1,8 @@
 import Input from './/Input'
 
-const ParametroTipoEstudio = ({parametro="Sangre:", valorA="0", valorB="10", unidad="ml"}) => {
+// Existen valores booleanos, numericos y de strings
+
+const ParametroTipoEstudio = ({tipoValor="num", parametro="Sangre:", valorA="0", valorB="10", unidad="ml"}) => {
     return(
         <div className='col s12 l6 espacio-vertical'>
             <div align="left">
