@@ -16,6 +16,7 @@ import CardSubtitulo from '../components/CardSubtitulo';
 import InputSearch from '../components/InputSearch';
 import { Link } from 'react-router-dom';
 import BtnEditRegis from '../components/BtnEditRegis';
+import ContainerForm from '../components/ContainerForm';
 
 function ConsultarPacientes() {
     const [isLoadind, setIsLoading] = useState(true);
@@ -73,12 +74,12 @@ function ConsultarPacientes() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Pacientes"/>
+                <br/>
+                <ContainerForm>
                 <Link to = "/paciente">
-                    <br></br>
                     <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
                 </Link>
-                <br></br>
-                <br></br>
+                </ContainerForm>
                 <CardSubtitulo subtitulo= "Pacientes">
                     <InputSearch
                         id = "buscar"
