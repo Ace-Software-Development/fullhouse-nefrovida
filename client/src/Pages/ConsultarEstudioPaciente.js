@@ -9,10 +9,11 @@ import validarIniciarSesion from '../util/validators/validarIniciarSesion';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
-import BtnGuardar from '../components/BtnGuardar';
-import EntradaParametro from '../components/EntradaParametro';
+import BtnEditRegis from '../components/BtnEditRegis';
+import BtnEliminar from '../components/BtnEliminar';
+import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 
-export default function RegistrarEstudio() {
+export default function ConsultarEstudioPaciente() {
 
     const [formulario, handleChange, reset, errors] = useLogin({
         username: '',
@@ -46,15 +47,15 @@ export default function RegistrarEstudio() {
             <Main>
                 <br></br>    
                 <Card>
-                <CardTitulo icono="note_add" titulo="Registrar estudio"/>
+                <CardTitulo icono="description" titulo="Detalle del estudio"/>
                     <ContainerForm>
                     <BtnRegresar url="/"/><br/><br/>
                     
                     
                     
                         <div align="left">               
-                            <div className="detalles-lista negrita-grande c-908F98 left-align">Estudio de Química Sanguínea  </div><span className='subrayado c-2E7EC8' >  05/05/2022</span><br/>
-                            <div className="detalles-lista light-pequeno c-908F98 left-align">Estudio para tomar los datos de la química sanguínea de las personas.</div>
+                            <div className="detalles-lista negrita-grande c-64646A left-align">Estudio de Química Sanguínea  </div><span>  05/05/2022</span><br/>
+                            <div className="detalles-lista light-pequeno c-717079 left-align">Estudio para tomar los datos de la química sanguínea de las personas.</div>
                         </div>
                         <br/>
                         <div className='identificacion-registrar'/>
@@ -64,8 +65,8 @@ export default function RegistrarEstudio() {
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             
-                            <EntradaParametro></EntradaParametro>
-                            <EntradaParametro parametro='Glucosa:' unidad='mg/dL'></EntradaParametro>
+                            <ParametroEstudioPaciente></ParametroEstudioPaciente>
+                            <ParametroEstudioPaciente parametro='Glucosa:' valor="100" unidad='mg/dL'></ParametroEstudioPaciente>
                             
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
@@ -73,18 +74,15 @@ export default function RegistrarEstudio() {
                         <LineaCampos>
                             <div align="left">
                             <div className='detalles-usuario'>
-                            <i className="material-icons icon-separator small c-908F98">remove_red_eye</i><div className="detalles-lista negrita-grande c-908F98 left-align">Observaciones:</div><br/>
+                            <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
                             </div>
-                            <Input 
-                                id="observaciones" 
-                                label="Ingresa aquí la observación del estudio" 
-                                value={formulario.observaciones}
-                                onChange={handleChange}
-                                tamano="m12 s12"/>
-                                </div>
+                            <br/><br/>
+                                <div className="detalles-lista negrita-pequeno c-64646A left-align">Se realizó el estudio 2 veces para verificar los datos obtenidos.</div>
+                            </div>
                         </LineaCampos>
                         <br></br>
-                        <BtnGuardar/>              
+                        <BtnEliminar texto='Eliminar estudio' posicion='right'/>
+                        <BtnEditRegis icono='create' texto='Editar estudio'/>               
                         </form>
                     </ContainerForm>
                 </Card>
