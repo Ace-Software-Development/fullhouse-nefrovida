@@ -3,16 +3,16 @@ import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
 import LineaCampos from '../components/LineaCampos';
-import Input from '../components/Input';
 import useLogin from '../hooks/useLogin';
 import validarIniciarSesion from '../util/validators/validarIniciarSesion';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
-import BtnGuardar from '../components/BtnGuardar';
-import EntradaParametro from '../components/EntradaParametro';
+import BtnEditRegis from '../components/BtnEditRegis';
+import BtnEliminar from '../components/BtnEliminar'
+import ParametroTipoEstudio from '../components/ParametroTipoEstudio';
 
-export default function RegistrarEstudio() {
+export default function ConsultarTipoEstudio() {
 
     const [formulario, handleChange, reset, errors] = useLogin({
         username: '',
@@ -46,45 +46,36 @@ export default function RegistrarEstudio() {
             <Main>
                 <br></br>    
                 <Card>
-                <CardTitulo icono="note_add" titulo="Registrar estudio"/>
+                <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
                     <ContainerForm>
-                    <BtnRegresar url="/"/><br/><br/>
+                    <BtnRegresar url="/"/>
+                    <br/><br/><br/><br/><br/>    
                     
-                    
-                    
-                        <div align="left">               
-                            <div className="detalles-lista negrita-grande c-908F98 left-align">Estudio de Química Sanguínea  </div><span className='subrayado c-2E7EC8' >  05/05/2022</span><br/>
-                            <div className="detalles-lista light-pequeno c-908F98 left-align">Estudio para tomar los datos de la química sanguínea de las personas.</div>
+                        <div className="col s7 l6 identificacion-prueba">
+                            <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
+                            <div className="detalles-lista negrita-grande c-393939 left-align">Biometría Hemática</div><br/>
+                            <div className="detalles-lista negrita-pequeno c-908F98 left-align">Examen de sangre que inspecciona las células que la componen</div>
                         </div>
-                        <br/>
+                        <div className='detalles-usuario'>
+                        <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">2 parámetros</div>
+                        </div>
+                        <br/><br/><br/><br/>
                         <div className='identificacion-registrar'/>
                         <br/>
-
 
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             
-                            <EntradaParametro></EntradaParametro>
-                            <EntradaParametro parametro='Glucosa:' unidad='mg/dL'></EntradaParametro>
-                            
+                            <ParametroTipoEstudio></ParametroTipoEstudio>
+                            <ParametroTipoEstudio parametro='Glucosa:' valorA="0" valorB="200" unidad='mg/dL'></ParametroTipoEstudio>
+
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
                         <br/>
-                        <LineaCampos>
-                            <div align="left">
-                            <div className='detalles-usuario'>
-                            <i className="material-icons icon-separator small c-908F98">remove_red_eye</i><div className="detalles-lista negrita-grande c-908F98 left-align">Observaciones:</div><br/>
-                            </div>
-                            <Input 
-                                id="observaciones" 
-                                label="Ingresa aquí la observación del estudio" 
-                                value={formulario.observaciones}
-                                onChange={handleChange}
-                                tamano="m12 s12"/>
-                                </div>
-                        </LineaCampos>
+                        
                         <br></br>
-                        <BtnGuardar/>              
+                        <BtnEliminar texto='Eliminar estudio' posicion='right'/>
+                        <BtnEditRegis icono='create' texto='Editar estudio'/>              
                         </form>
                     </ContainerForm>
                 </Card>
