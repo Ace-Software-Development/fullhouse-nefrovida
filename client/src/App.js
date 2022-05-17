@@ -3,9 +3,9 @@ import "./css/materialize-mod.css";
 import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Pages/Home'
-import RegistrarPaciente from './Pages/RegistrarPaciente'
-import DetallePaciente from './Pages/DetallePaciente'
+import Home from './pages/Home'
+import RegistrarPaciente from './pages/RegistrarPaciente'
+import DetallePaciente from './pages/DetallePaciente'
 
 
 function App() {
