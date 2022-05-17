@@ -15,7 +15,8 @@ import CardTitulo from '../components/CardTitulo'
 import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
 import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
-function VistaDetalle() {
+
+function DetallePaciente() {
     // Se obtiene la curp de los parámetros de front
     let { curp } = useParams()
     const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +48,7 @@ function VistaDetalle() {
                 return;
             }
             // Guardar los datos en el detallePaciente para desplegarlos.
-            setPaciente(detallePaciente.data.data)
+            setPaciente(detallePaciente.data.data);
         } catch(e) {
             // Mostrar mensaje de error en la conexión con la base de datos.
             setIsLoading(false);
@@ -77,4 +78,4 @@ function VistaDetalle() {
     )
 }
 
-export default VistaDetalle;
+export default DetallePaciente;

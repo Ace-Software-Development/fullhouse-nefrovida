@@ -9247,6 +9247,7 @@ table tr:last-child td:last-child {
 }
 
 .contenedor {
+  display: inline-block;
   margin: 0 auto;
   width: 90%;
 }
@@ -9254,7 +9255,7 @@ table tr:last-child td:last-child {
 .tabla-altura {
   max-height: 552px;
   overflow-y: auto;
-  scrollbar-gutter: stable;
+  scrollbar-gutter: auto;
 }
 
 thead {
