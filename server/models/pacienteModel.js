@@ -32,10 +32,31 @@ exports.registrarPaciente = async(data) => {
 
         const paciente = new Paciente();
 
+        // Estandarizar el formato de los nombres, cada nombre debe iniciar con mayúscula y luego incluir minúsculas.
+        let nombre = data.nombre.split(' ');
+        for (let i = 0; i < nombre.length; i++) {
+            nombre[i] = nombre[i][0].toUpperCase() + nombre[i].substr(1).toLowerCase();
+        }
+        nombre = nombre.join(' ');
+
+        // Estandarizar el formato de los apellidos paternos, cada apellidos debe iniciar con mayúscula y luego incluir minúsculas.
+        let apellidoPaterno = data.apellidoPaterno.split(' ');
+        for (let i = 0; i < apellidoPaterno.length; i++) {
+            apellidoPaterno[i] = apellidoPaterno[i][0].toUpperCase() + apellidoPaterno[i].substr(1).toLowerCase();
+        }
+        apellidoPaterno = apellidoPaterno.join(' ');
+
+        // Estandarizar el formato de los apellidos maternos, cada apellidos debe iniciar con mayúscula y luego incluir minúsculas.
+        let apellidoMaterno = data.apellidoMaterno.split(' ');
+        for (let i = 0; i < apellidoMaterno.length; i++) {
+            apellidoMaterno[i] = apellidoMaterno[i][0].toUpperCase() + apellidoMaterno[i].substr(1).toLowerCase();
+        }
+        apellidoMaterno = apellidoMaterno.join(' ');
+
         paciente.set(CONSTANTS.CURP, data.curp);
-        paciente.set(CONSTANTS.NOMBRE, data.nombre);
-        paciente.set(CONSTANTS.APELLIDOPATERNO, data.apellidoPaterno);
-        paciente.set(CONSTANTS.APELLIDOMATERNO, data.apellidoMaterno);
+        paciente.set(CONSTANTS.NOMBRE, nombre);
+        paciente.set(CONSTANTS.APELLIDOPATERNO, apellidoPaterno);
+        paciente.set(CONSTANTS.APELLIDOMATERNO, apellidoMaterno);
         paciente.set(CONSTANTS.FECHANACIMIENTO, data.fechaNacimiento);
         paciente.set(CONSTANTS.CORREO, data.correo);
         paciente.set(CONSTANTS.SEXO, data.sexo);
