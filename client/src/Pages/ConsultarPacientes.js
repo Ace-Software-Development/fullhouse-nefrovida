@@ -4,6 +4,8 @@ import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import CardSubtitulo from '../components/CardSubtitulo';
 import InputSearch from '../components/InputSearch';
+import { Link } from 'react-router-dom';
+import BtnEditRegis from '../components/BtnEditRegis';
 
 function ConsultarPacientes() {
     const [isLoadind, setIsLoading] = useState(true);
@@ -40,6 +42,9 @@ function ConsultarPacientes() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Pacientes"/>
+                <Link to = "/paciente">
+                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                </Link>
                 <CardSubtitulo subtitulo= "Pacientes">
                     <InputSearch
                         id = "buscar"

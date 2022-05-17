@@ -1,7 +1,7 @@
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useEffect } from "react";
 
-const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr, handleChange}) => {
+const Select = ({requerido = false, value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr, elError, handleChange}) => {
   
   useEffect(() => {
     var elems = document.querySelectorAll('select');
@@ -16,7 +16,7 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr, 
       name={id} 
       onChange={handleChange}
     >
-      <option value="" disabled selected  >
+      <option value="" disabled>
         {label}
       </option>
       {
@@ -29,9 +29,14 @@ const Select = ({value, tamano = "s4 m2", id = "nombre", label = "Nombre", arr, 
         )
       }
     </select>
-    <label  >
-      {label}
-    </label>
+    <label for={id}  >
+        {label} { requerido 
+          ? <span className="red-text"> *</span> 
+          : null }
+      </label>
+    <span className="helper-text left red-text">
+        {elError}
+    </span>
   </div>
   )
 }
