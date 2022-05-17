@@ -102,8 +102,8 @@ export default function ConsultarTipoEstudio() {
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
                         <br/><br/>
-                        <BtnEliminar texto='Eliminar estudio' posicion='right'/>
-                        <BtnEditRegis icono='create' texto='Editar estudio'/>              
+                        {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
+                        {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
                     </form>
                 </ContainerForm>
                 </Card>
