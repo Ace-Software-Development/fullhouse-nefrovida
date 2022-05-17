@@ -104,14 +104,18 @@ exports.buscarPorCurp = async (curp) => {
     }
 }
 
+/**
+ * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
+ * @returns Todos los pacientes registrados en nefrovida
+ */
 exports.consultarPacientes = async () => {
     console.log("modelo");
 
-    var table = Parse.Object.extend(CONSTANTS.PACIENTE)
-    var query = new Parse.Query(table)
+    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    var query = new Parse.Query(table);
     
     try {
-        var results = await query.find()
+        var results = await query.find();
 
         if (!results) {
             return {
@@ -133,6 +137,11 @@ exports.consultarPacientes = async () => {
     
 }
 
+/**
+ * asyncBuscarPorNombre Función asíncrona para buscar un paciente por nombre o apellidos
+ * @param {string} nombre Nombre a buscar para ver si coincide con algún paciente.
+ * @returns Paciente(s) cuyo nombre o apellidos incluyen esa string.
+ */
 exports.buscarPorNombre = async(nombre) => {
 
     nombre = nombre.toLowerCase();
@@ -143,29 +152,37 @@ exports.buscarPorNombre = async(nombre) => {
 
     try {
         var pacientes = await query.find();
-        var results = []
+        var results = [];
 
         var json_res = JSON.parse(JSON.stringify(pacientes));
 
+        // Iterar por ccada uno de los pacientes de nefrovida
         for (let i = 0; i < json_res.length; i++){
+            // Obtener su nombre completo
             var nombreCompleto = json_res[i].nombre + " " + json_res[i].apellidoPaterno + " ";
 
             if (json_res[i].apellidoMaterno) {
-                nombreCompleto += json_res[i].apellidoMaterno
+                nombreCompleto += json_res[i].apellidoMaterno;
             }
 
+            // Pasar el nombre a minúsculas
             nombreCompleto = nombreCompleto.toLowerCase();
             
             let includes = true;
+
+            // Por cada una de las palabras recibidas ver si el nombre completo la incluye
             for (let j = 0; j < palabras.length; j++) {
                 if (!nombreCompleto.includes(palabras[j])) {
                     includes = false;
                 }
             }
+            // Si el nombre completo incluye las palabras, añadir el paciente al arreglo
             if (includes) {
                 results.push(json_res[i]);
             }
-            results.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+
+            // Ordenar alfabéticamente
+            results.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1);
         }
 
         return {

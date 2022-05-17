@@ -1,3 +1,11 @@
+/**
+ * Detalle paciente:
+ * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
+ * consultar la información de un paciente.
+ * 
+ * Para obtener los datos usamos una petición de tipo GET al servidor que se ejecuta al 
+ * en el primer rederizado, se envía el CURP del paciente en el body.
+ */
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
@@ -8,23 +16,43 @@ import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
 import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
 function VistaDetalle() {
+    // Se obtiene la curp de los parámetros de front
     let { curp } = useParams()
-    const [isLoading, setIsLoading] = useState(true)
-    const [paciente, setPaciente] = useState({})
+    const [isLoading, setIsLoading] = useState(true);
+    const [paciente, setPaciente] = useState({});
+    const [errorFetch, setErrorFetch] = useState('');
 
+    /**
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+     */
     useEffect(() => {
         getPaciente();
     }, [])
 
+    /**
+     * Función asíncrona para obtener la información del paciente.
+     * @returns 
+     */
     async function getPaciente() {
-        const response = await fetch('http://localhost:6535/paciente/detalle/' + curp, {method: 'GET', headers: {'Content-Type': 'application/json'}})
-        const detallePaciente = await response.json()
-        setIsLoading(false)
-        if(!response.ok) {
-            window.alert(detallePaciente.message);
-            return;
+        setErrorFetch('');
+        try {
+            // Fetch a la ruta de back para obtener la información, se añade la curp del paciente a buscar
+            const response = await fetch('http://localhost:6535/paciente/detalle/' + curp, {method: 'GET', headers: {'Content-Type': 'application/json'}});
+            const detallePaciente = await response.json();
+            setIsLoading(false);
+
+            // Mostrar error en caso de ser necesario
+            if(!response.ok) {
+                setErrorFetch(detallePaciente.message);
+                return;
+            }
+            // Guardar los datos en el detallePaciente para desplegarlos.
+            setPaciente(detallePaciente.data.data)
+        } catch(e) {
+            // Mostrar mensaje de error en la conexión con la base de datos.
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
-        setPaciente(detallePaciente.data.data)
     }
 
     return (
@@ -38,7 +66,11 @@ function VistaDetalle() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
-                { isLoading ? <div>Cargado...</div> : <ContenidoDetallesPx paciente={paciente}/>}
+                { isLoading && <div>Cargado...</div> }
+                { !isLoading && !errorFetch && <ContenidoDetallesPx paciente={paciente}/>}
+                { errorFetch 
+                    && <div> <br></br> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                }
             </Card>
             </Main>
         </div>
