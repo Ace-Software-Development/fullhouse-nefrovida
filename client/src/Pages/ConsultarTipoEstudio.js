@@ -50,22 +50,22 @@ export default function ConsultarTipoEstudio() {
     
     const arreglo = []
 
-    async function getTipoEstudio(id) {
-        setErrorFetch('')
-        try {
-            const response = await fetch('http://localhost:6535/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            const tipoEstudio = await response.json();
-            setIsLoading(false);
-            if (!response.ok) {
-                setErrorFetch(tipoEstudio.message);
-                return;
-            }
-            arreglo = tipoEstudio.data.data
-        } catch(e) {
-            setIsLoading(false);
-            setErrorFetch('Error de conexión. Inténtelo de nuevo.')
-        }
-    }
+    // async function getTipoEstudio(id) {
+    //     setErrorFetch('')
+    //     try {
+    //         const response = await fetch('http://localhost:6535/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    //         const tipoEstudio = await response.json();
+    //         setIsLoading(false);
+    //         if (!response.ok) {
+    //             setErrorFetch(tipoEstudio.message);
+    //             return;
+    //         }
+    //         arreglo = tipoEstudio.data.data
+    //     } catch(e) {
+    //         setIsLoading(false);
+    //         setErrorFetch('Error de conexión. Inténtelo de nuevo.')
+    //     }
+    // }
 
     return(
         <div className="row ContainerForm left-align">
