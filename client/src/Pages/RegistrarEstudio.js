@@ -53,7 +53,7 @@ export default function RegistrarEstudio() {
                     
                     
                         <div align="left">               
-                            <div className="detalles-lista negrita-grande c-908F98 left-align">Estudio de Química Sanguínea  </div><span className='subrayado c-2E7EC8' >  05/05/2022</span><br/>
+                            <div className="detalles-lista negrita-grande c-64646A left-align">Estudio de Química Sanguínea  </div><span className='subrayado c-2E7EC8' >  05/05/2022</span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">Estudio para tomar los datos de la química sanguínea de las personas.</div>
                         </div>
                         <br/>
@@ -73,7 +73,7 @@ export default function RegistrarEstudio() {
                         <LineaCampos>
                             <div align="left">
                             <div className='detalles-usuario'>
-                            <i className="material-icons icon-separator small c-908F98">remove_red_eye</i><div className="detalles-lista negrita-grande c-908F98 left-align">Observaciones:</div><br/>
+                            <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
                             </div>
                             <Input 
                                 id="observaciones" 
