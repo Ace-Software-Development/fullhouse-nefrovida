@@ -4,24 +4,28 @@ exports.consultarTipoEstudio = async( id ) => {
       descripcion: "Examen de sangre que inspecciona...",
       parametros: [
          {
+            nombre: "numero",
             parametro: "Sangre",
             minimo: 0,
             maximo: 10,
             unidad: "ml"
          },
          {
+            nombre: "numero",
             parametro: "Glucosa",
             minimo: 0,
             maximo: 200,
             unidad: "mg/dL"
          },
          {
+            nombre: "bool",
             parametro: "Parametro 3",
             minimo: 0,
             maximo: 50,
             unidad: "L"
          },
          {
+            nombre: "string",
             parametro: "Parametro 4",
             minimo: 10,
             maximo: 20,
