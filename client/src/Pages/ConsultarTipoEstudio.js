@@ -48,24 +48,27 @@ export default function ConsultarTipoEstudio() {
             console.log(iniciarSesion);
         }
     
-    const arreglo = []
+    let arreglo = []
 
-    // async function getTipoEstudio(id) {
-    //     setErrorFetch('')
-    //     try {
-    //         const response = await fetch('http://localhost:6535/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-    //         const tipoEstudio = await response.json();
-    //         setIsLoading(false);
-    //         if (!response.ok) {
-    //             setErrorFetch(tipoEstudio.message);
-    //             return;
-    //         }
-    //         arreglo = tipoEstudio.data.data
-    //     } catch(e) {
-    //         setIsLoading(false);
-    //         setErrorFetch('Error de conexión. Inténtelo de nuevo.')
-    //     }
-    // }
+    async function getTipoEstudio(id) {
+        try {
+            console.log("Estoy haciendo la peticion")
+            const response = await fetch('http://localhost:6535/consultarTipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            console.log(response)
+            const tipoEstudio = response
+            if (!response.ok) {
+                return;
+            }
+            arreglo = tipoEstudio.data.data
+            console.log(tipoEstudio)
+            console.log("Obtuve los datos!")
+        } catch(e) {
+            
+            console.log(e)
+        }
+    }
+
+    getTipoEstudio(1);
 
     return(
         <div className="row ContainerForm left-align">
@@ -96,8 +99,9 @@ export default function ConsultarTipoEstudio() {
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             
-                            <ParametroTipoEstudio></ParametroTipoEstudio>
-                            <ParametroTipoEstudio parametro='Glucosa:' valorA="0" valorB="200" unidad='mg/dL'></ParametroTipoEstudio>
+                            <ParametroTipoEstudio nombreValor = "bool" nombreParametro = "Viscoso" valorBool = {true} codigo = {"HA"}/>
+                            <ParametroTipoEstudio nombreValor = "num" nombreParametro = "Glucosa" valorA = {10} valorB = {20} unidad = {"gm/gL"} codigo = "XD"/>
+                            <ParametroTipoEstudio nombreValor = "string" nombreParametro="Color" valorString = "Amarillo" codigo = "TEST" />
 
                         </LineaCampos>
                         <div className='identificacion-registrar'/>

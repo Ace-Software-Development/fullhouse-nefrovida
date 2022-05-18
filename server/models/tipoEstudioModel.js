@@ -2,34 +2,35 @@ exports.consultarTipoEstudio = async( id ) => {
    const datos=[{
       titulo: "Biometría Hemática",
       descripcion: "Examen de sangre que inspecciona...",
+      codigo: "BH",
       parametros: [
          {
-            nombre: "numero",
-            parametro: "Sangre",
+            nombreValor: "num",
+            nombreparametro: "Sangre",
+            codigo: "SG",
             minimo: 0,
             maximo: 10,
             unidad: "ml"
          },
          {
-            nombre: "numero",
-            parametro: "Glucosa",
+            nombreValor: "num",
+            nombreParametro: "Glucosa",
+            codigo: "GL",
             minimo: 0,
             maximo: 200,
             unidad: "mg/dL"
          },
          {
-            nombre: "bool",
-            parametro: "Parametro 3",
-            minimo: 0,
-            maximo: 50,
-            unidad: "L"
+            nombreValor: "bool",
+            nombreParametro: "Nitritos",
+            codigo: "NT",
+            valorBool: true
          },
          {
-            nombre: "string",
-            parametro: "Parametro 4",
-            minimo: 10,
-            maximo: 20,
-            unidad: "shots"
+            nombreValor: "string",
+            nombreParametro: "Color",
+            codigo: "CL",
+            valorString: "Rojo"
          }
       ]
    }]
