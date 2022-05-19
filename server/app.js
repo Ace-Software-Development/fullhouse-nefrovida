@@ -58,9 +58,7 @@ app.use('/home', require('./routes/home'));
 
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
-app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
-
-app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get('*', function(request, response){
     response.status(404)

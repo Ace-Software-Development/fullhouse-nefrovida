@@ -20,5 +20,16 @@ module.exports = Object.freeze({
     ROLQUIMICO: "quimico",
     ROLDOCTOR: "doctor",
     ROLNUTRIOLOGO: "nutriologo",
-    ROLPSICOLOGO: "psicologo"
+    ROLPSICOLOGO: "psicologo",
+    // Tabla TipoEstudio
+    TIPOESTUDIO: "TipoEstudio",
+    // Tabla Parametro
+    PARAMETRO: "Parametro",
+    IDTIPOVALOR: "idTipoValor",
+    // Tabla ParametroEstudio
+    PARAMETROESTUDIO: "ParametroEstudio",
+    IDTIPOESTUDIO: "idTipoEstudio",
+    IDPARAMETRO: "idParametro",
+    // Tabla TipoValor
+    TIPOVALOR: "TipoValor",
 })
