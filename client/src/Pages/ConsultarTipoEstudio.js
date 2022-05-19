@@ -12,8 +12,6 @@ import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
 import LineaCampos from '../components/LineaCampos';
-import useLogin from '../hooks/useLogin';
-import validarIniciarSesion from '../util/validators/validarIniciarSesion';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
@@ -23,55 +21,49 @@ import ParametroTipoEstudio from '../components/ParametroTipoEstudio';
 
 export default function ConsultarTipoEstudio() {
 
-    const [formulario, handleChange, reset, errors] = useLogin({
-        username: '',
-        password: '',
-        observaciones: '',
-    }, validarIniciarSesion)
-
-        async function handleSubmit (e) {
-
-            e.preventDefault()
-            
-            const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', body: JSON.stringify({
-            "data": formulario}), headers: {'Content-Type': 'application/json'} })
-            const iniciarSesion = await response.json()
-            console.log(response);
-            console.log(iniciarSesion);
-            if(!response.ok) {
-                window.alert(iniciarSesion.message);
-                return;
-            }
-            else {
-                window.alert(iniciarSesion.message);
-            }
-            console.log(iniciarSesion);
-        }
+    const [tipoEstudio, setTipoEstudio] = useState({})
+    let tipoEstudio2 = []
     
-    let arreglo = []
 
     async function getTipoEstudio(id) {
         try {
-            console.log("Estoy haciendo la peticion")
             const response = await fetch('http://localhost:6535/tipoEstudio/1', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            console.log(response)
-            const tipoEstudio = response
+            let misDatos = await response.json();
+
+            misDatos = misDatos.data.data.data;
+
+            
+
+            misDatos = { 
+                numParametros: misDatos.length - 1,
+                ...misDatos
+            }
+            console.log("Datos de la Query:", misDatos)
             if (!response.ok) {
                 return;
             }
-            arreglo = tipoEstudio.data.data
-            console.log(tipoEstudio)
-            console.log("Obtuve los datos!")
+            setTipoEstudio(misDatos);
+
+            console.log( tipoEstudio[2].nombre)
+
+
+            
         } catch(e) {
             
             console.log(e)
         }
     }
-
     useEffect(() => {
         getTipoEstudio(0);
+        
     }, [])
 
+    console.log("here")
+    tipoEstudio2 = tipoEstudio;
+    console.log("TE2", tipoEstudio2);
+    console.log( tipoEstudio[2].nombre)
+
+    
     return(
         <div className="row ContainerForm left-align">
         <div>
@@ -86,19 +78,16 @@ export default function ConsultarTipoEstudio() {
                     
                     <div className="col s7 l6 identificacion-prueba left-align">
                         <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
-                        <div className="detalles-lista negrita-grande c-393939">Biometría Hemática</div><br/>
-                        <div className="detalles-lista negrita-pequeno c-908F98">Examen de sangre que inspecciona las células que la componen</div>
+                        <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.numParametros }</div><br/>
+                        <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
                     </div>
                     <div className='detalles-usuario'>
-                        <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">2 parámetros</div>
+                        <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ tipoEstudio.numParametros } parámetros</div>
                     </div>
-                    
-                    <br/><br/><br/><br/>
-                    
+                    <br/><br/><br/>
                     <div className='identificacion-registrar'/>
-                    <br/>
-
-                    <form onSubmit={handleSubmit}>
+                    <br/>   
+                    
                         <LineaCampos>
                             
                             <ParametroTipoEstudio nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" valorBool = {true} codigo = {"HA"}/>
@@ -110,7 +99,7 @@ export default function ConsultarTipoEstudio() {
                         <br/><br/>
                         {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
                         {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
-                    </form>
+                    
                 </ContainerForm>
                 </Card>
             </Main>

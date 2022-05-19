@@ -1,13 +1,20 @@
 const tipoEstudio = require('../models/tipoEstudioModel')
 
 module.exports.consultarTipoEstudio = async(request, response) => {
-    console.log("here")
     const id = request.params.id;
     try {
-        response = await tipoEstudio.consultarTipoEstudio(id);
-        return response;
+        const results = await tipoEstudio.consultarTipoEstudio(id);
+        response.status(200).send( {
+            success: 'true',
+            data: results,
+            message: "tipo estudio consultado exitosamente"
+        })
     }
     catch (error) {
-        console.log(error);
+        response.status(400).send( {
+            success: 'false',
+            data: error,
+            message: "Error al consultar este tipo de estudio"
+        })
     }
 }
