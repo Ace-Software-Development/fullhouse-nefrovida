@@ -62,7 +62,7 @@ app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
-app.use('/consultarTipoEstudio', require('./routes/tipoEstudioRouter'))
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get('*', function(request, response){
     response.status(404)

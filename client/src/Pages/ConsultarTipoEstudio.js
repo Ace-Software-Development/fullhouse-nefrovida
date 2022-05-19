@@ -53,7 +53,7 @@ export default function ConsultarTipoEstudio() {
     async function getTipoEstudio(id) {
         try {
             console.log("Estoy haciendo la peticion")
-            const response = await fetch('http://localhost:6535/consultarTipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            const response = await fetch('http://localhost:6535/tipoEstudio/1', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             console.log(response)
             const tipoEstudio = response
             if (!response.ok) {
@@ -68,7 +68,9 @@ export default function ConsultarTipoEstudio() {
         }
     }
 
-    getTipoEstudio(1);
+    useEffect(() => {
+        getTipoEstudio(0);
+    }, [])
 
     return(
         <div className="row ContainerForm left-align">
@@ -99,9 +101,9 @@ export default function ConsultarTipoEstudio() {
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             
-                            <ParametroTipoEstudio nombreValor = "bool" nombreParametro = "Viscoso" valorBool = {true} codigo = {"HA"}/>
-                            <ParametroTipoEstudio nombreValor = "num" nombreParametro = "Glucosa" valorA = {10} valorB = {20} unidad = {"gm/gL"} codigo = "XD"/>
-                            <ParametroTipoEstudio nombreValor = "string" nombreParametro="Color" valorString = "Amarillo" codigo = "TEST" />
+                            <ParametroTipoEstudio nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" valorBool = {true} codigo = {"HA"}/>
+                            <ParametroTipoEstudio nombreValor = "Numérico" nombreParametro = "Glucosa" valorA = {10} valorB = {20} unidad = {"gm/gL"} codigo = "XD"/>
+                            <ParametroTipoEstudio nombreValor = "Texto" nombreParametro="Color" valorString = "Amarillo" codigo = "TEST" />
 
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
