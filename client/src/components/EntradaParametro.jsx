@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
+import { useForm } from 'react-hook-form';
+
 
 const EntradaParametroNum = ({nombreParametro, unidad, codigo}) => {
     return(

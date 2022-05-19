@@ -13,32 +13,6 @@ import BtnGuardar from '../components/BtnGuardar';
 import EntradaParametro from '../components/EntradaParametro';
 
 export default function RegistrarEstudio() {
-
-    const [formulario, handleChange, reset, errors] = useLogin({
-        username: '',
-        password: '',
-        observaciones: '',
-    }, validarIniciarSesion)
-
-        async function handleSubmit (e) {
-
-            e.preventDefault()
-            
-            const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', body: JSON.stringify({
-            "data": formulario}), headers: {'Content-Type': 'application/json'} })
-            const iniciarSesion = await response.json()
-            console.log(response);
-            console.log(iniciarSesion);
-            if(!response.ok) {
-                window.alert(iniciarSesion.message);
-                return;
-            }
-            else {
-                window.alert(iniciarSesion.message);
-            }
-            console.log(iniciarSesion);
-        }
-
     return(
         <div className="row ContainerForm left-align">
         <div>
