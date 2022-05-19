@@ -64,10 +64,15 @@ export default function RegistrarEstudio() {
                     <form onSubmit={handleSubmit}>
                         <LineaCampos>
                             
-                            <EntradaParametro></EntradaParametro>
-                            <EntradaParametro parametro='Glucosa:' unidad='mg/dL'></EntradaParametro>
-                            
+                            <EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "HA"/>
+                            <EntradaParametro nombreValor = "Numérico" nombreParametro = "Glucosa" unidad = 'mg/dL' codigo = "XD"/>
+                            <EntradaParametro nombreValor = "Texto" nombreParametro = "Color" codigo = "TEST"/>
+                            <EntradaParametro nombreValor = "Numérico" nombreParametro = "Sangre" unidad = 'ml' codigo = "DX"/>
+                            <EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "AH"/>
+                            <EntradaParametro nombreValor = "Texto" nombreParametro = "Nuevo Color" codigo = "TEST2"/>
+                        
                         </LineaCampos>
+                        
                         <div className='identificacion-registrar'/>
                         <br/>
                         <LineaCampos>
@@ -83,7 +88,7 @@ export default function RegistrarEstudio() {
                                 tamano="m12 s12"/>
                                 </div>
                         </LineaCampos>
-                        <br></br>
+                        <br/>
                         <BtnGuardar/>              
                         </form>
                     </ContainerForm>
