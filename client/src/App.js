@@ -2,8 +2,8 @@ import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Pages/Home';
-import RegistrarEstudio from './Pages/RegistrarEstudio';
+import Home from './pages/Home';
+import RegistrarEstudio from './pages/RegistrarEstudio';
 
 function App() {
   return (
