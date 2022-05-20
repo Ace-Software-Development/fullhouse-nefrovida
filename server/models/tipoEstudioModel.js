@@ -91,6 +91,32 @@ exports.consultarTipoEstudio = async( id ) => {
                   "objectId": "fE9Rb1RSEH"
             },
             {
+               "idParametro": {
+                  "nombre": "NEUTROFILOS SEGMENTADOS",
+                  "codigo": "SG",
+                  "unidad": "u/L",
+                  "valorA": 1400,
+                  "valorB": 6500,
+                  "idTipoValor": {
+                     "nombre": "Numérico",
+                     "createdAt": "2022-05-18T16:56:22.795Z",
+                     "updatedAt": "2022-05-18T16:56:22.795Z",
+                     "objectId": "Az39LfT9iZ",
+                     "__type": "Object",
+                     "className": "TipoValor"
+                  },
+                  "tieneRango": true,
+                  "createdAt": "2022-05-18T17:10:45.740Z",
+                  "updatedAt": "2022-05-18T17:10:45.740Z",
+                  "objectId": "EuYV4fneoP",
+                  "__type": "Object",
+                  "className": "Parametro"
+               },
+               "createdAt": "2022-05-18T17:11:51.884Z",
+               "updatedAt": "2022-05-18T17:11:51.884Z",
+               "objectId": "fE9Rb1RSEH"
+         },
+            {
                   "nombre": "Examen General de Orina",
                   "descripcion": "Examen para identificar alteraciones a nivel del sistema renal y urinario",
                   "activo": true,

@@ -17,13 +17,29 @@ import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar'
-import ParametroTipoEstudio from '../components/ParametroTipoEstudio';
+import { ParametroTexto, ParametroRango, ParametroBooleano } from '../components/ParametroTipoEstudio';
+
 
 export default function ConsultarTipoEstudio() {
 
     const [tipoEstudio, setTipoEstudio] = useState({})
-    let tipoEstudio2 = []
+    const [parametros, setParametros] = useState([])
     
+    function listaParametros() {
+        return parametros.map(el => {
+            if(el.idParametro.idTipoValor.nombre === "Positivo/Negativo"){
+                return <ParametroBooleano nombreParametro = { el.idParametro.nombre } valorBool ={el.idParametro.valorBool} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId} />
+            }
+            else if(el.idParametro.idTipoValor.nombre === "Texto"){
+                return <ParametroTexto nombreParametro = {el.idParametro.nombre} valorString = {el.idParametro.valorString} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId}/>
+            }
+            else if (el.idParametro.idTipoValor.nombre === "Numérico"){
+                return  <ParametroRango nombreParametro = {el.idParametro.nombre} valorA = {el.idParametro.valorA} valorB = {el.idParametro.valorB} unidad = {el.idParametro.unidad} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId}/>
+            }
+            
+        })
+        
+    }
 
     async function getTipoEstudio(id) {
         try {
@@ -31,40 +47,22 @@ export default function ConsultarTipoEstudio() {
             let misDatos = await response.json();
 
             misDatos = misDatos.data.data.data;
-
-            
-
-            misDatos = { 
-                numParametros: misDatos.length - 1,
-                ...misDatos
-            }
-            console.log("Datos de la Query:", misDatos)
             if (!response.ok) {
                 return;
             }
-            setTipoEstudio(misDatos);
+            setTipoEstudio(misDatos.pop());
+            setParametros(misDatos);
 
-            console.log( tipoEstudio[2].nombre)
-
-
-            
         } catch(e) {
-            
             console.log(e)
         }
     }
     useEffect(() => {
         getTipoEstudio(0);
-        
     }, [])
 
-    console.log("here")
-    tipoEstudio2 = tipoEstudio;
-    console.log("TE2", tipoEstudio2);
-    console.log( tipoEstudio[2].nombre)
-
-    
     return(
+        
         <div className="row ContainerForm left-align">
         <div>
             <Navbar/>
@@ -75,25 +73,19 @@ export default function ConsultarTipoEstudio() {
                 <ContainerForm>
                     <BtnRegresar url="/"/>
                     <br/><br/><br/><br/><br/>    
-                    
                     <div className="col s7 l6 identificacion-prueba left-align">
                         <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
-                        <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.numParametros }</div><br/>
+                        <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.nombre}</div><br/>
                         <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
                     </div>
                     <div className='detalles-usuario'>
-                        <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ tipoEstudio.numParametros } parámetros</div>
+                        <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ parametros.length } parámetros</div>
                     </div>
                     <br/><br/><br/>
                     <div className='identificacion-registrar'/>
                     <br/>   
-                    
                         <LineaCampos>
-                            
-                            <ParametroTipoEstudio nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" valorBool = {true} codigo = {"HA"}/>
-                            <ParametroTipoEstudio nombreValor = "Numérico" nombreParametro = "Glucosa" valorA = {10} valorB = {20} unidad = {"gm/gL"} codigo = "XD"/>
-                            <ParametroTipoEstudio nombreValor = "Texto" nombreParametro="Color" valorString = "Amarillo" codigo = "TEST" />
-
+                            { listaParametros()}
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
                         <br/><br/>

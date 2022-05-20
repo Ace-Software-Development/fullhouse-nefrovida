@@ -76,26 +76,4 @@ const ParametroTexto = ({nombreParametro, valorString, codigo}) => {
     )
 }
 
-
-
-
-const ParametroTipoEstudio = ({nombreValor=null, nombreParametro="undefined", codigo="?", valorA="?", valorB="?", valorBool=null, valorString="undefined", unidad="undefined", ...rest}) => {
-    
-    if (nombreValor === "Positivo/Negativo") {
-        return(
-            <ParametroBooleano nombreParametro = {nombreParametro} valorBool ={valorBool} codigo = {codigo} />
-        )
-    }
-    else if (nombreValor === "Texto") {
-        return(
-            <ParametroTexto nombreParametro = {nombreParametro} valorString = {valorString} codigo = {codigo}/>
-            )
-        }
-    else if (nombreValor === "Numérico") {
-            return(
-            <ParametroRango nombreParametro = {nombreParametro} valorA = {valorA} valorB = {valorB} unidad = {unidad} codigo = {codigo}/>
-        )
-    }
-}
-
-export default ParametroTipoEstudio;
+export {ParametroTexto, ParametroRango, ParametroBooleano};
