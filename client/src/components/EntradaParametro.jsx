@@ -52,7 +52,7 @@ const EntradaParametroBool = ({ nombreParametro, valorBool, codigo } ) => {
 
 }
 
-const EntradaParametroString = ({ nombreParametro, valorStirng, codigo }) => {
+const EntradaParametroString = ({ nombreParametro, valorString, codigo }) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -61,7 +61,7 @@ const EntradaParametroString = ({ nombreParametro, valorStirng, codigo }) => {
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: {valorStirng}
+                Valor de referencia: {valorString}
             </div>
             <br/><br/>
         <Input 
