@@ -15,31 +15,6 @@ import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 
 export default function ConsultarEstudioPaciente() {
 
-    const [formulario, handleChange, reset, errors] = useLogin({
-        username: '',
-        password: '',
-        observaciones: '',
-    }, validarIniciarSesion)
-
-        async function handleSubmit (e) {
-
-            e.preventDefault()
-            
-            const response = await fetch('http://localhost:6535/iniciarSesion', { method: 'POST', body: JSON.stringify({
-            "data": formulario}), headers: {'Content-Type': 'application/json'} })
-            const iniciarSesion = await response.json()
-            console.log(response);
-            console.log(iniciarSesion);
-            if(!response.ok) {
-                window.alert(iniciarSesion.message);
-                return;
-            }
-            else {
-                window.alert(iniciarSesion.message);
-            }
-            console.log(iniciarSesion);
-        }
-
     return(
         <div className="row ContainerForm left-align">
         <div>
@@ -49,7 +24,7 @@ export default function ConsultarEstudioPaciente() {
                 <Card>
                 <CardTitulo icono="description" titulo="Detalle del estudio"/>
                     <ContainerForm>
-                    <BtnRegresar url="/"/><br/><br/>
+                   {/* <BtnRegresar url="/"/><br/><br/> */}
                     
                     
                     
@@ -62,28 +37,28 @@ export default function ConsultarEstudioPaciente() {
                         <br/>
 
 
-                    <form onSubmit={handleSubmit}>
-                        <LineaCampos>
-                            
-                            <ParametroEstudioPaciente></ParametroEstudioPaciente>
-                            <ParametroEstudioPaciente parametro='Glucosa:' valor="100" unidad='mg/dL'></ParametroEstudioPaciente>
-                            
-                        </LineaCampos>
-                        <div className='identificacion-registrar'/>
-                        <br/>
-                        <LineaCampos>
-                            <div align="left">
-                            <div className='detalles-usuario'>
-                            <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
-                            </div>
-                            <br/><br/>
-                                <div className="detalles-lista negrita-pequeno c-64646A left-align">Se realizó el estudio 2 veces para verificar los datos obtenidos.</div>
-                            </div>
-                        </LineaCampos>
-                        <br></br>
-                        <BtnEliminar texto='Eliminar estudio' posicion='right'/>
-                        <BtnEditRegis icono='create' texto='Editar estudio'/>               
-                        </form>
+                    
+                    <LineaCampos>
+                        
+                        <ParametroEstudioPaciente></ParametroEstudioPaciente>
+                        <ParametroEstudioPaciente parametro='Glucosa:' valor="100" unidad='mg/dL'></ParametroEstudioPaciente>
+                        
+                    </LineaCampos>
+                    <div className='identificacion-registrar'/>
+                    <br/>
+                    <LineaCampos>
+                        <div align="left">
+                        <div className='detalles-usuario'>
+                        <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
+                        </div>
+                        <br/><br/>
+                            <div className="detalles-lista negrita-pequeno c-64646A left-align">Se realizó el estudio 2 veces para verificar los datos obtenidos.</div>
+                        </div>
+                    </LineaCampos>
+                    <br></br>
+                    {/*<BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
+                    {/*<BtnEditRegis icono='create' texto='Editar estudio'/>  */}          
+                        
                     </ContainerForm>
                 </Card>
             </Main>
