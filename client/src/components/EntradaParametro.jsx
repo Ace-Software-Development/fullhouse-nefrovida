@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
 
-const EntradaParametroNum = ({nombreParametro, unidad, codigo}) => {
+const EntradaParametroNum = ({ nombreParametro, valorA, valorB, unidad, codigo }) => {
     return(
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -10,7 +11,7 @@ const EntradaParametroNum = ({nombreParametro, unidad, codigo}) => {
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: 0 - 10 ml
+                Valor de referencia: { valorA } - { valorB } { unidad }
             </div>
             <br/><br/>
         <Input 
@@ -26,7 +27,7 @@ const EntradaParametroNum = ({nombreParametro, unidad, codigo}) => {
     )
 }
 
-const EntradaParametroBool = ({nombreParametro, codigo} ) => {
+const EntradaParametroBool = ({ nombreParametro, valorBool, codigo } ) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -35,7 +36,7 @@ const EntradaParametroBool = ({nombreParametro, codigo} ) => {
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: Positivo / Negativo
+                Valor de referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
         <Select
@@ -51,7 +52,7 @@ const EntradaParametroBool = ({nombreParametro, codigo} ) => {
 
 }
 
-const EntradaParametroString = ({nombreParametro, codigo}) => {
+const EntradaParametroString = ({ nombreParametro, valorStirng, codigo }) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -60,7 +61,7 @@ const EntradaParametroString = ({nombreParametro, codigo}) => {
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: texto
+                Valor de referencia: {valorStirng}
             </div>
             <br/><br/>
         <Input 
@@ -68,33 +69,14 @@ const EntradaParametroString = ({nombreParametro, codigo}) => {
             type= "text"
             label="Valor"
             tamano="m6 s6"
+            maxlength="25"
             requerido = { true }/>
             <br/><br/><br/>
         </div>
     )
 }
 
-const EntradaParametro = ({nombreValor=null, nombreParametro="undefined", codigo="?", unidad="undefined", ...rest}) => {
-    
-    if (nombreValor === "Numérico") {
-        return(
-            <EntradaParametroNum nombreParametro = {nombreParametro} unidad = {unidad} codigo = {codigo} />
-        )
-    }
-    else if (nombreValor === "Positivo/Negativo") {
-        return(
-            <EntradaParametroBool nombreParametro = {nombreParametro} codigo = {codigo}/>
-            )
-        }
-    else if (nombreValor === "Texto") {
-            return(
-            <EntradaParametroString nombreParametro = {nombreParametro} codigo = {codigo}/>
-        )
-    }
-}
-
-export default EntradaParametro;
-
+export {EntradaParametroNum, EntradaParametroBool, EntradaParametroString};
 
 
 
