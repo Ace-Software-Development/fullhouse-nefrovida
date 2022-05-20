@@ -21,6 +21,9 @@ module.exports = Object.freeze({
     ROLDOCTOR: "doctor",
     ROLNUTRIOLOGO: "nutriologo",
     ROLPSICOLOGO: "psicologo",
+    // Tabla Paciente
+    PACIENTE: "Paciente",
+    CURP: "curp",
     // Tabla TipoEstudio
     TIPOESTUDIO: "TipoEstudio",
     // Tabla Parametro
@@ -32,4 +35,18 @@ module.exports = Object.freeze({
     IDPARAMETRO: "idParametro",
     // Tabla TipoValor
     TIPOVALOR: "TipoValor",
+    // Tabla Estudio
+    ESTUDIO: "Estudio",
+    OBSERVACIONES: "observaciones",
+    FECHA: "fecha",
+    IDPACIENTE: "idPaciente",
+    IDTIPOESTUDIO: "idTipoEstudio",
+    IDQUIMICO: "idQuimico",
+    // Tabla Resultado
+    RESULTADO: "Resultado",
+    IDESTUDIO: "idEstudio",
+    IDPARAMETRO: "idParametro",
+    VALORNUM: "valorNum",
+    VALORBOOL: "valorBool",
+    VALORSTRING: "valorString"
 })

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication');
-const tipoEstudioController = require('../controllers/tipoEstudioController.js');
+const estudioController = require('../controllers/estudioController.js');
 
 // Ruta de tipo 'GET' para obtener todos los parámetros de un estudio.
-router.get('/:idTipoEstudio', 
-    tipoEstudioController.consularParametrosDeEstudio);
+router.post('/', 
+    estudioController.registrarResultadosEstudio);
 
 module.exports = router;

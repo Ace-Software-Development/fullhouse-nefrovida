@@ -60,6 +60,8 @@ app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
+app.use('/estudio', require('./routes/estudioRouter'));
+
 app.get('*', function(request, response){
     response.status(404)
     html = "";

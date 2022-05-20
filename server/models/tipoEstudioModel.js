@@ -6,59 +6,51 @@ let CONSTANTS = require("../constantsProject");
  * @param {string} idTipoEstudio ObjectId del tipo de estudio
  * @returns Lista con todos los parámetros del tipo de estudio y la información del tipo de estudio.
  */
+
+var TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
+
 exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
-
-    var table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
-    let query = new Parse.Query(table);
     
+    // Crea un tipoEstudio local con dicho ID.
+    let tipoEstudio = new TipoEstudio();
+    tipoEstudio.set(CONSTANTS.OBJECTID, idTipoEstudio);
+
+    table = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
+    var queryParametros = new Parse.Query(table);
+    // Se incluyen los objetos de parámetros y de tipoValor, pues es información necesaria.
+    queryParametros.include(CONSTANTS.IDPARAMETRO);
+    queryParametros.include([CONSTANTS.IDPARAMETRO + '.' + CONSTANTS.IDTIPOVALOR]);
+    // Buscamos en la tabla de ParametroEstudio todos los registros que contengan dicho estudio. 
+    queryParametros.equalTo(CONSTANTS.IDTIPOESTUDIO, tipoEstudio);
+    queryParametros.select(CONSTANTS.IDPARAMETRO);
+
     try {
-        // Obtiene el objeto de tipoEstudio con dicho ID.
-        let tipoEstudio = await query.get(idTipoEstudio);
-
-        table = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
-        var queryParametros = new Parse.Query(table);
-        // Se incluyen los objetos de parámetros y de tipoValor, pues es información necesaria.
-        queryParametros.include(CONSTANTS.IDPARAMETRO);
-        queryParametros.include([CONSTANTS.IDPARAMETRO + '.' + CONSTANTS.IDTIPOVALOR]);
-        // Buscamos en la tabla de ParametroEstudio todos los registros que contengan dicho estudio. 
-        queryParametros.equalTo(CONSTANTS.IDTIPOESTUDIO, tipoEstudio);
-        queryParametros.select(CONSTANTS.IDPARAMETRO);
-
-        try {
-            var results = await queryParametros.find();
-            
-            // Mostrar error si no hay parámetros
-            if (!results || results === []) {
-                return {
-                    data: null,
-                    error: 'No hay parámetros registrados para este tipo de estudio.'
-                }
-            }
-
-            // Añadir la información del tipo de estudio a los resultados
-            results.push(tipoEstudio);
-            const res = {
-                ...tipoEstudio,
-                ...results
-            }
-    
-            return {
-                data: results,
-                error: null
-            }
-        } catch(error) {
-            // Devolver error al obtener los parámetros
+        var results = await queryParametros.find();
+        
+        // Mostrar error si no hay parámetros
+        if (!results || results === []) {
             return {
                 data: null,
-                error: error.message
+                error: 'No hay parámetros registrados para este tipo de estudio.'
             }
         }
+
+        // Añadir la información del tipo de estudio a los resultados
+        results.push(tipoEstudio);
+        const res = {
+            ...tipoEstudio,
+            ...results
+        }
+
+        return {
+            data: results,
+            error: null
+        }
     } catch(error) {
-        // Devolver error al buscar el tipo de estudio
+        // Devolver error al obtener los parámetros
         return {
             data: null,
             error: error.message
         }
     }
-
 }
