@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
@@ -14,6 +15,7 @@ export default function RegistrarEstudio() {
 
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
+    const [isLoading, setIsLoading] = useState("");
     
     function listaParametros() {
         return parametros.map(el => {
@@ -31,6 +33,10 @@ export default function RegistrarEstudio() {
     }
 
     async function getTipoEstudio(id) {
+
+        setIsLoading(true);
+
+
         try {
             const response = await fetch('http://localhost:6535/tipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             console.log('RESPONSE', response);
@@ -69,8 +75,23 @@ export default function RegistrarEstudio() {
                 <Card>
                 <CardTitulo icono="note_add" titulo="Registrar estudio"/>
                     <ContainerForm>
-                    <BtnRegresar url="/"/><br/><br/>
-                    
+                    <Link to = "/">
+                    <BtnRegresar/><br/><br/>
+                    </Link>
+                    {
+                        isLoading &&
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    }
                         <div align="left">               
                             <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
