@@ -33,12 +33,16 @@ export default function RegistrarEstudio() {
     async function getTipoEstudio(id) {
         try {
             const response = await fetch('http://localhost:6535/tipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            console.log('RESPONSE', response);
             let misDatos = await response.json();
+            console.log('MISDATOS', misDatos);
 
-            misDatos = misDatos.data.data.data;
+            misDatos = misDatos.data.data;
             if (!response.ok) {
                 return;
             }
+
+            console.log('MISDATOS2', misDatos);
             setTipoEstudio(misDatos.pop());
             setParametros(misDatos);
 
@@ -47,7 +51,7 @@ export default function RegistrarEstudio() {
         }
     }
     useEffect(() => {
-        getTipoEstudio(0);
+        getTipoEstudio('oa4rkaUoYk');
     }, [])
 
     let currentDate = new Date();
