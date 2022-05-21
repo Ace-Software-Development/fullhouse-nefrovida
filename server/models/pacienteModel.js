@@ -29,12 +29,12 @@ exports.obtenerEstudioPaciente = async(id) => {
                 {
                     nombreParametro: "Sangre",
                     unidadParametro: "ml",
-                    valorResultado: "10"
+                    valorResultado: "59"
                 },
                 {
                     nombreParametro: "Glucosa",
                     unidadParametro: "mg/dL",
-                    valorResultado: "10"
+                    valorResultado: "25"
                 }
             ],
             observacionesEstudio: "Se realizó el estudio 2 veces para verificar los datos obtenidos."

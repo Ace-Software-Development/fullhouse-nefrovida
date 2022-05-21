@@ -15,6 +15,39 @@ import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 
 export default function ConsultarEstudioPaciente() {
 
+    const [estudio, setEstudio] = useState({})
+
+    function getParametrosEstudio() {
+        let parametros = estudio.parametros;
+        console.log(parametros);
+        if(parametros !== undefined) {
+            return parametros.map(el => {
+                return <ParametroEstudioPaciente parametro={el.nombreParametro} valor={el.valorResultado} unidad={el.unidadParametro} ></ParametroEstudioPaciente>
+            })
+        }
+    }
+    
+    async function getEstudio(id) {
+        try {
+            const response = await fetch('http://localhost:6535/consultarEstudioPaciente/1', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            let misDatos = await response.json();
+
+            misDatos = misDatos.estudio;
+            if (!response.ok) {
+                return;
+            }
+            setEstudio(misDatos);
+            console.log(misDatos);
+
+        } catch(e) {
+            console.log(e)
+        }
+    }
+    useEffect(() => {
+        getEstudio();
+        //getParametrosEstudio();
+    }, [])
+
     return(
         <div className="row ContainerForm left-align">
         <div>
@@ -29,8 +62,8 @@ export default function ConsultarEstudioPaciente() {
                     
                     
                         <div align="left">               
-                            <div className="detalles-lista negrita-grande c-64646A left-align">Estudio de Química Sanguínea  </div><span>  05/05/2022</span><br/>
-                            <div className="detalles-lista light-pequeno c-717079 left-align">Estudio para tomar los datos de la química sanguínea de las personas.</div>
+                            <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
+                            <div className="detalles-lista light-pequeno c-717079 left-align">{estudio.descripcionTipoEstudio}</div>
                         </div>
                         <br/>
                         <div className='identificacion-registrar'/>
@@ -39,11 +72,10 @@ export default function ConsultarEstudioPaciente() {
 
                     
                     <LineaCampos>
-                        
-                        <ParametroEstudioPaciente></ParametroEstudioPaciente>
-                        <ParametroEstudioPaciente parametro='Glucosa:' valor="100" unidad='mg/dL'></ParametroEstudioPaciente>
+                        {getParametrosEstudio()}
                         
                     </LineaCampos>
+
                     <div className='identificacion-registrar'/>
                     <br/>
                     <LineaCampos>
@@ -52,7 +84,7 @@ export default function ConsultarEstudioPaciente() {
                         <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
                         </div>
                         <br/><br/>
-                            <div className="detalles-lista negrita-pequeno c-64646A left-align">Se realizó el estudio 2 veces para verificar los datos obtenidos.</div>
+                            <div className="detalles-lista negrita-pequeno c-64646A left-align">{estudio.observacionesEstudio}</div>
                         </div>
                     </LineaCampos>
                     <br></br>
