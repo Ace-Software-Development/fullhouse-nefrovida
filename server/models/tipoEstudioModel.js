@@ -1,13 +1,26 @@
 let CONSTANTS = require("../constantsProject");
 
+var TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
+
+/**
+ * Función auxiliar para retornar los datos y el error.
+ * @param {Object} data - Datos a retornar
+ * @param {string} error - Mensaje de error en caso de existir
+ * @returns 
+ */
+function results(data, error) {
+    return {
+        data: data,
+        error: error
+    }
+}
+
 /**
  * asyncConsularParametrosDeEstudio Función asíncrona para obtener todos los parámetros 
  * de un estudio; recibe el ID del estudio que desea buscar.
  * @param {string} idTipoEstudio ObjectId del tipo de estudio
  * @returns Lista con todos los parámetros del tipo de estudio y la información del tipo de estudio.
  */
-
-var TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
 
 exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
@@ -17,6 +30,10 @@ exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
     try {
 
         let tipoEstudio = await query.get(idTipoEstudio);
+
+        if (!tipoEstudio) {
+            return results(null, 'No se encontró dicho estudio.');
+        }
 
         table = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
         var queryParametros = new Parse.Query(table);
@@ -38,10 +55,6 @@ exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
             // Añadir la información del tipo de estudio a los resultados
             results.push(tipoEstudio);
-            const res = {
-                ...tipoEstudio,
-                ...results
-            }
 
             return {
                 data: results,

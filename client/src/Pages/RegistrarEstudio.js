@@ -9,24 +9,68 @@ import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnGuardar from '../components/BtnGuardar';
+import { useForm } from 'react-hook-form';
 import { EntradaParametroBool, EntradaParametroNum, EntradaParametroString } from '../components/EntradaParametro';
 
 export default function RegistrarEstudio() {
 
-    const [tipoEstudio, setTipoEstudio] = useState({})
-    const [parametros, setParametros] = useState([])
-    const [isLoading, setIsLoading] = useState("");
+    const [tipoEstudio, setTipoEstudio] = useState({});
+    const [parametros, setParametros] = useState([]);
+    const [isLoading, setIsLoading] = useState('');
+    const [errorFetch, setErrorFetch] = useState('');
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     
+    function validation() {
+        parametros.map(el => {
+            register( el.idParametro.nombre , {
+                required: {
+                    value: true,
+                    message: "El valor de " + el.idParametro.nombre + "es requerido"
+                },
+            });
+        })
+        
+        register('observaciones', {
+            required: {
+                value: false
+            }
+        });
+        return;
+    }
+
     function listaParametros() {
         return parametros.map(el => {
-            if (el.idParametro.idTipoValor.nombre === "Numérico"){
-                return  <EntradaParametroNum nombreParametro = {el.idParametro.nombre} valorA = {el.idParametro.valorA} valorB = {el.idParametro.valorB} unidad = {el.idParametro.unidad} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId}/>
+            if (el.idParametro.idTipoValor.nombre === 'Numérico'){
+                return  <EntradaParametroNum 
+                            nombreParametro = { el.idParametro.nombre } 
+                            valorMin = { el.idParametro.valorMin } 
+                            valorMax = { el.idParametro.valorMax } 
+                            unidad = { el.idParametro.unidad } 
+                            codigo = { el.idParametro.codigo } 
+                            key = { el.idParametro.objectId } 
+                            handleChange = { handleChange } 
+                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                        />
             }
-            else if(el.idParametro.idTipoValor.nombre === "Positivo/Negativo"){
-                return <EntradaParametroBool nombreParametro = { el.idParametro.nombre } valorBool ={el.idParametro.valorBool} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId} />
+            else if(el.idParametro.idTipoValor.nombre === 'Positivo/Negativo'){
+                return <EntradaParametroBool 
+                            nombreParametro = { el.idParametro.nombre } 
+                            valorBool ={ el.idParametro.valorBool } 
+                            codigo = { el.idParametro.codigo } 
+                            key = { el.idParametro.objectId } 
+                            handleChange = { handleChange }
+                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                        />
             }
-            else if(el.idParametro.idTipoValor.nombre === "Texto"){
-                return <EntradaParametroString nombreParametro = {el.idParametro.nombre} valorString = {el.idParametro.valorString} codigo = {el.idParametro.codigo} key = {el.idParametro.objectId}/>
+            else if(el.idParametro.idTipoValor.nombre === 'Texto'){
+                return <EntradaParametroString 
+                            nombreParametro = { el.idParametro.nombre } 
+                            valorString = { el.idParametro.valorString } 
+                            codigo = { el.idParametro.codigo } 
+                            key = { el.idParametro.objectId } 
+                            handleChange = { handleChange }
+                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                        />
             }            
         })
         
@@ -35,30 +79,43 @@ export default function RegistrarEstudio() {
     async function getTipoEstudio(id) {
 
         setIsLoading(true);
+        setErrorFetch('');
 
 
         try {
             const response = await fetch('http://localhost:6535/tipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            console.log('RESPONSE', response);
             let misDatos = await response.json();
-            console.log('MISDATOS', misDatos);
+            setIsLoading(false);
 
             misDatos = misDatos.data.data;
             if (!response.ok) {
+                setErrorFetch(misDatos.message);
                 return;
             }
 
-            console.log('MISDATOS2', misDatos);
             setTipoEstudio(misDatos.pop());
             setParametros(misDatos);
 
         } catch(e) {
-            console.log(e)
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
     }
+
     useEffect(() => {
-        getTipoEstudio('oa4rkaUoYk');
+        getTipoEstudio('HifRCCITUo');
     }, [])
+
+    useEffect(() => {
+        if (parametros) {
+            validation();
+        }    
+    })
+
+    const handleChange = (e) => {
+        console.log(e.target.value);
+        setValue(e.target.name, e.target.value);
+    }
 
     let currentDate = new Date();
     let cDay = currentDate.getDate();
@@ -92,42 +149,52 @@ export default function RegistrarEstudio() {
                             </div>
                         </div>
                     }
-                        <div align="left">               
-                            <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
-                            <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
-                        </div>
-                        <br/>
-                        <div className='identificacion-registrar'/>
-                        <br/>
-
-                        <LineaCampos>
-                            
-                            { listaParametros()}
-
-                            {/*<EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "HA"/>*/}
-                            {/*<EntradaParametro nombreValor = "Numérico" nombreParametro = "Glucosa" unidad = 'mg/dL' codigo = "XD"/>*/}
-                            {/*<EntradaParametro nombreValor = "Texto" nombreParametro = "Color" codigo = "TEST"/>*/}
-                            {/*<EntradaParametro nombreValor = "Numérico" nombreParametro = "Sangre" unidad = 'ml' codigo = "DX"/>*/}
-                            {/*<EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "AH"/>*/}
-                            {/*<EntradaParametro nombreValor = "Texto" nombreParametro = "Nuevo Color" codigo = "TEST2"/>*/}
-                        
-                        </LineaCampos>
-                        
-                        <div className='identificacion-registrar'/>
-                        <br/>
-                        <LineaCampos>
-                            <div align="left">
-                            <div className='detalles-usuario'>
-                            <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
+                    {
+                        !isLoading && !errorFetch ?
+                        <div>
+                            <div align="left">               
+                                <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
+                                <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
                             </div>
-                            <Input 
-                                id="observaciones" 
-                                label="Ingresa aquí la observación del estudio" 
-                                tamano="m12 s12"/>
+                            <br/>
+                            <div className='identificacion-registrar'/>
+                            <br/>
+
+                            <LineaCampos>
+                                
+                                { listaParametros()}
+
+                                {/*<EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "HA"/>*/}
+                                {/*<EntradaParametro nombreValor = "Numérico" nombreParametro = "Glucosa" unidad = 'mg/dL' codigo = "XD"/>*/}
+                                {/*<EntradaParametro nombreValor = "Texto" nombreParametro = "Color" codigo = "TEST"/>*/}
+                                {/*<EntradaParametro nombreValor = "Numérico" nombreParametro = "Sangre" unidad = 'ml' codigo = "DX"/>*/}
+                                {/*<EntradaParametro nombreValor = "Positivo/Negativo" nombreParametro = "Viscoso" codigo = "AH"/>*/}
+                                {/*<EntradaParametro nombreValor = "Texto" nombreParametro = "Nuevo Color" codigo = "TEST2"/>*/}
+                            
+                            </LineaCampos>
+                            
+                            <div className='identificacion-registrar'/>
+                            <br/>
+                            <LineaCampos>
+                                <div align="left">
+                                <div className='detalles-usuario'>
+                                <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
                                 </div>
-                        </LineaCampos>
-                        <br/>
-                        <BtnGuardar/>              
+                                <Input 
+                                    id="observaciones" 
+                                    label="Ingresa aquí la observación del estudio" 
+                                    tamano="m12 s12"
+                                    onChange = { handleChange }/>
+                                    </div>
+                            </LineaCampos>
+                            <br/>
+                            <BtnGuardar/> 
+                        </div>
+                        : null
+                    }   
+                    { errorFetch 
+                        && <div> <div className='red-text right'> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                    }          
                     </ContainerForm>
                 </Card>
             </Main>

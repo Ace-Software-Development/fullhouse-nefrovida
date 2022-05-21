@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
 
-const EntradaParametroNum = ({ nombreParametro, valorA, valorB, unidad, codigo }) => {
+const EntradaParametroNum = ({ nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
     return(
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -11,15 +11,21 @@ const EntradaParametroNum = ({ nombreParametro, valorA, valorB, unidad, codigo }
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: { valorA } - { valorB } { unidad }
+                Valor de referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
         <Input 
-            id="parametroNum"
+            id = { nombreParametro }
+            name = { nombreParametro }
             type= "number"
             label="Valor"
             tamano="m6 s6"
-            requerido = { true }/>
+            requerido = { true }
+            onChange = { handleChange }
+        />
+        <span className="helper-text left red-text">
+            { elError }
+        </span>
             <br/>
             <div className="detalles-lista negrita-pequeno c-000000 left-align">{ unidad }</div>
             <br/><br/><br/><br/>
@@ -27,7 +33,7 @@ const EntradaParametroNum = ({ nombreParametro, valorA, valorB, unidad, codigo }
     )
 }
 
-const EntradaParametroBool = ({ nombreParametro, valorBool, codigo } ) => {
+const EntradaParametroBool = ({ nombreParametro, valorBool, codigo, handleChange, elError } ) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -40,19 +46,25 @@ const EntradaParametroBool = ({ nombreParametro, valorBool, codigo } ) => {
             </div>
             <br/><br/>
         <Select
-            id="parametroBool"
+            id= { nombreParametro }
+            name = { nombreParametro }
             label="Valor"
             value=""
             arr={[{value: "positivo", option: "Positivo"}, {value: "negativo", option: "Negativo"}]}
             tamano="m6 s6"
-            requerido = { true }/>
+            requerido = { true }
+            handleChange = { handleChange }
+        />
+        <span className="helper-text left red-text">
+            { elError }
+        </span>
             <br/><br/><br/>
         </div>     
     )
 
 }
 
-const EntradaParametroString = ({ nombreParametro, valorString, codigo }) => {
+const EntradaParametroString = ({ nombreParametro, valorString, codigo, handleChange, elError }) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -61,16 +73,22 @@ const EntradaParametroString = ({ nombreParametro, valorString, codigo }) => {
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: {valorString}
+                Valor de referencia: { valorString }
             </div>
             <br/><br/>
         <Input 
-            id="parametroBool"
+            id= { nombreParametro }
+            name = { nombreParametro }
             type= "text"
             label="Valor"
             tamano="m6 s6"
-            maxlength="25"
-            requerido = { true }/>
+            maxLength="25"
+            requerido = { true }
+            onChange = { handleChange }
+        />
+        <span className="helper-text left red-text">
+            { elError }
+        </span>
             <br/><br/><br/>
         </div>
     )
