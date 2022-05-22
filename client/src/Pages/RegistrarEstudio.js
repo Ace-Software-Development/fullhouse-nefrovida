@@ -22,7 +22,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     
     function validation() {
-        parametros.map(el => {
+        return parametros.map(el => {
             register( el.idParametro.objectId, {
                 required: {
                     value: true,
@@ -80,7 +80,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
         
     }
 
-    async function getTipoEstudio(id) {
+    async function getTipoEstudio(id, e) {
 
         setIsLoading(true);
         setErrorFetch('');
@@ -104,9 +104,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
             setIsLoading(false);
             setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
-
-        
-        validation();
     }
 
     async function onSubmit(data, e) {
@@ -115,9 +112,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
         setErrorFetch("");
 
         e.preventDefault();
-
-        
-
     }
 
     useEffect(() => {
