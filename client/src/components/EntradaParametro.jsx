@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
 
-const EntradaParametroNum = ({ nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
+const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
     return(
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -15,8 +15,8 @@ const EntradaParametroNum = ({ nombreParametro, valorMin, valorMax, unidad, codi
             </div>
             <br/><br/>
         <Input 
-            id = { nombreParametro }
-            name = { nombreParametro }
+            id = { id }
+            name = { id }
             type= "number"
             label="Valor"
             tamano="m6 s6"
@@ -33,7 +33,7 @@ const EntradaParametroNum = ({ nombreParametro, valorMin, valorMax, unidad, codi
     )
 }
 
-const EntradaParametroBool = ({ nombreParametro, valorBool, codigo, handleChange, elError } ) => {
+const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleChange, elError } ) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -46,8 +46,8 @@ const EntradaParametroBool = ({ nombreParametro, valorBool, codigo, handleChange
             </div>
             <br/><br/>
         <Select
-            id= { nombreParametro }
-            name = { nombreParametro }
+            id= { id }
+            name = { id }
             label="Valor"
             value=""
             arr={[{value: "positivo", option: "Positivo"}, {value: "negativo", option: "Negativo"}]}
@@ -64,7 +64,7 @@ const EntradaParametroBool = ({ nombreParametro, valorBool, codigo, handleChange
 
 }
 
-const EntradaParametroString = ({ nombreParametro, valorString, codigo, handleChange, elError }) => {
+const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, handleChange, elError }) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
                 <div className='detalles-usuario'>
@@ -77,8 +77,8 @@ const EntradaParametroString = ({ nombreParametro, valorString, codigo, handleCh
             </div>
             <br/><br/>
         <Input 
-            id= { nombreParametro }
-            name = { nombreParametro }
+            id= { id }
+            name = { id }
             type= "text"
             label="Valor"
             tamano="m6 s6"
