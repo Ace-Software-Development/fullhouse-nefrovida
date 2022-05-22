@@ -2,6 +2,10 @@ const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
 const rolModel = require('../models/rolModel');
 
+/**
+ * obtenerTodos Función asíncrona que retorna lista completa de colaboradores registrados en base de datos.
+ * @returns json con lista de colaboradores o mensaje de error.
+ */
 exports.obtenerTodos = async() => {
     var queryObtenerTodos = new Parse.Query(Parse.User);
     queryObtenerTodos.include(CONSTANTS.IDROL);
@@ -22,6 +26,11 @@ exports.obtenerTodos = async() => {
     }
 }
 
+/**
+ * obtenerColaborador Función asíncrona para buscar información de colaborador en base de datos dado un id.
+ * @param {number} id Identificador único de colaborador
+ * @returns json con colaborador o mensaje de error.
+ */
 exports.obtenerColaborador = async(id) => {
     const queryColab = new Parse.Query(Parse.User);
     queryColab.equalTo(CONSTANTS.OBJECTID, id);
@@ -40,6 +49,12 @@ exports.obtenerColaborador = async(id) => {
     }
 }
 
+/**
+ * resultsRegistrarColaborador Función auxiliar para armar json de respuesta a registro de colaborador.
+ * @param {object} colab objeto con información del colaborador registrado.
+ * @param {string} error Mensaje de error en caso de haberlo.
+ * @returns json con colaborador y mensaje de error recibidos.
+ */
 function resultsRegistrarColaborador(colab, error){
     return {
         colaborador: colab,
@@ -47,13 +62,19 @@ function resultsRegistrarColaborador(colab, error){
     };
 }
 
-
+/**
+ * registrarColaborador Función asíncrona para dar de alta información de colaborador en base de datos.
+ * @param {object} params objeto con infrormación recibida de formulario de registro.
+ * @returns json formado por colaborador y mensaje de error en caso de haberlo.
+ */
 exports.registrarColaborador = async(params) => {
+    // Verificar que no exista algún registro con el mismo número de teléfono.
     const queryTelefonoUnico = new Parse.Query(Parse.User);
     queryTelefonoUnico.equalTo(CONSTANTS.TELEFONO, params.telefono);
 
     try {
         const colaboradorT = await queryTelefonoUnico.first();
+        // Si ya existe registro con dicho teléfono, retornar mensaje de error.
         if (colaboradorT) {
             return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
         }
@@ -70,10 +91,13 @@ exports.registrarColaborador = async(params) => {
         colaborador.set(CONSTANTS.IDROL, params.idRol);
 
         try {
+            // Dar de alta colaborador en base de datos.
             const colab = await colaborador.signUp();
             return resultsRegistrarColaborador(colab, null);
 
-        } catch(error) {
+        } 
+        // En caso de que haya error al momento de registrar colaborador en base de datos, regresar mensaje correspondiente.
+        catch(error) {
             if (error.code === Parse.Error.INVALID_EMAIL_ADDRESS) {
                 return resultsRegistrarColaborador(null, "El correo electrónico ingresado es inválido.");
             }
@@ -100,11 +124,18 @@ exports.registrarColaborador = async(params) => {
     }
 }
 
+/**
+ * iniciarSesionColaborador Función asíncrona que valida credenciales de acceso con las de la base de datos.
+ * @param {objeto} params objeto con información de usuario y contraseña ingresados. 
+ * @returns json con colaborador, rol y mensaje de error en caso de que no se haya encontrado registro en la base de datos.
+ */
 exports.iniciarSesionColaborador = async(params) => {
     try {
+        // Dar de alta usuario comparando con credenciales de la base de datos.
         const colab = await Parse.User.logIn(params.username, params.password);
         const colaborador = colab.toJSON();
-        try{            
+        try{
+            // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
             return {
@@ -129,14 +160,18 @@ exports.iniciarSesionColaborador = async(params) => {
     }
 }
 
+/**
+ * cerrarSesionColaborador Función auxiliar para dar de baja sesión de usuario
+ * @returns json con error en caso de existir o sesión de usuario dada de baja en base de datos.
+ */
 exports.cerrarSesionColaborador = async() => {    
     try {
+        // Dar de baja sesión de usuario en base de datos utilizando Parse.
         const colab = await Parse.User.logOut();
         return {
             error: null
         }
     } catch (error) {
-        // Show the error message somewhere and let the user try again.
         return {
             error: error.message
         }

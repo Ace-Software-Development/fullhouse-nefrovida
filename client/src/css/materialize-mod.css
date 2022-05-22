@@ -9356,3 +9356,13 @@ thead {
 .no-border {
   border:none;
 }
+
+.cerrarSesionFix {
+  height: 36px;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+
+.cerrarSesionIconoFix {
+  line-height: 32px !important
+}
