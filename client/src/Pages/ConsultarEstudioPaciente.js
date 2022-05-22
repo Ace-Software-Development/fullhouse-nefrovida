@@ -22,7 +22,7 @@ export default function ConsultarEstudioPaciente() {
         console.log(parametros);
         if(parametros !== undefined) {
             return parametros.map(el => {
-                return <ParametroEstudioPaciente parametro={el.nombreParametro} valor={el.valorResultado} unidad={el.unidadParametro} ></ParametroEstudioPaciente>
+                return <ParametroEstudioPaciente parametro={el.nombreParametro} valor={el.valorResultado} unidad={el.unidadParametro} referencia= {el.valorReferenciaParametro}></ParametroEstudioPaciente>
             })
         }
     }
@@ -67,7 +67,6 @@ export default function ConsultarEstudioPaciente() {
                         </div>
                         <br/>
                         <div className='identificacion-registrar'/>
-                        <br/>
 
 
                     
@@ -76,7 +75,7 @@ export default function ConsultarEstudioPaciente() {
                         
                     </LineaCampos>
 
-                    <div className='identificacion-registrar'/>
+                    
                     <br/>
                     <LineaCampos>
                         <div align="left">

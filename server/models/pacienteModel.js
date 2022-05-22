@@ -29,12 +29,26 @@ exports.obtenerEstudioPaciente = async(id) => {
                 {
                     nombreParametro: "Sangre",
                     unidadParametro: "ml",
-                    valorResultado: "59"
+                    valorResultado: "59",
+                    valorReferenciaParametro: "50 - 60"
                 },
                 {
                     nombreParametro: "Glucosa",
                     unidadParametro: "mg/dL",
-                    valorResultado: "25"
+                    valorResultado: "25",
+                    valorReferenciaParametro: "5 - 20"
+                },
+                {
+                    nombreParametro: "Leucositos",
+                    unidadParametro: "ml",
+                    valorResultado: "100",
+                    valorReferenciaParametro: "100 - 150"
+                },
+                {
+                    nombreParametro: "Heterositos",
+                    unidadParametro: "mg/dL",
+                    valorResultado: "28",
+                    valorReferenciaParametro: "50 - 100"
                 }
             ],
             observacionesEstudio: "Se realizó el estudio 2 veces para verificar los datos obtenidos."
