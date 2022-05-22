@@ -9396,7 +9396,6 @@ thead {
   font-weight: bold;
   font-size: 42px;
   line-height: 40px;
-  word-spacing: 0.30em;
 }
 
 .espacio-pequeno {
@@ -9449,4 +9448,3 @@ thead {
 .espacio-vertical {
   line-height: 20px;
 }
-
