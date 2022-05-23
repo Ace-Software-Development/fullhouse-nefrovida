@@ -9480,3 +9480,9 @@ thead {
   display: flex;
   align-items: center;
 }
+
+.row-parametros {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
