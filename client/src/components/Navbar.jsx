@@ -39,7 +39,7 @@ const Navbar = ({children}) => {
             // Realizar petición al servidor.
             try {
                 const response = await fetch(
-                    'http://localhost:6535/iniciarSesion', 
+                    'http://localhost:6535/cerrarSesion', 
                     {
                         method: 'POST', 
                         mode: 'cors'           
