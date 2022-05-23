@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import M from "materialize-css/dist/js/materialize.min.js";
 import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
@@ -39,8 +40,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
 
         return;
     }
-
-    console.log('errores', errors);
 
     function listaParametros() {
         return parametros.map(el => {
@@ -111,7 +110,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
     }
 
     async function onSubmit(data, e) {
-        console.log('hola', data);
         setIsLoading(true);
         setErrorFetch("");
 
@@ -119,7 +117,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
 
         let { observaciones, ...rest } = data;
         let params = Object.entries(rest);
-        console.log('params', params);
 
         let parametrosArr = [];
         for (let i = 0; i < params.length; i++) {
@@ -128,12 +125,39 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
             paramObj['valor'] = params[i][1];
 
             parametrosArr.push(paramObj);
-            console.log('obj', paramObj);
         }
 
-        console.log('paramArr', parametrosArr);
+        let send = {
+            fecha: fecha,
+            observaciones: observaciones,
+            idTipoEstudio: idTipoEstudio,
+            curp: curp,
+            parametros: parametrosArr
+        }
 
+        try {
+            const response = await fetch('http://localhost:6535/estudio', { method: 'POST', body: JSON.stringify(send), headers: {'Content-Type': 'application/json'} });
+            const estudio = await response.json();
 
+            // Mostrar error en caso de ser necesario
+            if (!response.ok) {
+                setErrorSubmit(estudio.message);
+                return;
+            }
+            // Mostrar mensaje de éxito y redireccionar a la página principal
+            else {
+                M.toast({ html: estudio.message });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 3000);
+            }
+
+        } catch(error) {
+            // Mostrar mensaje de error en la conexión con la base de datos.
+            setIsLoading(false);
+            setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
+
+        }
     }
 
     useEffect(() => {
@@ -147,7 +171,6 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
     }, [parametros]);
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         setValue(e.target.name, e.target.value);
     }
 
