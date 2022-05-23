@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
+import LineaCampos from './LineaCampos';
 
 const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
     return(
@@ -14,6 +15,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                 Valor de referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
+        <LineaCampos>
         <Input 
             id = { id }
             name = { id }
@@ -23,12 +25,10 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             requerido = { true }
             onChange = { handleChange }
         />
-        <span className="helper-text left red-text">
-            { elError }
-        </span>
-            <br/>
-            <div className="detalles-lista negrita-pequeno c-000000 left-align">{ unidad }</div>
-            <br/><br/><br/><br/>
+        </LineaCampos>
+        { elError 
+            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
+        }
         </div>                             
     )
 }
@@ -45,6 +45,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
                 Valor de referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
+        <LineaCampos>
         <Select
             id= { id }
             name = { id }
@@ -55,10 +56,10 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
             requerido = { true }
             handleChange = { handleChange }
         />
-        <span className="helper-text left red-text">
-            { elError }
-        </span>
-            <br/><br/><br/>
+        </LineaCampos>
+        { elError 
+            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
+        }
         </div>     
     )
 
@@ -67,7 +68,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
 const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, handleChange, elError }) => {
     return (
         <div className='col s10 l6 espacio-vertical left-align'>
-                <div className='detalles-usuario'>
+            <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
                     <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
             </div>
@@ -76,6 +77,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
                 Valor de referencia: { valorString }
             </div>
             <br/><br/>
+        <LineaCampos>
         <Input 
             id= { id }
             name = { id }
@@ -86,10 +88,11 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
             requerido = { true }
             onChange = { handleChange }
         />
-        <span className="helper-text left red-text">
-            { elError }
-        </span>
-            <br/><br/><br/>
+        </LineaCampos>
+        { elError 
+            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
+        }
+
         </div>
     )
 }
