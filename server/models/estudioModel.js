@@ -60,21 +60,46 @@ exports.registrarResultadosEstudio = async(data) => {
             // Crear una lista de resultados donde almacenaremos el resultado de cada parámetro.
             var resultados = [];
             for (let i = 0; i < data.parametros.length; i++) {
-                // Asignar el pointer del idEstudio al estudio creado previamente.
-                var resultado = new Resultado();
-                resultado.set(CONSTANTS.IDESTUDIO, estudioSaved);
+                const query = new Parse.Query(Parametro);
+                query.include(CONSTANTS.IDTIPOVALOR);
+                
+                try {
+                    let parametro = await query.get(data.parametros[i].objectId);
+                    // Asignar el pointer del idEstudio al estudio creado previamente.
+                    var resultado = new Resultado();
+                    resultado.set(CONSTANTS.IDESTUDIO, estudioSaved);
 
-                // Asignar el pointer del idEstudio al estudio creado previamente.
-                var parametro = new Parametro();
-                parametro.set(CONSTANTS.OBJECTID, data.parametros[i].objectId);
-                resultado.set(CONSTANTS.IDPARAMETRO, parametro);
+                    // Asignar el pointer del idEstudio al estudio creado previamente.
+                    resultado.set(CONSTANTS.IDPARAMETRO, parametro);
 
-                // Asignar el resultado del parámetro dependiendo que tipo de dato recibe el parámetro
-                data.parametros[i].valorNum && resultado.set(CONSTANTS.VALORNUM, data.parametros[i].valorNum);
-                data.parametros[i].valorBool && resultado.set(CONSTANTS.VALORBOOL, data.parametros[i].valorBool);
-                data.parametros[i].valorString && resultado.set(CONSTANTS.VALORSTRING, data.parametros[i].valorString);
+                    let jsonParam = JSON.parse(JSON.stringify(parametro));
 
-                resultados.push(resultado);
+                    // Asignar el resultado del parámetro dependiendo que tipo de dato recibe el parámetro
+                    if (jsonParam.idTipoValor.nombre === 'Numérico') {
+
+                        resultado.set(CONSTANTS.VALORNUM, Number(data.parametros[i].valor));
+                    }
+                    else if (jsonParam.idTipoValor.nombre === 'Positivo/Negativo') {
+                        if (data.parametros[i].valor === 'positivo') {
+                            resultado.set(CONSTANTS.VALORBOOL, true);
+                        }
+                        else {
+                            resultado.set(CONSTANTS.VALORBOOL, false);
+                        }
+                    }
+                    else if (jsonParam.idTipoValor.nombre === 'Texto') {
+                        data.parametros[i].valor && resultado.set(CONSTANTS.VALORSTRING, data.parametros[i].valor);
+                    }
+
+                    resultados.push(resultado);
+                } catch(error) {
+                    // Mostrar error en caso de borrar los parámetros.
+                    return {
+                        data: null,
+                        error: error.message
+                    }
+                }
+                
             }
 
             try {

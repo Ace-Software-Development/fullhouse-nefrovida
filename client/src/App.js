@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={<Home />} />
-        <Route exact path='/registrarEstudio' element={<RegistrarEstudio curp="PICA010404MQTXVNA5" idTipoEstudio="HifRCCITUo"/>} />
+        <Route exact path='/registrarEstudio' element={<RegistrarEstudio curp="PICA010404MQTXVNA5" idTipoEstudio="t5RZddG5sy"/>} />
       </Routes>
     </BrowserRouter>
   )

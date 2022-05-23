@@ -22,11 +22,11 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     
     function validation() {
-        return parametros.map(el => {
+        parametros.map(el => {
             register( el.idParametro.objectId, {
                 required: {
                     value: true,
-                    message: "El valor de " + el.idParametro.nombre + "es requerido"
+                    message: "El valor de " + el.idParametro.nombre + " es requerido"
                 },
             });
         })
@@ -36,11 +36,15 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                 value: false
             }
         });
+
         return;
     }
 
+    console.log('errores', errors);
+
     function listaParametros() {
         return parametros.map(el => {
+            let objectId = el.idParametro.objectId;
             if (el.idParametro.idTipoValor.nombre === 'Numérico'){
                 return  <EntradaParametroNum 
                             id = { el.idParametro.objectId }
@@ -51,7 +55,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                             codigo = { el.idParametro.codigo } 
                             key = { el.idParametro.objectId } 
                             handleChange = { handleChange } 
-                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                            elError = { errors[objectId] && errors[objectId]?.message }
                         />
             }
             else if(el.idParametro.idTipoValor.nombre === 'Positivo/Negativo'){
@@ -62,7 +66,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                             codigo = { el.idParametro.codigo } 
                             key = { el.idParametro.objectId } 
                             handleChange = { handleChange }
-                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                            elError = { errors[objectId] && errors[objectId]?.message }
                         />
             }
             else if(el.idParametro.idTipoValor.nombre === 'Texto'){
@@ -73,7 +77,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                             codigo = { el.idParametro.codigo } 
                             key = { el.idParametro.objectId } 
                             handleChange = { handleChange }
-                            elError = { errors.nombreParametro && errors.nombreParametro?.message }
+                            elError = { errors[objectId] && errors[objectId]?.message }
                         />
             }            
         })
@@ -112,11 +116,35 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
         setErrorFetch("");
 
         e.preventDefault();
+
+        let { observaciones, ...rest } = data;
+        let params = Object.entries(rest);
+        console.log('params', params);
+
+        let parametrosArr = [];
+        for (let i = 0; i < params.length; i++) {
+            let paramObj = {};
+            paramObj['objectId'] = params[i][0];
+            paramObj['valor'] = params[i][1];
+
+            parametrosArr.push(paramObj);
+            console.log('obj', paramObj);
+        }
+
+        console.log('paramArr', parametrosArr);
+
+
     }
 
     useEffect(() => {
         getTipoEstudio(idTipoEstudio);
     }, [])
+
+    useEffect(() => {
+        if (parametros) {
+            validation();
+        }
+    }, [parametros]);
 
     const handleChange = (e) => {
         console.log(e.target.value);
@@ -175,7 +203,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                                 <LineaCampos>
                                     { listaParametros()}
                                 </LineaCampos>
-                                
+                                <br/>
                                 <div className='identificacion-registrar'/>
                                 <br/>
 
