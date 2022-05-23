@@ -22,7 +22,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     
     function validation() {
-        return parametros.map(el => {
+        parametros.map(el => {
             register( el.idParametro.objectId, {
                 required: {
                     value: true,
@@ -196,10 +196,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                             </form>
                         </div>
                         : null
-                    }   
-                    { errorFetch 
-                        && <div> <div className='red-text right'> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
-                    }          
+                    }             
                     </ContainerForm>
                 </Card>
             </Main>
