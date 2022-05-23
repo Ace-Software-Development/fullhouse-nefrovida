@@ -17,7 +17,7 @@ import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar'
-import { ParametroTexto, ParametroRango, ParametroBooleano } from '../components/ParametroTipoEstudio';
+import { ParametroTexto, ParametroRango, ParametroBooleano ,ParametroTipoEstudio } from '../components/ParametroTipoEstudio';
 
 
 export default function ConsultarTipoEstudio() {
@@ -40,6 +40,21 @@ export default function ConsultarTipoEstudio() {
         })
         
     }
+    // function listaParametros2() {
+    //     const arr = []
+    //     for (let index = 0; index < parametros.length; index+=2) {
+    //         const element = parametros[index];
+    //         if(parametros.length > index+1){
+    //             const element2 = parametros[index+1];   
+    //                 arr.push(<ParametroTipoEstudio nombreValor1= {element.idParametro.idTipoValor.nombre}  nombreValor2={element2.idParametro.idTipoValor.nombre} obj1 ={element} obj2 ={ element2} />);
+    //         }
+    //         else{
+    //             arr.push(<ParametroTipoEstudio nombreValor1= {element.idParametro.idTipoValor.nombre}  obj1 ={element} />);
+                
+    //         }
+    //     } 
+    //     return  arr      
+    // }
 
     async function getTipoEstudio(id) {
         try {
@@ -86,6 +101,7 @@ export default function ConsultarTipoEstudio() {
                     <br/>   
                         <LineaCampos>
                             { listaParametros()}
+                            {/* { listaParametros2()} */}
                         </LineaCampos>
                         <div className='identificacion-registrar'/>
                         <br/><br/>

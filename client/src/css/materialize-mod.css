@@ -9394,7 +9394,7 @@ thead {
 
 .espacio-3vw {
   font-weight: bold;
-  font-size: 42px;
+  font-size: 36px;
   line-height: 40px;
 }
 
@@ -9447,4 +9447,36 @@ thead {
 
 .espacio-vertical {
   line-height: 20px;
+}
+
+.detalles-estudio {
+  display: flex;
+  align-items: center;
+}
+
+.div-detalles-estudio {
+  display: flex;
+}
+
+.numero-parametros {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rango-parametros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.espacio-rango {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.fixed-height {
+  height: 140px;
+  display: flex;
+  align-items: center;
 }
