@@ -1,3 +1,11 @@
+/**
+ * Consultar estudio del paciente:
+ * Esta vista se ultiliza para el químico, doctor y nutriologa con la finalidad
+ * de consultar los estudios del paciente.
+ * Se trata de una card que desglosa la información solicitada de los estudios
+ * de cada paciente.
+ */
+
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
@@ -12,18 +20,12 @@ import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
-/**
- * 
- * 
- * 
- */
-
-
 
 export default function ConsultarEstudioPaciente() {
-
+    // Hook que se ejecuta para almacenar la información del estudio.
     const [estudio, setEstudio] = useState({})
 
+    // Funcion para obtener los parametros del estudio.
     function getParametrosEstudio() {
         let parametros = estudio.parametros;
         console.log(parametros);
@@ -34,6 +36,7 @@ export default function ConsultarEstudioPaciente() {
         }
     }
     
+    // Funcion que obtiene el estudio correspondiente al id.
     async function getEstudio(id) {
         try {
             const response = await fetch('http://localhost:6535/consultarEstudioPaciente/1', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
@@ -50,6 +53,7 @@ export default function ConsultarEstudioPaciente() {
             console.log(e)
         }
     }
+    // Hook que obtiene el estudio.
     useEffect(() => {
         getEstudio();
         //getParametrosEstudio();
