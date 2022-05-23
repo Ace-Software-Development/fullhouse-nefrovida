@@ -12,6 +12,13 @@ import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
+/**
+ * 
+ * 
+ * 
+ */
+
+
 
 export default function ConsultarEstudioPaciente() {
 
