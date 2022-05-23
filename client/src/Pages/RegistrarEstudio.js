@@ -247,10 +247,7 @@ export default function RegistrarEstudio({ idTipoEstudio, curp }) {
                             </form>
                         </div>
                         : null
-                    }   
-                    { errorFetch 
-                        && <div> <div className='red-text right'> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
-                    }          
+                    }             
                     </ContainerForm>
                 </Card>
             </Main>
