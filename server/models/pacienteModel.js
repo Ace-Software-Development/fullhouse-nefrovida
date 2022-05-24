@@ -85,8 +85,8 @@ exports.registrarPaciente = async(data) => {
  */
 exports.buscarPorCurp = async (curp) => {
     
-    var Table = Parse.Object.extend(CONSTANTS.PACIENTE);
-    var query = new Parse.Query(Table);
+    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    var query = new Parse.Query(table);
     query.equalTo(CONSTANTS.CURP, curp);
 
     try {
@@ -109,8 +109,6 @@ exports.buscarPorCurp = async (curp) => {
  * @returns Todos los pacientes registrados en nefrovida
  */
 exports.consultarPacientes = async () => {
-    console.log("modelo");
-
     var table = Parse.Object.extend(CONSTANTS.PACIENTE);
     var query = new Parse.Query(table);
     

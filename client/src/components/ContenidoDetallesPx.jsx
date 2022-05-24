@@ -4,7 +4,7 @@ const ContenidoDetallesPx = ({  paciente }) => {
       <br/>
       <div className="col s7 l6 identificacion-usuario">
           <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> account_circle </i>
-          <div className="detalles-lista negrita-grande left-align black-text"> { `${ paciente.nombre } ${ paciente.apellidoPaterno } ${ paciente.apellidoMaterno }` } </div><br/>
+          <div className="detalles-lista negrita-grande left-align black-text"> { `${ paciente.nombre } ${ paciente.apellidoPaterno } ${ paciente.apellidoMaterno ? paciente.apellidoMaterno : ''}` } </div><br/>
           <div className="detalles-lista negrita-pequeno c-908F98 left-align"> { paciente.correo } </div><br/>
           <div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.curp } </div>
       </div>
