@@ -15,7 +15,8 @@ const FormColaborador = () => {
     const { httpConfig, loading, responseJSON, error, message } = useFetch('http://localhost:6535/colaboradores/registrar');
     async function handleSubmit (e) {
         try{
-            httpConfig(null, 'POST')
+            // Utilizar custom hook para realizar petición
+            httpConfig(null, 'POST');
 
         } catch(err){
             console.log(err);

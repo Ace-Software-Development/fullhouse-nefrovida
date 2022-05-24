@@ -31,9 +31,8 @@ import useFetch from '../hooks/useFetch';
 
 const IniciarSesion = () => {
     
-    const [errorSubmit, setErrorSubmit] = useState("");
-    const [isLoading, setIsLoading] = useState("");
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
+    // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
     const { httpConfig, loading, responseJSON, error, message } = useFetch('http://localhost:6535/iniciarSesion');
 
     /**
@@ -70,8 +69,20 @@ const IniciarSesion = () => {
         setErrorSubmit("");
     }
 
-    // Si petición fue correcta almacenar sesión y redirigir página principal.
-    // Se llama a useEffect si cambia message que solo cambia cuando response estuvo ok
+
+    /**
+     * Hook para validar que cambió mensaje 
+     * de fetch y por lo tanto asumir que 
+     * petición fue correcta para almacenar 
+     * sesión y redirigir a página principal.
+     * 
+     * Se llama a useEffect si cambia message
+     * que solo cambia cuando response 
+     * estuvo ok
+     * 
+     * Se obtiene información del colaborador de Nefrovida y 
+     * se la almacena en una sesión dentro de una cookie.
+     */ 
     useEffect(() => {
         if (!responseJSON) return;
 
@@ -85,29 +96,20 @@ const IniciarSesion = () => {
         M.toast({ html: message });
 
     }, [message])
-
-    useEffect(() => {
-        // Mostrar que se está cargando información.
-        setIsLoading(loading);
-    }, [loading])
-
-    useEffect(() => {
-        // Mostrar mensaje de error
-        setErrorSubmit(error);
-    }, [error])
     
 
     /**
      * Función que se ejecuta al envia formulario para
      * validar credenciales de usuario en base de datos.
      * 
-     * Se obtiene información del colaborador de Nefrovida y 
-     * se la almacena en una sesión dentro de una cookie.
+     * Se utiliza hook para realizar fetch, la función
+     * que se llama arma configuración del fetch y dentro
+     * del hook de useFetch al detectar que cambia la 
+     * configuración de petición la realiza y se obtiene
+     * respuesta a través de variable de estado del hook.
      * 
      * @param {object} data - Credenciales de inicio de sesión. 
      * @param {*} e - Evento de submit.
-     * @returns Mensaje de error en caso de haberlo o 
-     * redirección a página inicial.
      */
     async function onSubmit (data, e) {
 
@@ -118,9 +120,10 @@ const IniciarSesion = () => {
         } 
         // En caso de que haya surgido un error mostrarlo.
         catch(e) {
-            setErrorSubmit(e.message)
+            setErrorSubmit(e.message);
         }
     };
+
 
     return(
         <div>
@@ -137,12 +140,11 @@ const IniciarSesion = () => {
                         alr="Logotipo Nefrovida"
                     />
                 </a>
-                
                 <Card>
                 <CardLogin titulo="Login" />
                     <ContainerForm>
                         {
-                            isLoading &&
+                            loading &&
                             <div className="preloader-wrapper small active">
                                 <div className="spinner-layer spinner-blue-only">
                                 <div className="circle-clipper left">
@@ -185,10 +187,10 @@ const IniciarSesion = () => {
                                     />
                                 </div>
                             </LineaCampos>
-                            { errorSubmit && 
+                            { error && 
                                 <div>
                                     <div className='red-text right'>
-                                        <strong> { errorSubmit } </strong>
+                                        <strong> { error } </strong>
                                     </div>
                                     <br />
                                     <br />
@@ -207,4 +209,4 @@ const IniciarSesion = () => {
     )
 }
 
-export default IniciarSesion
+export default IniciarSesion;

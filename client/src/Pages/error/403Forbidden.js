@@ -1,3 +1,10 @@
+/**
+ * Página de error que se llama cuando servidor
+ * retorna respuesta con status 403 para indicar
+ * que usuario no cuenta con el permiso necesario
+ * para realizar dicha acción.
+ */
+
 import Navbar from '../../components/Navbar';
 import Main from '../../components/Main'
 

@@ -1,3 +1,10 @@
+/**
+ * Página de error que se llama cuando servidor
+ * retorna respuesta con status 404 o sucedió un
+ * error inesperado que rompió aplicación o se 
+ * intenta acceder a una ruta inexistente.
+ */
+
 import Navbar from '../../components/Navbar';
 import Main from '../../components/Main'
 
@@ -22,6 +29,3 @@ function NotFound() {
 }
 
 export default NotFound;
-
-
-                

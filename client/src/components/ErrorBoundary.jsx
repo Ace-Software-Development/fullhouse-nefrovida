@@ -1,3 +1,9 @@
+/**
+ * ErrorBoundary se encarga de detectar errores de React
+ * para evitar que la aplicación se rompa. 
+ * En caso de detectar un error carga página de error 404.
+ */
+
 import React from "react";
 import NotFound from "../pages/error/404notFound";
 

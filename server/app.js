@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const parseServer = require('parse-server').ParseServer;
 const cors = require('cors');
-const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication')
+const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication');
 let CONSTANTS = require("./constantsProject");
 
 // Middlewares
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
-    console.log('DATABASE_URI not specified, falling back to localhost.')
+    console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
 var api = new parseServer({

@@ -16,7 +16,10 @@ function App() {
   // Definir que session se almacenará en una cookie
   ReactSession.setStoreType("cookie");
 
-  
+  /**
+   * Definir rutas de aplicación con protección
+   * dependiendo de la sessión del usuario.
+   */
   return (
     <BrowserRouter>
       <ErrorBoundary>

@@ -1,7 +1,12 @@
 const sessionModel = require('../models/sessionModel');
 
 /**
- * authUsuario Función para validar que usuario se haya autenticado en el sistema.
+ * authUsuario Función para validar que usuario 
+ * se haya autenticado en el sistema.
+ * 
+ * Recibe token de session desde React para 
+ * validarlo obteniendo el rol con el que 
+ * cuenta el usuario.
  * 
  * @param {object} request - Petición al servidor
  * @param {object} response - Respuesta a la petición realizada al servidor.
@@ -10,25 +15,31 @@ const sessionModel = require('../models/sessionModel');
  */
 function authUsuario(request, response, next) {
     var sessionToken = null;
+    // Si se obtuvo una petición POST obtener token del body
     if (request.method === 'POST') {
         if (request.body && request.body.session && request.body.session.sessionToken) {
             sessionToken = request.body.session.sessionToken;
         }
 
-    } else {
+    } 
+    // Si petición fue GET o DELETE obtener token dentro de ruta
+    else {
         if (request.query.token) {
             sessionToken = request.query.token;
         }
     }
 
+    // Si no se obtiene token definir que debe iniciar sesión
     if ( !sessionToken ) {
         return response.status(401).send({
             message: 'Sesion invalida'
         });
     }
     
+    // Consultar rol del token de session obtenido
     sessionModel.obtenerSession(sessionToken)
         .then((session) => {
+            // Si no se obtuo rol o hubo error en consulta
             if(session && !session.rol) {
                 // Retornar "Session invalida" para que usuario se autentique nuevamente
                 return response.status(401).send({
@@ -84,8 +95,7 @@ function authRol(roles) {
     return (request, response, next) => {
         
         if (!roles.includes(request.rol)) {
-            response.status(403)
-            return response.send({
+            return response.status(403).send({
                 message: 'Acceso no autorizado' 
             });
         }

@@ -14,12 +14,12 @@ exports.obtenerSession = function(token) {
                 return resolve( {
                     rol: null,
                     message: error
-                })
+                });
             }
             return resolve( {
                 rol: nombreRol,
                 message: error
-            })
+            });
         })
     })
 }
@@ -32,32 +32,39 @@ exports.obtenerSession = function(token) {
 
 exports.asyncObtenerSession = async(token, callback) => {
     try {
+        // Obtener datos de sessión actual de usuario.
         var session = await Parse.Session.current();
         const sessJSON = session.toJSON();
+        // Verificar que coincida token almacenado en session de React
         if(token == sessJSON.sessionToken) {
             try {
+                // Obtener objeto de usuario
                 const colab = await colaboradorModel.obtenerColaborador(sessJSON.user.objectId);
                 if(colab.error) {
                     callback(null, colab.error.message);
                 }
                 const colabJSON = colab.colaborador.toJSON();
+                // Obtener rol de usuario
                 const rol = await rolModel.obtenerRol(colabJSON.idRol.objectId);
                 if(rol.error) {
                     callback(null, rol.error);
                 }
+                // Retornar rol que tiene usuario
                 const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
                 callback(nombreRol, null);
             } catch(error) {
                 callback(null, errr.message);
             }
-        } else {
+        } 
+        // En caso de que token de sessión de React no sea válido, cerrar sesión.
+        else {
             await Parse.User.logOut();
-            callback(null, "Sesion invalida")
+            callback(null, "Sesion invalida");
         }
         
         
     } catch(error) {
         await Parse.User.logOut();
-        callback(null, "Sesion invalida")
+        callback(null, "Sesion invalida");
     }
 }
