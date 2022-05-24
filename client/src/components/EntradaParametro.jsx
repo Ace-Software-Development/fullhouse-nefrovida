@@ -16,7 +16,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                 Valor de Referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
-        <LineaParametros>
+        <LineaCampos>
         <Input 
             id = { id }
             name = { id }
@@ -26,7 +26,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             requerido = { true }
             onChange = { handleChange }
         />
-        </LineaParametros>
+        </LineaCampos>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }
@@ -46,7 +46,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
                 Valor de Referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
-        <LineaParametros>
+        <LineaCampos>
         <Select
             id= { id }
             name = { id }
@@ -57,7 +57,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
             requerido = { true }
             handleChange = { handleChange }
         />
-        </LineaParametros>
+        </LineaCampos>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }
@@ -78,7 +78,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
                 Valor de Referencia: { valorString }
             </div>
             <br/><br/>
-        <LineaParametros>
+        <LineaCampos>
         <Input 
             id= { id }
             name = { id }
@@ -89,7 +89,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
             requerido = { true }
             onChange = { handleChange }
         />
-        </LineaParametros>
+        </LineaCampos>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }

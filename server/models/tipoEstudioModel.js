@@ -22,13 +22,13 @@ function results(data, error) {
 
 exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
-    var table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
+    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
     let query = new Parse.Query(table);
 
     try {
 
         // Obtener el tipo de estudio
-        let tipoEstudio = await query.get(idTipoEstudio);
+        const tipoEstudio = await query.get(idTipoEstudio);
 
         // Enviar error en caso de no encontrar dicho tipo de Estudio
         if (!tipoEstudio) {
@@ -37,15 +37,15 @@ exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
         // Obtener de la tabla ParametroEstudio todos los registros cuyo 
         // pointer a idTipoEstudio sea el estudio.
-        table = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
-        var queryParametros = new Parse.Query(table);
+        const tableParametroEstudio = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
+        let queryParametros = new Parse.Query(tableParametroEstudio);
         queryParametros.include(CONSTANTS.IDPARAMETRO);
         queryParametros.include([CONSTANTS.IDPARAMETRO + '.' + CONSTANTS.IDTIPOVALOR]);
         queryParametros.equalTo(CONSTANTS.IDTIPOESTUDIO, tipoEstudio);
         queryParametros.select(CONSTANTS.IDPARAMETRO);
 
         try {
-            var parametros = await queryParametros.find();
+            let parametros = await queryParametros.find();
         
             // Mostrar error si no hay parámetros
             if (!parametros || parametros === []) {
