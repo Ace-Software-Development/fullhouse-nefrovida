@@ -3,6 +3,10 @@ module.exports = Object.freeze({
     OBJECTID: "objectId",
     IDROL: "idRol",
     ACTIVO: "activo",
+    // AREA
+    AREA: "AREA",
+    IDAREA: "idArea",
+    NOMBREAREA: "nombre",
     // Tabla User
     USUARIO: "username",
     CONTRASENA: "password",
@@ -24,5 +28,59 @@ module.exports = Object.freeze({
     // Session
     SESSION: "_Session",
     SESSIONTOKEN: "sessionToken",
-    USER: "user"
+    USER: "user",
+    // PACIENTE
+    PACIENTE: "PACIENTE",
+    CURP: "curp",
+    NOMBREPACIENTE: "nombre",
+    APELLIDOPATERNOPACIENTE: "apellidoPaterno",
+    APELLIDOMATERNOPACIENTE: "apellidoMaterno",
+    FECHANACIMIENTOPACIENTE: "fechaNacimiento",
+    EDADPACIENTE: "edad",
+    TELEFONOPACIENTE: "telefono",
+    CORREOPACIENTE: "correo",
+    SEXOPACIENTE: "sexo",
+    ESTATURAPACIENTE: "estatura",
+    PESOPACIENTE: "peso",
+    ACTIVOPACIENTE: "activo",
+    // TIPOESTUDIO
+    TIPOESTUDIO: "TIPOESTUDIO",
+    IDTIPOESTUDIO: "idTipoEstudio",
+    NOMBRETIPOESTUDIO: "nombre",
+    DESCRIPCIONTIPOESTUDIO: "descripcion",
+    ACTIVOTIPOESTUDIO: "activo",
+    CODIGOTIPOESTUDIO: "codigo",
+    // TIPOVALOR
+    TIPOVALOR: "TIPOVALOR",
+    IDTIPOVALOR: "idTipoValor",
+    NOMBRETIPOVALOR: "nombre",
+    // PARAMETRO
+    PARAMETRO: "PARAMETRO",
+    IDPARAMETRO: "idParametro",
+    NOMBREPARAMETRO: "nombre",
+    CODIGOPARAMETRO: "codigo",
+    UNIDADPARAMETRO: "unidad",
+    TIPOVALORPARAMETRO: "tipoValor",
+    TIENERANGOPARAMETRO: "tieneRango",
+    VALORMINPARAMETRO: "valorMin",
+    VALORMAXPARAMETRO: "valorMax",
+    VALORBOOLPARAMETRO: "valorBool",
+    VALORSTRINGPARAMETRO: "valorString",
+    // PARAMETROESTUDIO
+    PARAMETROESTUDIO: "PARAMETROESTUDIO",
+    // ESTUDIO
+    ESTUDIO: "ESTUDIO",
+    IDESTUDIO: "idEstudio",
+    OBSERVACIONESESTUDIO: "observaciones",
+    FECHAESTUDIO: "fecha",
+    //RESULTADO
+    RESULTADO: "RESULTADO",
+    VALORNUMRESULTADO: "valorNum",
+    VALORBOOLRESULTADO: "valorBool",
+    VALORSTRINGRESULTADO: "valorString",
+    // NOTAMEDICA
+    NOTAMEDICA: "NOTAMEDICA",
+    IDNOTAMEDICA: "idNotaMedica",
+    FECHANOTAMEDICA: "fecha",
+    NOTAS: "notas"
 })
