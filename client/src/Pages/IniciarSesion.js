@@ -139,85 +139,82 @@ const IniciarSesion = () => {
 
 
     return(
-        <div>
-            <Main>
-                <br></br>
+        <div className='center'>
+            <div className="login-page">
+                <div className='login-margin'>
                 <a 
                     href="#!"
                     className="brand-logo"
                 >
                     <img 
-                        height= "100px"
-                        className="logotipo" 
+                        className="logo-login" 
                         src={logo}
                         alr="Logotipo Nefrovida"
                     />
                 </a>
-                <Card>
-                <CardLogin titulo="Login" />
+                <CardLogin titulo="Iniciar sesión" >
                     <ContainerForm>
-                        {
-                            loading &&
-                            <div className="preloader-wrapper small active">
-                                <div className="spinner-layer spinner-blue-only">
-                                <div className="circle-clipper left">
-                                    <div className="circle"></div>
-                                </div><div className="gap-patch">
-                                    <div className="circle"></div>
-                                </div><div className="circle-clipper right">
-                                    <div className="circle"></div>
-                                </div>
-                                </div>
-                            </div>
-                        }
-                        <br />
-                        <br />
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <LineaCampos>
-                                <div align="left">
-                                    <Input
-                                        id="username" 
-                                        label="Usuario o Correo electrónico" 
-                                        tamano="m12 s12"
-                                        type="text"
-                                        onChange={ handleChange }
-                                        elError={ errors.username && errors.username?.message }
-                                        requerido = { true } 
-                                    />
-                                </div>
-                            </LineaCampos>
-                            <LineaCampos>
-                                <div align="left">
-                                    <Input 
-                                        id="password" 
-                                        label="Contraseña" 
-                                        tamano="m12 s12"
-                                        type="password"
-                                        onChange = { handleChange }
-                                        elError = { errors.password && errors.password?.message }
-                                        maxlength = "50"
-                                        requerido = { true }
-                                    />
-                                </div>
-                            </LineaCampos>
-                            { errorSubmit && 
-                                <div>
-                                    <div className='red-text right'>
-                                        <strong> { errorSubmit } </strong>
+                            {
+                                loading &&
+                                <div className="center animate-inicio-sesion-loader">    
+
+                                    <div class="preloader-wrapper med active">
+                                        <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <br />
-                                    <br />
+
+                                    <br/>
                                 </div>
                             }
                             <br />
-                            <BtnIniciarSesion />
-                            <br />
-                            <br />
-                            <BtnRestablecer />
-                        </form>
-                    </ContainerForm>
-                </Card>
-            </Main>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <LineaCampos>
+                                    <div align="left">
+                                        <Input
+                                            id="username" 
+                                            label="Usuario o Correo electrónico" 
+                                            tamano="m12 s12"
+                                            type="text"
+                                            onChange={ handleChange }
+                                            elError={ errors.username && errors.username?.message }
+                                            requerido = { true } 
+                                        />
+                                    </div>
+                                </LineaCampos>
+                                <LineaCampos>
+                                    <div align="left">
+                                        <Input 
+                                            id="password" 
+                                            label="Contraseña" 
+                                            tamano="m12 s12"
+                                            type="password"
+                                            onChange = { handleChange }
+                                            elError = { errors.password && errors.password?.message }
+                                            maxlength = "50"
+                                            requerido = { true }
+                                        />
+                                    </div>
+                                </LineaCampos>
+                                { errorSubmit && 
+                                    <div className="animate-new-element"> <div className="red-text right"> <strong> { errorSubmit } </strong> </div> <br/> </div>
+                                }
+                                <br />
+                                <BtnIniciarSesion />
+                                <br />
+                                <br />
+                                <BtnRestablecer />
+                            </form>
+                        </ContainerForm>
+                </CardLogin>
+                </div>
+            </div>
         </div>
     )
 }
