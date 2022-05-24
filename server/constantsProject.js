@@ -20,5 +20,9 @@ module.exports = Object.freeze({
     ROLQUIMICO: "quimico",
     ROLDOCTOR: "doctor",
     ROLNUTRIOLOGO: "nutriologo",
-    ROLPSICOLOGO: "psicologo"
+    ROLPSICOLOGO: "psicologo",
+    // Session
+    SESSION: "_Session",
+    SESSIONTOKEN: "sessionToken",
+    USER: "user"
 })
