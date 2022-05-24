@@ -62,6 +62,8 @@ app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
+app.use('/paciente', require('./routes/pacienteRouter'))
+
 app.use('/estudio', require('./routes/estudioRouter'));
 
 app.get('*', function(request, response){
