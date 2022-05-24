@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Input from './/Input'
 import Select from './Select'
 import LineaCampos from './LineaCampos';
+import LineaParametros from './LineaParametros';
 
 const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
     return(
@@ -15,7 +16,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                 Valor de Referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
-        <LineaCampos>
+        <LineaParametros>
         <Input 
             id = { id }
             name = { id }
@@ -25,7 +26,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             requerido = { true }
             onChange = { handleChange }
         />
-        </LineaCampos>
+        </LineaParametros>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }
@@ -45,7 +46,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
                 Valor de Referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
-        <LineaCampos>
+        <LineaParametros>
         <Select
             id= { id }
             name = { id }
@@ -56,7 +57,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
             requerido = { true }
             handleChange = { handleChange }
         />
-        </LineaCampos>
+        </LineaParametros>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }
@@ -77,7 +78,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
                 Valor de Referencia: { valorString }
             </div>
             <br/><br/>
-        <LineaCampos>
+        <LineaParametros>
         <Input 
             id= { id }
             name = { id }
@@ -88,7 +89,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
             requerido = { true }
             onChange = { handleChange }
         />
-        </LineaCampos>
+        </LineaParametros>
         { elError 
             && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
         }
@@ -98,20 +99,3 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
 }
 
 export {EntradaParametroNum, EntradaParametroBool, EntradaParametroString};
-
-
-
-/*<div className="col s7 l6 identificacion-usuario">
-        <div align="left">
-        <div className='detalles-usuario'>
-        <i className="material-icons icon-separator small c-908F98">format_list_numbered</i><div className="detalles-lista negrita-grande c-908F98 left-align">{ parametro }</div><br/>
-        </div><br></br>
-        <Input 
-            id="username"
-            type="number" 
-            label="Valor"
-            tamano="m8 s12"/>
-            <br></br>
-            <div className="detalles-lista negrita-pequeno c-908F98 left-align">{ unidad }</div>
-            </div>
-            </div>*/   
