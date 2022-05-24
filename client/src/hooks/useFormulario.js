@@ -15,8 +15,6 @@ const useFormulario = (inicial, validate) => {
         setErrors(validate(formulario))
     }
 
-    console.log(formulario)
-
     const reset = () => {
         setFormulario(inicial)
     }

@@ -1,4 +1,5 @@
-const pacienteModel = require('../models/pacienteModel')
+const pacienteModel = require('../models/pacienteModel');
+
 
 /**
  * asyncCrearPaciente Función asíncrona para registrar un nuevo paciente, 
@@ -16,13 +17,13 @@ module.exports.crearPaciente = async(request, response) => {
                 return response.status(400).send( {
                     status: 'error',
                     data: null,
-                    message: "Error. " + results.error
+                    message: 'Error. ' + results.error
                 })
             }
             response.status(200).send( {
                 success: 'true',
                 data: results,
-                message: "Paciente creado exitosamente"
+                message: 'Paciente creado exitosamente'
             })
         } catch (error) {
         }
@@ -31,7 +32,7 @@ module.exports.crearPaciente = async(request, response) => {
         return response.status(400).send( {
             status: 'error',
             data: null,
-            message: "Error. " + error.message
+            message: 'Error. ' + error.message
         })
     }
 }
