@@ -46,7 +46,7 @@ const Temp = () => {
     return(
         <Card>
             <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
-            <div className="contenedor">
+            <div className="contenedor animate-new-element">
                 { isLoading && (
                         <div className="center">
                             <br/><br/><br/>
@@ -70,15 +70,15 @@ const Temp = () => {
                     
                 )}
                 { !isLoading && !errorFetch && (
-                <>  
+                <div className="on-load-anim">  
                     <br/>
                     <LineaParametros>
                         {listaTiposEstudio()}
                     </LineaParametros>
-                </>
+                </div>
                 )}
                 { errorFetch && (
-                    <div>
+                    <div className="animate-new-element">
                         <br/><br/><br/>
 
                         <div className="texto-grande red-text center">

@@ -9546,3 +9546,31 @@ thead {
 .emoji-error {
   font-size: xx-large;
 }
+
+@keyframes append-animate {
+	from {
+		transform: translateY(40px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0%);
+		opacity: 1;
+	}
+}
+
+.on-load-anim {
+  animation: append-animate .6s ease;
+}
+
+@keyframes new-element {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.animate-new-element {
+  animation: new-element .4s ease-in-out;
+}
