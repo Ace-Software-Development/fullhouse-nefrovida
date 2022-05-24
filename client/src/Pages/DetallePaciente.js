@@ -72,7 +72,7 @@ function DetallePaciente() {
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
                 { isLoading && (
-                    <div className="center">
+                    <div className="center animate-new-element">
                         <br/><br/>
 
                         <div class="preloader-wrapper big active">
@@ -93,9 +93,9 @@ function DetallePaciente() {
                     </div>
                 
                 )}
-                { !isLoading && !errorFetch && <ContenidoDetallesPx paciente={ paciente }/>}
+                { !isLoading && !errorFetch && <div className="loader-anim"><ContenidoDetallesPx paciente={ paciente }/></div>}
                 { errorFetch && (
-                    <div>
+                    <div className="animate-new-element">
                         <br/><br/><br/>
 
                         <div className="texto-grande red-text center">

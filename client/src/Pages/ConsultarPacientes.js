@@ -91,7 +91,27 @@ function ConsultarPacientes() {
                         onChange = { handleChange }
                     />
                 </CardSubtitulo>
-                { isLoadind ?  <div> Cargando... </div> : <Tabla datos= { pacientes }/>}
+                { isLoadind ?  (
+                    <div className="center animate-new-element">
+                        <br/>
+
+                        <div class="preloader-wrapper med active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                    </div>
+                    ) 
+                : <Tabla datos= { pacientes }/>}
                 { errorFetch 
                     && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
                 }
