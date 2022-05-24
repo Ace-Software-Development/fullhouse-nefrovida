@@ -16,8 +16,10 @@ import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
-import BtnEliminar from '../components/BtnEliminar'
-import { ParametroTexto, ParametroRango, ParametroBooleano ,ParametroTipoEstudio } from '../components/ParametroTipoEstudio';
+import BtnEliminar from '../components/BtnEliminar';
+import LineaParametros from '../components/LineaParametros';
+import CardEstudio from '../components/CardEstudio';
+import { ParametroTexto, ParametroRango, ParametroBooleano} from '../components/ParametroTipoEstudio';
 
 
 export default function ConsultarTipoEstudio() {
@@ -40,21 +42,6 @@ export default function ConsultarTipoEstudio() {
         })
         
     }
-    // function listaParametros2() {
-    //     const arr = []
-    //     for (let index = 0; index < parametros.length; index+=2) {
-    //         const element = parametros[index];
-    //         if(parametros.length > index+1){
-    //             const element2 = parametros[index+1];   
-    //                 arr.push(<ParametroTipoEstudio nombreValor1= {element.idParametro.idTipoValor.nombre}  nombreValor2={element2.idParametro.idTipoValor.nombre} obj1 ={element} obj2 ={ element2} />);
-    //         }
-    //         else{
-    //             arr.push(<ParametroTipoEstudio nombreValor1= {element.idParametro.idTipoValor.nombre}  obj1 ={element} />);
-                
-    //         }
-    //     } 
-    //     return  arr      
-    // }
 
     async function getTipoEstudio(id) {
         try {
@@ -73,7 +60,7 @@ export default function ConsultarTipoEstudio() {
     }
     useEffect(() => {
         getTipoEstudio('wJSsSRLYmO');
-    }, [])
+    }, []);
 
     return(
         
@@ -85,26 +72,27 @@ export default function ConsultarTipoEstudio() {
                 <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
                 <ContainerForm>
                     <BtnRegresar url="/"/>
-                    <br/><br/><br/><br/><br/>
-                    <div className="row">
-                        <div className="col s7 l6 identificacion-prueba left-align">
-                            <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
-                            <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.nombre}</div><br/>
-                            <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
+                    <br/><br/>  
+                    <div className="row div-detalles-estudio">
+                        <div className="col s6 l6 left-align">
+                            <div className="detalles-estudio">
+                                <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
+                                <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.nombre}</div><br/>
+                                <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
+                            </div>
                         </div>
-                        <div className='detalles-usuario'>
+                        <div className='col s6 l6 numero-parametros'>
                             <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ parametros.length } parámetros</div>
                         </div>
                     </div>
-                    <br/><br/><br/>
+                    
                     <div className='identificacion-registrar'/>
-                    <br/>   
-                        <LineaCampos>
-                            { listaParametros()}
-                            {/* { listaParametros2()} */}
-                        </LineaCampos>
-                        <div className='identificacion-registrar'/>
-                        <br/><br/>
+
+                    <LineaParametros>
+                        { listaParametros()}
+                    </LineaParametros>
+                        
+                        
                         {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
                         {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
                     
