@@ -245,20 +245,25 @@ const RegistrarPaciente = () => {
                     <Link to = "/">
                         <BtnRegresar />
                     </Link>
-                    {
-                        isLoading &&
-                        <div class="preloader-wrapper small active">
-                            <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
+                    { isLoading && (
+                        <div className="center">
+                            <br/><br/>
+
+                            <div class="preloader-wrapper med active">
+                                <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                                </div>
                             </div>
-                            </div>
+
+                            <br/>
                         </div>
-                    }
+                    )}
                     <br/><br/>
                     <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
