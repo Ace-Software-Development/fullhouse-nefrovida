@@ -52,19 +52,19 @@ module.exports.consultarPacientes = async(request, response) => {
             return response.status(400).send({
                 status: 'error',
                 data: null,
-                message: "Error. " + results.error
+                message: 'Error. ' + results.error
             });
         }
         response.status(200).send({
             success: 'success',
             data: results,
-            message: "Pacientes obtenidos exitosamente."
+            message: 'Pacientes obtenidos exitosamente.'
         });
     } catch(error) {
         return response.status(400).send( {
             status: 'error',
             data: null,
-            message: "Error. " + error.message
+            message: 'Error. ' + error.message
         });
     }
 }
@@ -77,7 +77,8 @@ module.exports.consultarPacientes = async(request, response) => {
  * @returns Respuesta de la petición
  */
 module.exports.consutarDetallePaciente = async(request, response) => {
-    let curp = request.params.curp;
+    // Se obtiene el curp de los parametros de la ruta
+    const curp = request.params.curp;
 
     try {
         const results = await pacienteModel.buscarPorCurp(curp);
@@ -86,19 +87,19 @@ module.exports.consutarDetallePaciente = async(request, response) => {
             return response.status(400).send({
                 status: 'error',
                 data: null,
-                message: "Error. " + results.error
+                message: 'Error. ' + results.error
             });
         }
         response.status(200).send({
             success: 'success',
             data: results,
-            message: "Paciente obtenido exitosamente"
+            message: 'Paciente obtenido exitosamente'
         });
     } catch(error) {
         response.status(200).send({
             status: 'success',
             data: results,
-            message: "Paciente obtenido exitosamente"
+            message: 'Paciente obtenido exitosamente'
         });
     }
 }
@@ -111,26 +112,27 @@ module.exports.consutarDetallePaciente = async(request, response) => {
  * @returns Respuesta de la petición
  */
 module.exports.consultarPorNombre = async(request, response) => {
+    // Se obtiene el curp de los parametros de la ruta
+    const nombre = request.params.nombre;
     try {
-        let nombre = request.params.nombre;
         const results = await pacienteModel.buscarPorNombre(nombre)
         if (results.error) {
             return response.status(400).send({
                 status: 'error',
                 data: null,
-                message: "Error. " + results.error
+                message: 'Error. ' + results.error
             });
         }
         response.status(200).send({
             status: 'success',
             data: results,
-            message: "Paciente obtenido exitosamente"
+            message: 'Paciente obtenido exitosamente'
         });
     } catch(error) {
         response.status(200).send({
             status: 'success',
             data: results,
-            message: "Paciente obtenido exitosamente"
+            message: 'Paciente obtenido exitosamente'
         });
     }
 }

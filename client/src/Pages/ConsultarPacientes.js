@@ -22,6 +22,7 @@ function ConsultarPacientes() {
     const [pacientes, setPacientes] = useState([]);
     const [errorFetch, setErrorFetch] = useState('');
 
+
     /**
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
      */
@@ -29,12 +30,15 @@ function ConsultarPacientes() {
         getPacientes('');
     }, [])
 
+
     /**
      * Función asíncrona para obtener la lista de pacientes del laboratorio. Si recibe una string
      * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
      * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los pacientes.
      * @returns 
      */
+
+
     async function getPacientes(buscar) {
         // Error vacío
         setErrorFetch('');
@@ -57,6 +61,7 @@ function ConsultarPacientes() {
             setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
     }
+
 
     /**
      * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 

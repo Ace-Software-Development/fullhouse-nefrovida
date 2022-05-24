@@ -8,20 +8,22 @@
  */
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Main from '../components/Main'
-import CardTitulo from '../components/CardTitulo'
+import Main from '../components/Main';
+import CardTitulo from '../components/CardTitulo';
 import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
 import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
 
+
 function DetallePaciente() {
     // Se obtiene la curp de los parámetros de front
-    let { curp } = useParams()
+    let { curp } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [paciente, setPaciente] = useState({});
     const [errorFetch, setErrorFetch] = useState('');
+
 
     /**
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
@@ -29,6 +31,7 @@ function DetallePaciente() {
     useEffect(() => {
         getPaciente();
     }, [])
+
 
     /**
      * Función asíncrona para obtener la información del paciente.
@@ -38,7 +41,7 @@ function DetallePaciente() {
         setErrorFetch('');
         try {
             // Fetch a la ruta de back para obtener la información, se añade la curp del paciente a buscar
-            const response = await fetch('http://localhost:6535/paciente/detalle/' + curp, {method: 'GET', headers: {'Content-Type': 'application/json'}});
+            const response = await fetch('http://localhost:6535/paciente/detalle/' + curp, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             const detallePaciente = await response.json();
             setIsLoading(false);
 
@@ -56,19 +59,20 @@ function DetallePaciente() {
         }
     }
 
+
     return (
         <div>
             <Navbar/>
             <Main>
             <br/><br/> 
-            <Link to = '/'>
+            <Link to = "/">
                 <BtnRegresar/>
             </Link>
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
                 { isLoading && <div>Cargado...</div> }
-                { !isLoading && !errorFetch && <ContenidoDetallesPx paciente={paciente}/>}
+                { !isLoading && !errorFetch && <ContenidoDetallesPx paciente={ paciente }/>}
                 { errorFetch 
                     && <div> <br></br> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
                 }

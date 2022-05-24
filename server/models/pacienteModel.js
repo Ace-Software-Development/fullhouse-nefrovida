@@ -118,11 +118,11 @@ exports.buscarPorCurp = async (curp) => {
  * @returns Todos los pacientes registrados en nefrovida
  */
 exports.consultarPacientes = async () => {
-    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
-    var query = new Parse.Query(table);
+    const table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    let query = new Parse.Query(table);
     
     try {
-        var results = await query.find();
+        const results = await query.find();
 
         if (!results) {
             return {
@@ -154,19 +154,19 @@ exports.buscarPorNombre = async(nombre) => {
     nombre = nombre.toLowerCase();
     const palabras = nombre.split(' ');
 
-    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
-    var query = new Parse.Query(table);
+    const table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    let query = new Parse.Query(table);
 
     try {
-        var pacientes = await query.find();
-        var results = [];
+        const pacientes = await query.find();
+        let results = [];
 
-        var json_res = JSON.parse(JSON.stringify(pacientes));
+        let json_res = JSON.parse(JSON.stringify(pacientes));
 
         // Iterar por ccada uno de los pacientes de nefrovida
         for (let i = 0; i < json_res.length; i++){
             // Obtener su nombre completo
-            var nombreCompleto = json_res[i].nombre + " " + json_res[i].apellidoPaterno + " ";
+            let nombreCompleto = json_res[i].nombre + ' ' + json_res[i].apellidoPaterno + ' ';
 
             if (json_res[i].apellidoMaterno) {
                 nombreCompleto += json_res[i].apellidoMaterno;
