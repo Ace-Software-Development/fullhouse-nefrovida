@@ -113,6 +113,7 @@ exports.buscarPorCurp = async (curp) => {
     }
 }
 
+
 /**
  * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
  * @returns Todos los pacientes registrados en nefrovida
@@ -143,6 +144,7 @@ exports.consultarPacientes = async () => {
     }
     
 }
+
 
 /**
  * asyncBuscarPorNombre Función asíncrona para buscar un paciente por nombre o apellidos

@@ -13,7 +13,7 @@ const FilaTablaPaciente = ({ paciente }) => {
         </a>
         <br/>
         <g className="tabla-sexo">
-          { paciente.sexo }
+          { paciente.curp }
         </g>
       </td>
       <td  >

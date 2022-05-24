@@ -37,6 +37,7 @@ module.exports.crearPaciente = async(request, response) => {
     }
 }
 
+
 /**
  * asyncConsultarPacientes Función asíncrona para obtener la información de todos los
  * pacientes registrados en Nefrovida.
@@ -68,6 +69,7 @@ module.exports.consultarPacientes = async(request, response) => {
         });
     }
 }
+
 
 /**
  * asyncConsutarDetallePaciente Función asíncrona para consultar la información 
@@ -103,6 +105,7 @@ module.exports.consutarDetallePaciente = async(request, response) => {
         });
     }
 }
+
 
 /**
  * asyncConsultarPorNombre Función asíncrona para buscar un paciente por nombre,
