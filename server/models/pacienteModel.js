@@ -85,8 +85,8 @@ exports.registrarPaciente = async(data) => {
  */
 exports.buscarPorCurp = async (curp) => {
     
-    var table = Parse.Object.extend(CONSTANTS.PACIENTE);
-    var query = new Parse.Query(table);
+    var Table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    var query = new Parse.Query(Table);
     query.equalTo(CONSTANTS.CURP, curp);
 
     try {
@@ -168,9 +168,12 @@ exports.buscarPorNombre = async(nombre) => {
             
             let includes = true;
 
+
             // Por cada una de las palabras recibidas ver si el nombre completo la incluye
             for (let j = 0; j < palabras.length; j++) {
-                if (!nombreCompleto.includes(palabras[j])) {
+                const curp = json_res[i].curp.toLowerCase();
+
+                if (!nombreCompleto.includes(palabras[j]) && !curp.includes(palabras[j])) {
                     includes = false;
                 }
             }
