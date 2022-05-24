@@ -9418,3 +9418,9 @@ thead {
   flex-direction: row;
   align-items: center;
 }
+
+.texto-grande {
+  font-size:x-large;
+  line-height: 40px;
+  font-weight: 500;
+}

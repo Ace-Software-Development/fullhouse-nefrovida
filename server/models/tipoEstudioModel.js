@@ -1,7 +1,5 @@
 let CONSTANTS = require("../constantsProject");
 
-var TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
-
 /**
  * Función auxiliar para retornar los datos y el error.
  * @param {Object} data - Datos a retornar
@@ -24,54 +22,46 @@ function results(data, error) {
 
 exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
-    var table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
+    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
     let query = new Parse.Query(table);
 
     try {
 
-        let tipoEstudio = await query.get(idTipoEstudio);
+        // Obtener el tipo de estudio
+        const tipoEstudio = await query.get(idTipoEstudio);
 
+        // Enviar error en caso de no encontrar dicho tipo de Estudio
         if (!tipoEstudio) {
             return results(null, 'No se encontró dicho estudio.');
         }
 
-        table = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
-        var queryParametros = new Parse.Query(table);
+        // Obtener de la tabla ParametroEstudio todos los registros cuyo 
+        // pointer a idTipoEstudio sea el estudio.
+        const tableParametroEstudio = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
+        let queryParametros = new Parse.Query(tableParametroEstudio);
         queryParametros.include(CONSTANTS.IDPARAMETRO);
         queryParametros.include([CONSTANTS.IDPARAMETRO + '.' + CONSTANTS.IDTIPOVALOR]);
         queryParametros.equalTo(CONSTANTS.IDTIPOESTUDIO, tipoEstudio);
         queryParametros.select(CONSTANTS.IDPARAMETRO);
 
         try {
-            var results = await queryParametros.find();
+            let parametros = await queryParametros.find();
         
             // Mostrar error si no hay parámetros
-            if (!results || results === []) {
-                return {
-                    data: null,
-                    error: 'No hay parámetros registrados para este tipo de estudio.'
-                }
+            if (!parametros || parametros === []) {
+                return results(null, 'No hay parámetros registrados para este tipo de estudio.');
             }
 
             // Añadir la información del tipo de estudio a los resultados
-            results.push(tipoEstudio);
+            parametros.push(tipoEstudio);
 
-            return {
-                data: results,
-                error: null
-            }
+            return results(parametros, null);
         } catch(error) {
             // Devolver error al obtener los parámetros
-            return {
-                data: null,
-                error: error.message
-            }
+            return results(null, error.message);
         }
     } catch(error) {
         // Devolver error al obtener los parámetros
-        return {
-            data: null,
-            error: error.message
-        }
+        return results(null, error.message);
     }
 }

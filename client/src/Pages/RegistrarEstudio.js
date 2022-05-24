@@ -232,6 +232,7 @@ let fecha = cDay + "/" + cMonth + "/" + cYear ;
 
 return(
     <div className="row ContainerForm left-align">
+    
     <div>
         <Navbar/>
         <Main>
@@ -242,20 +243,28 @@ return(
                 <Link to = "/">
                 <BtnRegresar/><br/><br/>
                 </Link>
-                {
-                    isLoading &&
-                    <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
+                { isLoading && (
+                    <div className="center">
+                        <br/><br/><br/>
+
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
                         </div>
-                        </div>
+
+                        <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
+
+                        <br/><br/><br/>
                     </div>
-                }
+                
+                )}
                 {
                     !isLoading && !errorFetch ?
                     <div>
@@ -296,7 +305,18 @@ return(
                         </form>
                     </div>
                     : null
-                }             
+                }
+                { errorFetch && (
+                    <div>
+                        <br/><br/>
+
+                        <div className="texto-grande red-text center">
+                            <strong> { errorFetch } </strong> 
+                        </div>
+
+                        <br/><br/><br/>
+                    </div>
+                )}             
                 </ContainerForm>
             </Card>
         </Main>
