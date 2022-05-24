@@ -11,14 +11,14 @@
  */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import M from "materialize-css/dist/js/materialize.min.js";
+import M from 'materialize-css/dist/js/materialize.min.js';
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import LineaCampos from '../components/LineaCampos';
-import ContainerForm from '../components/ContainerForm'
-import Input from '../components/Input'
+import ContainerForm from '../components/ContainerForm';
+import Input from '../components/Input';
 import Datepicker from '../components/Datepicker';
-import Select from '../components/Select'
+import Select from '../components/Select';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnGuardar from '../components/BtnGuardar';
 import Navbar from '../components/Navbar';
@@ -26,16 +26,18 @@ import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 
 const RegistrarPaciente = () => {
-    const [errorSubmit, setErrorSubmit] = useState("");
-    const [isLoading, setIsLoading] = useState("");
-    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const [errorSubmit, setErrorSubmit] = useState('');
+    const [isLoading, setIsLoading] = useState('');
+    const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
 
+    
     /**
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
      */
     useEffect(() => {
         validation();
     }, []);
+
 
     /**
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
@@ -46,47 +48,45 @@ const RegistrarPaciente = () => {
         register('nombre', {
             required: {
                 value: true,
-                message: "El nombre es requerido"
+                message: 'El nombre es requerido'
             },
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
-                message: "Nombre inválido"
+                message: 'Nombre inválido'
             }
         });
-
+        
         // Variable para el apellido, requerido, con patrón.
         register('apellidoPaterno', {
             required: {
                 value: true,
-                message: "El apellido paterno es requerido"
+                message: 'El apellido paterno es requerido'
             },
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
-                message: "Nombre inválido"
+                message: 'Nombre inválido'
             }
         });
 
         // Variable para el apellido materno, no requerido, con patrón.
         register('apellidoMaterno', {
             required: {
-                value: false,
-                message: "El apellido materno es requerido"
+                value: false
             },
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
-                message: "Nombre inválido"
+                message: 'Nombre inválido'
             }
         });
 
         // Variable para la fecha de nacimiento, requerida, con patrón.
         register('fechaNacimiento', {
             required: {
-                value: true,
-                message: "La fecha es requerida"
+                value: false
             },
             pattern: {
                 value: /[0-9]+/,
-                message: "Fecha Inválida"
+                message: 'Fecha Inválida'
             }
         });
 
@@ -94,35 +94,33 @@ const RegistrarPaciente = () => {
         register('sexo', {
             required: {
                 value: true,
-                message: "El sexo es requerido"
+                message: 'El sexo es requerido'
             }
         });
 
         // Variable para el teléfono, no requerido y con longitud fija.
         register('telefono', {
             required: {
-                value: false,
-                message: "No debería de verse este error"
+                value: false
             },
             minLength: {
                 value: 10,
-                message: "El teléfono debe tener 10 digitos"
+                message: 'El teléfono debe tener 10 digitos'
             },
             maxLength: {
                 value: 10,
-                message: "El teléfono debe tener 10 digitos"
+                message: 'El teléfono debe tener 10 digitos'
             },
         });
 
         // Variable para el correo, requerido y con patrón.
         register('correo', {
             required: {
-                value: true,
-                message: "El correo es requerido"
+                value: false,
             },
             pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Correo inválido"
+                message: 'Correo inválido'
             }
         });
 
@@ -130,35 +128,31 @@ const RegistrarPaciente = () => {
         register('curp', {
             required: {
                 value: true,
-                message: "El CURP es requerido"
+                message: 'El CURP o folio es requerido'
             },
             minLength: {
-                value: 18,
-                message: "El CURP debe tener 18 caracteres"
+                value: 4,
+                message: 'El CURP debe tener 18 caracteres'
             },
             maxLength: {
                 value: 18,
-                message: "El CURP debe tener 18 caracteres"
+                message: 'El CURP o folio debe tener 18 caracteres máximo'
             },
-            pattern: {
-                value: /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
-                message: "CURP inválido"
-            }
         });
 
         // Variable para el peso, no requerido, con limites humanos.
         register('peso', {
             required: {
                 value: false,
-                message: "El nombre es requerido"
+                message: 'El nombre es requerido'
             },
             max: {
                 value: 700,
-                message: "¿El peso es correcto? 😯"
+                message: '¿El peso es correcto? 😯'
             },
             min: {
                 value: 5,
-                message: "¿El peso es correcto? 😐"
+                message: '¿El peso es correcto? 😐'
             }
         });
 
@@ -166,20 +160,21 @@ const RegistrarPaciente = () => {
         register('estatura', {
             required: {
                 value: false,
-                message: "El nombre es requerido"
+                message: 'El nombre es requerido'
             },
             
             max: {
                 value: 275,
-                message: "¿La estatura es correcta? 😯"
+                message: '¿La estatura es correcta? 😯'
             },
             min: {
                 value: 65,
-                message: "¿La estatura es correcta? 😐"
+                message: '¿La estatura es correcta? 😐'
             }
 
         });
     }
+
 
     /**
      * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
@@ -188,6 +183,7 @@ const RegistrarPaciente = () => {
     const handleChange = (e) => {
         setValue(e.target.name, e.target.value);
     }
+
 
     /**
      * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
@@ -199,18 +195,24 @@ const RegistrarPaciente = () => {
     async function onSubmit(data, e) {
         // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
         setIsLoading(true);
-        setErrorSubmit("");
+        setErrorSubmit('');
         // Cambiar los valores necesarios de string a número.
         data.estatura = Number(data.estatura);
         data.peso = Number(data.peso);
         data.telefono = Number(data.telefono);
-        data.fechaNacimiento = String(data.fechaNacimiento);
 
-        e.preventDefault()
+        // Se convierte la fecha a formato 'dd/mm/yyyy'
+        const dateSplit = data.fechaNacimiento.split('-');
+        const year = dateSplit[0];
+        const month = dateSplit[1];
+        const day = dateSplit[2];
+        data.fechaNacimiento = day +'/' + month + '/' + year;
+
+        e.preventDefault();
 
         try {
             // Hacer fetch a la ruta de back, enviando la información del formulario.
-            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} });
+            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
             const paciente = await response.json();
             setIsLoading(false);
     
@@ -221,15 +223,16 @@ const RegistrarPaciente = () => {
             }
             // Mostrar mensaje de éxito y redireccionar a la página principal
             else {
-                window.location.href = "/";
+                window.location.href = '/';
                 await M.toast({ html: paciente.message });
             }
         } catch(e) {
             // Mostrar mensaje de error en la conexión con la base de datos.
             setIsLoading(false);
-            setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
+            setErrorSubmit('Error de conexión. Inténtelo de nuevo.');
         }
     };
+
 
     return(
         <div>
@@ -266,7 +269,7 @@ const RegistrarPaciente = () => {
                                 onChange = { handleChange }
                                 elError = { errors.nombre && errors.nombre?.message }
                                 maxlength = "20"
-                                requerido = {true}
+                                requerido = { true }
                             />
                             <Input 
                                 id="apellidoPaterno" 
@@ -274,7 +277,7 @@ const RegistrarPaciente = () => {
                                 tamano="m4 s12"
                                 onChange = { handleChange }
                                 elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
-                                requerido = {true}
+                                requerido = { true }
                             />
                             <Input 
                                 id="apellidoMaterno" 
@@ -291,13 +294,12 @@ const RegistrarPaciente = () => {
                                 tamano="s8 m4"
                                 onChange = { handleChange }
                                 elError= { errors.fechaNacimiento && errors.fechaNacimiento?.message }
-                                requerido = {true}
                             />
                             <Select 
                                 id="sexo" 
                                 label="Sexo" 
                                 value=""
-                                arr={[{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}]}
+                                arr={ [{ value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino" }] }
                                 handleChange = { handleChange }
                                 elError = { errors.sexo && errors.sexo?.message }
                                 requerido = { true }
@@ -320,11 +322,10 @@ const RegistrarPaciente = () => {
                                 type="email"
                                 onChange={ handleChange }
                                 elError={ errors.correo && errors.correo?.message }
-                                requerido = { true }
                             />
                             <Input 
                                 id="curp" 
-                                label="CURP" 
+                                label="CURP o Folio Nefrovida" 
                                 tamano="s12 m4"
                                 onChange = { handleChange }
                                 elError = { errors.curp && errors.curp?.message }
@@ -350,7 +351,7 @@ const RegistrarPaciente = () => {
                             />
                         </LineaCampos>
                         { errorSubmit 
-                            && <div> <div className='red-text right'> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
+                            && <div> <div className="red-text right"> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
                         }
             
                         <BtnGuardar/>

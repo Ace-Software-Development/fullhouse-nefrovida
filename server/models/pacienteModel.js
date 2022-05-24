@@ -1,7 +1,9 @@
 const parseServer = require('parse-server').ParseServer;
-let CONSTANTS = require("../constantsProject");
+let CONSTANTS = require('../constantsProject');
+
 
 const Paciente = Parse.Object.extend(CONSTANTS.PACIENTE);
+
 
 /**
  * Función auxiliar para retornar los datos y el error.
@@ -16,6 +18,7 @@ function resultsPaciente(data, error) {
     }
 }
 
+
 /**
  * asyncRegistrarPaciente Función asíncrona para registrar un nuevo paciente, 
  * recibe los datos del paciente a guardar.
@@ -27,7 +30,7 @@ exports.registrarPaciente = async(data) => {
     try {
         const pacienteCurp = await exports.buscarPorCurp(data.curp);
         if (pacienteCurp.data) {
-            return resultsPaciente(pacienteCurp.data, 'El paciente ya se encuentra registrado con ese CURP');
+            return resultsPaciente(pacienteCurp.data, 'El paciente ya se encuentra registrado con ese CURP o folio');
         }
 
         const paciente = new Paciente();
@@ -46,12 +49,15 @@ exports.registrarPaciente = async(data) => {
         }
         apellidoPaterno = apellidoPaterno.join(' ');
 
+        let apellidoMaterno;
         // Estandarizar el formato de los apellidos maternos, cada apellidos debe iniciar con mayúscula y luego incluir minúsculas.
-        let apellidoMaterno = data.apellidoMaterno.split(' ');
-        for (let i = 0; i < apellidoMaterno.length; i++) {
-            apellidoMaterno[i] = apellidoMaterno[i][0].toUpperCase() + apellidoMaterno[i].substr(1).toLowerCase();
+        if (data.apellidoMaterno) {
+            apellidoMaterno = data.apellidoMaterno.split(' ');
+            for (let i = 0; i < apellidoMaterno.length; i++) {
+                apellidoMaterno[i] = apellidoMaterno[i][0].toUpperCase() + apellidoMaterno[i].substr(1).toLowerCase();
+            }
+            apellidoMaterno = apellidoMaterno.join(' ');
         }
-        apellidoMaterno = apellidoMaterno.join(' ');
 
         paciente.set(CONSTANTS.CURP, data.curp);
         paciente.set(CONSTANTS.NOMBRE, nombre);
@@ -78,6 +84,7 @@ exports.registrarPaciente = async(data) => {
     }
 }
 
+
 /**
  * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por su curp. 
  * @param {string} curp - Curp del paciente a buscar
@@ -85,15 +92,17 @@ exports.registrarPaciente = async(data) => {
  */
 exports.buscarPorCurp = async (curp) => {
     
-    var Table = Parse.Object.extend(CONSTANTS.PACIENTE);
-    var query = new Parse.Query(Table);
+    const Table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    let query = new Parse.Query(Table);
     query.equalTo(CONSTANTS.CURP, curp);
 
     try {
-        var results = await query.first();
+        const results = await query.first();
+        // Enviar error si no existe un paciente con ese curp
         if ( !results ) {
             return resultsPaciente(null, 'No se encontró un paciente con ese CURP');
         }
+        // Enviar el error si el paciente no esta activo
         if ( !results.get(CONSTANTS.ACTIVO)) {
             return resultsPaciente(null, 'El objeto fue eliminado anteriormente.');
         }
