@@ -13,7 +13,7 @@ const Tabla = (arr) => {
             
           <thead  >
             <tr className="figma"  >
-                <th class="tabla-padding"  >
+                <th className="tabla-padding"  >
                   Columna 1
                 </th>
                 <th  >
@@ -42,7 +42,7 @@ const Tabla = (arr) => {
             </td>
             <td className="center"  >
               <a href="http://www.google.com"  >
-                <i class="material-icons"  >
+                <i className="material-icons"  >
                   insert_drive_file
                 </i>
               </a>
