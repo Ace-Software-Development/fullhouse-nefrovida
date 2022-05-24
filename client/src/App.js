@@ -13,15 +13,14 @@ function App() {
 
   return (
 
-    <Navbar></Navbar>
-    /*
+    
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/login' element={<IniciarSesion />} />
       </Routes>
     </BrowserRouter>
-    */
+    
   )
 }
 
