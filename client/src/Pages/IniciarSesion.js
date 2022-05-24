@@ -31,6 +31,7 @@ import useFetch from '../hooks/useFetch';
 
 const IniciarSesion = () => {
     
+    const [errorSubmit, setErrorSubmit] = useState("");
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
     // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
     const { httpConfig, loading, responseJSON, error, message } = useFetch('http://localhost:6535/iniciarSesion');
@@ -97,6 +98,16 @@ const IniciarSesion = () => {
 
     }, [message])
     
+
+    /**
+     * Hook para cargar mensaje de error proveniente
+     * del fetch a ruta de inciar sesión dentro del
+     * formulario de autenticación.
+     */
+    useEffect(() => {
+        // Mostrar mensaje de error
+        setErrorSubmit(error);
+    }, [error])
 
     /**
      * Función que se ejecuta al envia formulario para
@@ -187,10 +198,10 @@ const IniciarSesion = () => {
                                     />
                                 </div>
                             </LineaCampos>
-                            { error && 
+                            { errorSubmit && 
                                 <div>
                                     <div className='red-text right'>
-                                        <strong> { error } </strong>
+                                        <strong> { errorSubmit } </strong>
                                     </div>
                                     <br />
                                     <br />
