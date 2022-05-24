@@ -232,6 +232,7 @@ let fecha = cDay + "/" + cMonth + "/" + cYear ;
 
 return(
     <div className="row ContainerForm left-align">
+    
     <div>
         <Navbar/>
         <Main>
