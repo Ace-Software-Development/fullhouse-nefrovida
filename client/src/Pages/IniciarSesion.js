@@ -27,11 +27,14 @@ import logo from "../img/logo.png";
 import BtnRestablecer from '../components/BtnRestablecer';
 import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
+import useFetch from '../hooks/useFetch';
 
 const IniciarSesion = () => {
-
+    
     const [errorSubmit, setErrorSubmit] = useState("");
-    const [isLoading, setIsLoading] = useState("");
+    const {register, formState: { errors }, handleSubmit, setValue} = useForm();
+    // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/iniciarSesion');
 
     /**
      * Hook para asignar las validaciones necesarias a los campos.
@@ -67,62 +70,73 @@ const IniciarSesion = () => {
         setErrorSubmit("");
     }
 
-    const {register, formState: { errors }, handleSubmit, setValue} = useForm();
 
-        /**
-         * Función que se ejecuta al envia formulario para
-         * validar credenciales de usuario en base de datos.
-         * 
-         * Se obtiene información del colaborador de Nefrovida y 
-         * se la almacena en una sesión dentro de una cookie.
-         * 
-         * @param {object} data - Credenciales de inicio de sesión. 
-         * @param {*} e - Evento de submit.
-         * @returns Mensaje de error en caso de haberlo o 
-         * redirección a página inicial.
-         */
-        async function onSubmit (data, e) {
-            // Mostrar que se está cargando información.
-            setIsLoading(true);
-            setErrorSubmit("");
+    /**
+     * Hook para validar que cambió estado de respuesta 
+     * de fetch y por lo tanto asumir que si es true,
+     * petición fue correcta para almacenar sesión y 
+     * redirigir a página principal.
+     * 
+     * Se llama a useEffect si cambia responseOk
+     * que solo cambia cuando response retorno true
+     * en ok
+     * 
+     * Se obtiene información del colaborador de Nefrovida y 
+     * se la almacena en una sesión dentro de una cookie.
+     */ 
+    useEffect(() => {
+        if (!responseJSON || !responseOk) return;
 
-            e.preventDefault();
-            // Realizar petición al servidor enviando datos del formulario.
-            try {
-                const response = await fetch(
-                    'http://localhost:6535/iniciarSesion', 
-                    {
-                        method: 'POST', 
-                        mode: 'cors', 
-                        body: JSON.stringify(data), 
-                        headers: {
-                            'Content-Type': 'application/json'
-                        } 
-                    });
-                
-                const iniciarSesion = await response.json();
-                // Si petición retornó error, desplegarlo.
-                if(!response.ok) {
-                    setErrorSubmit(iniciarSesion.message);
-                    setIsLoading(false);
-                    return;
-                }
-                // Si petición fue correcta almacenar sesión y redirigir página principal.
-                else {
-                    // Asignar a session rol, nombre y apellido de usuario autenticado
-                    ReactSession.set("rol", iniciarSesion.rol);
-                    ReactSession.set("nombre", iniciarSesion.colaborador.nombre);
-                    ReactSession.set("apellido", iniciarSesion.colaborador.apellidoPaterno);
-                    await M.toast({ html: iniciarSesion.message });
-                    window.location.href = "/";
-                }
-            } 
-            // En caso de que haya surgido un error mostrarlo.
-            catch(e) {
-                    setIsLoading(false);
-                    setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
-                }
-            };
+        if (responseJSON.rol) {
+            // Asignar a session rol, nombre y apellido de usuario autenticado
+            ReactSession.set("sessionToken", responseJSON.sessionToken);
+            ReactSession.set("rol", responseJSON.rol);
+            ReactSession.set("usuario", responseJSON.usuario);
+            ReactSession.set("nombre", responseJSON.nombre);
+            ReactSession.set("apellido", responseJSON.apellido);
+            window.location.href = "/";
+            M.toast({ html: message });
+        }
+
+    }, [responseOk])
+    
+
+    /**
+     * Hook para cargar mensaje de error proveniente
+     * del fetch a ruta de inciar sesión dentro del
+     * formulario de autenticación.
+     */
+    useEffect(() => {
+        // Mostrar mensaje de error
+        setErrorSubmit(error);
+    }, [error])
+
+    /**
+     * Función que se ejecuta al envia formulario para
+     * validar credenciales de usuario en base de datos.
+     * 
+     * Se utiliza hook para realizar fetch, la función
+     * que se llama arma configuración del fetch y dentro
+     * del hook de useFetch al detectar que cambia la 
+     * configuración de petición la realiza y se obtiene
+     * respuesta a través de variable de estado del hook.
+     * 
+     * @param {object} data - Credenciales de inicio de sesión. 
+     * @param {*} e - Evento de submit.
+     */
+    async function onSubmit (data, e) {
+
+        e.preventDefault();
+        // Realizar petición al servidor enviando datos del formulario.
+        try {
+            await httpConfig(data, 'POST');
+        } 
+        // En caso de que haya surgido un error mostrarlo.
+        catch(e) {
+            setErrorSubmit(e.message);
+        }
+    };
+
 
     return(
         <div>
@@ -139,20 +153,19 @@ const IniciarSesion = () => {
                         alr="Logotipo Nefrovida"
                     />
                 </a>
-                
                 <Card>
                 <CardLogin titulo="Login" />
                     <ContainerForm>
                         {
-                            isLoading &&
-                            <div class="preloader-wrapper small active">
-                                <div class="spinner-layer spinner-blue-only">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                    <div class="circle"></div>
-                                </div><div class="circle-clipper right">
-                                    <div class="circle"></div>
+                            loading &&
+                            <div className="preloader-wrapper small active">
+                                <div className="spinner-layer spinner-blue-only">
+                                <div className="circle-clipper left">
+                                    <div className="circle"></div>
+                                </div><div className="gap-patch">
+                                    <div className="circle"></div>
+                                </div><div className="circle-clipper right">
+                                    <div className="circle"></div>
                                 </div>
                                 </div>
                             </div>
@@ -209,4 +222,4 @@ const IniciarSesion = () => {
     )
 }
 
-export default IniciarSesion
+export default IniciarSesion;

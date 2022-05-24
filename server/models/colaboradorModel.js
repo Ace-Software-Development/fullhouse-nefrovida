@@ -134,28 +134,42 @@ exports.iniciarSesionColaborador = async(params) => {
         // Dar de alta usuario comparando con credenciales de la base de datos.
         const colab = await Parse.User.logIn(params.username, params.password);
         const colaborador = colab.toJSON();
+
         try{
             // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
             return {
-                colaborador: colaborador,
+                usuario: colaborador.username,
+                nombre: colaborador.nombre,
+                apellido: colaborador.apellidoPaterno,
+                sessionToken: colaborador.sessionToken,
                 rol: nombreRol,
                 error: null
             }
 
         } catch(error) {
             return {
-                colaborador: colaborador,
+                usuario: null,
+                nombre: null,
+                apellido: null,
+                sessionToken: null,
                 rol: null,
-                error: error.message
+                error: "Error al obtener permisos de usuario"
             }
         }
     } catch (error) {
+        var err = error.message;
+        if (error.code === 101) {
+            err = "Usuario y/o constraseña incorrecta."
+        }
         return {
-            colaborador: null,
+            usuario: null,
+            nombre: null,
+            apellido: null,
+            sessionToken: null,
             rol: null,
-            error: error.message
+            error: err
         }
     }
 }
