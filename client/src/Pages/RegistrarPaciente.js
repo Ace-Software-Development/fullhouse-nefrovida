@@ -246,7 +246,7 @@ const RegistrarPaciente = () => {
                         <BtnRegresar />
                     </Link>
                     { isLoading && (
-                        <div className="center">
+                        <div className="center animate-form-loader">
                             <br/><br/>
 
                             <div class="preloader-wrapper med active">
@@ -356,7 +356,7 @@ const RegistrarPaciente = () => {
                             />
                         </LineaCampos>
                         { errorSubmit 
-                            && <div> <div className="red-text right"> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
+                            && <div className="animate-new-element"> <div className="red-text right"> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
                         }
             
                         <BtnGuardar/>

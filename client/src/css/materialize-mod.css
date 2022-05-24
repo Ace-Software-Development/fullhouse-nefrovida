@@ -9321,3 +9321,46 @@ thead {
 .no-border {
   border:none;
 }
+
+.loader-anim {
+  animation: append-animate .6s ease;
+}
+
+@keyframes append-animate {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.animate-new-element {
+  animation: new-element .4s ease-in-out;
+}
+
+@keyframes new-element {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-form-loader{
+  animation: form-loader .6s ease;
+}
+
+@keyframes form-loader {
+  from {
+    opacity: 0;
+    height: 0px;
+	}
+	to {
+		opacity: 1;
+    height: 99px;
+	}
+}
