@@ -12,7 +12,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: { valorMin } - { valorMax } { unidad }
+                Valor de Referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
         <LineaCampos>
@@ -42,7 +42,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: { valorBool ? "Positivo" : "Negativo" }
+                Valor de Referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
         <LineaCampos>
@@ -74,7 +74,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
-                Valor de referencia: { valorString }
+                Valor de Referencia: { valorString }
             </div>
             <br/><br/>
         <LineaCampos>

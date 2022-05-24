@@ -1,5 +1,12 @@
 const estudioModel = require('../models/estudioModel')
 
+/**
+ * asyncRegistrarResultadosEstudio Funciòn asíncrona para registrar los resultados de un
+ * nuevo estudio para un paciente.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
 module.exports.registrarResultadosEstudio = async(request, response) => {
 
     try {

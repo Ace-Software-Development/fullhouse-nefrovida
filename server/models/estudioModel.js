@@ -94,10 +94,7 @@ exports.registrarResultadosEstudio = async(data) => {
                     resultados.push(resultado);
                 } catch(error) {
                     // Mostrar error en caso de borrar los parámetros.
-                    return {
-                        data: null,
-                        error: error.message
-                    }
+                    return results(null, error.message);
                 }
                 
             }
@@ -125,32 +122,19 @@ exports.registrarResultadosEstudio = async(data) => {
 
                         // Destruir el estudio
                         await estudioSaved.destroy();
-                        return {
-                            data: null,
-                            error: 'No se pudo guardar el resultado, intente nuevamente.'
-                        }
+                        return results(null, 'No se pudo guardar el resultado, intente nuevamente.');
 
                 } catch(error) {
                     // Mostrar error en caso de borrar los parámetros.
-                    return {
-                        data: null,
-                        error: error.message
-                    }
+                    return results(null, error.message);
                 }
             }
         } catch (error) {
             // Mostrar error en caso de guardar el estudio
-            return {
-                data: null,
-                error: error.message
-            }
+            return results(null, error.message);
         }
     } catch (error) {
         // Mostrar error en caso de no encontrar el paciente
-        return {
-            data: null,
-            error: error.message
-        }
+        return results(null, error.message);
     }
-
 }
