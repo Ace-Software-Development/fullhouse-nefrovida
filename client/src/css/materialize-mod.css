@@ -9412,3 +9412,9 @@ thead {
 .espacio-vertical {
   line-height: 20px;
 }
+
+.row-parametros {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
