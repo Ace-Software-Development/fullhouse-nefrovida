@@ -9,8 +9,7 @@ function Home() {
             <Navbar/>
             <Main>
             <br/><br/>
-            <p>Bienvenido: {ReactSession.get("nombre")} {ReactSession.get("apellido")} , usted tiene rol de {ReactSession.get("rol")}</p>
-            <FormColaborador/>
+                <FormColaborador/>
             </Main>
         </div>
     )
