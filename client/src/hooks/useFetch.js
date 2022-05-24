@@ -37,6 +37,8 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
     // id para get o delete
     const [itemId, setItemId] = useState(null);
+    // booleano para saber cuando response fue correcta
+    const [responseOk, setResponseOk] = useState(false);
 
     /**
      * httpConfig Función para armar petición de fetch
@@ -53,6 +55,7 @@ const useFetch = (url) => {
         // Limpiar variables de error y mensaje.
         await setMessage("");
         await setError("");
+        await setResponseOk(false);
 
         // Si se desea realizar un POST
         if (methodLocal === 'POST') {
@@ -202,6 +205,7 @@ const useFetch = (url) => {
         // Si petición retornó error.
         if(!response.ok) {
             if (response.status === 401) {
+                // TODO cuando esté cerrar sesion llamar a cerrarSesion
                 window.location.href = "/iniciarSesion";
             } else if (response.status === 403) {
                 window.location.href = "/403";
@@ -213,11 +217,12 @@ const useFetch = (url) => {
         // Si petición fue correcta
         else {
             setMessage(responseJSON.message);
+            setResponseOk(true);
         }
 
     }, [responseJSON]);
 
-    return { httpConfig, loading, responseJSON, error, message };
+    return { httpConfig, loading, responseJSON, error, message, responseOk };
 }
 
 export default useFetch;

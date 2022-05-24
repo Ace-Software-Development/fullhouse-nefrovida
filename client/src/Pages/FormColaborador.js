@@ -12,14 +12,14 @@ import { ReactSession } from 'react-client-session';
 import useFetch from '../hooks/useFetch';
 
 const FormColaborador = () => {
-    const { httpConfig, loading, responseJSON, error, message } = useFetch('http://localhost:6535/colaboradores/registrar');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaboradores/registrar');
     async function handleSubmit (e) {
         try{
             // Utilizar custom hook para realizar petición
             httpConfig(null, 'POST');
 
         } catch(err){
-            console.log(err);
+            
         }
     }
 

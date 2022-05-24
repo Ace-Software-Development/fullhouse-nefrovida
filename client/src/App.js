@@ -6,8 +6,8 @@ import { ReactSession } from 'react-client-session';
 import ErrorBoundary from './components/ErrorBoundary'
 import PrivateRoute from './components/PrivateRoute';
 import NoAuthRoute from './components/NoAuthRoute';
-import Home from './pages/home';
-import IniciarSesion from './pages/iniciarSesion';
+import Home from './pages/Home';
+import IniciarSesion from './pages/IniciarSesion';
 import NotFound from './pages/error/404notFound'
 import Forbidden from './pages/error/403Forbidden';
 
@@ -21,6 +21,7 @@ function App() {
    * dependiendo de la sessión del usuario.
    */
   return (
+
     <BrowserRouter>
       <ErrorBoundary>
         <Routes>
@@ -44,6 +45,7 @@ function App() {
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>
+    
   )
 }
 

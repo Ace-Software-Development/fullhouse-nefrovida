@@ -34,7 +34,7 @@ const IniciarSesion = () => {
     const [errorSubmit, setErrorSubmit] = useState("");
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
     // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
-    const { httpConfig, loading, responseJSON, error, message } = useFetch('http://localhost:6535/iniciarSesion');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/iniciarSesion');
 
     /**
      * Hook para asignar las validaciones necesarias a los campos.
@@ -72,31 +72,33 @@ const IniciarSesion = () => {
 
 
     /**
-     * Hook para validar que cambió mensaje 
-     * de fetch y por lo tanto asumir que 
-     * petición fue correcta para almacenar 
-     * sesión y redirigir a página principal.
+     * Hook para validar que cambió estado de respuesta 
+     * de fetch y por lo tanto asumir que si es true,
+     * petición fue correcta para almacenar sesión y 
+     * redirigir a página principal.
      * 
-     * Se llama a useEffect si cambia message
-     * que solo cambia cuando response 
-     * estuvo ok
+     * Se llama a useEffect si cambia responseOk
+     * que solo cambia cuando response retorno true
+     * en ok
      * 
      * Se obtiene información del colaborador de Nefrovida y 
      * se la almacena en una sesión dentro de una cookie.
      */ 
     useEffect(() => {
-        if (!responseJSON) return;
+        if (!responseJSON || !responseOk) return;
 
-        // Asignar a session rol, nombre y apellido de usuario autenticado
-        ReactSession.set("sessionToken", responseJSON.sessionToken);
-        ReactSession.set("rol", responseJSON.rol);
-        ReactSession.set("usuario", responseJSON.usuario);
-        ReactSession.set("nombre", responseJSON.nombre);
-        ReactSession.set("apellido", responseJSON.apellido);
-        window.location.href = "/";
-        M.toast({ html: message });
+        if (responseJSON.rol) {
+            // Asignar a session rol, nombre y apellido de usuario autenticado
+            ReactSession.set("sessionToken", responseJSON.sessionToken);
+            ReactSession.set("rol", responseJSON.rol);
+            ReactSession.set("usuario", responseJSON.usuario);
+            ReactSession.set("nombre", responseJSON.nombre);
+            ReactSession.set("apellido", responseJSON.apellido);
+            window.location.href = "/";
+            M.toast({ html: message });
+        }
 
-    }, [message])
+    }, [responseOk])
     
 
     /**

@@ -92,17 +92,17 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
                 rol: results.rol,
                 message: results.error
             });
-        }
-        
-        // Retornar información de colaborador
-        return response.status(200).send( {
-            usuario: results.usuario,
-            nombre: results.nombre,
-            apellido: results.apellido,
-            sessionToken: results.sessionToken,
-            rol: results.rol,
-            message: "Inicio de Sesion exitoso!!"
-        });
+        } else {
+            // Retornar información de colaborador
+            return response.status(200).send( {
+                usuario: results.usuario,
+                nombre: results.nombre,
+                apellido: results.apellido,
+                sessionToken: results.sessionToken,
+                rol: results.rol,
+                message: "Inicio de Sesion exitoso!!"
+            });
+        }        
         
     } catch(error) {
         return response.status(400).send( {
