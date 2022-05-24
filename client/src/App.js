@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={<Home />} />
-        <Route exact path='/consultarTipoEstudio' element={<ConsultarTipoEstudio />} />
+        <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
         <Route exact path='/temp' element={<Temp />} />
       </Routes>
     </BrowserRouter>

@@ -6,30 +6,35 @@ import { useEffect, useState } from 'react';
 
 const Temp = () => {
 
-    const [tiposEstudio, setTiposEstudio] = useState({})
+    const [tiposEstudio, setTiposEstudio] = useState([])
+    const [errorFetch, setErrorFetch] = useState('');
 
 
     function listaTiposEstudio() {
         return tiposEstudio.map(el => {
-            console.log(el)
+            return(
+                <CardEstudio nombreEstudio={el.nombre} idTipoEstudio={el.objectId} idPaciente={"undefined"}/>
+            )
         })
-        
     }
 
     async function getTiposEstudio() {
         try {
             const response = await fetch('http://localhost:6535/tipoEstudio/', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             let misDatos = await response.json();
-            misDatos = misDatos.data.data;
+            
             if (!response.ok) {
+                setErrorFetch(misDatos.message);
                 return;
             }
+            misDatos = misDatos.data.data;
             setTiposEstudio(misDatos);
             
         } catch(e) {
-            console.log(e)
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
     }
+    
     useEffect(() => {
         getTiposEstudio();
     }, []);
@@ -41,15 +46,6 @@ const Temp = () => {
                 <br/>
                 <LineaParametros>
                     {listaTiposEstudio()}
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>
-                    <CardEstudio/>  
-                    <CardEstudio/>
                 </LineaParametros>
             </div>
         </Card>

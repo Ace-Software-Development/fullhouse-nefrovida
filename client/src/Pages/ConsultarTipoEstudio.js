@@ -20,12 +20,15 @@ import BtnEliminar from '../components/BtnEliminar';
 import LineaParametros from '../components/LineaParametros';
 import CardEstudio from '../components/CardEstudio';
 import { ParametroTexto, ParametroRango, ParametroBooleano} from '../components/ParametroTipoEstudio';
-
+import { useParams } from 'react-router-dom';
 
 export default function ConsultarTipoEstudio() {
+    const params = useParams();
 
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
+    const [errorFetch, setErrorFetch] = useState('');
+    const [isLoading, setIsLoading] = useState('');
     
     function listaParametros() {
         return parametros.map(el => {
@@ -44,23 +47,32 @@ export default function ConsultarTipoEstudio() {
     }
 
     async function getTipoEstudio(id) {
+        setIsLoading(true);
+
         try {
-            const response = await fetch('http://localhost:6535/tipoEstudio/'+id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            const response = await fetch('http://localhost:6535/tipoEstudio/'+ id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             let misDatos = await response.json();
-            misDatos = misDatos.data.data;
+            setIsLoading(false);
+
             if (!response.ok) {
+                setErrorFetch(misDatos.message);
                 return;
             }
+
+            misDatos = misDatos.data.data;
             setTipoEstudio(misDatos.pop());
             setParametros(misDatos);
             
         } catch(e) {
-            console.log(e)
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
         }
     }
     useEffect(() => {
-        getTipoEstudio('wJSsSRLYmO');
+        getTipoEstudio(params.idTipoEstudio);
+        setIsLoading(true);
     }, []);
+
 
     return(
         
@@ -71,7 +83,7 @@ export default function ConsultarTipoEstudio() {
                 <Card>
                 <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
                 <ContainerForm>
-                    <BtnRegresar url="/"/>
+                    <BtnRegresar/>
                     <br/><br/>  
                     <div className="row div-detalles-estudio">
                         <div className="col s6 l6 left-align">
@@ -97,6 +109,9 @@ export default function ConsultarTipoEstudio() {
                         {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
                     
                 </ContainerForm>
+                { errorFetch 
+                    && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                }
                 </Card>
             </Main>
         </div>

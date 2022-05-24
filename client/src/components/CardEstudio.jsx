@@ -1,11 +1,11 @@
-const CardEstudio = ({ idTipoEstudio = "undefined", idPaciente = "undefined" }) => {
+const CardEstudio = ({ nombreEstudio="undefined", idTipoEstudio = "undefined", idPaciente = "undefined" }) => {
     return (
         <>
             <div className="col s6 l4 xl3 card-mini-separation no-margin-left">
                 <div className="card card-mini">
                 <br/>
                 <div className="card-mini-flex">
-                    <i className="material-icons icon-separator">biotech</i><span className="card-mini-text">Tipo de Estudio</span>
+                    <i className="material-icons icon-separator">biotech</i><span className="card-mini-text">{ nombreEstudio }</span>
                 </div>
                 <br/>
                 <div className="card-mini-flex">
