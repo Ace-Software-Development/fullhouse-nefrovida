@@ -13,7 +13,7 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 
-export default function ConsultarEstudioPaciente() {
+export default function ConsultarEstudioPaciente({ idEstudio }) {
 
     const [estudio, setEstudio] = useState({})
 
@@ -29,7 +29,7 @@ export default function ConsultarEstudioPaciente() {
     
     async function getEstudio(id) {
         try {
-            const response = await fetch('http://localhost:6535/consultarEstudioPaciente/1', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            const response = await fetch('http://localhost:6535/estudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             let misDatos = await response.json();
 
             misDatos = misDatos.estudio;
@@ -44,7 +44,7 @@ export default function ConsultarEstudioPaciente() {
         }
     }
     useEffect(() => {
-        getEstudio();
+        getEstudio(idEstudio);
         //getParametrosEstudio();
     }, [])
 

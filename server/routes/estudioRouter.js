@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const {authUsuario, authRol} = require('../rbac/Authentication')
 
-const pacienteController = require("../controllers/pacienteController");
+const estudioController = require("../controllers/estudioController");
 
-router.get('/:id', pacienteController.consultarEstudioPaciente);
+router.get('/:idEstudio', estudioController.consultarEstudioPaciente);
 
 module.exports = router;

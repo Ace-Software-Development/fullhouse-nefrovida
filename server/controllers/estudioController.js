@@ -1,9 +1,9 @@
-const pacienteModel = require('../models/pacienteModel');
+const estudioModel = require('../models/estudioModel');
 
 module.exports.consultarEstudioPaciente = async(request, response) => {
-    const id = request.params.id;
+    const id = request.params.idEstudio;
     try {
-        const results = await pacienteModel.obtenerEstudioPaciente(id);
+        const results = await estudioModel.obtenerEstudioPaciente(id);
         if (results.error) {
             return response.status(404).send( {
                 estudio: null,

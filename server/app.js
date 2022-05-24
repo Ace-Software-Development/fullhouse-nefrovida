@@ -62,7 +62,7 @@ app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
-app.use('/consultarEstudioPaciente', require('./routes/consultarEstudioPacienteRouter'));
+app.use('/estudio', require('./routes/estudioRouter'));
 
 app.get('*', function(request, response){
     response.status(404)

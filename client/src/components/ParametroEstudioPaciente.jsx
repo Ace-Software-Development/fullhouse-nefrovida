@@ -1,4 +1,4 @@
-const ParametroEstudioPaciente = ({parametro="Sangre:", valor="10", unidad="ml", referencia="undefined"}) => {
+const ParametroEstudioPaciente = ({parametro, valor, unidad, referencia}) => {
     return(
         <div className='col s12 l6 espacio-vertical center-align'>
             
