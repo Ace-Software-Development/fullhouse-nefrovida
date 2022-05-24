@@ -9494,8 +9494,9 @@ thead {
 
 .row-parametros {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .no-margin-left {
@@ -9503,8 +9504,10 @@ thead {
 }
 
 .card-mini {
+  display: block;
   width: 100%;
   max-width: 220px;
+  min-height: -moz-fit-content;
   min-height: fit-content;
   border-radius: 12px;
   background: #F9F9F9;
@@ -9513,6 +9516,8 @@ thead {
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .card-mini-flex{
@@ -9536,4 +9541,8 @@ thead {
   font-size:x-large;
   line-height: 40px;
   font-weight: 500;
+}
+
+.emoji-error {
+  font-size: xx-large;
 }

@@ -75,43 +75,74 @@ export default function ConsultarTipoEstudio() {
 
 
     return(
-        
         <div>
             <Navbar/>
             <Main>
                 <br></br>    
                 <Card>
                 <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
-                <ContainerForm>
-                    <BtnRegresar/>
-                    <br/><br/>  
-                    <div className="row div-detalles-estudio">
-                        <div className="col s6 l6 left-align">
-                            <div className="detalles-estudio">
-                                <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
-                                <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.nombre}</div><br/>
-                                <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
+                { isLoading && (
+                    <div className="center">
+                        <br/><br/><br/>
+
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
                             </div>
                         </div>
-                        <div className='col s6 l6 numero-parametros'>
-                            <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ parametros.length } parámetros</div>
-                        </div>
-                    </div>
-                    
-                    <div className='identificacion-registrar'/>
 
-                    <LineaParametros>
-                        { listaParametros()}
-                    </LineaParametros>
+                        <div class="texto-grande blue-text text-darken-1">Cargando información</div>
+
+                        <br/><br/><br/>
+                    </div>
+                
+                )}
+                { !isLoading && !errorFetch && (
+                    <ContainerForm>
+                        <BtnRegresar/>
+                        <br/><br/>  
+                        <div className="row div-detalles-estudio">
+                            <div className="col s6 l6 left-align">
+                                <div className="detalles-estudio">
+                                    <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> description </i>          
+                                    <div className="detalles-lista negrita-grande c-393939">{ tipoEstudio.nombre}</div><br/>
+                                    <div className="detalles-lista negrita-pequeno c-908F98">{ tipoEstudio.descripcion }</div>
+                                </div>
+                            </div>
+                            <div className='col s6 l6 numero-parametros'>
+                                <i className="material-icons icon-separator small c-000000">format_list_numbered</i><div className="detalles-lista sn-pequeno c-908F98 left-align">{ parametros.length } parámetros</div>
+                            </div>
+                        </div>
                         
+                        <div className='identificacion-registrar'/>
+
+                        <LineaParametros>
+                            { listaParametros()}
+                        </LineaParametros>
+                            
+                            
+                            {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
+                            {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
                         
-                        {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
-                        {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
-                    
-                </ContainerForm>
-                { errorFetch 
-                    && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
-                }
+                    </ContainerForm>
+                )}
+                { errorFetch && (
+                    <div>
+                        <br/><br/><br/>
+
+                        <div className="texto-grande red-text center">
+                            <strong> { errorFetch } </strong> 
+                        </div>
+
+                        <br/><br/><br/>
+                    </div>
+                )}
                 </Card>
             </Main>
         </div>
