@@ -21,6 +21,9 @@ function App() {
    * dependiendo de la sessión del usuario.
    */
   return (
+
+    <Navbar></Navbar>
+    /*
     <BrowserRouter>
       <ErrorBoundary>
         <Routes>
@@ -44,6 +47,7 @@ function App() {
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>
+    */
   )
 }
 

@@ -9463,3 +9463,13 @@ body {
     font-size: 26px;
   }
 }
+
+.cerrarSesionFix {
+  height: 36px;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+
+.cerrarSesionIconoFix {
+  line-height: 32px !important
+}

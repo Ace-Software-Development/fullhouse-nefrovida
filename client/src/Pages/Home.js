@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import Main from '../components/Main'
-import FormColaborador from './formColaborador'
+import FormColaborador from './FormColaborador'
 import { ReactSession } from 'react-client-session';
 
 function Home() {
