@@ -203,15 +203,12 @@ const RegistrarPaciente = () => {
 
         // Se convierte la fecha a formato 'dd/mm/yyyy'
         const dateSplit = data.fechaNacimiento.split('-');
-        console.log(dateSplit);
         const year = dateSplit[0];
         const month = dateSplit[1];
         const day = dateSplit[2];
         data.fechaNacimiento = day +'/' + month + '/' + year;
 
         e.preventDefault();
-
-        console.log('data', data);
 
         try {
             // Hacer fetch a la ruta de back, enviando la información del formulario.
