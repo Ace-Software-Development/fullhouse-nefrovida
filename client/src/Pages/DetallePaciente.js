@@ -71,11 +71,40 @@ function DetallePaciente() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
-                { isLoading && <div>Cargado...</div> }
+                { isLoading && (
+                    <div className="center">
+                        <br/><br/>
+
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="texto-grande blue-text text-darken-1">Cargando información</div>
+
+                        <br/><br/>
+                    </div>
+                
+                )}
                 { !isLoading && !errorFetch && <ContenidoDetallesPx paciente={ paciente }/>}
-                { errorFetch 
-                    && <div> <br></br> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
-                }
+                { errorFetch && (
+                    <div>
+                        <br/><br/><br/>
+
+                        <div className="texto-grande red-text center">
+                            <strong> { errorFetch } </strong> 
+                        </div>
+
+                        <br/><br/><br/>
+                    </div>
+                )}
             </Card>
             </Main>
         </div>

@@ -9363,3 +9363,9 @@ thead {
   margin-top: 3px !important;
   margin-right: 5px !important;
 }
+
+.texto-grande {
+  font-size:x-large;
+  line-height: 40px;
+  font-weight: 500;
+}
