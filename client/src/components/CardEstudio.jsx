@@ -1,10 +1,10 @@
 const CardEstudio = ({ nombreEstudio="undefined", idTipoEstudio = "undefined", idPaciente = "undefined" }) => {
     return (
         <>
-            <div className="col s6 l4 xl3 card-mini-separation no-margin-left">
+            <div className="col s6 m4 l4 xl3 card-mini-separation no-margin-left">
                 <div className="card card-mini">
                 <br/>
-                <div className="card-mini-flex">
+                <div className="card-mini-flex center">
                     <i className="material-icons icon-separator">biotech</i><span className="card-mini-text">{ nombreEstudio }</span>
                 </div>
                 <br/>
