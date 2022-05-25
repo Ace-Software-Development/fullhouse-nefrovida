@@ -5,7 +5,8 @@ import LineaCampos from './LineaCampos';
 
 const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, codigo, handleChange, elError }) => {
     return(
-        <div className='col s10 l6 espacio-vertical left-align'>
+        <div className='col s12 l6 espacio-vertical left-align no-margin-left'>
+            <br/>
                 <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
                     <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
@@ -15,27 +16,27 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                 Valor de Referencia: { valorMin } - { valorMax } { unidad }
             </div>
             <br/><br/>
-        <LineaCampos>
-        <Input 
-            id = { id }
-            name = { id }
-            type= "number"
-            label="Valor"
-            tamano="m6 s6"
-            requerido = { true }
-            onChange = { handleChange }
-        />
-        </LineaCampos>
-        { elError 
-            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
-        }
+            <LineaCampos>
+                <Input 
+                    id = { id }
+                    name = { id }
+                    type= "number"
+                    label="Valor"
+                    tamano="m6 s6"
+                    requerido = { true }
+                    onChange = { handleChange }
+                    elError = { elError }
+                />
+            </LineaCampos>
+        <div class="identificacion-registrar"/>
         </div>                             
     )
 }
 
 const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleChange, elError } ) => {
     return (
-        <div className='col s10 l6 espacio-vertical left-align'>
+        <div className='col s10 l6 espacio-vertical left-align no-margin-left'>
+            <br/>
                 <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
                     <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
@@ -45,21 +46,20 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
                 Valor de Referencia: { valorBool ? "Positivo" : "Negativo" }
             </div>
             <br/><br/>
-        <LineaCampos>
-        <Select
-            id= { id }
-            name = { id }
-            label="Valor"
-            value=""
-            arr={[{value: "positivo", option: "Positivo"}, {value: "negativo", option: "Negativo"}]}
-            tamano="m6 s6"
-            requerido = { true }
-            handleChange = { handleChange }
-        />
-        </LineaCampos>
-        { elError 
-            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
-        }
+            <LineaCampos>
+                <Select
+                    id= { id }
+                    name = { id }
+                    label="Valor"
+                    value=""
+                    arr={[{value: "positivo", option: "Positivo"}, {value: "negativo", option: "Negativo"}]}
+                    tamano="m6 s6"
+                    requerido = { true }
+                    handleChange = { handleChange }
+                    elError = { elError }
+                />
+            </LineaCampos>
+            <div class="identificacion-registrar"/>
         </div>     
     )
 
@@ -67,7 +67,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
 
 const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, handleChange, elError }) => {
     return (
-        <div className='col s10 l6 espacio-vertical left-align'>
+        <div className='col s12 l6 espacio-vertical left-align no-margin-left'>
             <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
                     <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
@@ -77,22 +77,20 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
                 Valor de Referencia: { valorString }
             </div>
             <br/><br/>
-        <LineaCampos>
-        <Input 
-            id= { id }
-            name = { id }
-            type= "text"
-            label="Valor"
-            tamano="m6 s6"
-            maxLength="25"
-            requerido = { true }
-            onChange = { handleChange }
-        />
-        </LineaCampos>
-        { elError 
-            && <div> <div className='red-text left'> <strong> { elError } </strong> </div> <br/><br/> </div>
-        }
-
+            <LineaCampos>
+                <Input 
+                    id= { id }
+                    name = { id }
+                    type= "text"
+                    label="Valor"
+                    tamano="m6 s6"
+                    maxLength="25"
+                    requerido = { true }
+                    onChange = { handleChange }
+                    elError = { elError }
+                />
+            </LineaCampos>
+            <div class="identificacion-registrar"/>
         </div>
     )
 }

@@ -9415,12 +9415,63 @@ thead {
 
 .row-parametros {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .texto-grande {
   font-size:x-large;
   line-height: 40px;
   font-weight: 500;
+}
+
+.no-margin-left {
+  margin-left: unset !important;
+}
+
+.loader-anim {
+  animation: append-animate .6s ease;
+}
+
+.borde-abajo {
+  border-bottom: 1px solid #B9B9B9;
+}
+
+@keyframes append-animate {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.animate-new-element {
+  animation: new-element .4s ease-in-out;
+}
+
+@keyframes new-element {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-form-loader{
+  animation: form-loader .6s ease;
+}
+
+@keyframes form-loader {
+  from {
+    opacity: 0;
+    height: 0px;
+  }
+  to {
+    opacity: 1;
+    height: 99px;
+  }
 }

@@ -244,8 +244,8 @@ return(
                 <BtnRegresar/><br/><br/>
                 </Link>
                 { isLoading && (
-                    <div className="center">
-                        <br/><br/><br/>
+                    <div className="center animate-new-element">
+                        <br/>
 
                         <div class="preloader-wrapper big active">
                             <div class="spinner-layer spinner-blue-only">
@@ -261,20 +261,19 @@ return(
 
                         <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
 
-                        <br/><br/><br/>
+                        <br/><br/>
                     </div>
                 
                 )}
                 {
                     !isLoading && !errorFetch ?
-                    <div>
+                    <div className="loader-anim">
                         <div align="left">               
                             <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
                         </div>
                         <br/>
                         <div className='identificacion-registrar'/>
-                        <br/>
 
                         <form 
                             id = "registrar-estudio"
@@ -284,9 +283,8 @@ return(
                             <LineaParametros>
                                 { listaParametros()}
                             </LineaParametros>
-                            <br/>
-                            <div className='identificacion-registrar'/>
-                            <br/>
+                            
+                            
 
                             <LineaCampos>
                                 <div align="left">
@@ -307,7 +305,7 @@ return(
                     : null
                 }
                 { errorFetch && (
-                    <div>
+                    <div className="animate-new-element">
                         <br/><br/>
 
                         <div className="texto-grande red-text center">
