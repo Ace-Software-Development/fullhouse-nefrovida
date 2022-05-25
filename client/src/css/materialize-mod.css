@@ -9429,12 +9429,13 @@ thead {
   margin-left: unset !important;
 }
 
-.loader-anim {
-  animation: append-animate .6s ease;
-}
 
 .borde-abajo {
   border-bottom: 1px solid #B9B9B9;
+}
+
+.loader-anim {
+  animation: append-animate .6s ease;
 }
 
 @keyframes append-animate {
