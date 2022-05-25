@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Main from '../components/Main'
 import BtnEditRegis from '../components/BtnEditRegis'
 import FormColaborador from './FormColaborador'
-import Main from '../components/Main'
-import FormColaborador from './FormColaborador'
 
 function Home() {
     return (
