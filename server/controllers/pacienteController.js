@@ -22,7 +22,7 @@ module.exports.mostrarEstudiosPaciente = async(request, response) => {
         }
         response.status(200).send({
             success: 'success',
-            data: results,
+            data: results.data,
             message: 'Estudios obtenidos exitosamente.'
         });
     } catch(error) {

@@ -211,37 +211,44 @@ exports.buscarPorNombre = async(nombre) => {
 
 }
 
+/*
+try {
+            
+
+} catch(error) {
+    return {
+        data: null,
+        error: error.message
+    }
+}
+*/
+
 /**
  * asyncObtenerEstudiosPaciente Función asíncrona para consultar todos los estudios de un paciente de nefrovida
  * @param {string} curp - Curp del paciente a buscar
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
- exports.obtenerEstudiosPaciente = async (curp) => {
-    const table = Parse.Object.extend(CONSTANTS.ESTUDIO);
-    const query = new Parse.Query(table);
-    query.equalTo(CONSTANTS.CURP, curp);
-    
+exports.obtenerEstudiosPaciente = async (curp) => {
+
+    const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
+    const queryObtenerEstudios = new Parse.Query(tablaEstudio);
+    queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
+    queryObtenerEstudios.include(CONSTANTS.IDCOLABORADOR);
+    queryObtenerEstudios.equalTo(CONSTANTS.CURP, curp);
     try {
-        const results = await query.find();
-
-        const jsonEstudios = JSON.parse(JSON.stringify(results));
-
-        if (!results) {
-            return {
-                data: null,
-                error: 'No hay estudios del paciente registrados actualmente'
-            }
-        }
-
+        const estudios = await queryObtenerEstudios.find();
+        const jsonEstudios = JSON.parse(JSON.stringify(estudios));
+        console.log(jsonEstudios);
         return {
             data: jsonEstudios,
             error: null
         }
-    } catch (error) {
+
+    } catch(error) {
         return {
             data: null,
             error: error.message
         }
     }
-    
+
 }
