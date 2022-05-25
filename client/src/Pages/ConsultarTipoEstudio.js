@@ -31,7 +31,7 @@ export default function ConsultarTipoEstudio() {
     const [parametros, setParametros] = useState([])
     const [errorFetch, setErrorFetch] = useState('');
 
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
 
 
     useEffect(() => {
@@ -40,8 +40,8 @@ export default function ConsultarTipoEstudio() {
         }
         else {
             const misDatos = responseJSON.data.data
-            setTipoEstudio(misDatos[0]);
-            setParametros([misDatos[1]]);
+            setTipoEstudio(misDatos.pop());
+            setParametros(misDatos);
         }
     }, [responseOk])
 
