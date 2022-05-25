@@ -9486,13 +9486,19 @@ thead {
 }
 
 .fixed-height {
-  min-height: 120px;
+  min-height: 110px;
   max-height: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .row-parametros {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.row-cards-estudios {
   display: flex;
   align-items: center;
   flex-wrap: wrap;

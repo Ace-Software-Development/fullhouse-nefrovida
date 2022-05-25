@@ -1,5 +1,5 @@
 import CardEstudio from '../components/CardEstudio';
-import LineaParametros from '../components/LineaParametros';
+import LineaCardsEstudios from '../components/LineaCardsEstudios';
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import { useEffect, useState } from 'react';
@@ -72,9 +72,9 @@ const Temp = () => {
                 { !isLoading && !errorFetch && (
                 <div className="on-load-anim">  
                     <br/>
-                    <LineaParametros>
+                    <LineaCardsEstudios>
                         {listaTiposEstudio()}
-                    </LineaParametros>
+                    </LineaCardsEstudios>
                 </div>
                 )}
                 { errorFetch && (
