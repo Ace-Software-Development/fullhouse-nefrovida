@@ -1,4 +1,4 @@
-const Datepicker = ({tamano = "s12 m4", id, label, ...rest}) => {
+const Datepicker = ({requerido = false, tamano = "s12 m4", id, label, elError, ...rest}) => {
   return(
     <div className={"input-field col " + tamano}  >
       <input
@@ -7,7 +7,14 @@ const Datepicker = ({tamano = "s12 m4", id, label, ...rest}) => {
         type="date"
         className="validate z-depth-1" 
         {...rest}/>
-      <label for={id}>{label}</label>
+      <label for={id}  >
+        {label} { requerido 
+          ? <span className="red-text"> *</span> 
+          : null }
+      </label>
+      <span className="helper-text left red-text">
+        {elError}
+      </span>
     </div>
   )
 }

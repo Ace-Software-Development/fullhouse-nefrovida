@@ -3,33 +3,67 @@ module.exports = Object.freeze({
     OBJECTID: "objectId",
     IDROL: "idRol",
     ACTIVO: "activo",
-    // Tabla User
-    USUARIO: "username",
-    CONTRASENA: "password",
-    CORREO: "email",
     NOMBRE: "nombre",
+    CORREO: "email",
     APELLIDOPATERNO: "apellidoPaterno",
     APELLIDOMATERNO: "apellidoMaterno",
+    DESCRIPCION: "descripcion",
+    FECHA: "fecha",
     TELEFONO: "telefono",
+    CODIGO: "codigo",
+    VALORBOOL: "valorBool",
+    VALORSTRING: "valorString",
+    // AREA
+    AREA: "Area",
+    IDAREA: "idArea",
+    // Tabla User
+    IDUSUARIO: "idUsuario",
+    USUARIO: "username",
+    CONTRASENA: "password",
     // Roles
-    ROL: "Rol",
-    NOMBREROL: "nombre",
-    DESCRIPCIONROL: "descripcion",
+    ROL: "Rol",        
     ROLADMIN: "admin",
     ROLTRABAJOSOCIAL: "trabajoSocial",
     ROLQUIMICO: "quimico",
     ROLDOCTOR: "doctor",
     ROLNUTRIOLOGO: "nutriologo",
     ROLPSICOLOGO: "psicologo",
-    // Tabla TipoEstudio
+    // Session
+    SESSION: "_Session",
+    SESSIONTOKEN: "sessionToken",
+    USER: "user",
+    // PACIENTE
+    PACIENTE: "Paciente",
+    IDPACIENTE: "idPaciente",
+    CURP: "curp",
+    FECHANACIMIENTO: "fechaNacimiento",   
+    SEXO: "sexo",
+    ESTATURA: "estatura",
+    PESO: "peso",
+    // TIPOESTUDIO
     TIPOESTUDIO: "TipoEstudio",
-    // Tabla Parametro
-    PARAMETRO: "Parametro",
-    IDTIPOVALOR: "idTipoValor",
-    // Tabla ParametroEstudio
-    PARAMETROESTUDIO: "ParametroEstudio",
     IDTIPOESTUDIO: "idTipoEstudio",
-    IDPARAMETRO: "idParametro",
-    // Tabla TipoValor
+    // TIPOVALOR
     TIPOVALOR: "TipoValor",
+    IDTIPOVALOR: "idTipoValor",
+    // PARAMETRO
+    PARAMETRO: "Parametro",
+    IDPARAMETRO: "idParametro",
+    UNIDAD: "unidad",
+    TIENERANGO: "tieneRango",
+    VALORMIN: "valorMin",
+    VALORMAX: "valorMax",
+    // PARAMETROESTUDIO
+    PARAMETROESTUDIO: "ParametroEstudio",
+    // ESTUDIO
+    ESTUDIO: "Estudio",
+    IDESTUDIO: "idEstudio",
+    OBSERVACIONES: "observaciones",
+    //RESULTADO
+    RESULTADO: "Resultado",
+    VALORNUM: "valorNum",
+    // NOTAMEDICA
+    NOTAMEDICA: "NotaMedica",
+    IDNOTAMEDICA: "idNotaMedica",   
+    NOTAS: "notas"
 })
