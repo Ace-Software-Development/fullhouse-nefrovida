@@ -9,7 +9,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             <br/>
                 <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
-                    <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
+                    <div className="detalles-lista texto-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
@@ -28,6 +28,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                     elError = { elError }
                 />
             </LineaCampos>
+            
         <div class="identificacion-registrar"/>
         </div>                             
     )
@@ -39,7 +40,7 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
             <br/>
                 <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
-                    <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
+                    <div className="detalles-lista texto-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
@@ -70,7 +71,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
         <div className='col s12 l6 espacio-vertical left-align no-margin-left'>
             <div className='detalles-usuario'>
                     <i className="material-icons icon-separator small c-64646A">format_list_numbered</i>
-                    <div className="detalles-lista negrita-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
+                    <div className="detalles-lista texto-grande c-64646A left-align">{ nombreParametro + " (" + codigo + "):" }</div><br/>
             </div>
             <br/>
             <div className="detalles-lista light-pequeno c-908F98">
