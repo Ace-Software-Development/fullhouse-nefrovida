@@ -1,4 +1,6 @@
-let CONSTANTS = require("../constantsProject");
+//Iniciar Sesión: IT3-3 (https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit?usp=sharing)
+
+let CONSTANTS = require('../constantsProject');
 const colaboradorModel = require('../models/colaboradorModel');
 const rolModel = require('../models/rolModel');
 
@@ -59,12 +61,12 @@ exports.asyncObtenerSession = async(token, callback) => {
         // En caso de que token de sessión de React no sea válido, cerrar sesión.
         else {
             await Parse.User.logOut();
-            callback(null, "Sesion invalida");
+            callback(null, 'Sesion invalida');
         }
         
         
     } catch(error) {
         await Parse.User.logOut();
-        callback(null, "Sesion invalida");
+        callback(null, 'Sesion invalida');
     }
 }
