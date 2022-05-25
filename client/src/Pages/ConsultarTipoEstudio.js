@@ -21,6 +21,8 @@ import LineaParametros from '../components/LineaParametros';
 import CardEstudio from '../components/CardEstudio';
 import { ParametroTexto, ParametroRango, ParametroBooleano} from '../components/ParametroTipoEstudio';
 import { useParams } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+
 
 export default function ConsultarTipoEstudio() {
     const params = useParams();
@@ -28,8 +30,37 @@ export default function ConsultarTipoEstudio() {
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
     const [errorFetch, setErrorFetch] = useState('');
-    const [isLoading, setIsLoading] = useState('');
+
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
+
+
+    useEffect(() => {
+        if (!responseJSON || !responseOk) {
+            return;
+        }
+        else {
+            const misDatos = responseJSON.data.data
+            setTipoEstudio(misDatos[0]);
+            setParametros([misDatos[1]]);
+        }
+    }, [responseOk])
+
+    useEffect(() => {
+        setErrorFetch(error);
+
+    }, [error])
+
+    useEffect(() => {
+        getTipoEstudio(params.idTipoEstudio);
+    }, []);
+
+    async function getTipoEstudio(id) {
+        await httpConfig(id, 'GET');
+    }
     
+    console.log(tipoEstudio,"tipoEstudio")
+    console.log(parametros, "parametros")
+
     function listaParametros() {
         return parametros.map(el => {
             if(el.idParametro.idTipoValor.nombre === "Positivo/Negativo"){
@@ -46,33 +77,6 @@ export default function ConsultarTipoEstudio() {
         
     }
 
-    async function getTipoEstudio(id) {
-        setIsLoading(true);
-
-        try {
-            const response = await fetch('http://localhost:6535/tipoEstudio/'+ id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            let misDatos = await response.json();
-            setIsLoading(false);
-
-            if (!response.ok) {
-                setErrorFetch(misDatos.message);
-                return;
-            }
-
-            misDatos = misDatos.data.data;
-            setTipoEstudio(misDatos.pop());
-            setParametros(misDatos);
-            
-        } catch(e) {
-            setIsLoading(false);
-            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
-        }
-    }
-    useEffect(() => {
-        getTipoEstudio(params.idTipoEstudio);
-        setIsLoading(true);
-    }, []);
-
 
     return(
         <div>
@@ -84,7 +88,7 @@ export default function ConsultarTipoEstudio() {
                 <ContainerForm>
                     <BtnRegresar/>
                     <br/>
-                    { isLoading && (
+                    { loading && (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
 
@@ -106,7 +110,7 @@ export default function ConsultarTipoEstudio() {
                         </div>
                     
                     )}
-                    { !isLoading && !errorFetch && (
+                    { !loading && !errorFetch && (
                         <div className="on-load-anim">
 
                                 <br/><br/>  

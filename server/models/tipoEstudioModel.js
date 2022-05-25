@@ -67,7 +67,6 @@ exports.consultarTiposDeEstudio = async() => {
 
    try {
       const tiposDeEstudio = await query.find();
-
       if (!tiposDeEstudio || tiposDeEstudio === []) {
          return {
             data: null,

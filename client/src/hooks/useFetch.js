@@ -151,7 +151,7 @@ const useFetch = (url) => {
                 setLoading(true);
                 try {
                     // Armar ruta con datos de session y id
-                    const getUrl = `${url}/?token=${ReactSession.get("sessionToken")}&id=${itemId}`;
+                    const getUrl = `${url}/?token=${ReactSession.get("sessionToken")}`;
                     const res = await fetch(getUrl, config);
                     const json = await res.json();
                     await setResponse(res);

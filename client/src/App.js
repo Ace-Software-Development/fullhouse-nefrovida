@@ -1,7 +1,7 @@
 import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import ErrorBoundary from './components/ErrorBoundary'
 import PrivateRoute from './components/PrivateRoute';
