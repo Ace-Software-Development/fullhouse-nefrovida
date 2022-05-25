@@ -24,17 +24,21 @@ import BtnGuardar from '../components/BtnGuardar';
 import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
+import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 const RegistrarPaciente = () => {
-    const [errorSubmit, setErrorSubmit] = useState('');
-    const [isLoading, setIsLoading] = useState('');
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/registrar');
 
     
     /**
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
      */
     useEffect(() => {
+        if (ReactSession.get('rol') !== 'trabajoSocial') {
+            window.location.href = '/';
+        }
         validation();
     }, []);
 
@@ -193,9 +197,6 @@ const RegistrarPaciente = () => {
      * @returns 
      */
     async function onSubmit(data, e) {
-        // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
-        setIsLoading(true);
-        setErrorSubmit('');
         // Cambiar los valores necesarios de string a número.
         data.estatura = Number(data.estatura);
         data.peso = Number(data.peso);
@@ -210,28 +211,24 @@ const RegistrarPaciente = () => {
 
         e.preventDefault();
 
-        try {
-            // Hacer fetch a la ruta de back, enviando la información del formulario.
-            const response = await fetch('http://localhost:6535/paciente', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
-            const paciente = await response.json();
-            setIsLoading(false);
-    
-            // Mostrar error en caso de ser necesario
-            if (!response.ok) {
-                setErrorSubmit(paciente.message);
-                return;
-            }
-            // Mostrar mensaje de éxito y redireccionar a la página principal
-            else {
-                window.location.href = '/';
-                await M.toast({ html: paciente.message });
-            }
-        } catch(e) {
-            // Mostrar mensaje de error en la conexión con la base de datos.
-            setIsLoading(false);
-            setErrorSubmit('Error de conexión. Inténtelo de nuevo.');
-        }
+        httpConfig(data, 'POST');
     };
+
+    /**
+     * Hook que se ejecuta cada vez que el responseOk cambia, si no fue correcta la respuesta no
+     * debe mostrar ningún mensaje. Si la respuesta es correcta muestra un toast con el mensaje 
+     * y se redirige.
+     */
+    useEffect(() => {
+        if (!responseJSON || !responseOk) {
+            return
+        } else {
+            M.toast({ html: message });
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+    }, [responseOk])
 
 
     return(
@@ -245,25 +242,20 @@ const RegistrarPaciente = () => {
                     <Link to = "/">
                         <BtnRegresar />
                     </Link>
-                    { isLoading && (
-                        <div className="center animate-form-loader">
-                            <br/><br/>
-
-                            <div class="preloader-wrapper med active">
-                                <div class="spinner-layer spinner-blue-only">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                    <div class="circle"></div>
-                                </div><div class="circle-clipper right">
-                                    <div class="circle"></div>
-                                </div>
-                                </div>
+                    {
+                        loading &&
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
                             </div>
-
-                            <br/>
+                            </div>
                         </div>
-                    )}
+                    }
                     <br/><br/>
                     <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
@@ -355,8 +347,8 @@ const RegistrarPaciente = () => {
                                 elError = { errors.estatura && errors.estatura?.message }
                             />
                         </LineaCampos>
-                        { errorSubmit 
-                            && <div className="animate-new-element"> <div className="red-text right"> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
+                        { error 
+                            && <div> <div className="red-text right"> <strong> { error } </strong> </div> <br/><br/> </div>
                         }
             
                         <BtnGuardar/>

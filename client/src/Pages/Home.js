@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Main from '../components/Main'
 import BtnEditRegis from '../components/BtnEditRegis'
 import FormColaborador from './FormColaborador'
+import { ReactSession } from 'react-client-session';
 
 function Home() {
     return (
@@ -10,9 +11,11 @@ function Home() {
             <Navbar/>
             <Main>
                 <br/><br/>
-                <Link to = "/paciente">
-                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
-                </Link>
+                { ReactSession.get('rol') === 'trabajoSocial' &&
+                    <Link to = "/paciente">
+                        <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                    </Link>
+                }
                 <FormColaborador/>
             </Main>
         </div>
