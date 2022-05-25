@@ -56,10 +56,7 @@ export default function ConsultarTipoEstudio() {
 
     async function getTipoEstudio(id) {
         await httpConfig(id, 'GET');
-    }
-    
-    console.log(tipoEstudio,"tipoEstudio")
-    console.log(parametros, "parametros")
+    }   
 
     function listaParametros() {
         return parametros.map(el => {
