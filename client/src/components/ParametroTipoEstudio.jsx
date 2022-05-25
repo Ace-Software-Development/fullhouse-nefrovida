@@ -47,8 +47,10 @@ const ParametroRango = ({nombreParametro, valorMin, valorMax, unidad, codigo}) =
                     </div>
                 </div>
             </div>
-        
+            
             <br/>
+
+            <div class="identificacion-registrar"></div>
 
         </div>                             
     )
@@ -70,10 +72,11 @@ const ParametroBooleano = ({nombreParametro, valorBool, codigo} ) => {
                 Valor positivo / negativo
             </div> 
             
-            <br/>
+            <br/><br/><br/>
 
             <div className="detalles-lista espacio-3vw c-64646A fixed-height">{ valorBool ? "Positivo" : "Negativo" } </div>
             
+            <div class="identificacion-registrar"></div>
 
         </div>       
     )
@@ -95,12 +98,11 @@ const ParametroTexto = ({nombreParametro, valorString, codigo}) => {
             <div className="detalles-lista light-pequeno c-908F98">
                 Valor de texto
             </div>
-            <br/>
+            <br/><br/><br/>
 
             <div className="detalles-lista espacio-3vw c-64646A fixed-height">{ valorString } </div>
             
-
-            
+            <div class="identificacion-registrar"></div>
 
         </div>  
     )
