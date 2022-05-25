@@ -1,17 +1,51 @@
-import React from "react";
+import React from 'react';
 import "./css/materialize-mod.css";
 import "materialize-css/dist/js/materialize.min.js";
-import Tabla from './components/Tabla'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ReactSession } from 'react-client-session';
+import ErrorBoundary from './components/ErrorBoundary'
+import PrivateRoute from './components/PrivateRoute';
+import NoAuthRoute from './components/NoAuthRoute';
+import Home from './pages/Home';
+import IniciarSesion from './pages/IniciarSesion';
+import NotFound from './pages/error/404notFound'
+import Forbidden from './pages/error/403Forbidden';
+
 
 function App() {
-  const arr = [{nombre: "Eduardo", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" },
-              {nombre: "yO", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" },
-              {nombre: "Otro", materno: "Pete", paterno: "Gil", sexo:"Hombre", rol: "Dueño de pepe", telefono:"4641063915", detalle:"http://store.steampowered.com/" }
-            ]
+  // Definir que session se almacenará en una cookie
+  ReactSession.setStoreType("cookie");
+
+  /**
+   * Definir rutas de aplicación con protección
+   * dependiendo de la sessión del usuario.
+   */
   return (
-    <>
-      <Tabla arr= {arr} id="nombres"/>
-    </>
+
+    <BrowserRouter>
+      <ErrorBoundary>
+        <Routes>
+          
+          <Route exact path='/iniciarSesion' element={<NoAuthRoute/>}>
+            <Route exact path='/iniciarSesion' element={<IniciarSesion />}/>
+          </Route>
+
+          <Route exact path='/' element={<PrivateRoute/>}>
+            <Route exact path='/' element={<Home/>}/>
+          </Route>
+
+          <Route exact path='/403' element={<PrivateRoute/>}>
+            <Route exact path='/403' element={<Forbidden />} />
+          </Route>
+
+          <Route exact path='*' element={<PrivateRoute/>}>
+            <Route exact path='*' element={<NotFound />} />
+          </Route>
+
+        </Routes>
+      </ErrorBoundary>
+    </BrowserRouter>
+    
   )
 }
 
