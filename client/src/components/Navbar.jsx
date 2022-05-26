@@ -1,5 +1,5 @@
 import logo from "../img/logo.png";
-import UseCerrarSesion from "../hooks/useCerrarSesion"
+import CerrarSesion from "./CerrarSesion"
 
 
 const Navbar = ({children}) => {
@@ -25,7 +25,7 @@ const Navbar = ({children}) => {
           <i className="material-icons"  >menu</i>
           </a>
           <ul className="right"  >            
-            <UseCerrarSesion/>
+            <CerrarSesion/>
           </ul>
         </div>
       </nav>

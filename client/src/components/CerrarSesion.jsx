@@ -2,15 +2,30 @@ import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import BtnCerrarSesion from "../components/BtnCerrarSesion";
-import useFetch from './useFetch';
+import useFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
 
-const UseCerrarSesion = () => {
+const CerrarSesion = () => {
 
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
+
+    // Crear instancia de hook para realizar petición al servidor de cerrar sesión.
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/cerrarSesion');
 
 
+    /**
+     * Hook para validar que cambió estado de respuesta 
+     * de fetch y por lo tanto asumir que si es true,
+     * petición fue correcta para almacenar sesión y 
+     * redirigir a página principal.
+     * 
+     * Se llama a useEffect si cambia responseOk
+     * que solo cambia cuando response retorno true
+     * en ok
+     * 
+     * Se obtiene información del colaborador de Nefrovida y 
+     * destruye la sesión.
+     */ 
     useEffect(() => {
         if (!responseJSON || !responseOk) return;
         
@@ -37,15 +52,17 @@ const UseCerrarSesion = () => {
 
     /**
     * Función que se ejecuta al envia formulario para
-    * buscar credenciales de usuario en base de datos.
+    * obtener credenciales de usuario actual.
     * 
-    * Se obtiene información del colaborador de Nefrovida y 
-    * se destruye la sesión.
+    * Se utiliza hook para realizar fetch, la función
+    * que se llama arma configuración del fetch y dentro
+    * del hook de useFetch al detectar que cambia la 
+    * configuración de petición la realiza y se obtiene
+    * respuesta a través de variable de estado del hook.
     * 
     * @returns redirección a la página actual en caso de error o  
     * redirección a la página de iniciar sesión.
-    */
-    
+    */    
     async function onSubmit () {
 
         // Realizar petición al servidor.
@@ -65,4 +82,4 @@ const UseCerrarSesion = () => {
     )
 }
 
-export default UseCerrarSesion;
+export default CerrarSesion;
