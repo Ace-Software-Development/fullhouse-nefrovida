@@ -13,7 +13,7 @@ const Tabla = ({ datos }) => {
           <thead  >
             <tr className="figma"  >
                 
-                <th class="tabla-padding">
+                <th className="tabla-padding">
                   Nombre
                 </th>
                 <th  >

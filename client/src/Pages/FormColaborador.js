@@ -33,7 +33,7 @@ const FormColaborador = () => {
                     id="main-login"
                     onSubmit={handleSubmit}>
                     <LineaCampos>
-                        <Input id="usuario" label="Usuario" tamano="m3 s12" handleInputChange/>
+                        <Input id="usuario" label="Usuario" tamano="m3 s12" />
                         <Input id="nombre" label="Nombre" tamano="m3 s12"/>
                         <Input id="paterno" label="Apellido Paterno" tamano="m3 s12"/>
                         <Input id="materno" label="Apellido Materno" tamano="m3 s12"/>

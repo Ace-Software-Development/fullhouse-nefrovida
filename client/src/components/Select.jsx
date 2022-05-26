@@ -29,7 +29,7 @@ const Select = ({requerido = false, value, tamano = "s4 m2", id = "nombre", labe
         )
       }
     </select>
-    <label for={id}  >
+    <label htmlFor={id}  >
         {label} { requerido 
           ? <span className="red-text"> *</span> 
           : null }

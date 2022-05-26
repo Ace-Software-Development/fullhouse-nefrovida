@@ -244,14 +244,14 @@ const RegistrarPaciente = () => {
                     </Link>
                     {
                         loading &&
-                        <div class="preloader-wrapper small active">
-                            <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
+                        <div className="preloader-wrapper small active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
                             </div>
                             </div>
                         </div>
