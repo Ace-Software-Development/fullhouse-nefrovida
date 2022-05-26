@@ -12,16 +12,16 @@ function App() {
   ReactSession.setStoreType("cookie");
 
   return (
-
-    <Navbar></Navbar>
-    /*
+    
+    //<Navbar></Navbar>
+    
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/login' element={<IniciarSesion />} />
       </Routes>
     </BrowserRouter>
-    */
+    
   )
 }
 
