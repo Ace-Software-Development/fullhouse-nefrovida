@@ -29,6 +29,8 @@ import { ReactSession } from 'react-client-session';
 
 export default function RegistrarEstudio({ idTipoEstudio, curp }) {
 const [url, setUrl] = useState('http://localhost:6535/tipoEstudio/id');
+const [errorSubmit, setErrorSubmit] = useState('');
+const [isLoading, setIsLoading] = useState('');
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
 
@@ -206,6 +208,7 @@ useEffect(() => {
     } else {
         setTipoEstudio(responseJSON.data.data.pop());
         setParametros(responseJSON.data.data);
+        setUrl('http://localhost:6535/estudio');
     }
 }, [responseOk])
 
@@ -253,7 +256,7 @@ return(
                 
                 )}
                 {
-                    !isLoading && !errorFetch ?
+                    !loading && !error ?
                     <div className="loader-anim">
                         
                     
