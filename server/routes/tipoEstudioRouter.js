@@ -1,11 +1,13 @@
-const express = require('express')
+const express = require('express');
+let CONSTANTS = require('../constantsProject');
 const router = express.Router()
 const tipoEstudio = require('../controllers/tipoEstudioController')
 
+
 // ruta get para consutar todos los tipos de estudio
-router.get('/', tipoEstudio.consultarTiposEstudio);
+router.get('/',authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.consultarTiposEstudio);
 
 // ruta get para consutar los detalles y parametros de un tipo de estudio
-router.get('/id', tipoEstudio.consultarTipoEstudio);
+router.get('/id', authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.consultarTipoEstudio);
 
 module.exports = router;

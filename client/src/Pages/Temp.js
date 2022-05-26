@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 const Temp = () => {
 
@@ -12,6 +13,10 @@ const Temp = () => {
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
 
     function listaTiposEstudio() {
+        //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
+        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' ) {
+            return [];
+        }
         return tiposEstudio.map(el => {
             return(
                 <CardEstudio nombreEstudio={el.nombre} idTipoEstudio={el.objectId} idPaciente={"undefined"}/>

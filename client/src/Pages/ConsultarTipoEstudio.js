@@ -22,6 +22,8 @@ import CardEstudio from '../components/CardEstudio';
 import { ParametroTexto, ParametroRango, ParametroBooleano} from '../components/ParametroTipoEstudio';
 import { useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
+
 
 
 export default function ConsultarTipoEstudio() {
@@ -33,7 +35,7 @@ export default function ConsultarTipoEstudio() {
 
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
 
-
+    //Hook para actualizar los datos de el estudio y los parametros
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return;
@@ -45,19 +47,38 @@ export default function ConsultarTipoEstudio() {
         }
     }, [responseOk])
 
+
+    //Hook para actualizar el error
     useEffect(() => {
         setErrorFetch(error);
 
     }, [error])
 
+    /**
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+     */
     useEffect(() => {
+        //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
+        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' ) {
+            window.location.href = '/';
+        }
         getTipoEstudio(params.idTipoEstudio);
     }, []);
 
+    /**
+    * getTipoEstudio Función asíncrona para obtener el detalle  
+    * de un tipo de estudio; recibe el ID del tipo estudio a buscar.
+    * @param {string} idTipoEstudio ObjectId del tipo de estudio
+    */
     async function getTipoEstudio(id) {
         await httpConfig(id, 'GET');
     }   
 
+    /**
+    * listaParametros Función para obtener la lista de componentes 
+    * de diferentes tipos de parametros con sus detalles
+    * @returns lista de parametros
+    */
     function listaParametros() {
         return parametros.map(el => {
             if(el.idParametro.idTipoValor.nombre === "Positivo/Negativo"){
