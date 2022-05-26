@@ -29,21 +29,58 @@ import { useForm } from 'react-hook-form';
 const RegistrarColaborador = () => {
     const [errorSubmit, setErrorSubmit] = useState("")
     const [isLoading, setIsLoading] = useState("")
+    const [postIsLoading, setPostIsLoading] = useState("")
+    const [errorFetch, setErrorFetch] = useState('');
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const [roles, setRoles] = useState([]);
 
-     /**
+    async function getRoles() {
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('http://localhost:6535/colaboradores', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            let miJayson = await response.json();
+            setIsLoading(false);
+
+            if (!response.ok) {
+                setErrorFetch(miJayson.message);
+                return;
+            }
+
+            miJayson = miJayson.roles;
+            setRoles(miJayson);
+            
+        } catch(e) {
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
+        }
+    }
+
+    function miJson() {
+        const arr = []
+        roles.map(
+            el => { 
+            arr.push({option:el.nombre, value:el.objectId})}
+        )
+        return arr
+    }
+
+    /**
       * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
       * @param {event} e - Evento del cambio
       */
-    const handleChange = (e) => {
+        const handleChange = (e) => {
         setValue(e.target.name, e.target.value)
-        console.log(e.target.name, e.target.value)
+        // console.log(e.target.name, e.target.value)
     }
 
     /**
       * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
     */
     useEffect(() => {
+
+        setIsLoading(true);
+        getRoles();
         
         // Variable para el usuario, requerido, con patrón.
         register('usuario', {
@@ -173,7 +210,7 @@ const RegistrarColaborador = () => {
         });
     }, []);
 
-     /**
+    /**
       * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
       * base de datos haciendo un fetch a la ruta de back.
       * @param {object} data - Datos del paciente en el formulario 
@@ -183,7 +220,7 @@ const RegistrarColaborador = () => {
     async function onSubmit(data, e) {
         // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
         onSubmit="document.getElementById('submit').disabled=true"
-        setIsLoading(true)
+        setPostIsLoading(true)
         setErrorSubmit("")
         
         // Cambiar los valores necesarios de string a número.
@@ -196,9 +233,9 @@ const RegistrarColaborador = () => {
         try {
             // Hacer fetch a la ruta de back, enviando la información del formulario.
             const response = await fetch('http://localhost:6535/colaboradores', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-            console.log("response", response)
+            // console.log("response", response)
             const colaborador = await response.json()
-            setIsLoading(false)
+            setPostIsLoading(false)
             
             // Mostrar error en caso de ser necesario
             if (!response.ok) {
@@ -211,10 +248,10 @@ const RegistrarColaborador = () => {
                 await M.toast({ html: colaborador.message });
                 window.location.href = "/"
             }
-            console.log(colaborador)
+            // console.log(colaborador)
         } catch(e) {
             // Mostrar mensaje de error en la conexión con la base de datos.
-            setIsLoading(false)
+            setPostIsLoading(false)
             setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
         }
     }
@@ -230,140 +267,155 @@ const RegistrarColaborador = () => {
                     <Link to = "/">
                         <BtnRegresar />
                     </Link>
-                    {
-                        isLoading &&
-                        <div class="preloader-wrapper small active">
-                            <div class="spinner-layer spinner-blue-only">
+                    { isLoading && (
+                        <div className="center animate-new-element">
+                            <br/><br/><br/>
+
+                            <div class="preloader-wrapper big active">
+                                <div class="spinner-layer spinner-blue-only">
                                 <div class="circle-clipper left">
                                     <div class="circle"></div>
-                                </div>
-                                <div class="gap-patch">
+                                </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div><div class="circle-clipper right">
                                     <div class="circle"></div>
                                 </div>
-                                <div class="circle-clipper right">
-                                    <div class="circle"></div>
                                 </div>
                             </div>
+
+                            <div class="texto-grande blue-text text-darken-1">Cargando</div>
+
+                            <br/><br/><br/>
                         </div>
-                    }
-                    <br/><br/>
-                    <form
-                        id = "main-login"
-                        action = 'http://localhost:6535/colaboradores'
-                        method = 'post'
-                        onSubmit = { handleSubmit(onSubmit) }>
-                        <LineaCampos>
-                            <Input 
-                                id = "usuario" 
-                                label = "Usuario" 
-                                tamano = "m3 s12" 
-                                onChange = { handleChange }
-                                elError = { errors.usuario && errors.usuario?.message }
-                                maxLength = "20"
-                                requerido = {true}
+                    
+                    )}
+                    { !isLoading && !errorFetch && (
+                        <div className="on-load-anim">
+                            <form
+                                id = "main-login"
+                                action = 'http://localhost:6535/colaboradores'
+                                method = 'post'
+                                onSubmit = { handleSubmit(onSubmit) }>
+                                <LineaCampos>
+                                    <Input 
+                                        id = "usuario" 
+                                        label = "Usuario" 
+                                        tamano = "m3 s12" 
+                                        onChange = { handleChange }
+                                        elError = { errors.usuario && errors.usuario?.message }
+                                        maxLength = "20"
+                                        requerido = {true}
 
 
-                            />
-                            <Input 
-                                id = "nombre" 
-                                label = "Nombre" 
-                                tamano = "m3 s12"
-                                onChange = {handleChange}
-                                elError = { errors.nombre && errors.nombre?.message }
-                                maxLength = "20"
-                                requerido = {true}
-                            />
-                            <Input 
-                                id = "apellidoPaterno" 
-                                label = "Apellido Paterno" 
-                                tamano = "m3 s12"
-                                onChange = { handleChange }
-                                elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
-                                requerido = {true}
-                            />
-                            <Input 
-                                id = "apellidoMaterno" 
-                                label = "Apellido Materno" 
-                                tamano = "m3 s12"
-                                onChange = { handleChange }
-                                elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
-                            />
-                        </LineaCampos>
-                        <LineaCampos>
-                            <Datepicker 
-                                id = "fechaNacimiento" 
-                                label = "Fecha de nacimiento" 
-                                tamano = "s8 m4"
-                                onChange = { handleChange }
-                                elError = { errors.fechaNacimiento && errors.fechaNacimiento?.message }
-                                requerido = {true}
-                            />
-                            <Select 
-                                id = "sexo" 
-                                label = "Sexo" 
-                                value = ""
-                                arr = { [{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}] }
-                                handleChange = { handleChange }
-                                elError = { errors.sexo && errors.sexo?.message }
-                                requerido = { true }
-                            />
-                            <Input 
-                                id = "telefono" 
-                                label = "Telefono" 
-                                type = "number"
-                                tamano = "s8 m4"
-                                onChange = { handleChange }
-                                maxLength = "10"
-                                min = "0"
-                                elError = { errors.telefono && errors.telefono?.message }
-                            />
-                            <Select 
-                                id = "rol" 
-                                label = "Rol" 
-                                value = ""
-                                arr = { [{value: "colaborador", option: "Colaborador"},
-                                        {value: "activo", option: "Activo"}, 
-                                        {value: "pasivo", option: "Pasivo"},
-                                        {value: "wtf", option: "xD"},] }
-                                handleChange = { handleChange }
-                                elError = { errors.rol && errors.rol?.message }
-                                requerido = { true }
-                            />
-                        </LineaCampos>
-                        <LineaCampos>
-                            <Input 
-                                id = "correo" 
-                                label = "Correo electrónico" 
-                                tamano = "s12 m4"
-                                type = "email"
-                                onChange = { handleChange }
-                                elError = { errors.correo && errors.correo?.message }
-                                requerido = { true }
-                            />
-                            <Input 
-                                id = "password" 
-                                label = "Contraseña" 
-                                tamano = "s12 m4" 
-                                type = "password"
-                                onChange = { handleChange }
-                                elError = { errors.password && errors.password?.message }
-                                requerido = { true }
-                            />
-                            <Input 
-                                id = "confPassword" 
-                                label = "Confirmar contraseña" 
-                                tamano = "s12 m4"
-                                type = "password"
-                                onChange = { handleChange }
-                                elError = { errors.confPassword && errors.confPassword?.message }
-                                requerido = { true }
-                            />
-                        </LineaCampos>
-                        { errorSubmit 
-                            && <div> <div className='red-text right'> <strong> { errorSubmit } </strong> </div> <br/><br/> </div>
-                        }
-                        <BtnGuardar/>
-                    </form>
+                                    />
+                                    <Input 
+                                        id = "nombre" 
+                                        label = "Nombre" 
+                                        tamano = "m3 s12"
+                                        onChange = {handleChange}
+                                        elError = { errors.nombre && errors.nombre?.message }
+                                        maxLength = "20"
+                                        requerido = {true}
+                                    />
+                                    <Input 
+                                        id = "apellidoPaterno" 
+                                        label = "Apellido Paterno" 
+                                        tamano = "m3 s12"
+                                        onChange = { handleChange }
+                                        elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
+                                        requerido = {true}
+                                    />
+                                    <Input 
+                                        id = "apellidoMaterno" 
+                                        label = "Apellido Materno" 
+                                        tamano = "m3 s12"
+                                        onChange = { handleChange }
+                                        elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
+                                    />
+                                </LineaCampos>
+                                <LineaCampos>
+                                    <Datepicker 
+                                        id = "fechaNacimiento" 
+                                        label = "Fecha de nacimiento" 
+                                        tamano = "s8 m4"
+                                        onChange = { handleChange }
+                                        elError = { errors.fechaNacimiento && errors.fechaNacimiento?.message }
+                                        requerido = {true}
+                                    />
+                                    <Select 
+                                        id = "sexo" 
+                                        label = "Sexo" 
+                                        value = ""
+                                        arr = { [{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}] }
+                                        handleChange = { handleChange }
+                                        elError = { errors.sexo && errors.sexo?.message }
+                                        requerido = { true }
+                                    />
+                                    <Input 
+                                        id = "telefono" 
+                                        label = "Telefono" 
+                                        type = "number"
+                                        tamano = "s8 m4"
+                                        onChange = { handleChange }
+                                        maxLength = "10"
+                                        min = "0"
+                                        elError = { errors.telefono && errors.telefono?.message }
+                                    />
+                                    <Select 
+                                        id = "rol" 
+                                        label = "Rol" 
+                                        value = ""
+                                        arr = { miJson() }
+                                        handleChange = { handleChange }
+                                        elError = { errors.rol && errors.rol?.message }
+                                        requerido = { true }
+                                    />
+                                </LineaCampos>
+                                <LineaCampos>
+                                    <Input 
+                                        id = "correo" 
+                                        label = "Correo electrónico" 
+                                        tamano = "s12 m4"
+                                        type = "email"
+                                        onChange = { handleChange }
+                                        elError = { errors.correo && errors.correo?.message }
+                                        requerido = { true }
+                                    />
+                                    <Input 
+                                        id = "password" 
+                                        label = "Contraseña" 
+                                        tamano = "s12 m4" 
+                                        type = "password"
+                                        onChange = { handleChange }
+                                        elError = { errors.password && errors.password?.message }
+                                        requerido = { true }
+                                    />
+                                    <Input 
+                                        id = "confPassword" 
+                                        label = "Confirmar contraseña" 
+                                        tamano = "s12 m4"
+                                        type = "password"
+                                        onChange = { handleChange }
+                                        elError = { errors.confPassword && errors.confPassword?.message }
+                                        requerido = { true }
+                                    />
+                                </LineaCampos>
+                                <BtnGuardar/>
+                            </form>
+                            <br/><br/>
+                        </div>
+                    )}
+                    { errorFetch && (
+                        <div>
+                            <br/><br/><br/>
+
+                            <div className="texto-grande red-text center animate-new-element">
+                                <strong> { errorFetch } </strong> 
+                            </div>
+
+                            <br/><br/><br/>
+                        </div>
+                    )}
                     </ContainerForm>
                 </Card>
             </Main>
