@@ -3,35 +3,24 @@ const http = require('http');
 const bodyParser = require('body-parser');
 // Para enviar archivos HTML como respuesta desde express
 const path = require('path');
-var cookieSession = require('cookie-session');
 const parseServer = require('parse-server').ParseServer;
 const cors = require('cors');
-const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication')
+const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication');
 let CONSTANTS = require("./constantsProject");
 
 // Middlewares
 const app = express();
 app.use(express.json());
+
 app.use(cors());
+
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Crear sessión en cookie del lado del cliente
-const jornadaLaboral8h = 1000 * 60 * 60 * 8;
-app.use(
-    cookieSession( {
-        name: 'session',
-        secret: 'kñsjdnrkncjjbu83jjbjs83njbb4uir3jbkjbh8hll4ñkm',
-        cookie: { 
-            maxAge: jornadaLaboral8h,
-            secure: true
-        }
-    })
-);
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
-    console.log('DATABASE_URI not specified, falling back to localhost.')
+    console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
 var api = new parseServer({
@@ -42,6 +31,12 @@ var api = new parseServer({
     appName: process.env.APP_NAME,
 });
 app.use('/parse', api);
+
+const parseDashboard = require('./parse/dashboard');
+app.use(
+    parseDashboard.url,
+    parseDashboard.dashboard
+);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -63,13 +58,6 @@ app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 // Validar que usuario esté autenticado
 app.use(authUsuario);
 
-const parseDashboard = require('./parse/dashboard');
-app.use(
-    parseDashboard.url, 
-    authRol([CONSTANTS.ROLADMIN]),
-    parseDashboard.dashboard
-);
-
 app.use('/home', require('./routes/home'));
 
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
@@ -77,12 +65,7 @@ app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
 app.get('*', function(request, response) {
-    response.status(404)
-    html = "";
-    html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
-    html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1></body></html>";
-    response.status(404);
-    response.send(html);
+    response.status(404).send();
 })
 
 

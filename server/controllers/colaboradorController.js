@@ -14,7 +14,7 @@ module.exports.getRegistrarColaborador = async(request, response) => {
         const results = await rolModel.obtenerRoles();
         // Si hubo error al obtener roles retorna mensaje de error.
         if (results.error) {
-            return response.status(404).send( {
+            return response.status(400).send( {
                 roles: null,
                 message: results.error
             });
@@ -27,7 +27,7 @@ module.exports.getRegistrarColaborador = async(request, response) => {
     } 
     // En caso de error, retorna mensaje de error.
     catch(error) {
-        response.status(404).send( {
+        response.status(400).send( {
             roles: null,
             message: error.message
         });
@@ -50,7 +50,7 @@ module.exports.registrarColaborador = async(request, response) => {
         const results = await colaboradorModel.registrarColaborador(request.body.data);
         // Si hubo un error en el registro retorna mensaje de error.
         if (results.error) {
-            return response.status(404).send( {
+            return response.status(400).send( {
                 colaborador: null,
                 message: results.error
             });
@@ -62,7 +62,7 @@ module.exports.registrarColaborador = async(request, response) => {
         });
         
     } catch(error) {
-        response.status(404).send( {
+        response.status(400).send( {
             colaborador: null,
             message: error.message
         });
@@ -80,32 +80,38 @@ module.exports.registrarColaborador = async(request, response) => {
 module.exports.iniciarSesionColaborador = async(request, response) => {
     try {
         // Envío de credenciales al modelo.
+        Parse.User.enableUnsafeCurrentUser()
         const results = await colaboradorModel.iniciarSesionColaborador(request.body);
         // Si hubo error, no se permite acceso.
         if (results.error) {
-            return response.status(404).send( {
-                colaborador: null,
-                message: results.error,
-                rol: null
+            return response.status(400).send( {
+                usuario: results.usuario,
+                nombre: results.nombre,
+                apellido: results.apellido,
+                sessionToken: results.sessionToken,
+                rol: results.rol,
+                message: results.error
             });
-        }
-        // Se registra sesión de usuario.
-        request.session.isLoggedIn = true;
-        request.session.usuario = results.colaborador.username;
-        request.session.rol = results.rol;
-        
-        // Retornar información de colaborador
-        return response.status(200).send( {
-            colaborador: results.colaborador,
-            message: "Inicio de Sesion exitoso!!",
-            rol: request.session.rol
-        });
+        } else {
+            // Retornar información de colaborador
+            return response.status(200).send( {
+                usuario: results.usuario,
+                nombre: results.nombre,
+                apellido: results.apellido,
+                sessionToken: results.sessionToken,
+                rol: results.rol,
+                message: "Inicio de Sesion exitoso!!"
+            });
+        }        
         
     } catch(error) {
-        return response.status(404).send( {
-            colaborador: null,
-            message: error.message,
-            rol: null
+        return response.status(400).send( {
+            usuario: null,
+            nombre: null,
+            apellido: null,
+            sessionToken: null,
+            rol: null,
+            message: error.message
         });
     }
 }
@@ -124,7 +130,7 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
         const results = await colaboradorModel.cerrarSesionColaborador();
         // Si hubo error, retornar mensaje.
         if (results.error) {
-            return response.status(404).send( {
+            return response.status(400).send( {
                 message: results.error
             });
         }
@@ -136,7 +142,7 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
         });
         
     } catch(error) {
-        return response.status(404).send( {
+        return response.status(400).send( {
             message: error.message
         });
     }
