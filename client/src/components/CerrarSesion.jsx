@@ -38,7 +38,9 @@ const CerrarSesion = () => {
         
         //Redirige a página de Iniciar sesión
         window.location.href = "/IniciarSesion";
-        M.toast({ html: message });
+
+        //Mensaje que dice que se cerro la sesión con éxito
+        M.toast({ html: "Cerrar sesión exitoso"});
 
     }, [responseOk])
 
