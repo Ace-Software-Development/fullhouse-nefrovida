@@ -61,24 +61,31 @@ let CONSTANTS = require("../constantsProject");
       }
    }
 
+/**
+ * consultarTiposDeEstudio Función asíncrona para obtener todos los tipos de estudio.
+ * @returns Lista con todos los tipo de estudio.
+ */
 exports.consultarTiposDeEstudio = async() => {
    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
    const query = new Parse.Query(table);
 
    try {
+      //Obtener tipos de estudio
       const tiposDeEstudio = await query.find();
+      // Mostrar error si no hay tipos de etudio registrados
       if (!tiposDeEstudio || tiposDeEstudio === []) {
          return {
             data: null,
             error: 'No hay tipos de estudio registrados.'
          }
       }
-
+      //Devolver los tipos de estudio
       return {
          data: tiposDeEstudio,
          error: null
       }
    } catch (error) {
+      //Devolver error al intentar obtener tipos de estudio
       return {
          data: null,
          error: error.message

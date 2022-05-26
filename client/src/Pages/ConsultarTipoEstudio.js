@@ -1,10 +1,10 @@
 /**
- * Consultar tipo de Estudio (Administrador):
- * En esta vista, el administrador puede consultar
- * los detalles de un estudio, eliminar y editar el
+ * Consultar tipo de Estudio (Administrador y Quimicos):
+ * En esta vista, el administrador o quimico puede consultar
+ * los detalles de un  tipo de estudio, eliminar y editar el
  * estudio.
  * 
- * Los datos llegan desde la base de datos y se muestran.
+ * Los datos llegan desde la base de datos y se muestran.   
 */
 
 import { useEffect, useState } from 'react';
