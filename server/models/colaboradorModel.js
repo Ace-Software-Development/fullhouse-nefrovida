@@ -1,5 +1,5 @@
 const parseServer = require('parse-server').ParseServer;
-let CONSTANTS = require("../constantsProject");
+let CONSTANTS = require('../constantsProject');
 const rolModel = require('../models/rolModel');
 
 /**
@@ -27,6 +27,7 @@ exports.obtenerTodos = async() => {
 }
 
 /**
+ * Iniciar Sesión: IT3-3 (https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit?usp=sharing)
  * obtenerColaborador Función asíncrona para buscar información de colaborador en base de datos dado un id.
  * @param {number} id Identificador único de colaborador
  * @returns json con colaborador o mensaje de error.
@@ -76,7 +77,7 @@ exports.registrarColaborador = async(params) => {
         const colaboradorT = await queryTelefonoUnico.first();
         // Si ya existe registro con dicho teléfono, retornar mensaje de error.
         if (colaboradorT) {
-            return resultsRegistrarColaborador(colaboradorT, "Ya existe un empleado registrado con dicho teléfono.");
+            return resultsRegistrarColaborador(colaboradorT, 'Ya existe un empleado registrado con dicho teléfono.');
         }
         // Si no existe un empleado con dicho teléfono aún, crear registro.
         const colaborador = new Parse.User();
@@ -99,24 +100,24 @@ exports.registrarColaborador = async(params) => {
         // En caso de que haya error al momento de registrar colaborador en base de datos, regresar mensaje correspondiente.
         catch(error) {
             if (error.code === Parse.Error.INVALID_EMAIL_ADDRESS) {
-                return resultsRegistrarColaborador(null, "El correo electrónico ingresado es inválido.");
+                return resultsRegistrarColaborador(null, 'El correo electrónico ingresado es inválido.');
             }
             else if (error.code === Parse.Error.USERNAME_MISSING) {
-                return resultsRegistrarColaborador(null, "El usuario ingresado es inválido o está faltante.");
+                return resultsRegistrarColaborador(null, 'El usuario ingresado es inválido o está faltante.');
             }
             else if (error.code === Parse.Error.PASSWORD_MISSING) {
-                return resultsRegistrarColaborador(null, "La contraseña ingresada es inválida o está faltante.");
+                return resultsRegistrarColaborador(null, 'La contraseña ingresada es inválida o está faltante.');
             }
             else if (error.code === Parse.Error.USERNAME_TAKEN) {
-                return resultsRegistrarColaborador(null, "El usuario ingresado ya se encuentra en uso.");
+                return resultsRegistrarColaborador(null, 'El usuario ingresado ya se encuentra en uso.');
             }
             else if (error.code === Parse.Error.EMAIL_TAKEN) {
-                return resultsRegistrarColaborador(null, "El correo electrónico ingresado ya se encuentra en uso.");
+                return resultsRegistrarColaborador(null, 'El correo electrónico ingresado ya se encuentra en uso.');
             }
             else if (error.code === Parse.Error.EMAIL_MISSING) {
-                return resultsRegistrarColaborador(null, "Correo electrónico faltante.");
+                return resultsRegistrarColaborador(null, 'Correo electrónico faltante.');
             }
-            return resultsRegistrarColaborador(null, error.message + " " + error.code);
+            return resultsRegistrarColaborador(null, error.message + ' ' + error.code);
         }
         
     } catch(errorT) {
@@ -125,6 +126,7 @@ exports.registrarColaborador = async(params) => {
 }
 
 /**
+ * Iniciar Sesión: IT3-3 (https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit?usp=sharing)
  * iniciarSesionColaborador Función asíncrona que valida credenciales de acceso con las de la base de datos.
  * @param {objeto} params objeto con información de usuario y contraseña ingresados. 
  * @returns json con colaborador, rol y mensaje de error en caso de que no se haya encontrado registro en la base de datos.
@@ -134,28 +136,42 @@ exports.iniciarSesionColaborador = async(params) => {
         // Dar de alta usuario comparando con credenciales de la base de datos.
         const colab = await Parse.User.logIn(params.username, params.password);
         const colaborador = colab.toJSON();
+
         try{
             // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
             return {
-                colaborador: colaborador,
+                usuario: colaborador.username,
+                nombre: colaborador.nombre,
+                apellido: colaborador.apellidoPaterno,
+                sessionToken: colaborador.sessionToken,
                 rol: nombreRol,
                 error: null
             }
 
         } catch(error) {
             return {
-                colaborador: colaborador,
+                usuario: null,
+                nombre: null,
+                apellido: null,
+                sessionToken: null,
                 rol: null,
-                error: error.message
+                error: 'Error al obtener permisos de usuario'
             }
         }
     } catch (error) {
+        var err = error.message;
+        if (error.code === 101) {
+            err = 'Usuario y/o constraseña incorrecta.';
+        }
         return {
-            colaborador: null,
+            usuario: null,
+            nombre: null,
+            apellido: null,
+            sessionToken: null,
             rol: null,
-            error: error.message
+            error: err
         }
     }
 }
