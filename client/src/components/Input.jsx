@@ -6,7 +6,6 @@ const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "N
         name={id}
         type={type} 
         className="validate z-depth-1"
-        autoComplete="nope"
         {...rest}/>
 
 
