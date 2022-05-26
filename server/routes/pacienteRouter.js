@@ -17,8 +17,8 @@ router.get('/',
     //authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
     pacienteController.consultarPacientes);
 // Ruta de tipo 'POST' para registrar un nuevo paciente.
-router.post('/', 
-    //authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
+router.post('/registrar', 
+    authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
     pacienteController.crearPaciente)
 
 module.exports = router

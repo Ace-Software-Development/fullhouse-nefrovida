@@ -2810,7 +2810,7 @@ video.responsive-video {
   -webkit-font-smoothing: antialiased;
 }
 
-.breadcrumb:first-child:before {
+.breadrumb:first-:before {
   display: none;
 }
 
@@ -4473,7 +4473,7 @@ nav .input-field label.active i {
 
 .navbar-fixed {
   position: relative;
-  height: 56px;
+  height: 52px;
   z-index: 997;
 }
 
@@ -4928,6 +4928,43 @@ small {
   padding-bottom: 1px;
 }
 
+.card-login {
+  max-width: 500px;
+  background-color: #F3F3F3;
+  border-radius: 12px 12px 12px 12px;
+  color: #000000;
+  letter-spacing: .2px;
+  padding-top: 15px;
+}
+
+.card-login-title {
+  font-size: 2.18rem;
+  font-weight: 400;
+}
+
+.login-page {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: fit-content;
+  width: fit-content;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+.login-margin {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.logo-login {
+  max-width: 300px;
+}
+
 .card-titulo {
   display: flex;
   align-items: center;
@@ -5221,6 +5258,16 @@ o
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn-login{
+  border:#ffffff 2px solid;
+  border-radius: 12px;
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 16px;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .btn-logout{
   border: #D50404 2px solid;
   border-radius: 12px;
@@ -5279,6 +5326,16 @@ o
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
   text-decoration: underline red;
+}
+
+.btn-restablecer{
+  border-radius: 12px;
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 16px;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: underline blue;
 }
 
 .btn.disabled, .disabled.btn-large, .disabled.btn-small,
@@ -9362,4 +9419,188 @@ thead {
   height: 22px !important;
   margin-top: 3px !important;
   margin-right: 5px !important;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#notfound {
+  position: relative;
+  height: 100vh;
+}
+
+#notfound .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 920px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.notfound .notfound-404 {
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: -1;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: 'Maven Pro', sans-serif;
+  color: #ececec;
+  font-weight: 900;
+  font-size: 276px;
+  margin: 0px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound h2 {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 46px;
+  color: #000;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0px;
+}
+
+.notfound p {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 16px;
+  color: #000;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-top: 15px;
+}
+
+.notfound a {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: #189cf0;
+  display: inline-block;
+  padding: 16px 38px;
+  border: 2px solid transparent;
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 400;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.notfound a:hover {
+  background-color: #fff;
+  border-color: #189cf0;
+  color: #189cf0;
+}
+
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 h1 {
+    font-size: 162px;
+  }
+  .notfound h2 {
+    font-size: 26px;
+  }
+}
+
+.cerrarSesionFix {
+  height: 36px;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+
+.cerrarSesionIconoFix {
+  line-height: 32px !important
+}
+
+@keyframes append-animate {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.loader-anim {
+  animation: append-animate .6s ease;
+}
+
+@keyframes new-element {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-new-element {
+  animation: new-element .4s ease-in-out;
+}
+
+@keyframes new-element {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-form-loader {
+  animation: form-loader .6s ease;
+}
+
+@keyframes form-loader {
+  from {
+    opacity: 0;
+    height: 0px;
+  }
+  to {
+    opacity: 1;
+    height: 99px;
+  }
+}
+
+.animate-inicio-sesion-loader {
+  animation: form-login .6s ease;
+}
+
+@keyframes form-login {
+  from {
+    opacity: 0;
+    height: 0px;
+  }
+  to {
+    opacity: 1;
+    height: 56px;
+  }
 }

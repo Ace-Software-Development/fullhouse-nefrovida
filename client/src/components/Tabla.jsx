@@ -28,8 +28,7 @@ const Tabla = ({ datos }) => {
                 </th>
             </tr>
           </thead>
-
-        
+          
           { tableContent }
         </table>
       </div>  
