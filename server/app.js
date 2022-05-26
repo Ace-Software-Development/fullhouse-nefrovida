@@ -3,22 +3,24 @@ const http = require('http');
 const bodyParser = require('body-parser');
 // Para enviar archivos HTML como respuesta desde express
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const parseServer = require('parse-server').ParseServer;
-const {authUsuario, authRol} = require('./rbac/Authentication')
+const cors = require('cors');
+const {authUsuario, noAuthUsuario, authRol} = require('./rbac/Authentication');
 let CONSTANTS = require("./constantsProject");
 
 // Middlewares
 const app = express();
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
+
+app.use(cors());
+
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
+
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
-    console.log('DATABASE_URI not specified, falling back to localhost.')
+    console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
 var api = new parseServer({
@@ -30,13 +32,11 @@ var api = new parseServer({
 });
 app.use('/parse', api);
 
-// Validar que usuario haya iniciado sesión en el sistema
-// app.use(authUsuario);
-
 const parseDashboard = require('./parse/dashboard');
-app.use(parseDashboard.url, 
-    // authRol([CONSTANTS.ROLADMIN]), 
-    parseDashboard.dashboard);
+app.use(
+    parseDashboard.url,
+    parseDashboard.dashboard
+);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -44,7 +44,7 @@ app.use(function(req, res, next) {
     res.header('Cross-Origin-Resource-Policy', 'same-site');
     res.header("Access-Control-Allow-Credentials", "true ");
     res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
 
     res.header('Cross-Origin-Resource-Policy', 'cross-origin');
     res.header('Cross-Origin-Embedder-Policy', 'credentialless');
@@ -54,6 +54,10 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
+// Validar que usuario esté autenticado
+app.use(authUsuario);
+
 app.use('/home', require('./routes/home'));
 
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
@@ -62,13 +66,10 @@ app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.use('/estudio', require('./routes/estudioRouter'));
 
-app.get('*', function(request, response){
-    response.status(404)
-    html = "";
-    html += '<html><head><meta charset="UTF-8"><title>Error</title></head>';
-    html += "<body><h1>Dicha ruta no existe por favor prueba con otra.</h1></body></html>";
-    response.status(404);
-    response.send(html);
+app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+
+app.get('*', function(request, response) {
+    response.status(404).send();
 })
 
 
