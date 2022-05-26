@@ -1,10 +1,39 @@
 import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import BtnCerrarSesion from "../components/BtnCerrarSesion";
+import useFetch from './useFetch';
+import { useEffect } from 'react';
 
 const UseCerrarSesion = () => {
 
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/cerrarSesion');
+
+
+    useEffect(() => {
+        if (!responseJSON || !responseOk) return;
+        
+        // Destruye los datos de la sesión.
+        ReactSession.remove('rol');
+        ReactSession.remove('nombre');
+        ReactSession.remove('apellido');
+        ReactSession.remove('sessionToken');
+        ReactSession.remove('usuario');
+        
+        //Redirige a página de Iniciar sesión
+        window.location.href = "/IniciarSesion";
+        M.toast({ html: message });
+
+    }, [responseOk])
+
+
+    // Si petición retornó error, no sale de la sesión.
+    useEffect(() => {
+        if (!error) return;
+        console.log('error');
+
+    }, [error])
 
     /**
     * Función que se ejecuta al envia formulario para
@@ -18,50 +47,9 @@ const UseCerrarSesion = () => {
     */
     
     async function onSubmit () {
-           
+
         // Realizar petición al servidor.
-        try {
-            const response = await fetch(
-                'http://localhost:6535/iniciarSesion', 
-                {
-                    method: 'POST', 
-                    mode: 'cors'           
-                });
-                    
-            const cerrarSesion = await response.json();
-
-            // Si petición retornó error, no sale de la sesión.
-            if(!response.ok) {
-                console.log("error");
-                return;
-            }
-            
-            // Si petición fue correcta destruye la sesión y redirige a página de Iniciar sesión.
-            else {
-
-                // Destruye los datos de la sesión.
-
-                console.log(ReactSession.get("rol"));
-                console.log(ReactSession.get("nombre"));
-                console.log(ReactSession.get("apellido"));
-
-                //ReactSession.removeItem("rol");
-                //ReactSession.removeItem("nombre");
-                //ReactSession.removeItem("apellido");
-
-                //localStorage.clear();
-                ReactSession.clear();
-                
-                //Redirige a página de Iniciar sesión
-                window.location.href = "/IniciarSesion";
-            }
-        } 
-        
-        // En caso de que haya surgido un error mostrarlo.
-        
-        catch(e) {
-            console.log("error2");
-        }
+        await httpConfig(null, 'POST');
 
     };
 
@@ -75,7 +63,6 @@ const UseCerrarSesion = () => {
             </li>
         </form>
     )
-  
 }
 
 export default UseCerrarSesion;

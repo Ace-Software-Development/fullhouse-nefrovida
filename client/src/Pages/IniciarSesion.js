@@ -105,6 +105,7 @@ const IniciarSesion = () => {
      * formulario de autenticación.
      */
     useEffect(() => {
+        if (!error) return;
         // Mostrar mensaje de error
         setErrorSubmit(error);
     }, [error])
