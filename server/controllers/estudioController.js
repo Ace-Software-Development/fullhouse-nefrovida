@@ -1,5 +1,13 @@
 const estudioModel = require('../models/estudioModel');
 
+
+/**
+ * asyncConsultarEstudioPaciente Función asíncrona para obtener la información de un
+ * estudio registrado de un paciente en Nefrovida.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
 module.exports.consultarEstudioPaciente = async(request, response) => {
     const id = request.params.idEstudio;
     try {

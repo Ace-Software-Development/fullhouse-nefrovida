@@ -1,15 +1,12 @@
 import Navbar from '../components/Navbar';
 import Main from '../components/Main'
-import FormColaborador from './FormColaborador'
+import EstudiosLaboratorio from './EstudiosLaboratorio';
 
 function Home() {
     return (
         <div>
-            <Navbar/>
-            <Main>
-            <br/><br/>
-            <FormColaborador/>
-            </Main>
+            <Navbar/><br/>
+            <EstudiosLaboratorio/>
         </div>
     )
 }

@@ -1,6 +1,13 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require("../constantsProject");
 
+
+/**
+ * Función auxiliar para devolver el resultado
+ * de un parametro obtenido en un estudio.
+ * @param {JSON} json - JSON de query
+ * @returns valor del resultado
+ */
 function obtenerValorResultado(json) {
     const tipoValor = json.idParametro.idTipoValor.nombre;
 
@@ -23,6 +30,13 @@ function obtenerValorResultado(json) {
     }
 }
 
+
+/**
+ * Función auxiliar para devolver el valor de referencia
+ * de un parametro en un estudio.
+ * @param {JSON} json - JSON de query
+ * @returns valor de referencia
+ */
 function obtenerValorReferenciaParametro(json) {
     console.log(json.idParametro.idTipoValor.nombre);
     const tipoValor = json.idParametro.idTipoValor.nombre;
@@ -45,6 +59,12 @@ function obtenerValorReferenciaParametro(json) {
     }
 }
 
+
+/**
+ * asyncObtenerEstudioPaciente Función asíncrona para obtener el estudio de un paciente.
+ * @param {string} idEstudio - Identificador del estudio
+ * @returns Información del detalle de estudio de un paciente.
+ */
 exports.obtenerEstudioPaciente = async(idEstudio) => {
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudio = new Parse.Query(tablaEstudio);
@@ -98,7 +118,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
     } catch (error) {
         return {
             paciente: null,
-            error: error.message
+            error: "No se encontró dicho estudio del paciente."
         }
     }
 }

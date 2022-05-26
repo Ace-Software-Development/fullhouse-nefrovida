@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
+import LineaParametros from '../components/LineaParametros';
 import LineaCampos from '../components/LineaCampos';
 import Input from '../components/Input';
 import useLogin from '../hooks/useLogin';
@@ -20,10 +21,14 @@ import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
+import { useParams } from 'react-router-dom';
 
 export default function ConsultarEstudioPaciente({ idEstudio }) {
+    const params = useParams();
 
     const [estudio, setEstudio] = useState({})
+    const [errorFetch, setErrorFetch] = useState('');
+    const [isLoading, setIsLoading] = useState('');
 
     // Funcion para obtener los parametros del estudio.
     function getParametrosEstudio() {
@@ -38,24 +43,30 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
     
     // Funcion que obtiene el estudio correspondiente al id.
     async function getEstudio(id) {
+        setIsLoading(true);
+
         try {
             const response = await fetch('http://localhost:6535/estudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             let misDatos = await response.json();
+            setIsLoading(false);
 
-            misDatos = misDatos.estudio;
             if (!response.ok) {
+                setErrorFetch(misDatos.message);
                 return;
             }
-            setEstudio(misDatos);
-            console.log(misDatos);
+            setEstudio(misDatos.estudio);
+            //console.log(misDatos);
 
         } catch(e) {
+            setIsLoading(false);
+            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
             console.log(e)
         }
     }
     // Hook que obtiene el estudio.
     useEffect(() => {
-        getEstudio(idEstudio);
+        getEstudio(params.idEstudio);
+        setIsLoading(true);
         //getParametrosEstudio();
     }, [])
 
@@ -68,38 +79,74 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                 <Card>
                 <CardTitulo icono="description" titulo="Detalle del estudio"/>
                     <ContainerForm>
-                   {/* <BtnRegresar url="/"/><br/><br/> */}
                     
-                    
-                    
-                        <div align="left">               
-                            <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
-                            <div className="detalles-lista light-pequeno c-717079 left-align">{estudio.descripcionTipoEstudio}</div>
-                        </div>
-                        <br/>
-                        <div className='identificacion-registrar'/>
-
-
-                    
-                    <LineaCampos>
-                        {getParametrosEstudio()}
+                        {/* <BtnRegresar url="/"/><br/><br/> */}
                         
-                    </LineaCampos>
+                        { isLoading && (
+                            <div className="center animate-new-element">
+                                <br/><br/><br/>
 
-                    
-                    <br/>
-                    <LineaCampos>
-                        <div align="left">
-                        <div className='detalles-usuario'>
-                        <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
-                        </div>
-                        <br/><br/>
-                            <div className="detalles-lista negrita-pequeno c-64646A left-align">{estudio.observacionesEstudio}</div>
-                        </div>
-                    </LineaCampos>
-                    <br></br>
-                    {/*<BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
-                    {/*<BtnEditRegis icono='create' texto='Editar estudio'/>  */}          
+                                <div class="preloader-wrapper big active">
+                                    <div class="spinner-layer spinner-blue-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="texto-grande blue-text text-darken-1">Cargando información</div>
+
+                                <br/><br/><br/>
+                            </div>
+                        
+                        )}
+                        { !isLoading && !errorFetch && (
+                            <div class="on-load-anim">
+                                <div align="left">               
+                                    <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
+                                    <div className="detalles-lista light-pequeno c-717079 left-align">{estudio.descripcionTipoEstudio}</div>
+                                </div>
+                                <br/>
+                                
+                                <div className='identificacion-registrar'/>
+
+                                <LineaParametros>
+                                    {getParametrosEstudio()}             
+                                </LineaParametros>
+
+                                <LineaCampos>
+                                    <div align="left">
+                                        <div className='detalles-usuario'>
+                                            <i className="material-icons icon-separator small c-000000">remove_red_eye</i>
+                                            <div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div>
+                                            <br/>
+                                        </div>
+
+                                        <br/><br/>
+                                        <div className="detalles-lista negrita-pequeno c-64646A left-align">{estudio.observacionesEstudio}</div>
+                                    </div>
+                                </LineaCampos>
+                                <br></br>
+
+                                {/*<BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
+                                {/*<BtnEditRegis icono='create' texto='Editar estudio'/>  */} 
+                            </div>
+                        )}
+                        { errorFetch && (
+                            <div>
+                                <br/><br/><br/>
+
+                                <div className="texto-grande red-text center animate-new-element">
+                                    <strong> { errorFetch } </strong> 
+                                </div>
+
+                                <br/><br/><br/>
+                            </div>
+                        )}
                         
                     </ContainerForm>
                 </Card>

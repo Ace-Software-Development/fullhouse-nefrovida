@@ -2,8 +2,8 @@ const pacienteModel = require('../models/pacienteModel');
 
 
 /**
- * asyncConsultarPacientes Función asíncrona para obtener la información de todos los
- * pacientes registrados en Nefrovida.
+ * asyncMostrarEstudiosPaciente Función asíncrona para obtener la información de todos los
+ * estudios registrados de un paciente en Nefrovida.
  * @param {object} request Información enviados al servidor
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición

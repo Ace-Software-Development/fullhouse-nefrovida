@@ -239,8 +239,21 @@ exports.obtenerEstudiosPaciente = async (curp) => {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
         console.log(jsonEstudios);
+
+        const arrEstudios = [];
+
+        jsonEstudios.map(el => {
+            arrEstudios.push({
+                objectIdEstudio: el.objectId,
+                nombreTipoEstudio: el.idTipoEstudio.nombre,
+                codigoTipoEstudio: el.idTipoEstudio.codigo,
+                nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
+                fechaEstudio: el.fecha
+            });
+        })
+
         return {
-            data: jsonEstudios,
+            data: arrEstudios,
             error: null
         }
 
