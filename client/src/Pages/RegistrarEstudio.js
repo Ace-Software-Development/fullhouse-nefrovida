@@ -33,7 +33,7 @@ const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
 const [errorFetch, setErrorFetch] = useState('');
 const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('');
+const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
 
 /**
  * Función para realizar las validaciones necesarias para cada uno de los parámetros del estudio.
