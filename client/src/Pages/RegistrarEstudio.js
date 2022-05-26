@@ -28,12 +28,12 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 export default function RegistrarEstudio({ idTipoEstudio, curp }) {
-
+const [url, setUrl] = useState('http://localhost:6535/tipoEstudio/id');
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
-const [errorFetch, setErrorFetch] = useState('');
+
 const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
+const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
 /**
  * Función para realizar las validaciones necesarias para cada uno de los parámetros del estudio.
@@ -177,15 +177,15 @@ async function onSubmit(data, e) {
  */
 useEffect(() => {
     getTipoEstudio(idTipoEstudio);
+    if (ReactSession.get('rol') !== 'quimico') {
+        window.location.href = '/';
+    }
 }, [])
 
 /**
  * Hook que se ejecuta al renderizar los parámetros.
  */
 useEffect(() => {
-    if (ReactSession.get('rol') !== 'quimico') {
-        window.location.href = '/';
-    }
     if (parametros) {
         validation();
     }
@@ -204,10 +204,8 @@ useEffect(() => {
     if (!responseJSON || !responseOk) {
         return
     } else {
-        M.toast({ html: message });
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 1000);
+        setTipoEstudio(responseJSON.data.data.pop());
+        setParametros(responseJSON.data.data);
     }
 }, [responseOk])
 

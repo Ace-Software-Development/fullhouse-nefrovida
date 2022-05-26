@@ -7,9 +7,9 @@ const tipoEstudioModel = require('../models/tipoEstudioModel')
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición
  */
-module.exports.consularParametrosDeEstudio = async(request, response) => {
+module.exports.consultarParametrosDeEstudio = async(request, response) => {
     // Obtiene el ID del estudio de la ruta
-    let idTipoEstudio = request.params.idTipoEstudio;
+    let idTipoEstudio = request.query.id;
 
     try {
         const results = await tipoEstudioModel.consularParametrosDeEstudio(idTipoEstudio);

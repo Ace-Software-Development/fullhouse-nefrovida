@@ -11,14 +11,14 @@ function Home() {
             <Main>
             <br/><br/>
             <Link to = "/registrarEstudio">
-                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                <BtnEditRegis icono = "add" texto = "Registrar paciente" posicion = "left"/>
             </Link>
             { ReactSession.get('rol') === 'quimico' &&
                 <Link to = "/registrarEstudio">
-                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                    <BtnEditRegis icono = "add" texto = "Registrar paciente" posicion = "left"/>
                 </Link>
             }
-                <FormColaborador/>
+            <FormColaborador/>
             </Main>
         </div>
     )
