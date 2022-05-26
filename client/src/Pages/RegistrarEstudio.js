@@ -24,15 +24,16 @@ import BtnGuardar from '../components/BtnGuardar';
 import { EntradaParametroBool, EntradaParametroNum, EntradaParametroString } from '../components/EntradaParametro';
 import { useForm } from 'react-hook-form';
 import LineaParametros from '../components/LineaParametros';
+import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 export default function RegistrarEstudio({ idTipoEstudio, curp }) {
 
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
-const [isLoading, setIsLoading] = useState('');
 const [errorFetch, setErrorFetch] = useState('');
-const [errorSubmit, setErrorSubmit] = useState('');
 const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('');
 
 /**
  * Función para realizar las validaciones necesarias para cada uno de los parámetros del estudio.
@@ -111,33 +112,7 @@ function listaParametros() {
  */
 async function getTipoEstudio(id) {
 
-// Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
-    setIsLoading(true);
-    setErrorFetch('');
-
-
-    try {
-        // Fetch a la ruta de back para obtener la información
-        const response = await fetch('http://localhost:6535/tipoEstudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-        let misDatos = await response.json();
-        setIsLoading(false);
-
-        // Mostrar error en caso de ser necesario.
-        misDatos = misDatos.data.data;
-        if (!response.ok) {
-            setErrorFetch(misDatos.message);
-            return;
-        }
-
-        // Guardar los datos en misDatos para desplegarlos
-        setTipoEstudio(misDatos.pop());
-        setParametros(misDatos);
-
-    } catch(e) {
-        // Mostrar mensaje de error en la conexión con la base de datos.
-        setIsLoading(false);
-        setErrorFetch('Error de conexión. Inténtelo de nuevo.');
-    }
+    httpConfig(id, 'GET');
 }
 
 /**
@@ -148,8 +123,6 @@ async function getTipoEstudio(id) {
  * @returns 
  */
 async function onSubmit(data, e) {
-    setIsLoading(true);
-    setErrorFetch("");
 
     e.preventDefault();
 
@@ -210,6 +183,9 @@ useEffect(() => {
  * Hook que se ejecuta al renderizar los parámetros.
  */
 useEffect(() => {
+    if (ReactSession.get('rol') !== 'quimico') {
+        window.location.href = '/';
+    }
     if (parametros) {
         validation();
     }
@@ -222,6 +198,19 @@ useEffect(() => {
 const handleChange = (e) => {
     setValue(e.target.name, e.target.value);
 }
+
+
+useEffect(() => {
+    if (!responseJSON || !responseOk) {
+        return
+    } else {
+        M.toast({ html: message });
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1000);
+    }
+}, [responseOk])
+
 
 // Variables para sacar la fecha actual.
 let currentDate = new Date();
@@ -243,7 +232,7 @@ return(
                 <Link to = "/">
                 <BtnRegresar/><br/><br/>
                 </Link>
-                { isLoading && (
+                { loading && (
                     <div className="center animate-new-element">
                         <br/>
 
@@ -311,12 +300,12 @@ return(
                     </div>
                     : null
                 }
-                { errorFetch && (
+                { error && (
                     <div className="animate-new-element">
                         <br/><br/>
 
                         <div className="texto-grande red-text center">
-                            <strong> { errorFetch } </strong> 
+                            <strong> { error } </strong> 
                         </div>
 
                         <br/><br/><br/>
