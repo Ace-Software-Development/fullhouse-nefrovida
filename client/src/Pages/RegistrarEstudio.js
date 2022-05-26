@@ -29,8 +29,6 @@ import { ReactSession } from 'react-client-session';
 
 export default function RegistrarEstudio({ idTipoEstudio, curp }) {
 const [url, setUrl] = useState('http://localhost:6535/tipoEstudio/id');
-const [errorSubmit, setErrorSubmit] = useState('');
-const [isLoading, setIsLoading] = useState('');
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
 
@@ -148,31 +146,8 @@ async function onSubmit(data, e) {
         parametros: parametrosArr
     }
 
-    try {
-        // Hacer fetch a la ruta de back, enviando la información del formulario.
-        const response = await fetch('http://localhost:6535/estudio', { method: 'POST', body: JSON.stringify(send), headers: {'Content-Type': 'application/json'} });
-        const estudio = await response.json();
-
-        // Mostrar error en caso de ser necesario
-        if (!response.ok) {
-            setErrorSubmit(estudio.message);
-            return;
-        }
-        // Mostrar mensaje de éxito y redireccionar a la página principal
-        else {
-            M.toast({ html: estudio.message });
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 3000);
-        }
-
-    } catch(error) {
-        // Mostrar mensaje de error en la conexión con la base de datos.
-        setIsLoading(false);
-        setErrorSubmit("Error de conexión. Inténtelo de nuevo.");
-
-    }
-}
+    httpConfig(data, 'POST');
+};
 
 /**
  * Hook que se ejecuta al renderizar el tipo de estudio.
@@ -206,9 +181,17 @@ useEffect(() => {
     if (!responseJSON || !responseOk) {
         return
     } else {
-        setTipoEstudio(responseJSON.data.data.pop());
-        setParametros(responseJSON.data.data);
-        setUrl('http://localhost:6535/estudio');
+        if (url === 'http://localhost:6535/tipoEstudio/id') {
+            setTipoEstudio(responseJSON.data.data.pop());
+            setParametros(responseJSON.data.data);
+            setUrl('http://localhost:6535/estudio');
+        } else if (url === 'http://localhost:6535/estudio') {
+            M.toast({ html: estudio.message });
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 3000);
+        }
+        
     }
 }, [responseOk])
 
