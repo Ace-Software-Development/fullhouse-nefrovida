@@ -36,9 +36,9 @@ const RegistrarPaciente = () => {
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
      */
     useEffect(() => {
-        if (ReactSession.get('rol') !== 'trabajoSocial') {
-            window.location.href = '/';
-        }
+        // if (ReactSession.get('rol') !== 'trabajoSocial') {
+        //     window.location.href = '/';
+        // }
         validation();
     }, []);
 

@@ -56,7 +56,7 @@ app.use(function(req, res, next) {
 
 app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 // Validar que usuario esté autenticado
-app.use(authUsuario);
+// app.use(authUsuario);
 
 app.use('/home', require('./routes/home'));
 

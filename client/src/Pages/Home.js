@@ -5,6 +5,7 @@ import ConsultarPacientes from './ConsultarPacientes'
 import BtnEditRegis from '../components/BtnEditRegis'
 import FormColaborador from './FormColaborador'
 import { ReactSession } from 'react-client-session';
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (

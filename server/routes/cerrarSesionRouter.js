@@ -6,7 +6,6 @@ const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 const colaboradorController = require("../controllers/colaboradorController");
 
 router.post('/', 
-    authUsuario,
     colaboradorController.cerrarSesionColaborador);
 
 module.exports = router;
