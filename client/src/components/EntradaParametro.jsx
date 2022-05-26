@@ -20,7 +20,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                 <Input 
                     id = { id }
                     name = { id }
-                    type= "number"
+                    type= "float"
                     label="Valor"
                     tamano="m6 s6"
                     requerido = { true }
