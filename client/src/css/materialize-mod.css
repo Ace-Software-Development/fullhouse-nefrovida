@@ -9536,6 +9536,17 @@ body {
 
 .cerrarSesionIconoFix {
   line-height: 32px !important
+
+}
+
+.texto-grande {
+  font-size:x-large;
+  line-height: 40px;
+  font-weight: 500;
+}
+
+.loader-anim {
+  animation: append-animate .6s ease;
 }
 
 @keyframes append-animate {
@@ -9547,10 +9558,6 @@ body {
     transform: translateY(0%);
     opacity: 1;
   }
-}
-
-.loader-anim {
-  animation: append-animate .6s ease;
 }
 
 @keyframes new-element {
