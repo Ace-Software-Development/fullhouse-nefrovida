@@ -48,7 +48,6 @@ const CerrarSesion = () => {
     // Si petición retornó error, no sale de la sesión.
     useEffect(() => {
         if (!error) return;
-        console.log('error');
 
     }, [error])
 
