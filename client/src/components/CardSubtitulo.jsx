@@ -5,7 +5,7 @@ const CardSubtitulo = ({ subtitulo, grande = false, children}) => {
         ? (
         <div className="card-subtitulo-grande"  >
           { children 
-            ? <> <div className="texto-subtitulo-grande"> { subtitulo }</div> <div> { children } </div> </>  
+            ? <> <div className="texto-subtitulo-grande"> { subtitulo }</div> <div className="flex-for-main-div"> { children } </div> </>  
             : <div> { subtitulo } </div> }
         </div>
         ) 
