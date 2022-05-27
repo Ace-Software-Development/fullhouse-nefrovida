@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/estudio/:idEstudio' element={<ConsultarEstudioPaciente/>} />
-        <Route exact path='/paciente/:idPaciente/estudios' element={<EstudiosLaboratorio idPaciente = "PICA0304MEVN3"/>} />
+        <Route exact path='/paciente/:idPaciente/estudios' element={<EstudiosLaboratorio/>} />
       </Routes>
     </BrowserRouter>
   )

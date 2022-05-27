@@ -9466,9 +9466,48 @@ thead {
   flex-wrap: wrap;
 }
 
-.input-pequeno{
+.input-pequeno {
   width: 100px !important;
   height: 22px !important;
   margin-top: 3px !important;
   margin-right: 5px !important;
+}
+
+.select-pequeno {
+  width: 100px !important;
+  height: 22px !important;
+  margin-top: 3px !important;
+  margin-right: 8px !important;
+}
+
+.select-grande {
+  width: 150px !important;
+  height: 47px !important;
+  margin-top: 7px !important;
+  margin-bottom: 9px !important;
+  margin-right: 10px !important;
+  color: transparent;
+  background: transparent;
+}
+
+.card-subtitulo-grande {
+  background-color: #CECFD9;
+  border-radius: 12px;
+  width: 90%;
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.texto-subtitulo-grande {
+  margin: auto;
+}
+
+.adjust-for-min-content {
+  width: min-content;
 }

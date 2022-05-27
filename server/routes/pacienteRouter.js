@@ -20,8 +20,8 @@ router.get('/',
 router.post('/', 
     //authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
     pacienteController.crearPaciente)
-// Ruta de tipo 'GET' para obtener todos los estudios de unn paciente.
-router.get('/estudios/:curp',
+// Ruta de tipo 'GET' para obtener los estudios de un paciente.
+router.get('/estudios/:curp/:tipoEstudio/:ascendente',
     //authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
     pacienteController.mostrarEstudiosPaciente)
 

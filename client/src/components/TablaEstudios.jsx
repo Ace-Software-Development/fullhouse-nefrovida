@@ -3,7 +3,7 @@ import FilaTablaEstudios from './FilaTablaEstudios';
 
 const TablaEstudios = ({ datos }) => {
 
-    console.log( "Los datos son: ", datos );
+    // console.log( "Los datos son: ", datos );
 
     const tableContent = datos.map((estudio, index) =>(
         <FilaTablaEstudios key = { index } estudio = { estudio } />
@@ -16,7 +16,7 @@ return(
             <thead  >
             <tr className="figma"  >
 
-                <th class="tabla-padding">
+                <th className="tabla-padding">
                     Tipo de estudio
                 </th>
                 <th  >

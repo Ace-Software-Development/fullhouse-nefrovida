@@ -228,38 +228,75 @@ try {
  * @param {string} curp - Curp del paciente a buscar
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
-exports.obtenerEstudiosPaciente = async (curp) => {
+exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDCOLABORADOR);
     queryObtenerEstudios.equalTo(CONSTANTS.CURP, curp);
+
+    //console.log(ascendente);
+    if((ascendente == "true") || (ascendente == " ")) {
+        queryObtenerEstudios.ascending(CONSTANTS.FECHAESTUDIO);
+    }
+    else {
+        queryObtenerEstudios.descending(CONSTANTS.FECHAESTUDIO);
+    }
+
     try {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
-        console.log(jsonEstudios);
 
         const arrEstudios = [];
 
         jsonEstudios.map(el => {
-            arrEstudios.push({
-                objectIdEstudio: el.objectId,
-                nombreTipoEstudio: el.idTipoEstudio.nombre,
-                codigoTipoEstudio: el.idTipoEstudio.codigo,
-                nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
-                fechaEstudio: el.fecha
-            });
+            if(nombre == el.idTipoEstudio.nombre) {
+                arrEstudios.push({
+                    objectIdEstudio: el.objectId,
+                    nombreTipoEstudio: el.idTipoEstudio.nombre,
+                    codigoTipoEstudio: el.idTipoEstudio.codigo,
+                    nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
+                    fechaEstudio: el.fecha
+                });
+            }
+            else if(nombre == " ") {
+                arrEstudios.push({
+                    objectIdEstudio: el.objectId,
+                    nombreTipoEstudio: el.idTipoEstudio.nombre,
+                    codigoTipoEstudio: el.idTipoEstudio.codigo,
+                    nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
+                    fechaEstudio: el.fecha
+                });
+            }
         })
 
+        let arrTiposEstudio = [];
+        jsonEstudios.map(el => {
+            arrTiposEstudio.push(el.idTipoEstudio.nombre);
+        })
+        arrTiposEstudio = arrTiposEstudio.filter((item,index)=>{
+            return arrTiposEstudio.indexOf(item) === index;
+        })
+        let jsonTiposEstudio = [];
+        for(let i=0; i<arrTiposEstudio.length; i++) {
+            jsonTiposEstudio.push({
+                value: arrTiposEstudio[i],
+                option: arrTiposEstudio[i]
+            })
+        }
+
+        console.log(jsonTiposEstudio);
+
         return {
-            data: arrEstudios,
+            estudios: arrEstudios,
+            tiposEstudio: jsonTiposEstudio,
             error: null
         }
 
     } catch(error) {
         return {
-            data: null,
+            estudios: null,
             error: error.message
         }
     }

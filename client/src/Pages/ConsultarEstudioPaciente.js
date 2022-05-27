@@ -86,26 +86,26 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                             <div className="center animate-new-element">
                                 <br/><br/><br/>
 
-                                <div class="preloader-wrapper big active">
-                                    <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
-                                    </div><div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div><div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                <div className="preloader-wrapper big active">
+                                    <div className="spinner-layer spinner-blue-only">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div><div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div><div className="circle-clipper right">
+                                        <div className="circle"></div>
                                     </div>
                                     </div>
                                 </div>
 
-                                <div class="texto-grande blue-text text-darken-1">Cargando información</div>
+                                <div className="texto-grande blue-text text-darken-1">Cargando información</div>
 
                                 <br/><br/><br/>
                             </div>
                         
                         )}
                         { !isLoading && !errorFetch && (
-                            <div class="on-load-anim">
+                            <div className = "on-load-anim">
                                 <div align="left">               
                                     <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
                                     <div className="detalles-lista light-pequeno c-717079 left-align">{estudio.descripcionTipoEstudio}</div>

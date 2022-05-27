@@ -2,17 +2,19 @@ const pacienteModel = require('../models/pacienteModel');
 
 
 /**
- * asyncMostrarEstudiosPaciente Función asíncrona para obtener la información de todos los
+ * asyncMostrarEstudiosPaciente Función asíncrona para obtener la información de los
  * estudios registrados de un paciente en Nefrovida.
  * @param {object} request Información enviados al servidor
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición
  */
 module.exports.mostrarEstudiosPaciente = async(request, response) => {
+    // Se obtiene el curp de los parametros de la ruta
     const curp = request.params.curp;
+    const nombreTipoEstudio = request.params.tipoEstudio;
+    const ascendente = request.params.ascendente;
     try {
-        const results = await pacienteModel.obtenerEstudiosPaciente(curp);
-
+        const results = await pacienteModel.obtenerEstudiosPaciente(curp, nombreTipoEstudio, ascendente);
         if (results.error) {
             return response.status(400).send({
                 status: 'error',
@@ -21,15 +23,16 @@ module.exports.mostrarEstudiosPaciente = async(request, response) => {
             });
         }
         response.status(200).send({
-            success: 'success',
-            data: results.data,
-            message: 'Estudios obtenidos exitosamente.'
+            status: 'success',
+            estudios: results.estudios,
+            tiposEstudio: results.tiposEstudio,
+            message: 'estudios obtenido exitosamente'
         });
     } catch(error) {
-        return response.status(400).send( {
-            status: 'error',
-            data: null,
-            message: 'Error. ' + error.message
+        response.status(200).send({
+            status: 'success',
+            data: results,
+            message: 'estudios obtenido exitosamente'
         });
     }
 }
