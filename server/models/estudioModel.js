@@ -26,6 +26,7 @@ function results(data, error) {
  * @returns Información de los resultados o un error en caso de existir.
  */
 exports.registrarResultadosEstudio = async(data) => {
+    console.log('data', data)
     // Crear un nuevo estudio y asignar la fecha y las observaciones
     const estudio = new Estudio;
     estudio.set(CONSTANTS.FECHA, data.fecha);
@@ -51,7 +52,7 @@ exports.registrarResultadosEstudio = async(data) => {
 
         // Asignar el pointer de idPaciente al estudio, y asignar la química que lo creo.
         estudio.set(CONSTANTS.IDPACIENTE, paciente);
-        // estudio.set(CONSTANTS.IDQUIMICO, Parse.User.current());
+        estudio.set(CONSTANTS.IDUSUARIO, Parse.User.current());
 
         try {
             // Guardar el nuevo estudio

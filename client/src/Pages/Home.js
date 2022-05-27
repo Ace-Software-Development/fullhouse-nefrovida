@@ -11,9 +11,6 @@ function Home() {
             <Navbar/>
             <Main>
             <br/><br/>
-            <Link to = "/registrarEstudio">
-                <BtnEditRegis icono = "add" texto = "Registrar Estudio" posicion = "left"/>
-            </Link>
             { ReactSession.get('rol') === 'quimico' &&
                 <Link to = "/registrarEstudio">
                     <BtnEditRegis icono = "add" texto = "Registrar paciente" posicion = "left"/>

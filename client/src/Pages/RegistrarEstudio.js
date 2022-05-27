@@ -28,7 +28,10 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 export default function RegistrarEstudio({ idTipoEstudio, curp }) {
-const [url, setUrl] = useState('http://localhost:6535/tipoEstudio/id');
+const urlGet = 'http://localhost:6535/tipoEstudio/id';
+const urlPost = 'http://localhost:6535/estudio';
+const [url, setUrl] = useState(urlGet);
+const [isLoading, setIsLoading] = useState(false);
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
 
@@ -146,7 +149,7 @@ async function onSubmit(data, e) {
         parametros: parametrosArr
     }
 
-    httpConfig(data, 'POST');
+    httpConfig(send, 'POST');
 };
 
 /**
@@ -181,15 +184,16 @@ useEffect(() => {
     if (!responseJSON || !responseOk) {
         return
     } else {
-        if (url === 'http://localhost:6535/tipoEstudio/id') {
+        if (url === urlGet) {
             setTipoEstudio(responseJSON.data.data.pop());
             setParametros(responseJSON.data.data);
-            setUrl('http://localhost:6535/estudio');
-        } else if (url === 'http://localhost:6535/estudio') {
-            M.toast({ html: estudio.message });
+            setUrl(urlPost);
+        } else if (url === urlPost) {
+            setIsLoading(true);
+            M.toast({ html: responseJSON.message });
             setTimeout(() => {
                 window.location.href = "/";
-            }, 3000);
+            }, 1000);
         }
         
     }
@@ -216,7 +220,7 @@ return(
                 <Link to = "/">
                 <BtnRegresar/><br/><br/>
                 </Link>
-                { loading && (
+                { loading || isLoading && (
                     <div className="center animate-new-element">
                         <br/>
 
@@ -239,7 +243,7 @@ return(
                 
                 )}
                 {
-                    !loading && !error ?
+                    !loading && !isLoading && !error ?
                     <div className="loader-anim">
                         
                     
