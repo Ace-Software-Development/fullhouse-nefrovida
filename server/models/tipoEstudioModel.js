@@ -1,5 +1,6 @@
 let CONSTANTS = require("../constantsProject");
 
+
    /**
     * Función auxiliar para retornar los datos y el error.
     * @param {Object} data - Datos a retornar
@@ -13,6 +14,7 @@ let CONSTANTS = require("../constantsProject");
       }
    }
 
+
    /**
     * asyncConsularParametrosDeEstudio Función asíncrona para obtener todos los parámetros 
     * de un estudio; recibe el ID del estudio que desea buscar.
@@ -20,10 +22,11 @@ let CONSTANTS = require("../constantsProject");
     * @returns Lista con todos los parámetros del tipo de estudio y la información del tipo de estudio.
     */
 
-   exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
 
+   exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
       const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
       let query = new Parse.Query(table);
+
 
       try {
 
@@ -56,22 +59,28 @@ let CONSTANTS = require("../constantsProject");
                return results(null, error.message);
          }
       } catch(error) {
+
          // Devolver error al obtener los parámetros
          return results(null, 'No se encontró dicho estudio.');
       }
    }
 
+
 /**
  * consultarTiposDeEstudio Función asíncrona para obtener todos los tipos de estudio.
  * @returns Lista con todos los tipo de estudio.
  */
+
+
 exports.consultarTiposDeEstudio = async() => {
    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
    const query = new Parse.Query(table);
 
    try {
+
       //Obtener tipos de estudio
       const tiposDeEstudio = await query.find();
+
       // Mostrar error si no hay tipos de etudio registrados
       if (!tiposDeEstudio || tiposDeEstudio === []) {
          return {
@@ -79,12 +88,14 @@ exports.consultarTiposDeEstudio = async() => {
             error: 'No hay tipos de estudio registrados.'
          }
       }
+
       //Devolver los tipos de estudio
       return {
          data: tiposDeEstudio,
          error: null
       }
    } catch (error) {
+      
       //Devolver error al intentar obtener tipos de estudio
       return {
          data: null,

@@ -1,7 +1,6 @@
 const tipoEstudio = require('../models/tipoEstudioModel')
 
 
-
 /**
 * asyncConsularParametrosDeEstudio Función asíncrona para obtener todos los parámetros 
 * de un estudio; recibe el ID del estudio que desea buscar.
@@ -33,6 +32,8 @@ module.exports.consultarTipoEstudio = async(request, response) => {
         })
     }
 }
+
+
 /**
  * consultarTiposDeEstudio Función asíncrona para obtener todos los tipos de estudio.
  * @returns Lista con todos los tipo de estudio.
