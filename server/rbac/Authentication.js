@@ -31,7 +31,6 @@ function authUsuario(request, response, next) {
 
     // Si no se obtiene token definir que debe iniciar sesión
     if ( !sessionToken ) {
-        console.log('no hay token')
         return response.status(401).send({
             message: 'Sesion invalida'
         });
@@ -43,8 +42,6 @@ function authUsuario(request, response, next) {
             // Si no se obtuo rol o hubo error en consulta
             if(session && !session.rol) {
                 // Retornar "Session invalida" para que usuario se autentique nuevamente
-                console.log('no hay rol');
-                console.log(session);
                 return response.status(401).send({
                     
                     message: session.message
@@ -54,7 +51,6 @@ function authUsuario(request, response, next) {
                 next()
             }
         }, (error) => {
-            console.log('error catch')
             return response.status(401).send({
                 message: error.message
             });
