@@ -3,7 +3,7 @@
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
- .materialize-red {
+.materialize-red {
   background-color: #e51c23 !important;
 }
 
@@ -2725,6 +2725,11 @@ i.sidenav-button{
   border-radius: 8px;
 }
 
+i.estudio-button{
+  font-size: 3rem;
+  border-radius: 8px;
+}
+
 img.responsive-img,
 video.responsive-video {
   max-width: 100%;
@@ -4977,7 +4982,8 @@ small {
   font-size: x-large;
   font-weight: bold;
   letter-spacing: .2px;
-  line-height: 54px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .card-subtitulo {
@@ -9379,9 +9385,205 @@ thead {
   border:none;
 }
 
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.detalles-lista {
+  display: contents;
+}
+
+.detalles-usuario {
+  display: inline-flex;
+  align-items: center;
+}
+
+.negrita-grande {
+  font-weight: bold;
+  font-size:x-large;
+  line-height: 40px;
+}
+
+.negrita-3vw {
+  font-weight: bold;
+  font-size:2.7vw;
+  line-height: 40px;
+}
+
+.negrita-pequeno {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.sn-pequeno {
+  font-size: medium;
+}
+
+.light-pequeno {
+  font-weight: lighter;
+  font-size: medium;
+}
+
+.espacio-3vw {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.espacio-pequeno {
+  font-weight: lighter;
+  font-size: medium;
+  word-spacing: 2.2em;
+}
+
+.identificacion-usuario {
+  border-right: 1px solid #B9B9B9;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  height: 130px;
+}
+
+.identificacion-prueba {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.identificacion-registrar {
+  border-bottom: 1px solid #B9B9B9;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.c-2E7EC8 {
+  color: #2E7EC8;
+}
+
+.c-908F98 {
+  color: #908F98;
+}
+
+.c-64646A {
+  color: #64646A;
+}
+
+.c-393939 {
+  color: #393939;
+}
+
+.c-000000 {
+  color: #000000;
+}
+
+.c-98D0A1 {
+  color: #98D0A1;
+}
+
+.espacio-vertical {
+  line-height: 20px;
+}
+
+.detalles-estudio {
+  display: flex;
+  align-items: center;
+}
+
+.div-detalles-estudio {
+  display: flex;
+}
+
+.numero-parametros {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rango-parametros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.espacio-rango {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.fixed-height {
+  min-height: 110px;
+  max-height: fit-content;
+  display: flex;
+  align-items: flex-start;
+}
+
+.row-parametros {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.row-cards-estudios {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.no-margin-left {
+  margin-left: unset !important;
+}
+
+.card-mini {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+  border-radius: 12px;
+  background: #F9F9F9;
+  line-height: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.card-mini-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-mini-text {
+  font-size: medium;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.card-mini-separation{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.texto-grande {
+  font-size:x-large;
+  line-height: 40px;
+  font-weight: 500;
+}
+
+.emoji-error {
+  font-size: xx-large;
+}
+
+@keyframes append-animate {
+	from {
+		transform: translateY(40px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0%);
+		opacity: 1;
+	}
 }
 
 body {
@@ -9496,6 +9698,10 @@ body {
   line-height: 32px !important
 }
 
+.on-load-anim {
+  animation: append-animate .6s ease;
+}
+
 @keyframes append-animate {
   from {
     transform: translateY(40px);
@@ -9512,16 +9718,12 @@ body {
 }
 
 @keyframes new-element {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-new-element {
-  animation: new-element .4s ease-in-out;
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 .animate-new-element {
