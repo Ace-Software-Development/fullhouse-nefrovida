@@ -1,11 +1,7 @@
+import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
-import ContainerForm from '../components/ContainerForm';
-import LineaCampos from '../components/LineaCampos';
-import Input from '../components/Input';
-import useLogin from '../hooks/useLogin';
-import validarIniciarSesion from '../util/validators/validarIniciarSesion';
 import CardTitulo from '../components/CardTitulo';
 import CardSubtitulo from '../components/CardSubtitulo';
 import Navbar from '../components/Navbar';
@@ -16,6 +12,7 @@ import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 import TablaEstudios from '../components/TablaEstudios';
 import InputSearch from '../components/InputSearch';
 import SelectEstudios from '../components/SelectEstudios';
+import useFetch from '../hooks/useFetch';
 
 
 export default function EstudiosLaboratorio() {
@@ -24,46 +21,47 @@ export default function EstudiosLaboratorio() {
         
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
-        const [isLoading, setIsLoading] = useState(true);
         const [errorFetch, setErrorFetch] = useState('');
 
         const [currentEstudio, setCurrentEstudio] = useState("%20");
         const [ascendente, setAscendente] = useState("%20");
 
-
+        const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/estudios');
+        
         // Funcion que obtiene el estudio correspondiente al id.
         async function getEstudios(id = "PICA0304MEVN3", nombreTipoEstudio = "%20", ascendente = "%20") {
-            console.log("1")
-            setErrorFetch('');
-            try {
-                console.log("2")
-                // console.log('http://localhost:6535/paciente/estudios/' + id + '/' + nombreTipoEstudio + '/' + ascendente);
-                const ruta = 'http://localhost:6535/paciente/estudios/' + id + '/' + nombreTipoEstudio + '/' + ascendente
-                console.log(ruta);
-                const response = await fetch(ruta, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-                let misDatos = await response.json();
-                setIsLoading(false);
-
-                console.log("3")
-                if (!response.ok) {
-                    setErrorFetch(misDatos.message);
-                    return;
-                }
-
-                console.log("4")
-                setEstudios(misDatos.estudios);
-                setTiposEstudio(misDatos.tiposEstudio);
-                // console.log(misDatos.tiposEstudio);
-    
-            } catch(e) {
-                // console.log(e)
-                setIsLoading(false);
-                setErrorFetch('Error de conexión. Inténtelo de nuevo.');
+            const paramsRoute = {
+                idPaciente: id,
+                nombreTipoEstudio: nombreTipoEstudio,
+                ascendente: ascendente
             }
+
+            await httpConfig(paramsRoute, 'GET');
         }
 
-        // Hook que obtiene los estudio.
         useEffect(() => {
+            if(!responseJSON || !responseOk){
+                return;
+            }
+            else {
+                const misDatos = responseJSON;
+                console.log(misDatos);
+                setEstudios(misDatos.estudios);
+                setTiposEstudio(misDatos.tiposEstudio);
+            }
+        }, [responseOk])
+
+        useEffect(() => {
+            setErrorFetch(error)
+        }, [error])
+
+        // Hook que obtiene los estudios
+        useEffect(() => {
+            //Se deja solo el acceso a los roles permitidos
+            if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
+                window.location.href = '/';
+            }
+
             getEstudios();
         }, [])
     
@@ -104,7 +102,7 @@ export default function EstudiosLaboratorio() {
                 <Card>
                     <CardTitulo icono="vaccines" titulo="Exámenes de laboratorio"/>
                     <CardSubtitulo subtitulo = "Estudios" grande = {true}> 
-                    { isLoading ?  (
+                    { loading ?  (
                     <div className="center animate-new-element">
                         Cargando
                     </div>
@@ -136,7 +134,7 @@ export default function EstudiosLaboratorio() {
                         
 
                     </CardSubtitulo>
-                    { isLoading ?  (
+                    { loading ?  (
                     <div className="center animate-new-element">
                         <br/>
 

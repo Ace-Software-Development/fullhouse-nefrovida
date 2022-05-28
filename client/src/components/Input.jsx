@@ -1,12 +1,24 @@
-const Input = ({tamano = "s12 m4", id = "nombre", label = "Nombre", type="text", ...rest}) => {
+const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "Nombre", type="text", elError, ...rest}) => {
   return(
     <div className={"input-field col " + tamano}  >
       <input 
-        id={id} 
+        id={id}
+        name={id}
         type={type} 
-        name={id} 
-        className="validate z-depth-1" {...rest}/>
-      <label for={id}  >{label}</label>
+        className="validate z-depth-1"
+        {...rest}/>
+
+
+      <label for={id}  >
+        {label} { requerido 
+          ? <span className="red-text"> *</span> 
+          : null }
+      </label>
+      
+      
+      <span className="helper-text left red-text">
+        {elError}
+      </span>
     </div>
   )
 }

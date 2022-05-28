@@ -238,10 +238,10 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
 
     //console.log(ascendente);
     if((ascendente == "true") || (ascendente == " ")) {
-        queryObtenerEstudios.ascending(CONSTANTS.FECHAESTUDIO);
+        queryObtenerEstudios.ascending(CONSTANTS.FECHA);
     }
     else {
-        queryObtenerEstudios.descending(CONSTANTS.FECHAESTUDIO);
+        queryObtenerEstudios.descending(CONSTANTS.FECHA);
     }
 
     try {
