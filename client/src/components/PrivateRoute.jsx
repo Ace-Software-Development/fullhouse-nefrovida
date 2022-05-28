@@ -15,7 +15,12 @@ import { ReactSession } from 'react-client-session'
 const PrivateRoute = () => {
     try {
         const sess = ReactSession.get("rol");
-        return <Outlet />;
+        if (sess) {
+            return <Outlet />;
+        }
+        else {
+            return <Navigate to="/iniciarSesion" />;
+        }
     } catch(err) {
         return <Navigate to="/iniciarSesion" />;
     }

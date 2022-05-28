@@ -23,7 +23,6 @@ function App() {
    * dependiendo de la sessión del usuario.
    */
   return (
-
     <BrowserRouter>
       <ErrorBoundary>
         <Routes>
