@@ -60,6 +60,8 @@ app.use(authUsuario);
 
 app.use('/home', require('./routes/home'));
 
+app.use('/paciente', require('./routes/pacienteRouter'))
+
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));

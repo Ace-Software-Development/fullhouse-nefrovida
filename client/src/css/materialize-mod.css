@@ -9726,10 +9726,6 @@ body {
 	}
 }
 
-.animate-new-element {
-  animation: new-element .4s ease-in-out;
-}
-
 @keyframes new-element {
   from {
     opacity: 0;
