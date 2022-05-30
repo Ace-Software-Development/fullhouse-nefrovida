@@ -49,7 +49,7 @@ function ConsultarPacientes() {
     */
      useEffect(() => {
         getPacientes(listaPacientes);
-        if (ReactSession.get('rol') !== 'trabajosocial' 
+        if (ReactSession.get('rol') !== 'trabajoSocial' 
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
