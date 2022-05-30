@@ -17,6 +17,13 @@ function Home() {
                 </Link>
             }
             <FormColaborador/>
+                <br/><br/>
+                { ReactSession.get('rol') === 'trabajoSocial' &&
+                    <Link to = "/paciente">
+                        <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                    </Link>
+                }
+            <FormColaborador/>
             </Main>
         </div>
     )

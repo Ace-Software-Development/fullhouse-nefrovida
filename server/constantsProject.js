@@ -21,7 +21,7 @@ module.exports = Object.freeze({
     USUARIO: "username",
     CONTRASENA: "password",
     // Roles
-    ROL: "Rol",
+    ROL: "Rol",        
     ROLADMIN: "admin",
     ROLTRABAJOSOCIAL: "trabajoSocial",
     ROLQUIMICO: "quimico",
@@ -36,7 +36,7 @@ module.exports = Object.freeze({
     PACIENTE: "Paciente",
     IDPACIENTE: "idPaciente",
     CURP: "curp",
-    FECHANACIMIENTO: "fechaNacimiento",
+    FECHANACIMIENTO: "fechaNacimiento",   
     SEXO: "sexo",
     ESTATURA: "estatura",
     PESO: "peso",
@@ -64,6 +64,6 @@ module.exports = Object.freeze({
     VALORNUM: "valorNum",
     // NOTAMEDICA
     NOTAMEDICA: "NotaMedica",
-    IDNOTAMEDICA: "idNotaMedica",
+    IDNOTAMEDICA: "idNotaMedica",   
     NOTAS: "notas"
 })

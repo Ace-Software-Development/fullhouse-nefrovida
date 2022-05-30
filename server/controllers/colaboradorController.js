@@ -134,8 +134,6 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
                 message: results.error
             });
         }
-        // Destruir cookie de session en caso de éxito.
-        request.session = null;
 
         return response.status(200).send( {
             message: "Sesion Cerrada correctamente"

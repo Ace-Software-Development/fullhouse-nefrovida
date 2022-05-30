@@ -1,12 +1,14 @@
 const express = require('express');
-const router = express.Router();
-const { authUsuario, noAuthUsuario, authRol } = require('../rbac/Authentication');
-const tipoEstudioController = require('../controllers/tipoEstudioController.js');
 let CONSTANTS = require('../constantsProject');
+const router = express.Router();
+const tipoEstudio = require('../controllers/tipoEstudioController');
+const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 
-// Ruta de tipo 'GET' para obtener todos los parámetros de un estudio.
-router.get('/id', 
-    authRol([CONSTANTS.ROLQUIMICO]),
-    tipoEstudioController.consultarParametrosDeEstudio);
+
+// ruta get para consutar todos los tipos de estudio
+router.get('/',authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.consultarTiposEstudio);
+
+// ruta get para consutar los detalles y parametros de un tipo de estudio
+router.get('/id', authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.consultarTipoEstudio);
 
 module.exports = router;
