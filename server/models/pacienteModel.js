@@ -226,6 +226,8 @@ try {
 /**
  * asyncObtenerEstudiosPaciente Función asíncrona para consultar todos los estudios de un paciente de nefrovida
  * @param {string} curp - Curp del paciente a buscar
+ * @param {string} nombre - Nombre del tipo de estudio a buscar
+ * @param {string} ascendente - Los datos se ordenan por fecha de manera ascendente o no
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
 exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
@@ -236,7 +238,8 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     queryObtenerEstudios.include(CONSTANTS.IDCOLABORADOR);
     queryObtenerEstudios.equalTo(CONSTANTS.CURP, curp);
 
-    if((ascendente == "true") || (ascendente == " ")) {
+    // Los datos se ordenan por fecha de manera ascendente o no
+    if((ascendente == 'true') || (ascendente == ' ')) {
         queryObtenerEstudios.ascending(CONSTANTS.FECHA);
     }
     else {
@@ -247,6 +250,7 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
 
+        //Guardar nombres de los tipos de estudio del paciente
         let arrTiposEstudio = [];
         jsonEstudios.map(el => {
             arrTiposEstudio.push(el.idTipoEstudio.nombre);
@@ -254,7 +258,10 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
         arrTiposEstudio = arrTiposEstudio.filter((item,index)=>{
             return arrTiposEstudio.indexOf(item) === index;
         })
+        // Ordenar tipos de estudio
         arrTiposEstudio.sort();
+
+        // Guardar en forma de json para el front
         let jsonTiposEstudio = [];
         for(let i=0; i<arrTiposEstudio.length; i++) {
             jsonTiposEstudio.push({
@@ -263,24 +270,27 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
             })
         }
 
+        //Obtener los estudios por nombre de tipo de estudio
         const arrEstudios = [];
 
         jsonEstudios.map(el => {
+            // Por un tipo de estudio
             if(nombre == el.idTipoEstudio.nombre) {
                 arrEstudios.push({
                     objectIdEstudio: el.objectId,
                     nombreTipoEstudio: el.idTipoEstudio.nombre,
                     codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
+                    nombreColaborador: el.idColaborador.nombre + ' ' + el.idColaborador.apellidoPaterno + ' ' + el.idColaborador.apellidoMaterno,
                     fechaEstudio: el.fecha
                 });
             }
-            else if(nombre == " ") {
+            // Todos los tipos de estudio
+            else if(nombre == ' ') {
                 arrEstudios.push({
                     objectIdEstudio: el.objectId,
                     nombreTipoEstudio: el.idTipoEstudio.nombre,
                     codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idColaborador.nombre + " " + el.idColaborador.apellidoPaterno + " " + el.idColaborador.apellidoMaterno,
+                    nombreColaborador: el.idColaborador.nombre + ' ' + el.idColaborador.apellidoPaterno + ' ' + el.idColaborador.apellidoMaterno,
                     fechaEstudio: el.fecha
                 });
             }

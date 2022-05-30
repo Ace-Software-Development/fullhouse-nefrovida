@@ -18,8 +18,8 @@ router.get('/estudios',
     pacienteController.mostrarEstudiosPaciente);
 // Ruta de tipo 'GET' para buscar un paciente por nombre.
 router.get('/:nombre', 
-// authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
-pacienteController.consultarPorNombre);
+    // authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
+    pacienteController.consultarPorNombre);
 // Ruta de tipo 'GET' para consultar la información del paciente por curp.
 router.get('/detalle/:curp', 
     // authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),

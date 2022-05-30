@@ -1,5 +1,5 @@
 const parseServer = require('parse-server').ParseServer;
-let CONSTANTS = require("../constantsProject");
+let CONSTANTS = require('../constantsProject');
 
 
 /**
@@ -11,21 +11,21 @@ let CONSTANTS = require("../constantsProject");
 function obtenerValorResultado(json) {
     const tipoValor = json.idParametro.idTipoValor.nombre;
 
-    if(tipoValor === "Numérico") {
+    if(tipoValor === 'Numérico') {
         const valorNum = json.valorNum;
         return valorNum
     }
-    else if(tipoValor === "Texto") {
+    else if(tipoValor === 'Texto') {
         const valorString = json.valorString;
         return valorString
     }
     else {
         const valorBool = json.valorBool;
         if(valorBool) {
-            return "Positivo"
+            return 'Positivo'
         }
         else{
-            return "Negativo"
+            return 'Negativo'
         }
     }
 }
@@ -41,19 +41,19 @@ function obtenerValorReferenciaParametro(json) {
     console.log(json.idParametro.idTipoValor.nombre);
     const tipoValor = json.idParametro.idTipoValor.nombre;
 
-    if(tipoValor === "Numérico") {
+    if(tipoValor === 'Numérico') {
         const valorMin = json.idParametro.valorMin;
         const valorMax = json.idParametro.valorMax;
         const tieneRango = json.idParametro.tieneRango;
 
         if(tieneRango) {
-            return valorMin + " - " + valorMax
+            return valorMin + ' - ' + valorMax
         }
         else{
             return valorMin
         }
     }
-    else if(tipoValor === "Texto") {
+    else if(tipoValor === 'Texto') {
         const valorString = json.idParametro.valorString;
         return valorString
     }
@@ -118,7 +118,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
     } catch (error) {
         return {
             paciente: null,
-            error: "No se encontró dicho estudio del paciente."
+            error: 'No se encontró dicho estudio del paciente.'
         }
     }
 }

@@ -16,18 +16,19 @@ import useFetch from '../hooks/useFetch';
 
 
 export default function EstudiosLaboratorio() {
-    
-        const id = "PICA0304MEVN3";
+
+        // Parametro por default
+        const id = 'PICA0304MEVN3';
         
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
-        const [currentEstudio, setCurrentEstudio] = useState("%20");
-        const [ascendente, setAscendente] = useState("%20");
+        const [currentEstudio, setCurrentEstudio] = useState('%20');
+        const [ascendente, setAscendente] = useState('%20');
 
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/estudios');
         
         // Funcion que obtiene el estudio correspondiente al id.
-        async function getEstudios(id = "PICA0304MEVN3", nombreTipoEstudio = "%20", ascendente = "%20") {
+        async function getEstudios(id = 'PICA0304MEVN3', nombreTipoEstudio = '%20', ascendente = '%20') {
             const paramsRoute = {
                 idPaciente: id,
                 nombreTipoEstudio: nombreTipoEstudio,
@@ -36,11 +37,6 @@ export default function EstudiosLaboratorio() {
             const paramsString = JSON.stringify(paramsRoute);
 
             await httpConfig(paramsString, 'GET');
-
-            /*
-            setAscendente(ascendente);
-            setCurrentEstudio(nombreTipoEstudio);
-            */
         }
 
         useEffect(() => {
@@ -65,26 +61,31 @@ export default function EstudiosLaboratorio() {
             getEstudios();
         }, [])
 
+        // Hook que obtiene los estudio cuando currentEstudio y ascendente cambian
         useEffect(() => {
             getEstudios(id, currentEstudio, ascendente);
         }, [currentEstudio, ascendente])
     
         /**
-         * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 
-         * función de obtener los pacientes envíandole el nuevo valor como parámetro.
+         * Función que se ejecuta cuando hay un cambio en el filtro de tipo de estudio.
          * @param {event} e Evento del cambio
          */
 
         function tipoEstudioChange(e) {
             setCurrentEstudio(e.target.value);
-            //getEstudios(id, e.target.value, ascendente);
         }
 
+        /**
+         * Función que se ejecuta cuando hay un cambio en el filtro de ascendente/descendente.
+         * @param {event} e Evento del cambio
+         */
         function orderChange(e) {
             setAscendente(e.target.value);
-            //getEstudios(id, currentEstudio, e.target.value);
         }
 
+        /**
+         * Función que valida si existen tipos de estudio en su arreglo.
+         */
         function estudiosExisten() {
             if (tiposEstudio[1] === undefined){
                 return false;

@@ -20,7 +20,7 @@ module.exports.consultarEstudioPaciente = async(request, response) => {
         }
         response.status(200).send( {
             estudio: results.estudio,
-            message: "Estudio de paciente obtenido!!!"
+            message: 'Estudio de paciente obtenido!!!'
         });
         
     } catch(error) {

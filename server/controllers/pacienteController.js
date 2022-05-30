@@ -9,7 +9,7 @@ const pacienteModel = require('../models/pacienteModel');
  * @returns Respuesta de la petición
  */
 module.exports.mostrarEstudiosPaciente = async(request, response) => {
-    // Se obtiene el curp de los parametros de la ruta
+    // Se obtiene los parametros desde la query del front
     const queryJSON = JSON.parse(request.query.id);
     const curp = queryJSON.idPaciente;
     const nombreTipoEstudio = queryJSON.nombreTipoEstudio;

@@ -54,8 +54,8 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
 
     /**
     * getTipoEstudio Función asíncrona para obtener el detalle  
-    * de un tipo de estudio; recibe el ID del tipo estudio a buscar.
-    * @param { string } idTipoEstudio ObjectId del tipo de estudio
+    * de un estudio del paciente; recibe el ID del estudio a buscar.
+    * @param { string } id 
     */
     async function getEstudio(id) {
         await httpConfig(id, 'GET');
