@@ -6,6 +6,7 @@
  * de cada paciente.
  */
 
+ import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
@@ -19,18 +20,52 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 import { useParams } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+
 
 export default function ConsultarEstudioPaciente({ idEstudio }) {
     const params = useParams();
-
     const [estudio, setEstudio] = useState({})
-    const [errorFetch, setErrorFetch] = useState('');
-    const [isLoading, setIsLoading] = useState('');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/estudio/id');
+
+
+    //Hook para actualizar los datos de el estudio y los parametros
+    useEffect(() => {
+        if (!responseJSON || !responseOk) {
+            return;
+        }
+        else {
+            setEstudio(responseJSON.estudio);
+        }
+    }, [responseOk])
+
+
+    /**
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+     */
+    useEffect(() => {
+        //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
+        if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol') !== 'nutriologo') {
+            window.location.href = '/';
+        }
+        getEstudio(params.idEstudio);
+    }, []);
+
+
+    /**
+    * getTipoEstudio Función asíncrona para obtener el detalle  
+    * de un tipo de estudio; recibe el ID del tipo estudio a buscar.
+    * @param { string } idTipoEstudio ObjectId del tipo de estudio
+    */
+    async function getEstudio(id) {
+        await httpConfig(id, 'GET');
+    }
+
+
 
     // Funcion para obtener los parametros del estudio.
     function getParametrosEstudio() {
         let parametros = estudio.parametros;
-        console.log(parametros);
         if(parametros !== undefined) {
             return parametros.map(el => {
                 return <ParametroEstudioPaciente parametro={el.nombreParametro} valor={el.valorResultado} unidad={el.unidadParametro} referencia= {el.valorReferenciaParametro}></ParametroEstudioPaciente>
@@ -38,34 +73,6 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
         }
     }
     
-    // Funcion que obtiene el estudio correspondiente al id.
-    async function getEstudio(id) {
-        setIsLoading(true);
-
-        try {
-            const response = await fetch('http://localhost:6535/estudio/' + id, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            let misDatos = await response.json();
-            setIsLoading(false);
-
-            if (!response.ok) {
-                setErrorFetch(misDatos.message);
-                return;
-            }
-            setEstudio(misDatos.estudio);
-            //console.log(misDatos);
-
-        } catch(e) {
-            setIsLoading(false);
-            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
-            console.log(e)
-        }
-    }
-    // Hook que obtiene el estudio.
-    useEffect(() => {
-        getEstudio(params.idEstudio);
-        setIsLoading(true);
-        //getParametrosEstudio();
-    }, [])
 
     return(
         <div className="row ContainerForm left-align">
@@ -79,7 +86,7 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                     
                         {/* <BtnRegresar url="/"/><br/><br/> */}
                         
-                        { isLoading && (
+                        { loading && (
                             <div className="center animate-new-element">
                                 <br/><br/><br/>
 
@@ -101,7 +108,7 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                             </div>
                         
                         )}
-                        { !isLoading && !errorFetch && (
+                        { !loading && !error && (
                             <div className = "on-load-anim">
                                 <div align="left">               
                                     <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
@@ -133,12 +140,12 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                                 {/*<BtnEditRegis icono='create' texto='Editar estudio'/>  */} 
                             </div>
                         )}
-                        { errorFetch && (
+                        { error && (
                             <div>
                                 <br/><br/><br/>
 
                                 <div className="texto-grande red-text center animate-new-element">
-                                    <strong> { errorFetch } </strong> 
+                                    <strong> { error } </strong> 
                                 </div>
 
                                 <br/><br/><br/>

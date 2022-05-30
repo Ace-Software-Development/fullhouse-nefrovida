@@ -17,7 +17,7 @@ import useFetch from '../hooks/useFetch';
 
 export default function EstudiosLaboratorio() {
     
-        let id = "PICA0304MEVN3"
+        const id = "PICA0304MEVN3";
         
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
@@ -34,9 +34,13 @@ export default function EstudiosLaboratorio() {
                 ascendente: ascendente
             }
             const paramsString = JSON.stringify(paramsRoute);
-            console.log(paramsString);
 
             await httpConfig(paramsString, 'GET');
+
+            /*
+            setAscendente(ascendente);
+            setCurrentEstudio(nombreTipoEstudio);
+            */
         }
 
         useEffect(() => {
@@ -45,7 +49,6 @@ export default function EstudiosLaboratorio() {
             }
             else {
                 const misDatos = responseJSON;
-                console.log(misDatos);
                 setEstudios(misDatos.estudios);
                 setTiposEstudio(misDatos.tiposEstudio);
             }
@@ -54,14 +57,17 @@ export default function EstudiosLaboratorio() {
 
         // Hook que obtiene los estudios
         useEffect(() => {
-            //Se deja solo el acceso a los roles permitidos
-            // if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
-            //     window.location.href = '/403';
-            // }
-            console.log(ReactSession.get('rol'), "rol")
+            // Se deja solo el acceso a los roles permitidos
+            if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
+                window.location.href = '/';
+            }
 
             getEstudios();
         }, [])
+
+        useEffect(() => {
+            getEstudios(id, currentEstudio, ascendente);
+        }, [currentEstudio, ascendente])
     
         /**
          * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 
@@ -69,20 +75,17 @@ export default function EstudiosLaboratorio() {
          * @param {event} e Evento del cambio
          */
 
-        function handleChange(e) {
-            console.log(e.target.value)
-            getEstudios(id, e.target.value, ascendente);
+        function tipoEstudioChange(e) {
             setCurrentEstudio(e.target.value);
+            //getEstudios(id, e.target.value, ascendente);
         }
 
         function orderChange(e) {
-            console.log(e.target.value)
-            getEstudios(id, currentEstudio, e.target.value);
             setAscendente(e.target.value);
+            //getEstudios(id, currentEstudio, e.target.value);
         }
 
         function estudiosExisten() {
-            console.log(tiposEstudio[1])
             if (tiposEstudio[1] === undefined){
                 return false;
             }
@@ -112,7 +115,7 @@ export default function EstudiosLaboratorio() {
                             value = "%20"
                             paraEstudios = {true}
                             arr = { tiposEstudio} 
-                            handleChange = {  handleChange }
+                            handleChange = {  tipoEstudioChange }
                         />
                         <SelectEstudios
                             id = "orden" 

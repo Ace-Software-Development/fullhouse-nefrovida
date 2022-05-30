@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom'
 
 
 const FilaTablaEstudios = ({ estudio }) => {
-    estudio = estudio;
     const route = "/estudio/" + estudio.objectIdEstudio
 
     return(

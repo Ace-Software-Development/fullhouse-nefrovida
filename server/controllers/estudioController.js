@@ -9,7 +9,7 @@ const estudioModel = require('../models/estudioModel');
  * @returns Respuesta de la petición
  */
 module.exports.consultarEstudioPaciente = async(request, response) => {
-    const id = request.params.idEstudio;
+    const id = request.query.id;
     try {
         const results = await estudioModel.obtenerEstudioPaciente(id);
         if (results.error) {

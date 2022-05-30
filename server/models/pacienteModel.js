@@ -236,7 +236,6 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     queryObtenerEstudios.include(CONSTANTS.IDCOLABORADOR);
     queryObtenerEstudios.equalTo(CONSTANTS.CURP, curp);
 
-    //console.log(ascendente);
     if((ascendente == "true") || (ascendente == " ")) {
         queryObtenerEstudios.ascending(CONSTANTS.FECHA);
     }
@@ -247,6 +246,22 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     try {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
+
+        let arrTiposEstudio = [];
+        jsonEstudios.map(el => {
+            arrTiposEstudio.push(el.idTipoEstudio.nombre);
+        })
+        arrTiposEstudio = arrTiposEstudio.filter((item,index)=>{
+            return arrTiposEstudio.indexOf(item) === index;
+        })
+        arrTiposEstudio.sort();
+        let jsonTiposEstudio = [];
+        for(let i=0; i<arrTiposEstudio.length; i++) {
+            jsonTiposEstudio.push({
+                value: arrTiposEstudio[i],
+                option: arrTiposEstudio[i]
+            })
+        }
 
         const arrEstudios = [];
 
@@ -270,21 +285,6 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
                 });
             }
         })
-
-        let arrTiposEstudio = [];
-        jsonEstudios.map(el => {
-            arrTiposEstudio.push(el.idTipoEstudio.nombre);
-        })
-        arrTiposEstudio = arrTiposEstudio.filter((item,index)=>{
-            return arrTiposEstudio.indexOf(item) === index;
-        })
-        let jsonTiposEstudio = [];
-        for(let i=0; i<arrTiposEstudio.length; i++) {
-            jsonTiposEstudio.push({
-                value: arrTiposEstudio[i],
-                option: arrTiposEstudio[i]
-            })
-        }
 
         console.log(jsonTiposEstudio);
 

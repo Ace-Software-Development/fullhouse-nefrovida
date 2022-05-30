@@ -8,11 +8,9 @@ const SelectEstudios = ({requerido = false, value, id = "nombre", label = "Nombr
         M.FormSelect.init(elems, {});
     }, []);
 
-    if (paraEstudios === true){
-        arr.push({
-            value: "%20",
-            option: "Todos los estudios"
-        });
+    let todosOption;
+    if(paraEstudios){
+        todosOption = <option key={1} value="%20">Todos los estudios</option>;
     }
 
     return(
@@ -24,8 +22,9 @@ const SelectEstudios = ({requerido = false, value, id = "nombre", label = "Nombr
             onChange={handleChange}
         >
             <option key={0} value={value} disabled>
-            {label}
+                {label}
             </option>
+            {todosOption}
             {arr.map((item, index) => 
                 <option key={index+1} value={item.value}>
                     {item.option}
