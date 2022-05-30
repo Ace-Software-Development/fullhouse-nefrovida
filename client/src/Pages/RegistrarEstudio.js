@@ -249,14 +249,12 @@ return(
                     <div className="loader-anim">
 
 
-                    <div className="row div-detalles-estudio">
                         <div className="col s6 l6 left-align">
                             <div className="detalles-estudio">         
                             <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
                             </div>
                         </div>
-                    </div>
 
 
                         <div className='identificacion-registrar'/>
