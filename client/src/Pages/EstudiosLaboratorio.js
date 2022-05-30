@@ -21,8 +21,6 @@ export default function EstudiosLaboratorio() {
         
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
-        const [errorFetch, setErrorFetch] = useState('');
-
         const [currentEstudio, setCurrentEstudio] = useState("%20");
         const [ascendente, setAscendente] = useState("%20");
 
@@ -35,8 +33,10 @@ export default function EstudiosLaboratorio() {
                 nombreTipoEstudio: nombreTipoEstudio,
                 ascendente: ascendente
             }
+            const paramsString = JSON.stringify(paramsRoute);
+            console.log(paramsString);
 
-            await httpConfig(paramsRoute, 'GET');
+            await httpConfig(paramsString, 'GET');
         }
 
         useEffect(() => {
@@ -51,16 +51,14 @@ export default function EstudiosLaboratorio() {
             }
         }, [responseOk])
 
-        useEffect(() => {
-            setErrorFetch(error)
-        }, [error])
 
         // Hook que obtiene los estudios
         useEffect(() => {
             //Se deja solo el acceso a los roles permitidos
-            if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
-                window.location.href = '/';
-            }
+            // if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
+            //     window.location.href = '/403';
+            // }
+            console.log(ReactSession.get('rol'), "rol")
 
             getEstudios();
         }, [])
@@ -77,14 +75,13 @@ export default function EstudiosLaboratorio() {
             setCurrentEstudio(e.target.value);
         }
 
-        function cagadaChange(e) {
+        function orderChange(e) {
             console.log(e.target.value)
             getEstudios(id, currentEstudio, e.target.value);
             setAscendente(e.target.value);
         }
 
         function estudiosExisten() {
-            console.log("aaaa")
             console.log(tiposEstudio[1])
             if (tiposEstudio[1] === undefined){
                 return false;
@@ -125,7 +122,7 @@ export default function EstudiosLaboratorio() {
                                     {value: "true", option: "↑ Ascendente"},
                                     {value: "false", option: "↓ Descendente"},
                                 ] }
-                            handleChange = { cagadaChange }
+                            handleChange = { orderChange }
                         />
                     </div>
                     )
@@ -155,8 +152,8 @@ export default function EstudiosLaboratorio() {
                     </div>
                     ) 
                     : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
-                    { errorFetch 
-                        && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                    { error 
+                        && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                     }
                 </Card>
             </Main>

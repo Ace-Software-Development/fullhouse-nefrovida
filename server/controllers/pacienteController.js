@@ -10,9 +10,11 @@ const pacienteModel = require('../models/pacienteModel');
  */
 module.exports.mostrarEstudiosPaciente = async(request, response) => {
     // Se obtiene el curp de los parametros de la ruta
-    const curp = request.query.id.idPaciente;
-    const nombreTipoEstudio = request.query.id.nombreTipoEstudio;
-    const ascendente = request.query.id.ascendente;
+    const queryJSON = JSON.parse(request.query.id);
+    const curp = request.queryJSON.idPaciente;
+    const nombreTipoEstudio = request.queryJSON.nombreTipoEstudio;
+    const ascendente = request.queryJSON.ascendente;
+    
     try {
         const results = await pacienteModel.obtenerEstudiosPaciente(curp, nombreTipoEstudio, ascendente);
         if (results.error) {
