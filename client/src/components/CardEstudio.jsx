@@ -12,7 +12,7 @@ const CardEstudio = ({ nombreEstudio="undefined", idTipoEstudio = "undefined", i
                     <a href={"/consultarTipoEstudio" + "/"+idTipoEstudio}>
                         <i className="material-icons estudio-button icon-separator c-2E7EC8">description</i>
                     </a>
-                    <a href={"/registrarEstudio"}>
+                    <a href={"/registrarEstudio"+ "/"+idTipoEstudio+ "/"+idPaciente}>
                         <i className="material-icons estudio-button icon-separator c-98D0A1">add</i>
                     </a>
                 </div>

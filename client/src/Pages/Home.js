@@ -12,18 +12,17 @@ function Home() {
             <Main>
             <br/><br/>
             { ReactSession.get('rol') === 'quimico' &&
-                <Link to = "/registrarEstudio">
-                    <BtnEditRegis icono = "add" texto = "Registrar paciente" posicion = "left"/>
+                <Link to = "/temp">
+                    <BtnEditRegis icono = "add" texto = "Registrar estudio" posicion = "left"/>
                 </Link>
             }
-            <FormColaborador/>
-                <br/><br/>
-                { ReactSession.get('rol') === 'trabajoSocial' &&
-                    <Link to = "/paciente">
-                        <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
-                    </Link>
-                }
-            <FormColaborador/>
+            <br/><br/>
+            { ReactSession.get('rol') === 'trabajoSocial' &&
+                <Link to = "/paciente">
+                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
+                </Link>
+            }
+                <FormColaborador/>
             </Main>
         </div>
     )
