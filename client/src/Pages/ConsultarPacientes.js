@@ -87,9 +87,11 @@ function ConsultarPacientes() {
                 <CardTitulo icono="person" titulo="Pacientes"/>
                 <br/>
                 <div className = "contenedor">
+                { ReactSession.get('rol') === 'trabajoSocial' &&
                     <Link to = "/paciente">
                         <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
                     </Link>
+                }
                 </div>
                 <CardSubtitulo subtitulo= "Pacientes">
                     <InputSearch
