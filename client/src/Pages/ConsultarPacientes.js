@@ -18,9 +18,8 @@ import { Link } from 'react-router-dom';
 import BtnEditRegis from '../components/BtnEditRegis';
 
 function ConsultarPacientes() {
-    const [isLoadind, setIsLoading] = useState(true);
     const [pacientes, setPacientes] = useState([]);
-    const [errorFetch, setErrorFetch] = useState('');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/buscar');
 
 
     /**
@@ -38,29 +37,37 @@ function ConsultarPacientes() {
      * @returns 
      */
 
+    async function getPacientes() {
 
-    async function getPacientes(buscar) {
-        // Error vacío
-        setErrorFetch('');
-        try {
             // Fetch a la ruta de back para obtener la información
-            const response = await fetch('http://localhost:6535/paciente/' + buscar, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            const listaPacientes = await response.json();
-            setIsLoading(false);
-            
-            // Mostrar error en caso de ser necesario
-            if (!response.ok) {
-                setErrorFetch(listaPacientes.message);
-                return;
-            }
-            // Guardar los datos en la listaPacientes para desplegarlos.
-            setPacientes(listaPacientes.data.data);
-        } catch(e) {
-            // Mostrar mensaje de error en la conexión con la base de datos.
-            setIsLoading(false);
-            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
-        }
+            httpConfig(params.listaPacientes, 'GET');
     }
+
+
+    /**
+    * Hook que se ejecuta al renderizar el tipo de estudio.
+    */
+     useEffect(() => {
+        getPacientes(listaPacientes);
+        if (ReactSession.get('rol') !== 'trabajosocial' 
+        && ReactSession.get('rol') !== 'quimico'
+        && ReactSession.get('rol') !== 'doctor'
+        && ReactSession.get('rol') !== 'nutriologo'
+        && ReactSession.get('rol') !== 'psicologo') {
+            window.location.href = '/';
+        }
+    }, [])
+
+
+    useEffect(() => {
+        if (!responseJSON || !responseOk) {
+            return
+        } else {
+            if (url === urlGet) {
+                setPacientes(responseJSON.data.data);
+            } 
+        }
+    }, [responseOk])
 
 
     /**
@@ -91,7 +98,7 @@ function ConsultarPacientes() {
                         onChange = { handleChange }
                     />
                 </CardSubtitulo>
-                { isLoadind ?  (
+                { loading ?  (
                     <div className="center animate-new-element">
                         <br/>
 
@@ -112,8 +119,8 @@ function ConsultarPacientes() {
                     </div>
                     ) 
                 : <Tabla datos= { pacientes }/>}
-                { errorFetch 
-                    && <div> <div className="red-text center"> <strong> { errorFetch } </strong> </div> <br/><br/> </div>
+                { error 
+                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
             </Card>
         </div>
