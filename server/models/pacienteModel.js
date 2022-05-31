@@ -122,12 +122,15 @@ exports.buscarPorCurp = async (curp) => {
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
 exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
+    const queryObtenerIdPaciente = new Parse.Query(Paciente);
+    queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
+    const idPaciente = await queryObtenerIdPaciente.first();
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
-    queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, curp);
+    queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
 
     // Los datos se ordenan por fecha de manera ascendente o no
     if((ascendente == 'true') || (ascendente == ' ')) {

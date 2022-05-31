@@ -41,7 +41,7 @@ function App() {
             <Route exact path='/' element={<Home/>}/>
           </Route>
 
-          <Route exact path='/registrarEstudio' element={<PrivateRoute/>}>
+          <Route exact path='/registrarEstudio/:curp/:idTipoEstudio/' element={<PrivateRoute/>}>
             <Route exact path='/registrarEstudio/:curp/:idTipoEstudio/' element={<RegistrarEstudio/>} />
           </Route>
           

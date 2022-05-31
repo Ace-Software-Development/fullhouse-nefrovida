@@ -1,3 +1,4 @@
+import { useParams } from 'react-router';
 import CardEstudio from '../components/CardEstudio';
 import LineaCardsEstudios from '../components/LineaCardsEstudios';
 import Card from '../components/Card';
@@ -7,7 +8,9 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 const Temp = () => {
-    const curp = 'AECF770826HDGLRR22';
+    // Parametro
+    const params = useParams();
+    const curp = params.curp;
 
     const [tiposEstudio, setTiposEstudio] = useState([])
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
