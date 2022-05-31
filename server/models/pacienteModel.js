@@ -115,6 +115,95 @@ exports.buscarPorCurp = async (curp) => {
 
 
 /**
+ * asyncObtenerEstudiosPaciente Función asíncrona para consultar todos los estudios de un paciente de nefrovida
+ * @param {string} curp - Curp del paciente a buscar
+ * @param {string} nombre - Nombre del tipo de estudio a buscar
+ * @param {string} ascendente - Los datos se ordenan por fecha de manera ascendente o no
+ * @returns Todos los estudios de un paciente registrados en nefrovida
+ */
+exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
+
+    const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
+    const queryObtenerEstudios = new Parse.Query(tablaEstudio);
+    queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
+    queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
+    queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, curp);
+
+    // Los datos se ordenan por fecha de manera ascendente o no
+    if((ascendente == 'true') || (ascendente == ' ')) {
+        queryObtenerEstudios.ascending(CONSTANTS.FECHA);
+    }
+    else {
+        queryObtenerEstudios.descending(CONSTANTS.FECHA);
+    }
+
+    try {
+        const estudios = await queryObtenerEstudios.find();
+        const jsonEstudios = JSON.parse(JSON.stringify(estudios));
+
+        //Guardar nombres de los tipos de estudio del paciente
+        let arrTiposEstudio = [];
+        jsonEstudios.map(el => {
+            arrTiposEstudio.push(el.idTipoEstudio.nombre);
+        })
+        arrTiposEstudio = arrTiposEstudio.filter((item,index)=>{
+            return arrTiposEstudio.indexOf(item) === index;
+        })
+        // Ordenar tipos de estudio
+        arrTiposEstudio.sort();
+
+        // Guardar en forma de json para el front
+        let jsonTiposEstudio = [];
+        for(let i=0; i<arrTiposEstudio.length; i++) {
+            jsonTiposEstudio.push({
+                value: arrTiposEstudio[i],
+                option: arrTiposEstudio[i]
+            })
+        }
+
+        //Obtener los estudios por nombre de tipo de estudio
+        const arrEstudios = [];
+
+        jsonEstudios.map(el => {
+            // Por un tipo de estudio
+            if(nombre == el.idTipoEstudio.nombre) {
+                arrEstudios.push({
+                    objectIdEstudio: el.objectId,
+                    nombreTipoEstudio: el.idTipoEstudio.nombre,
+                    codigoTipoEstudio: el.idTipoEstudio.codigo,
+                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
+                    fechaEstudio: el.fecha
+                });
+            }
+            // Todos los tipos de estudio
+            else if(nombre == ' ') {
+                arrEstudios.push({
+                    objectIdEstudio: el.objectId,
+                    nombreTipoEstudio: el.idTipoEstudio.nombre,
+                    codigoTipoEstudio: el.idTipoEstudio.codigo,
+                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
+                    fechaEstudio: el.fecha
+                });
+            }
+        })
+
+        return {
+            estudios: arrEstudios,
+            tiposEstudio: jsonTiposEstudio,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            estudios: null,
+            error: error.message
+        }
+    }
+
+}
+
+
+/**
  * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
  * @returns Todos los pacientes registrados en nefrovida
  */

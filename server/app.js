@@ -66,12 +66,15 @@ app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
+app.use('/paciente', require('./routes/pacienteRouter'))
+
+app.use('/estudio', require('./routes/estudioRouter'));
+
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get('*', function(request, response) {
     response.status(404).send();
 })
-
 
 // Start the server
 const PORT = process.env.PORT;

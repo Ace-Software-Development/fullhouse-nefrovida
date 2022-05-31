@@ -19,6 +19,11 @@ router.get('/nombre',
     pacienteController.consultarPorNombre);
 
 
+// Ruta de tipo 'GET' para obtener los estudios de un paciente.
+router.get('/estudios',
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLQUIMICO]),
+    pacienteController.mostrarEstudiosPaciente);
+
 // Ruta de tipo 'POST' para registrar un nuevo paciente.
 router.post('/registrar', 
     authRol([CONSTANTS.ROLTRABAJOSOCIAL]),

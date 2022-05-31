@@ -18,6 +18,8 @@ import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
+import EstudiosLaboratorio from './EstudiosLaboratorio'
+import Temp from './Temp'
 
 
 function DetallePaciente() {
@@ -104,6 +106,24 @@ function DetallePaciente() {
                     </div>
                 )}
             </Card>
+            { ReactSession.get('rol') === 'quimico' &&
+                <div>
+                    <Temp/>
+                    <EstudiosLaboratorio/>
+                </div>
+            }
+            { ReactSession.get('rol') === 'doctor' &&
+                <EstudiosLaboratorio/>
+            }
+            { ReactSession.get('rol') === 'trabajoSocial' &&
+                <Temp/>
+            }
+            { ReactSession.get('rol') === 'nutriologo' &&
+                <EstudiosLaboratorio/>
+            }
+            { ReactSession.get('rol') === 'admin' &&
+                <Temp/>
+            }
             </Main>
         </div>
     )
