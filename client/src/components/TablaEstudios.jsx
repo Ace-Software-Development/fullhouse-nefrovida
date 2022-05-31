@@ -3,8 +3,6 @@ import FilaTablaEstudios from './FilaTablaEstudios';
 
 const TablaEstudios = ({ datos }) => {
 
-    // console.log( "Los datos son: ", datos );
-
     const tableContent = datos.map((estudio, index) =>(
         <FilaTablaEstudios key = { index } estudio = { estudio } />
     ))

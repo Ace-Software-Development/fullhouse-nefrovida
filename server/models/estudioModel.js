@@ -38,7 +38,6 @@ function obtenerValorResultado(json) {
  * @returns valor de referencia
  */
 function obtenerValorReferenciaParametro(json) {
-    console.log(json.idParametro.idTipoValor.nombre);
     const tipoValor = json.idParametro.idTipoValor.nombre;
 
     if(tipoValor === 'Numérico') {
