@@ -43,6 +43,7 @@ function authUsuario(request, response, next) {
             if(session && !session.rol) {
                 // Retornar "Session invalida" para que usuario se autentique nuevamente
                 return response.status(401).send({
+                    
                     message: session.message
                 });
             } else {

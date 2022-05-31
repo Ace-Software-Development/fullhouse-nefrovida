@@ -1,17 +1,8 @@
 import logo from "../img/logo.png";
-import BtnCerrarSesion from "./BtnCerrarSesion";
-import { useForm } from 'react-hook-form';
-import { ReactSession } from 'react-client-session';
-import M from "materialize-css/dist/js/materialize.min.js";
-import { useEffect, useState } from 'react';
+import CerrarSesion from "./CerrarSesion"
 
 
 const Navbar = ({children}) => {
-
-  
-
-
-
   return(
   <header>
     <div className="navbar-fixed"  >
@@ -34,14 +25,7 @@ const Navbar = ({children}) => {
           <i className="material-icons"  >menu</i>
           </a>
           <ul className="right"  >            
-             
-              <li>
-                <BtnCerrarSesion small={ false }/>
-              </li>
-              <li>
-                <BtnCerrarSesion small={ true }/>
-              </li>
-            
+            <CerrarSesion/>
           </ul>
         </div>
       </nav>

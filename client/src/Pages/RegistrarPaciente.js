@@ -36,9 +36,9 @@ const RegistrarPaciente = () => {
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
      */
     useEffect(() => {
-        // if (ReactSession.get('rol') !== 'trabajoSocial') {
-        //     window.location.href = '/';
-        // }
+        if (ReactSession.get('rol') !== 'trabajoSocial') {
+            window.location.href = '/';
+        }
         validation();
     }, []);
 
@@ -203,11 +203,14 @@ const RegistrarPaciente = () => {
         data.telefono = Number(data.telefono);
 
         // Se convierte la fecha a formato 'dd/mm/yyyy'
-        const dateSplit = data.fechaNacimiento.split('-');
-        const year = dateSplit[0];
-        const month = dateSplit[1];
-        const day = dateSplit[2];
-        data.fechaNacimiento = day +'/' + month + '/' + year;
+        if( data.fechaNacimiento){
+            const dateSplit = data.fechaNacimiento.split('-');
+            const year = dateSplit[0];
+            const month = dateSplit[1];
+            const day = dateSplit[2];
+            data.fechaNacimiento = day +'/' + month + '/' + year;
+        }
+        
 
         e.preventDefault();
 
@@ -244,14 +247,14 @@ const RegistrarPaciente = () => {
                     </Link>
                     {
                         loading &&
-                        <div className="preloader-wrapper small active">
-                            <div className="spinner-layer spinner-blue-only">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
                             </div>
                             </div>
                         </div>

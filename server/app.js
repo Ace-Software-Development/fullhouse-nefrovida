@@ -56,7 +56,7 @@ app.use(function(req, res, next) {
 
 app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 // Validar que usuario esté autenticado
-// app.use(authUsuario);
+app.use(authUsuario);
 
 app.use('/home', require('./routes/home'));
 
@@ -65,6 +65,8 @@ app.use('/paciente', require('./routes/pacienteRouter'))
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get('*', function(request, response) {
     response.status(404).send();

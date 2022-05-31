@@ -2,7 +2,7 @@ import React from 'react';
 import "./css/materialize-mod.css";
 import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import ErrorBoundary from './components/ErrorBoundary'
 import PrivateRoute from './components/PrivateRoute';
@@ -13,7 +13,8 @@ import Forbidden from './pages/error/403Forbidden';
 import Home from './pages/Home'
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
-
+import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
+import Temp from './pages/Temp';
 
 
 function App() {
@@ -25,7 +26,6 @@ function App() {
    * dependiendo de la sessión del usuario.
    */
   return (
-
     <BrowserRouter>
       <ErrorBoundary>
         <Routes>
@@ -33,7 +33,7 @@ function App() {
           <Route exact path='/iniciarSesion' element={<NoAuthRoute/>}>
             <Route exact path='/iniciarSesion' element={<IniciarSesion />}/>
           </Route>
-
+          
           <Route exact path='/' element={<PrivateRoute/>}>
             <Route exact path='/' element={<Home/>}/>
           </Route>
@@ -44,6 +44,14 @@ function App() {
 
           <Route exact path='/paciente/:curp' element={<PrivateRoute/>}>
             <Route exact path= '/paciente/:curp' element={<DetallePaciente/>}/>
+          </Route>
+
+          <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<PrivateRoute/>}>  
+            <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
+          </Route>
+
+          <Route exact path='/temp' element={<PrivateRoute/>}>  
+            <Route exact path='/temp' element={<Temp />} />
           </Route>
 
           <Route exact path='/403' element={<PrivateRoute/>}>

@@ -50,7 +50,6 @@ function ConsultarPacientes() {
     */
     useEffect(() => {
         getPacientes('');
-        console.log(ReactSession.get('rol'), "rol")
         if (ReactSession.get('rol') !== 'trabajoSocial' 
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
