@@ -121,7 +121,7 @@ exports.buscarPorCurp = async (curp) => {
  * @param {string} ascendente - Los datos se ordenan por fecha de manera ascendente o no
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
- exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
+exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
@@ -196,6 +196,104 @@ exports.buscarPorCurp = async (curp) => {
     } catch(error) {
         return {
             estudios: null,
+            error: error.message
+        }
+    }
+
+}
+
+
+/**
+ * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
+ * @returns Todos los pacientes registrados en nefrovida
+ */
+exports.consultarPacientes = async () => {
+    const table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    let query = new Parse.Query(table);
+    
+    try {
+        const results = await query.find();
+
+        if (!results) {
+            return {
+                data: null,
+                error: 'No hay pacientes registrados actualmente'
+            }
+        }
+
+        return {
+            data: results,
+            error: null
+        }
+    } catch (error) {
+        return {
+            data: null,
+            error: error.message
+        }
+    }
+    
+}
+
+
+/**
+ * asyncBuscarPorNombre Función asíncrona para buscar un paciente por nombre o apellidos
+ * @param {string} nombre Nombre a buscar para ver si coincide con algún paciente.
+ * @returns Paciente(s) cuyo nombre o apellidos incluyen esa string.
+ */
+exports.buscarPorNombre = async(nombre) => {
+
+    nombre = nombre.toLowerCase();
+    const palabras = nombre.split(' ');
+
+    const table = Parse.Object.extend(CONSTANTS.PACIENTE);
+    let query = new Parse.Query(table);
+
+    try {
+        const pacientes = await query.find();
+        let results = [];
+
+        let json_res = JSON.parse(JSON.stringify(pacientes));
+
+        // Iterar por ccada uno de los pacientes de nefrovida
+        for (let i = 0; i < json_res.length; i++){
+            // Obtener su nombre completo
+            let nombreCompleto = json_res[i].nombre + ' ' + json_res[i].apellidoPaterno + ' ';
+
+            if (json_res[i].apellidoMaterno) {
+                nombreCompleto += json_res[i].apellidoMaterno;
+            }
+
+            // Pasar el nombre a minúsculas
+            nombreCompleto = nombreCompleto.toLowerCase();
+            
+            let includes = true;
+
+
+            // Por cada una de las palabras recibidas ver si el nombre completo la incluye
+            for (let j = 0; j < palabras.length; j++) {
+                const curp = json_res[i].curp.toLowerCase();
+
+                if (!nombreCompleto.includes(palabras[j]) && !curp.includes(palabras[j])) {
+                    includes = false;
+                }
+            }
+            // Si el nombre completo incluye las palabras, añadir el paciente al arreglo
+            if (includes) {
+                results.push(json_res[i]);
+            }
+
+            // Ordenar alfabéticamente
+            results.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1);
+        }
+
+        return {
+            data: results,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            data: null,
             error: error.message
         }
     }

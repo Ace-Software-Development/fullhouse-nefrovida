@@ -1,3 +1,4 @@
+import { useParams } from 'react-router';
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
@@ -17,8 +18,9 @@ import useFetch from '../hooks/useFetch';
 
 export default function EstudiosLaboratorio() {
 
-        // Parametro por default
-        const id = 'PICA0304MEVN3';
+        // Parametro
+        const params = useParams();
+        const id = params.curp;
         
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
@@ -28,7 +30,7 @@ export default function EstudiosLaboratorio() {
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/estudios');
         
         // Funcion que obtiene el estudio correspondiente al id.
-        async function getEstudios(id = 'PICA0304MEVN3', nombreTipoEstudio = '%20', ascendente = '%20') {
+        async function getEstudios(id, nombreTipoEstudio = '%20', ascendente = '%20') {
             const paramsRoute = {
                 idPaciente: id,
                 nombreTipoEstudio: nombreTipoEstudio,
@@ -99,68 +101,66 @@ export default function EstudiosLaboratorio() {
 
     return(
         <div>
-            <Main>
-                <Card>
-                    <CardTitulo icono="vaccines" titulo="Exámenes de laboratorio"/>
-                    <CardSubtitulo subtitulo = "Estudios" grande = {true}> 
-                    { loading ?  (
-                    <div className="center animate-new-element">
-                        Cargando
-                    </div>
-                    ) 
-                    : estudiosExisten() ? (
-                    <div className="adjust-for-min-content ">
-                        <SelectEstudios
-                            id = "tipo" 
-                            label = "📃 Tipo" 
-                            value = "%20"
-                            paraEstudios = {true}
-                            arr = { tiposEstudio} 
-                            handleChange = {  tipoEstudioChange }
-                        />
-                        <SelectEstudios
-                            id = "orden" 
-                            label = "📅 Orden" 
-                            value = "true"
-                            arr = {[
-                                    {value: "true", option: "↑ Ascendente"},
-                                    {value: "false", option: "↓ Descendente"},
-                                ] }
-                            handleChange = { orderChange }
-                        />
-                    </div>
-                    )
-                    : <></>
-                    }
-                        
+            <Card>
+                <CardTitulo icono="vaccines" titulo="Exámenes de laboratorio"/>
+                <CardSubtitulo subtitulo = "Estudios" grande = {true}> 
+                { loading ?  (
+                <div className="center animate-new-element">
+                    Cargando
+                </div>
+                ) 
+                : estudiosExisten() ? (
+                <div className="adjust-for-min-content ">
+                    <SelectEstudios
+                        id = "tipo" 
+                        label = "📃 Tipo" 
+                        value = "%20"
+                        paraEstudios = {true}
+                        arr = { tiposEstudio} 
+                        handleChange = {  tipoEstudioChange }
+                    />
+                    <SelectEstudios
+                        id = "orden" 
+                        label = "📅 Orden" 
+                        value = "true"
+                        arr = {[
+                                {value: "true", option: "↑ Ascendente"},
+                                {value: "false", option: "↓ Descendente"},
+                            ] }
+                        handleChange = { orderChange }
+                    />
+                </div>
+                )
+                : <></>
+                }
+                    
 
-                    </CardSubtitulo>
-                    { loading ?  (
-                    <div className="center animate-new-element">
-                        <br/>
+                </CardSubtitulo>
+                { loading ?  (
+                <div className="center animate-new-element">
+                    <br/>
 
-                        <div className="preloader-wrapper med active">
-                            <div className="spinner-layer spinner-blue-only">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                            </div>
+                    <div className="preloader-wrapper med active">
+                        <div className="spinner-layer spinner-blue-only">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div><div className="gap-patch">
+                            <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                            <div className="circle"></div>
                         </div>
-
-                        <br/>
-                        <br/>
+                        </div>
                     </div>
-                    ) 
-                    : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
-                    { error 
-                        && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
-                    }
-                </Card>
-            </Main>
+
+                    <br/>
+                    <br/>
+                </div>
+                ) 
+                : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
+                { error 
+                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
+                }
+            </Card>
         </div>
     )
 }
