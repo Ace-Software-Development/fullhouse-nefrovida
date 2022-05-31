@@ -4,25 +4,18 @@ import FormColaborador from './FormColaborador';
 import BtnEditRegis from '../components/BtnEditRegis';
 import { ReactSession } from 'react-client-session';
 import { Link } from 'react-router-dom';
+import Sidenav from '../components/Sidenav'
 
+import ConsultarPacientes from './ConsultarPacientes'
 function Home() {
     return (
         <div>
-            <Navbar/>
+            <Navbar>
+                <Sidenav/>
+            </Navbar>
             <Main>
-            <br/><br/>
-            { ReactSession.get('rol') === 'quimico' &&
-                <Link to = "/temp">
-                    <BtnEditRegis icono = "add" texto = "Registrar estudio" posicion = "left"/>
-                </Link>
-            }
-            <br/><br/>
-            { ReactSession.get('rol') === 'trabajoSocial' &&
-                <Link to = "/paciente">
-                    <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
-                </Link>
-            }
-                <FormColaborador/>
+                <br/><br/>
+                <ConsultarPacientes/>
             </Main>
         </div>
     )

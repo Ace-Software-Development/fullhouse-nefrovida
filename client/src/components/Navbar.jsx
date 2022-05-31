@@ -7,7 +7,7 @@ const Navbar = ({children}) => {
   <header>
     <div className="navbar-fixed"  >
       <nav className="z-depth-2"  >
-        <div className="nav-wrapper c-F9F9F9"  >
+        <div className="nav-wrapper c-F9F9F9-transparente"  >
           <a 
             href="#!"
             className="brand-logo"

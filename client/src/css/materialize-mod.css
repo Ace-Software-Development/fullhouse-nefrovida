@@ -2154,6 +2154,8 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
+  overflow-y: overlay;
+  overflow-x: overlay;
 }
 
 /* Sections
@@ -4285,10 +4287,11 @@ table span.badge {
 
 nav {
   color: #fff;
-  background-color: #ee6e73;
+  background-color: #00000000;
   width: 100%;
   height: 56px;
   line-height: 56px;
+  backdrop-filter: blur(3px);
 }
 
 nav.nav-extended {
@@ -5110,8 +5113,8 @@ small {
 
 .tabs {
   position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: overlay;
+  overflow-y: overlay;
   height: 48px;
   width: 100%;
   background-color: #fff;
@@ -9294,6 +9297,10 @@ table tr:last-child td:last-child {
   background-color: #F9F9F9;
 }
 
+.c-F9F9F9-transparente {
+  background-color: #f9f9f999;
+}
+
 .c-Transparente {
   background-color: #00000000;
 }
@@ -9310,13 +9317,15 @@ table tr:last-child td:last-child {
 }
 
 .contenedor {
+  display: inline-block;
   margin: 0 auto;
   width: 90%;
 }
 
 .tabla-altura {
   max-height: 552px;
-  overflow-y: auto;
+  overflow-y: overlay;
+  overflow-x: overlay;
   scrollbar-gutter: stable;
 }
 
@@ -9346,6 +9355,7 @@ thead {
 
 .tabla-padding {
   padding-left: 15px;
+  width: 40%;
 }
 
 .icon-separator {
@@ -9364,28 +9374,35 @@ thead {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 18px;
+  height: 18px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #343434;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: #00000094;
+  border-radius: 12px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
 }
 
 .no-border {
   border:none;
 }
 
-.detalles-lista {
+.identificacion-usuario {
+  border-right: 1px solid #B9B9B9;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 130px;
+}
+
+.detalles-lista{
   display: contents;
 }
 
@@ -9394,15 +9411,9 @@ thead {
   align-items: center;
 }
 
-.negrita-grande {
+.negrita-grande{
   font-weight: bold;
   font-size:x-large;
-  line-height: 40px;
-}
-
-.negrita-3vw {
-  font-weight: bold;
-  font-size:2.7vw;
   line-height: 40px;
 }
 
@@ -9420,6 +9431,17 @@ thead {
   font-size: medium;
 }
 
+.input-pequeno{
+  width: 100px !important;
+  height: 22px !important;
+  margin-top: 3px !important;
+  margin-right: 5px !important;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 .espacio-3vw {
   font-weight: bold;
   font-size: 36px;
@@ -9429,7 +9451,6 @@ thead {
 .espacio-pequeno {
   font-weight: lighter;
   font-size: medium;
-  word-spacing: 2.2em;
 }
 
 .identificacion-usuario {
@@ -9471,6 +9492,10 @@ thead {
 
 .c-000000 {
   color: #000000;
+}
+
+.c-717079 {
+  color: #717079;
 }
 
 .c-98D0A1 {
@@ -9525,6 +9550,62 @@ thead {
   line-height: 40px;
   font-weight: 500;
 }
+.input-pequeno {
+  width: 100px !important;
+  height: 22px !important;
+  margin-top: 3px !important;
+  margin-right: 5px !important;
+}
+
+.select-pequeno {
+  width: 100px !important;
+  height: 22px !important;
+  margin-top: 3px !important;
+  margin-right: 8px !important;
+}
+
+.select-grande {
+  width: 150px !important;
+  height: 47px !important;
+  margin-top: 7px !important;
+  margin-bottom: 9px !important;
+  margin-right: 10px !important;
+  color: transparent;
+  background: transparent;
+}
+
+.card-subtitulo-grande {
+  background-color: #CECFD9;
+  border-radius: 12px;
+  width: 90%;
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.texto-subtitulo-grande {
+  margin: auto;
+}
+
+.flex-for-main-div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.adjust-for-min-content {
+  width: auto;
+
+}
+
 .row-cards-estudios {
   display: flex;
   align-items: center;
@@ -9710,6 +9791,17 @@ body {
 
 .cerrarSesionIconoFix {
   line-height: 32px !important
+
+}
+
+.texto-grande {
+  font-size:x-large;
+  line-height: 40px;
+  font-weight: 500;
+}
+
+.loader-anim {
+  animation: append-animate .6s ease;
 }
 
 .on-load-anim {

@@ -9,4 +9,10 @@ router.post('/',
     authRol([CONSTANTS.ROLQUIMICO]),
     estudioController.registrarResultadosEstudio);
 
+
+// Ruta de tipo 'GET' para obtener el detalle de estudio.
+router.get('/id',
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLQUIMICO]),
+    estudioController.consultarEstudioPaciente);
+
 module.exports = router;

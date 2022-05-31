@@ -9,7 +9,7 @@ const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "N
         {...rest}/>
 
 
-      <label for={id}  >
+      <label htmlFor={id}  >
         {label} { requerido 
           ? <span className="red-text"> *</span> 
           : null }
