@@ -15,13 +15,16 @@ app.use(express.json());
 app.use(cors());
 
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
     console.log('DATABASE_URI not specified, falling back to localhost.');
 }
+app.use(express.static(
+	path.join(__dirname,
+							"../client/build")));
 
 var api = new parseServer({
     databaseURI: databaseUri,
@@ -76,9 +79,15 @@ app.use('/estudio', require('./routes/estudioRouter'));
 
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
-app.get('*', function(request, response) {
-    response.status(404).send();
-})
+app.get("*", (req, res) => {
+    console.log("here")
+	res.sendFile(
+			path.join(__dirname,
+						"../client/build/index.html")
+	);
+});
+
+
 
 // Start the server
 const PORT = process.env.PORT;
