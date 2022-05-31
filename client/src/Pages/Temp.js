@@ -14,7 +14,7 @@ const Temp = () => {
     function listaTiposEstudio() {
 
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
-        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' ) {
+        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol') !== 'trabajoSocial') {
             return [];
         }
         return tiposEstudio.map(el => {
