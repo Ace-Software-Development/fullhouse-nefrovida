@@ -115,9 +115,6 @@ function DetallePaciente() {
             { ReactSession.get('rol') === 'doctor' &&
                 <EstudiosLaboratorio/>
             }
-            { ReactSession.get('rol') === 'trabajoSocial' &&
-                <Temp/>
-            }
             { ReactSession.get('rol') === 'nutriologo' &&
                 <EstudiosLaboratorio/>
             }
