@@ -42,8 +42,8 @@ function App() {
             <Route exact path='/paciente' element={<RegistrarPaciente />} />
           </Route>
 
-          <Route exact path='/curp' element={<PrivateRoute/>}>
-            <Route exact path= '/curp' element={<DetallePaciente/>}/>
+          <Route exact path='/paciente/:curp' element={<PrivateRoute/>}>
+            <Route exact path= '/paciente/:curp' element={<DetallePaciente/>}/>
           </Route>
 
           <Route exact path='/403' element={<PrivateRoute/>}>

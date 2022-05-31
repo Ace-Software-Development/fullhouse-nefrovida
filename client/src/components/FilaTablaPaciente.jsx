@@ -2,8 +2,7 @@ import {Link} from 'react-router-dom'
 
 
 const FilaTablaPaciente = ({ paciente }) => {
-  paciente = paciente;
-  const route = "/" + paciente.curp
+  const route = "/paciente/" + paciente.curp
 
   return(
     <tbody>

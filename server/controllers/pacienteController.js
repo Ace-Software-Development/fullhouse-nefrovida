@@ -80,7 +80,7 @@ module.exports.consultarPacientes = async(request, response) => {
  */
 module.exports.consutarDetallePaciente = async(request, response) => {
     // Se obtiene el curp de los parametros de la ruta
-    const curp = request.params.curp;
+    const curp = request.query.id;
 
     try {
         const results = await pacienteModel.buscarPorCurp(curp);
@@ -116,7 +116,7 @@ module.exports.consutarDetallePaciente = async(request, response) => {
  */
 module.exports.consultarPorNombre = async(request, response) => {
     // Se obtiene el curp de los parametros de la ruta
-    const nombre = request.params.nombre;
+    const nombre = request.query.id;
     try {
         const results = await pacienteModel.buscarPorNombre(nombre)
         if (results.error) {

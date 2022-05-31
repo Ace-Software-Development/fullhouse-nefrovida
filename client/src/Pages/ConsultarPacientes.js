@@ -22,7 +22,7 @@ import { ReactSession } from 'react-client-session';
 
 function ConsultarPacientes() {
     const urlGetTodos = 'http://localhost:6535/paciente/todos';
-    const urlGetBuscar = 'http://localhost:6535/paciente/buscar';
+    const urlGetBuscar = 'http://localhost:6535/paciente/nombre';
     const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
@@ -36,6 +36,7 @@ function ConsultarPacientes() {
             return
         } else {
             if (url === urlGetTodos) {
+                setPacientes(responseJSON.data.data);
                 setUrl(urlGetBuscar);
             } else if (url === urlGetBuscar) {
                 setPacientes(responseJSON.data.data);
@@ -47,15 +48,15 @@ function ConsultarPacientes() {
     /**
     * Hook que se ejecuta al renderizar el tipo de estudio.
     */
-     useEffect(() => {
+    useEffect(() => {
         getPacientes('');
-        console.log(ReactSession.get('rol'))
+        console.log(ReactSession.get('rol'), "rol")
         if (ReactSession.get('rol') !== 'trabajoSocial' 
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
         && ReactSession.get('rol') !== 'psicologo') {
-            //window.location.href = '/';
+            window.location.href = '/403';
         }
         getPacientes(params.idPacientes);
     }, [])
@@ -69,10 +70,9 @@ function ConsultarPacientes() {
      */
 
     async function getPacientes(buscar) {
-        console.log(buscar);
-        if (urlGetTodos) {
+        if ( url === urlGetTodos ) {
             httpConfig(null, 'GET');
-        } else if (urlGetBuscar) {
+        } else if (url === urlGetBuscar) {
             httpConfig(buscar, 'GET');
         }
     }

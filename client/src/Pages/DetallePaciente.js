@@ -19,10 +19,10 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 
+
 function DetallePaciente() {
     const params = useParams();
     const [paciente, setPaciente] = useState({});
-    const detallePaciente = params.detallePaciente;
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
 
 
@@ -31,23 +31,21 @@ function DetallePaciente() {
      * @returns 
      */
     async function getPaciente() {
-
-            httpConfig(params.detallePaciente, 'GET');
+            httpConfig(params.curp, 'GET');
     }
 
     /**
     * Hook que se ejecuta al renderizar el tipo de estudio.
     */
     useEffect(() => {
-        getPaciente(detallePaciente);
         if (ReactSession.get('rol') !== 'trabajoSocial' 
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
         && ReactSession.get('rol') !== 'psicologo') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
-        getPaciente(params.idPacientes);
+        getPaciente();
     }, [])
 
 
