@@ -16,11 +16,11 @@ const Tabla = ({ datos }) => {
                 <th className="tabla-padding">
                   Nombre
                 </th>
-                {/*
+                
                 <th>
                   Correo
                 </th>
-                */}
+
                 <th>
                   Teléfono
                 </th>
