@@ -14,14 +14,14 @@ module.exports = Object.freeze({
     VALORBOOL: "valorBool",
     VALORSTRING: "valorString",
     // AREA
-    AREA: "AREA",
+    AREA: "Area",
     IDAREA: "idArea",
     // Tabla User
     IDUSUARIO: "idUsuario",
     USUARIO: "username",
     CONTRASENA: "password",
     // Roles
-    ROL: "ROL",        
+    ROL: "Rol",        
     ROLADMIN: "admin",
     ROLTRABAJOSOCIAL: "trabajoSocial",
     ROLQUIMICO: "quimico",
@@ -33,7 +33,7 @@ module.exports = Object.freeze({
     SESSIONTOKEN: "sessionToken",
     USER: "user",
     // PACIENTE
-    PACIENTE: "PACIENTE",
+    PACIENTE: "Paciente",
     IDPACIENTE: "idPaciente",
     CURP: "curp",
     FECHANACIMIENTO: "fechaNacimiento",   
@@ -41,30 +41,29 @@ module.exports = Object.freeze({
     ESTATURA: "estatura",
     PESO: "peso",
     // TIPOESTUDIO
-    TIPOESTUDIO: "TIPOESTUDIO",
+    TIPOESTUDIO: "TipoEstudio",
     IDTIPOESTUDIO: "idTipoEstudio",
     // TIPOVALOR
-    TIPOVALOR: "TIPOVALOR",
+    TIPOVALOR: "TipoValor",
     IDTIPOVALOR: "idTipoValor",
     // PARAMETRO
-    PARAMETRO: "PARAMETRO",
+    PARAMETRO: "Parametro",
     IDPARAMETRO: "idParametro",
     UNIDAD: "unidad",
     TIENERANGO: "tieneRango",
     VALORMIN: "valorMin",
     VALORMAX: "valorMax",
     // PARAMETROESTUDIO
-    PARAMETROESTUDIO: "PARAMETROESTUDIO",
+    PARAMETROESTUDIO: "ParametroEstudio",
     // ESTUDIO
-    ESTUDIO: "ESTUDIO",
+    ESTUDIO: "Estudio",
     IDESTUDIO: "idEstudio",
     OBSERVACIONES: "observaciones",
-    IDCOLABORADOR: "idColaborador",
     //RESULTADO
-    RESULTADO: "RESULTADO",
+    RESULTADO: "Resultado",
     VALORNUM: "valorNum",
     // NOTAMEDICA
-    NOTAMEDICA: "NOTAMEDICA",
+    NOTAMEDICA: "NotaMedica",
     IDNOTAMEDICA: "idNotaMedica",   
     NOTAS: "notas"
 })
