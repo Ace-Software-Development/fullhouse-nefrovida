@@ -16,11 +16,13 @@ const FilaTablaPaciente = ({ paciente }) => {
             { paciente.curp }
           </a>
         </td>
+        {/*
         <td  >
           <a href = { route }>
             { paciente.correo }
           </a>
         </td>
+        */}
         <td  >
           <a href = { route }>
             { paciente.telefono }

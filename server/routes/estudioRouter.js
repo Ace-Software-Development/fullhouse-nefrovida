@@ -1,9 +1,14 @@
-let CONSTANTS = require('../constantsProject');
 const express = require('express');
 const router = express.Router();
-const {authUsuario, authRol} = require('../rbac/Authentication')
+const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication');
+const estudioController = require('../controllers/estudioController.js');
+let CONSTANTS = require('../constantsProject');
 
-const estudioController = require('../controllers/estudioController');
+// Ruta de tipo 'POST' para registrar la información de un estudio
+router.post('/', 
+    authRol([CONSTANTS.ROLQUIMICO]),
+    estudioController.registrarResultadosEstudio);
+
 
 // Ruta de tipo 'GET' para obtener el detalle de estudio.
 router.get('/id',

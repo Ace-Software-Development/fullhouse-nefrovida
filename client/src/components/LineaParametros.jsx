@@ -6,5 +6,5 @@ const LineaParametros = ({children}) => {
         </div>
     )
 }
-
+  
 export default LineaParametros

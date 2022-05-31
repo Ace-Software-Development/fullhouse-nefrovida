@@ -64,6 +64,10 @@ app.use('/paciente', require('./routes/pacienteRouter'))
 
 app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
 
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
+
+app.use('/estudio', require('./routes/estudioRouter'));
+
 app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
 app.use('/paciente', require('./routes/pacienteRouter'))

@@ -9545,6 +9545,11 @@ thead {
   flex-wrap: wrap;
 }
 
+.texto-grande {
+  font-size: x-large;
+  line-height: 40px;
+  font-weight: 500;
+}
 .input-pequeno {
   width: 100px !important;
   height: 22px !important;
@@ -9612,6 +9617,15 @@ thead {
   margin-left: unset !important;
 }
 
+
+.borde-abajo {
+  border-bottom: 1px solid #B9B9B9;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 .card-mini {
   display: block;
   width: 100%;
@@ -9805,13 +9819,31 @@ body {
   }
 }
 
+.loader-anim {
+  animation: append-animate .6s ease;
+}
+
+@keyframes append-animate {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
 @keyframes new-element {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-new-element {
+  animation: new-element .4s ease-in-out;
 }
 
 @keyframes new-element {

@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
+import Main from '../components/Main';
 import Sidenav from '../components/Sidenav'
-import Main from '../components/Main'
 
 import ConsultarPacientes from './ConsultarPacientes'
 function Home() {

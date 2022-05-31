@@ -1,3 +1,4 @@
+import { useParams } from 'react-router';
 import CardEstudio from '../components/CardEstudio';
 import LineaCardsEstudios from '../components/LineaCardsEstudios';
 import Card from '../components/Card';
@@ -7,6 +8,9 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 const Temp = () => {
+    // Parametro
+    const params = useParams();
+    const curp = params.curp;
 
     const [tiposEstudio, setTiposEstudio] = useState([])
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
@@ -14,12 +18,12 @@ const Temp = () => {
     function listaTiposEstudio() {
 
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
-        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol') !== 'trabajoSocial') {
+        if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico') {
             return [];
         }
         return tiposEstudio.map(el => {
             return(
-                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ "undefined" }/>
+                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ curp }/>
             )
         })
     }

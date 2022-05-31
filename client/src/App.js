@@ -3,6 +3,7 @@ import "./css/materialize-mod.css";
 import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import RegistrarEstudio from './pages/RegistrarEstudio';
 import Home from './pages/Home';
 import ConsultarEstudioPaciente from './pages/ConsultarEstudioPaciente';
 import EstudiosLaboratorio from './pages/EstudiosLaboratorio';
@@ -40,6 +41,10 @@ function App() {
             <Route exact path='/' element={<Home/>}/>
           </Route>
 
+          <Route exact path='/registrarEstudio/:curp/:idTipoEstudio/' element={<PrivateRoute/>}>
+            <Route exact path='/registrarEstudio/:curp/:idTipoEstudio/' element={<RegistrarEstudio/>} />
+          </Route>
+          
           <Route exact path='/estudio/:idEstudio' element={<PrivateRoute/>}>
             <Route exact path='/estudio/:idEstudio' element={<ConsultarEstudioPaciente/>} />
           </Route>
