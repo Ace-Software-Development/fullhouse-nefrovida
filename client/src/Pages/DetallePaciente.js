@@ -15,19 +15,14 @@ import CardTitulo from '../components/CardTitulo';
 import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
 import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
+import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 
 function DetallePaciente() {
+    const params = useParams();
     const [paciente, setPaciente] = useState({});
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
-
-
-    /**
-     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
-     */
-    useEffect(() => {
-        getPaciente();
-    }, [])
 
 
     /**
@@ -36,7 +31,7 @@ function DetallePaciente() {
      */
     async function getPaciente() {
 
-            httpConfig(params.detallePaciente, 'GET');
+            httpConfig(detallePaciente, 'GET');
     }
 
     /**
@@ -51,6 +46,7 @@ function DetallePaciente() {
         && ReactSession.get('rol') !== 'psicologo') {
             window.location.href = '/';
         }
+        getPaciente(params.idPacientes);
     }, [])
 
 

@@ -16,32 +16,25 @@ import CardSubtitulo from '../components/CardSubtitulo';
 import InputSearch from '../components/InputSearch';
 import { Link } from 'react-router-dom';
 import BtnEditRegis from '../components/BtnEditRegis';
+import { useParams } from 'react-router';
+import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 function ConsultarPacientes() {
+    const params = useParams();
     const [pacientes, setPacientes] = useState([]);
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/buscar');
 
 
-    /**
-     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
-     */
     useEffect(() => {
-        getPacientes('');
-    }, [])
-
-
-    /**
-     * Función asíncrona para obtener la lista de pacientes del laboratorio. Si recibe una string
-     * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
-     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los pacientes.
-     * @returns 
-     */
-
-    async function getPacientes() {
-
-            // Fetch a la ruta de back para obtener la información
-            httpConfig(params.listaPacientes, 'GET');
-    }
+        if (!responseJSON || !responseOk) {
+            return
+        } else {
+            if (url === urlGet) {
+                setPacientes(responseJSON.data.data);
+            } 
+        }
+    }, [responseOk])
 
 
     /**
@@ -56,18 +49,22 @@ function ConsultarPacientes() {
         && ReactSession.get('rol') !== 'psicologo') {
             window.location.href = '/';
         }
+        getPacientes(params.idPacientes);
     }, [])
 
 
-    useEffect(() => {
-        if (!responseJSON || !responseOk) {
-            return
-        } else {
-            if (url === urlGet) {
-                setPacientes(responseJSON.data.data);
-            } 
-        }
-    }, [responseOk])
+    /**
+     * Función asíncrona para obtener la lista de pacientes del laboratorio. Si recibe una string
+     * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
+     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los pacientes.
+     * @returns 
+     */
+
+    async function getPacientes() {
+
+            // Fetch a la ruta de back para obtener la información
+            httpConfig(listaPacientes, 'GET');
+    }
 
 
     /**
