@@ -3,13 +3,10 @@ import "./css/materialize-mod.css";
 import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-<<<<<<< HEAD
 import RegistrarEstudio from './pages/RegistrarEstudio';
-=======
 import Home from './pages/Home';
 import ConsultarEstudioPaciente from './pages/ConsultarEstudioPaciente';
 import EstudiosLaboratorio from './pages/EstudiosLaboratorio';
->>>>>>> b4a5177d36ddd6484662ad7ab0fff290c96839f7
 import { ReactSession } from 'react-client-session';
 import ErrorBoundary from './components/ErrorBoundary'
 import PrivateRoute from './components/PrivateRoute';
