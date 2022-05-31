@@ -21,33 +21,41 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 function ConsultarPacientes() {
+    const urlGetTodos = 'http://localhost:6535/paciente/todos';
+    const urlGetBuscar = 'http://localhost:6535/paciente/buscar';
+    const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/buscar');
+
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+
 
 
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return
         } else {
-            if (url === urlGet) {
+            if (url === urlGetTodos) {
+                setUrl(urlGetBuscar);
+            } else if (url === urlGetBuscar) {
                 setPacientes(responseJSON.data.data);
-            } 
+            }
         }
     }, [responseOk])
-
+    
 
     /**
     * Hook que se ejecuta al renderizar el tipo de estudio.
     */
      useEffect(() => {
-        getPacientes(listaPacientes);
+        getPacientes('');
+        console.log(ReactSession.get('rol'))
         if (ReactSession.get('rol') !== 'trabajoSocial' 
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
         && ReactSession.get('rol') !== 'psicologo') {
-            window.location.href = '/';
+            //window.location.href = '/';
         }
         getPacientes(params.idPacientes);
     }, [])
@@ -60,10 +68,13 @@ function ConsultarPacientes() {
      * @returns 
      */
 
-    async function getPacientes() {
-
-            // Fetch a la ruta de back para obtener la información
-            httpConfig(listaPacientes, 'GET');
+    async function getPacientes(buscar) {
+        console.log(buscar);
+        if (urlGetTodos) {
+            httpConfig(null, 'GET');
+        } else if (urlGetBuscar) {
+            httpConfig(buscar, 'GET');
+        }
     }
 
 

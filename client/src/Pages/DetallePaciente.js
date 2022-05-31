@@ -22,6 +22,7 @@ import { ReactSession } from 'react-client-session';
 function DetallePaciente() {
     const params = useParams();
     const [paciente, setPaciente] = useState({});
+    const detallePaciente = params.detallePaciente;
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
 
 
@@ -31,7 +32,7 @@ function DetallePaciente() {
      */
     async function getPaciente() {
 
-            httpConfig(detallePaciente, 'GET');
+            httpConfig(params.detallePaciente, 'GET');
     }
 
     /**
@@ -54,9 +55,7 @@ function DetallePaciente() {
         if (!responseJSON || !responseOk) {
             return
         } else {
-            if (url === urlGet) {
                 setPaciente(responseJSON.data.data);
-            } 
         }
     }, [responseOk])
 
