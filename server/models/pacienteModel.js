@@ -126,8 +126,8 @@ exports.buscarPorCurp = async (curp) => {
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
-    queryObtenerEstudios.include(CONSTANTS.IDCOLABORADOR);
-    queryObtenerEstudios.equalTo(CONSTANTS.CURP, curp);
+    queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
+    queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, curp);
 
     // Los datos se ordenan por fecha de manera ascendente o no
     if((ascendente == 'true') || (ascendente == ' ')) {
@@ -171,7 +171,7 @@ exports.buscarPorCurp = async (curp) => {
                     objectIdEstudio: el.objectId,
                     nombreTipoEstudio: el.idTipoEstudio.nombre,
                     codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idColaborador.nombre + ' ' + el.idColaborador.apellidoPaterno + ' ' + el.idColaborador.apellidoMaterno,
+                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
                     fechaEstudio: el.fecha
                 });
             }
@@ -181,7 +181,7 @@ exports.buscarPorCurp = async (curp) => {
                     objectIdEstudio: el.objectId,
                     nombreTipoEstudio: el.idTipoEstudio.nombre,
                     codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idColaborador.nombre + ' ' + el.idColaborador.apellidoPaterno + ' ' + el.idColaborador.apellidoMaterno,
+                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
                     fechaEstudio: el.fecha
                 });
             }

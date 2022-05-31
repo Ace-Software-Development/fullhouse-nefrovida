@@ -12,7 +12,7 @@ let CONSTANTS = require("../constantsProject");
 // AREA
 const Area = Parse.Object.extend(CONSTANTS.AREA);
 const area = new Area();
-area.set(CONSTANTS.NOMBREAREA, "Nutrición");
+area.set(CONSTANTS.NOMBRE, "Nutrición");
 area.save();
 
 // _User
@@ -25,7 +25,7 @@ colaborador.set(CONSTANTS.CORREO, "andreapc@correo.com");
 colaborador.set(CONSTANTS.TELEFONO, 4426598556);
 colaborador.set(CONSTANTS.CONTRASENA, "ASD1233456")
 colaborador.set(CONSTANTS.ACTIVO, true);
-colaborador.set(CONSTANTS.IDROL, "10WxPw5t2h");
+colaborador.set(CONSTANTS.IDROL, "hcKV3Pxe7h");
 colaborador.save();
 
 /*

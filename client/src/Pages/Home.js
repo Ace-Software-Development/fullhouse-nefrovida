@@ -23,6 +23,12 @@ function Home() {
                 { ReactSession.get('rol') === 'doctor' &&
                     <EstudiosLaboratorio/>
                 }
+                { ReactSession.get('rol') === 'quimico' &&
+                    <EstudiosLaboratorio/>
+                }
+                { ReactSession.get('rol') === 'nutriologo' &&
+                    <EstudiosLaboratorio/>
+                }
             </Main>
         </div>
     )
