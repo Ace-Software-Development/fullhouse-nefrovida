@@ -203,11 +203,14 @@ const RegistrarPaciente = () => {
         data.telefono = Number(data.telefono);
 
         // Se convierte la fecha a formato 'dd/mm/yyyy'
-        const dateSplit = data.fechaNacimiento.split('-');
-        const year = dateSplit[0];
-        const month = dateSplit[1];
-        const day = dateSplit[2];
-        data.fechaNacimiento = day +'/' + month + '/' + year;
+        if( data.fechaNacimiento){
+            const dateSplit = data.fechaNacimiento.split('-');
+            const year = dateSplit[0];
+            const month = dateSplit[1];
+            const day = dateSplit[2];
+            data.fechaNacimiento = day +'/' + month + '/' + year;
+        }
+        
 
         e.preventDefault();
 

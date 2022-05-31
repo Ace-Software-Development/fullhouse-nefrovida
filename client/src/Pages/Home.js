@@ -1,22 +1,15 @@
 import Navbar from '../components/Navbar';
-import { Link } from 'react-router-dom'
+import Sidenav from '../components/Sidenav'
 import Main from '../components/Main'
-import BtnEditRegis from '../components/BtnEditRegis'
-import FormColaborador from './FormColaborador'
-import { ReactSession } from 'react-client-session';
-
+import ConsultarPacientes from './ConsultarPacientes'
 function Home() {
     return (
         <div>
-            <Navbar/>
+            <Navbar>
+                <Sidenav/>
+            </Navbar>
             <Main>
-                <br/><br/>
-                { ReactSession.get('rol') === 'trabajoSocial' &&
-                    <Link to = "/paciente">
-                        <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
-                    </Link>
-                }
-                <FormColaborador/>
+                <ConsultarPacientes/>
             </Main>
         </div>
     )

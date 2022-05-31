@@ -1,20 +1,19 @@
 // Datos de ejemplo
-import FilaTablaPaciente from "./FilaTablaPaciente";
-
+import FilaTablaPaciente from './FilaTablaPaciente';
 const Tabla = ({ datos }) => {
 
-  const tableContent = datos.map((paciente)=>(
-    <FilaTablaPaciente paciente= { paciente } />
+  const tableContent = datos.map((paciente, index) =>(
+    <FilaTablaPaciente key = { index } paciente = { paciente } />
   ))
 
   return(
-    <>
-      <div className="card contenedor tabla-altura"  >
-        <table id="doctores" className="highlight"  >
-            
+    <div>
+      <div className="card contenedor tabla-altura">
+        <table id="doctores" className="highlight">     
           <thead  >
             <tr className="figma"  >
-                <th className="tabla-padding"  >
+                
+                <th className="tabla-padding">
                   Nombre
                 </th>
                 <th  >
@@ -23,18 +22,17 @@ const Tabla = ({ datos }) => {
                 <th  >
                   Teléfono
                 </th>
-                <th className="center"  >
-                  Detalle
+                <th className="center">
+                  Detalles
                 </th>
             </tr>
           </thead>
-          
           { tableContent }
         </table>
       </div>  
-      <br  />
-      <br  />
-    </>
+      <br/>
+      <br/>
+    </div>
   )
 }
 

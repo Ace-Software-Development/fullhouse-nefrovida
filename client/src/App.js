@@ -1,5 +1,6 @@
 import React from 'react';
 import "./css/materialize-mod.css";
+import "./css/components.css";
 import "materialize-css/dist/js/materialize.min.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
@@ -11,6 +12,7 @@ import NotFound from './pages/error/404notFound'
 import Forbidden from './pages/error/403Forbidden';
 import Home from './pages/Home'
 import RegistrarPaciente from './pages/RegistrarPaciente'
+import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import Temp from './pages/Temp';
 
@@ -38,6 +40,10 @@ function App() {
 
           <Route exact path='/paciente' element={<PrivateRoute/>}>
             <Route exact path='/paciente' element={<RegistrarPaciente />} />
+          </Route>
+
+          <Route exact path='/paciente/:curp' element={<PrivateRoute/>}>
+            <Route exact path= '/paciente/:curp' element={<DetallePaciente/>}/>
           </Route>
 
           <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<PrivateRoute/>}>  
