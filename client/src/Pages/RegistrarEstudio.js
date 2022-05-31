@@ -28,7 +28,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useParams } from 'react-router-dom';
 
-export default function RegistrarEstudio({ idTipoEstudio, curp }) {
+export default function RegistrarEstudio() {
 const urlGet = 'http://localhost:6535/tipoEstudio/id';
 const urlPost = 'http://localhost:6535/estudio';
 const [url, setUrl] = useState(urlGet);
@@ -36,6 +36,8 @@ const [isLoading, setIsLoading] = useState(false);
 const [tipoEstudio, setTipoEstudio] = useState({});
 const [parametros, setParametros] = useState([]);
 const params = useParams();
+const curp = params.curp;
+const idTipoEstudio = params.idTipoEstudio;
 
 const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
@@ -147,9 +149,10 @@ async function onSubmit(data, e) {
         fecha: fecha,
         observaciones: observaciones,
         idTipoEstudio: idTipoEstudio,
-        curp: params.curp,
+        curp: curp,
         parametros: parametrosArr
     }
+    console.log('send', send)
 
     httpConfig(send, 'POST');
 };
@@ -158,7 +161,7 @@ async function onSubmit(data, e) {
  * Hook que se ejecuta al renderizar el tipo de estudio.
  */
 useEffect(() => {
-    getTipoEstudio(idTipoEstudio);
+    getTipoEstudio(params.idTipoEstudio);
     if (ReactSession.get('rol') !== 'quimico') {
         window.location.href = '/';
     }

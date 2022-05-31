@@ -7,6 +7,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 const Temp = () => {
+    const curp = 'AECF770826HDGLRR22';
 
     const [tiposEstudio, setTiposEstudio] = useState([])
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
@@ -19,7 +20,7 @@ const Temp = () => {
         }
         return tiposEstudio.map(el => {
             return(
-                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ "undefined" }/>
+                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ curp }/>
             )
         })
     }

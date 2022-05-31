@@ -8,7 +8,7 @@ const estudioModel = require('../models/estudioModel')
  * @returns Respuesta de la petición
  */
 module.exports.registrarResultadosEstudio = async(request, response) => {
-
+    console.log('data', request);
     try {
         const results = await estudioModel.registrarResultadosEstudio(request.body);
         console.log(results)

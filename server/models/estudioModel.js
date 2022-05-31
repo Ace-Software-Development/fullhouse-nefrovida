@@ -26,7 +26,7 @@ function results(data, error) {
  * @returns Información de los resultados o un error en caso de existir.
  */
 exports.registrarResultadosEstudio = async(data) => {
-    console.log('data', data)
+    
     // Crear un nuevo estudio y asignar la fecha y las observaciones
     const estudio = new Estudio;
     estudio.set(CONSTANTS.FECHA, data.fecha);
