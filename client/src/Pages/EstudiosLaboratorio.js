@@ -110,7 +110,7 @@ export default function EstudiosLaboratorio() {
                 </div>
                 ) 
                 : estudiosExisten() ? (
-                <div className="adjust-for-min-content ">
+                <div className="adjust-for-min-content flex-for-main-div">
                     <SelectEstudios
                         id = "tipo" 
                         label = "📃 Tipo" 
