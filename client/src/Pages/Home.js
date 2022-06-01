@@ -1,7 +1,8 @@
 import Navbar from '../components/Navbar';
 import Main from '../components/Main'
-import FormColaborador from './FormColaborador'
 import { ReactSession } from 'react-client-session';
+import RegistrarColaborador from './RegistrarColaborador';
+
 
 function Home() {
     return (
@@ -9,7 +10,7 @@ function Home() {
             <Navbar/>
             <Main>
             <br/><br/>
-                <FormColaborador/>
+                <RegistrarColaborador/>
             </Main>
         </div>
     )
