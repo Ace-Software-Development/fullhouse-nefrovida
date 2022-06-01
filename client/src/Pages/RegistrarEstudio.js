@@ -152,7 +152,6 @@ async function onSubmit(data, e) {
         curp: curp,
         parametros: parametrosArr
     }
-    console.log('send', send)
 
     httpConfig(send, 'POST');
 };

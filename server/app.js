@@ -80,7 +80,6 @@ app.use('/estudio', require('./routes/estudioRouter'));
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get("*", (req, res) => {
-    console.log("here")
 	res.sendFile(
 			path.join(__dirname,
 						"../client/build/index.html")
