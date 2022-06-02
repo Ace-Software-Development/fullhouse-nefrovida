@@ -9453,14 +9453,6 @@ thead {
   font-size: medium;
 }
 
-.identificacion-usuario {
-  border-right: 1px solid #B9B9B9;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  height: 130px;
-}
-
 .identificacion-prueba {
   display: flex;
   align-items: center;
