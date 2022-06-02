@@ -38,7 +38,7 @@ const RegistrarColaborador = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:6535/colaboradores', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            const response = await fetch('http://localhost:6535/colaborador', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             let miJayson = await response.json();
             setIsLoading(false);
 
@@ -232,7 +232,7 @@ const RegistrarColaborador = () => {
         e.preventDefault()
         try {
             // Hacer fetch a la ruta de back, enviando la información del formulario.
-            const response = await fetch('http://localhost:6535/colaboradores', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
+            const response = await fetch('http://localhost:6535/colaborador', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
             // console.log("response", response)
             const colaborador = await response.json()
             setPostIsLoading(false)
@@ -293,7 +293,7 @@ const RegistrarColaborador = () => {
                         <div className="on-load-anim">
                             <form
                                 id = "main-login"
-                                action = 'http://localhost:6535/colaboradores'
+                                action = 'http://localhost:6535/colaborador'
                                 method = 'post'
                                 onSubmit = { handleSubmit(onSubmit) }>
                                 <LineaCampos>
