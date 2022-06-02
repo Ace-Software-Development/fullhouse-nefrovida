@@ -8,14 +8,12 @@ const useFormulario = (inicial, validate) => {
         setFormulario({
             ...formulario,
             [e.target.name]: e.target.type === 'checkbox'
-                ? e.targjnmet.checked
+                ? e.target.checked
                 : e.target.value
         })
 
         setErrors(validate(formulario))
     }
-
-    console.log(formulario)
 
     const reset = () => {
         setFormulario(inicial)

@@ -60,16 +60,25 @@ app.use(authUsuario);
 
 app.use('/home', require('./routes/home'));
 
-app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
+app.use('/paciente', require('./routes/pacienteRouter'))
+
+app.use('/colaborador', require('./routes/colaboradorRouter'));
+
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
+
+app.use('/estudio', require('./routes/estudioRouter'));
+
+app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
 
 app.use('/paciente', require('./routes/pacienteRouter'))
 
-app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+app.use('/estudio', require('./routes/estudioRouter'));
+
+app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
 app.get('*', function(request, response) {
     response.status(404).send();
 })
-
 
 // Start the server
 const PORT = process.env.PORT;

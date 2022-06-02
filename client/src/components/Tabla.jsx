@@ -1,11 +1,12 @@
 // Datos de ejemplo
-const arr = [{nombre: "Eduardo"}, {materno: "Pete"}, {paterno: "Gil"}, {sexo:"Hombre"}, {rol: "Dueño de pepe"}, {telefono:"4641063915"}, {detalle:"http://store.steampowered.com/"},
-             {nombre: "Andrea"}, {materno: "Pineapple"}, {paterno: "Pen"}, {sexo:"Mujer"}, {rol: "La PPAP"}, {telefono: "4425672356"}, {detalle:"http://www.youtube.com/"},
-             {nombre: "David"}, {materno: "Guz"}, {paterno: "Lolero"}, {sexo:"Hombre"}, {rol: "El Lolero"}, {telefono:"5674447535"}, {detalle:"http://lan.leagueoflegends.com/"},
-             {nombre: "Feli"}, {materno: "Pollos"}, {paterno: "Feliz"}, {sexo: "Hombre"}, {rol: "El Felipollos"}, {telefono: "9311901105"}, {detalle:"https://pollofelizslp.com/"}
-            ]
+import FilaTablaPaciente from "./FilaTablaPaciente";
 
-const Tabla = (arr) => {
+const Tabla = ({ datos }) => {
+
+  const tableContent = datos.map((paciente)=>(
+    <FilaTablaPaciente paciente= { paciente } />
+  ))
+
   return(
     <>
       <div className="card contenedor tabla-altura"  >
@@ -14,41 +15,21 @@ const Tabla = (arr) => {
           <thead  >
             <tr className="figma"  >
                 <th className="tabla-padding"  >
-                  Columna 1
+                  Nombre
                 </th>
                 <th  >
-                  Columna 2
+                  Correo
+                </th>
+                <th  >
+                  Teléfono
                 </th>
                 <th className="center"  >
-                  Columna 3
+                  Detalle
                 </th>
             </tr>
           </thead>
-
-          <tr  >
-            <td className="tabla-padding"  >
-              <a href="http://www.google.com"  >
-                Cont col1
-              </a>
-              <br/>
-              <g className="tabla-sexo"  >
-                Subtexto
-              </g>
-            </td>
-            <td  >
-              <a href="http://www.google.com"  >
-                Cont col2
-              </a>
-            </td>
-            <td className="center"  >
-              <a href="http://www.google.com"  >
-                <i className="material-icons"  >
-                  insert_drive_file
-                </i>
-              </a>
-            </td>
-          </tr>
-
+          
+          { tableContent }
         </table>
       </div>  
       <br  />

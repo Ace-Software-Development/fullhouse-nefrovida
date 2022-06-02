@@ -13,7 +13,11 @@ import { ReactSession } from 'react-client-session'
 const NoAuthRoute = () => {
     try {
         const sess = ReactSession.get("rol");
-        return <Navigate to="/" />;
+        if (!sess) {
+            return <Outlet />;
+        } else {
+            return <Navigate to="/" />;
+        }
     } catch(err) {
         return <Outlet />;
     }
