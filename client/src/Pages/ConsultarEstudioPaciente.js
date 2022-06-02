@@ -6,7 +6,7 @@
  * de cada paciente.
  */
 
- import { ReactSession } from 'react-client-session';
+import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';

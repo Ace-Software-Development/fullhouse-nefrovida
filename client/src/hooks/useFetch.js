@@ -101,7 +101,6 @@ const useFetch = (url) => {
         } 
         // Si se desea realizar un GET
         else if (methodLocal === 'GET') {
-            console.log("data: " + data);
             await setItemId(data);
             await setMethod(methodLocal);
             await setConfig( {
@@ -206,6 +205,12 @@ const useFetch = (url) => {
         // Si petición retornó error.
         if(!response.ok) {
             if (response.status === 401) {
+                // Destruye los datos de la sesión.
+                ReactSession.remove('rol');
+                ReactSession.remove('nombre');
+                ReactSession.remove('apellido');
+                ReactSession.remove('sessionToken');
+                ReactSession.remove('usuario');
                 // TODO cuando esté cerrar sesion llamar a cerrarSesion
                 window.location.href = "/iniciarSesion";
             } else if (response.status === 403) {

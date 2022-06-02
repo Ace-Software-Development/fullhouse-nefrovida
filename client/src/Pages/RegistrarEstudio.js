@@ -146,7 +146,9 @@ async function onSubmit(data, e) {
         parametrosArr.push(paramObj);
     }
 
+    const usuario = ReactSession.get("usuario");
     let send = {
+        usuario: usuario,
         fecha: fecha,
         observaciones: observaciones,
         idTipoEstudio: idTipoEstudio,
