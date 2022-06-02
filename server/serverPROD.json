@@ -1,17 +1,22 @@
 {
     "apps": [{
-        "name": "Parse Prod Server NefroWeb",
+        "name": "ParseDevServerNefroWeb",
         "script": "app.js",
+        "watch": ["cloud", "functions", "app.js", "controllers", "models"],
+        "watch_options": {
+            "useFsEvents": false
+        },
+        "ignore_watch": ["public/", "node_modules/"],
         "env": {
-            "NAME": "NefroWebServerPROD",
-            "APP_NAME": "NefroWeb Server PROD",
-            "PORT": 6536,
-            "NODE_ENV": "production",
-            "DATABASE_URI": "mongodb://nefroweb.nefrovidaac.com:27017/nefroweb",
+            "NAME": "NefroWebServerDEV",
+            "APP_NAME": "NefroWeb Server DEV",
+            "PORT": 6535,
+            "NODE_ENV": "development",
+            "DATABASE_URI": "mongodb://nefrovida:N3fr0v1d4.com@prod.nefrovidaac.com/nefrowebDEV?authMechanism=DEFAULT&authSource=admin",
             "APP_ID": "app_id",
             "MASTER_KEY": "master_key",
             "SECRET_KEY_USERS": "secret_key",
-            "SERVER_URL": "https://nefroweb.nefrovidaac.com/parse"
+            "SERVER_URL": "http://localhost:6535/parse"
         }
     }]
 }

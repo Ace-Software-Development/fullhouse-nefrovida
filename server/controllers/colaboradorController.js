@@ -145,3 +145,77 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
         });
     }
 }
+
+
+
+
+
+
+
+/**
+ * asyncConsultarPacientes Función asíncrona para obtener la información de todos los
+ * pacientes registrados en Nefrovida.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+ module.exports.consultarColaborador = async(request, response) => {
+    try {
+        const results = await colaboradorModel.consultarColaborador();
+
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            });
+        }
+        response.status(200).send({
+            success: 'success',
+            data: results,
+            message: 'Empleados obtenidos exitosamente.'
+        });
+    } catch(error) {
+        return response.status(400).send( {
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        });
+    }
+}
+
+
+/**
+ * asyncConsutarDetallePaciente Función asíncrona para consultar la información 
+ * de un paciente, buscandolo por curp.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+module.exports.consutarDetalleColaborador = async(request, response) => {
+    // Se obtiene el curp de los parametros de la ruta
+    const idUsuario = request.query.idUsuario;
+
+    try {
+        const results = await colaboradorModel.buscarPorId(idUsuario);
+
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            });
+        }
+        response.status(200).send({
+            success: 'success',
+            data: results,
+            message: 'Empleado obtenido exitosamente'
+        });
+    } catch(error) {
+        response.status(200).send({
+            status: 'success',
+            data: results,
+            message: 'Empleado obtenido exitosamente'
+        });
+    }
+}

@@ -63,6 +63,20 @@ function resultsRegistrarColaborador(colab, error){
     };
 }
 
+
+/**
+ * Función auxiliar para retornar los datos y el error.
+ * @param {Object} data - Datos a retornar
+ * @param {string} error - Mensaje de error en caso de existir
+ * @returns 
+ */
+ function resultsColaborador(data, error) {
+    return {
+        data: data,
+        error: error
+    }
+}
+
 /**
  * registrarColaborador Función asíncrona para dar de alta información de colaborador en base de datos.
  * @param {object} params objeto con infrormación recibida de formulario de registro.
@@ -191,5 +205,38 @@ exports.cerrarSesionColaborador = async() => {
         return {
             error: error.message
         }
+    }
+}
+
+
+
+
+
+
+/**
+ * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por su curp. 
+ * @param {string} username - Curp del paciente a buscar
+ * @returns Información del paciente en caso de encontrarlo o un error en caso de no existir.
+ */
+ exports.buscarPorUsuario = async (username) => {
+    
+    const Table = Parse.Object.extend(CONSTANTS.USUARIO);
+    let query = new Parse.Query(Table);
+    query.equalTo(CONSTANTS.USUARIO, username);
+
+    try {
+        const results = await query.first();
+        // Enviar error si no existe un paciente con ese curp
+        if ( !results ) {
+            return resultsColaborador(null, 'No se encontró un colaborador con ese ID');
+        }
+        // Enviar el error si el paciente no esta activo
+        if ( !results.get(CONSTANTS.ACTIVO)) {
+            return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
+        }
+        return resultsColaborador(results, null);
+
+    } catch (error) {
+        return resultsColaborador(null, error.message);
     }
 }
