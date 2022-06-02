@@ -59,23 +59,21 @@ app.use(function(req, res, next) {
 
 app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 // Validar que usuario esté autenticado
-app.use(authUsuario);
+app.use('/home', authUsuario, require('./routes/home'));
 
-app.use('/home', require('./routes/home'));
+app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
-app.use('/paciente', require('./routes/pacienteRouter'))
+app.use('/colaboradores', authUsuario, require('./routes/registrarColaboradorRouter'));
 
-app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
+app.use('/tipoEstudio', authUsuario, require('./routes/tipoEstudioRouter'));
 
-app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
+app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
-app.use('/estudio', require('./routes/estudioRouter'));
+app.use('/cerrarSesion', authUsuario, require('./routes/cerrarSesionRouter'));
 
-app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
-app.use('/paciente', require('./routes/pacienteRouter'))
-
-app.use('/estudio', require('./routes/estudioRouter'));
+app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
 app.get("*", (req, res) => {
 	res.sendFile(
