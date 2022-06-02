@@ -18,7 +18,7 @@ import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import Temp from './pages/Temp';
-import RegistrarTipoEstudio from './pages/RegistrarTipoEstudio';
+import RegistrarNuevoTipoEstudio from './pages/RegistrarNuevoTipoEstudio';
 
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
           </Route>
  
 
-          <Route exact path='/registrarTipoEstudio' element={<RegistrarTipoEstudio />} />
+          <Route exact path='/registrarNuevoTipoEstudio' element={<RegistrarNuevoTipoEstudio />} />
 
 
           <Route exact path='/temp' element={<PrivateRoute/>}>  

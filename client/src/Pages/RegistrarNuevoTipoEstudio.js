@@ -13,7 +13,7 @@ import BtnGuardar from '../components/BtnGuardar';
 import BtnAnadirParametro from '../components/BtnAnadirParametro';
 import BtnEditRegis from '../components/BtnEditRegis';
 
-export default function RegistrarTipoEstudio() {
+export default function RegistrarNuevoTipoEstudio() {
 
 return(
     <div className="row ContainerForm left-align">
