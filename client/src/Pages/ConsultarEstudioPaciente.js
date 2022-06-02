@@ -26,7 +26,7 @@ import useFetch from '../hooks/useFetch';
 export default function ConsultarEstudioPaciente({ idEstudio }) {
     const params = useParams();
     const [estudio, setEstudio] = useState({})
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/estudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/estudio/id');
 
 
     //Hook para actualizar los datos de el estudio y los parametros

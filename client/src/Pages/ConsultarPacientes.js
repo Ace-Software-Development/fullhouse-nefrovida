@@ -21,8 +21,8 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 function ConsultarPacientes() {
-    const urlGetTodos = 'http://localhost:6535/paciente/todos';
-    const urlGetBuscar = 'http://localhost:6535/paciente/nombre';
+    const urlGetTodos = '/paciente/todos';
+    const urlGetBuscar = '/paciente/nombre';
     const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);

@@ -25,7 +25,7 @@ import Temp from './Temp'
 function DetallePaciente() {
     const params = useParams();
     const [paciente, setPaciente] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/paciente/detalle/curp');
 
 
     /**

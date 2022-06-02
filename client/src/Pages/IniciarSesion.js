@@ -32,7 +32,7 @@ const IniciarSesion = () => {
     const [errorSubmit, setErrorSubmit] = useState('');
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
     // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/iniciarSesion');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/iniciarSesion');
 
     /**
      * Hook para asignar las validaciones necesarias a los campos.
@@ -92,6 +92,7 @@ const IniciarSesion = () => {
             ReactSession.set('usuario', responseJSON.usuario);
             ReactSession.set('nombre', responseJSON.nombre);
             ReactSession.set('apellido', responseJSON.apellido);
+            ReactSession.set('apiRoute','')
             window.location.href = '/';
             M.toast({ html: message });
         }

@@ -25,7 +25,7 @@ export default function ConsultarTipoEstudio() {
     const params = useParams();
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/tipoEstudio/id');
 
 
     //Hook para actualizar los datos de el estudio y los parametros

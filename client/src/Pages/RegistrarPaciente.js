@@ -29,7 +29,7 @@ import { ReactSession } from 'react-client-session';
 
 const RegistrarPaciente = () => {
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/registrar');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/paciente/registrar');
 
     
     /**

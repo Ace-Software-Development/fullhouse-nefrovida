@@ -28,9 +28,10 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useParams } from 'react-router-dom';
 
+
 export default function RegistrarEstudio() {
-const urlGet = 'http://localhost:6535/tipoEstudio/id';
-const urlPost = 'http://localhost:6535/estudio';
+const urlGet = '/tipoEstudio/id';
+const urlPost = '/estudio';
 const [url, setUrl] = useState(urlGet);
 const [isLoading, setIsLoading] = useState(false);
 const [tipoEstudio, setTipoEstudio] = useState({});
@@ -261,7 +262,7 @@ return(
 
                         <form 
                             id = "registrar-estudio"
-                            action = 'http://localhost:6535/estudio'
+                            action = {ReactSession.get("apiRoute")+"/estudio"}
                             method = 'post'
                             onSubmit = { handleSubmit(onSubmit) }>
                             <LineaParametros>
