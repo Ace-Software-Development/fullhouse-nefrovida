@@ -8,7 +8,6 @@ const tipoEstudio = require('../models/tipoEstudioModel')
 */
 module.exports.consultarTipoEstudio = async(request, response) => {
     const id = request.query.id;
-    console.log("consultarTipoEstudio", request.query.id);
     try {
         const results = await tipoEstudio.consularParametrosDeEstudio(id);
 
@@ -41,7 +40,6 @@ module.exports.consultarTipoEstudio = async(request, response) => {
  */
 module.exports.consultarTiposEstudio = async(request, response) => {
     try {
-        console.log("consultarTipoEstudio todos");
         const results = await tipoEstudio.consultarTiposDeEstudio();
         response.status(200).send( {
             success: 'true',

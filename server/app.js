@@ -77,16 +77,12 @@ app.use('/paciente', require('./routes/pacienteRouter'))
 
 app.use('/estudio', require('./routes/estudioRouter'));
 
-app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
-
 app.get("*", (req, res) => {
 	res.sendFile(
 			path.join(__dirname,
 						"../client/build/index.html")
 	);
 });
-
-
 
 // Start the server
 const PORT = process.env.PORT;

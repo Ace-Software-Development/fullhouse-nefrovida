@@ -20,17 +20,23 @@ function authUsuario(request, response, next) {
         if (request.body && request.body.session && request.body.session.sessionToken) {
             sessionToken = request.body.session.sessionToken;
         }
-
     } 
     // Si petición fue GET o DELETE obtener token dentro de ruta
     else {
         if (request.query.token) {
             sessionToken = request.query.token;
+        } else if (request.headers?.cookie) {
+            let cookies = request.headers?.cookie.split("=")
+            let values = JSON.parse(cookies[1])
+            sessionToken = values["sessionToken"]
         }
     }
 
     // Si no se obtiene token definir que debe iniciar sesión
     if ( !sessionToken ) {
+        var uri = request.get('host') + request.originalUrl
+        console.log("PRINTING URI REQUEST")
+        console.log(uri)
         return response.status(401).send({
             message: 'Sesion invalida'
         });
@@ -43,7 +49,6 @@ function authUsuario(request, response, next) {
             if(session && !session.rol) {
                 // Retornar "Session invalida" para que usuario se autentique nuevamente
                 return response.status(401).send({
-                    
                     message: session.message
                 });
             } else {
@@ -71,7 +76,6 @@ function noAuthUsuario(request, response, next) {
         if (request.body && request.body.session && request.body.session.sessionToken) {
             sessionToken = request.body.session.sessionToken;
         }
-
     } else {
         if (request.query.token) {
             sessionToken = request.query.token;
@@ -94,7 +98,6 @@ function noAuthUsuario(request, response, next) {
  */
 function authRol(roles) {
     return (request, response, next) => {
-        
         if (!roles.includes(request.rol)) {
             return response.status(403).send({
                 message: 'Acceso no autorizado' 
