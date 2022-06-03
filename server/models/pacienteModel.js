@@ -233,8 +233,7 @@ exports.consultarPacientes = async () => {
             data: null,
             error: error.message
         }
-    }
-    
+    } 
 }
 
 

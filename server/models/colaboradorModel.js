@@ -219,16 +219,17 @@ exports.cerrarSesionColaborador = async() => {
  * @returns Información del paciente en caso de encontrarlo o un error en caso de no existir.
  */
  exports.buscarPorUsuario = async (username) => {
-    
-    const Table = Parse.Object.extend(CONSTANTS.USUARIO);
+    console.log("HO")
+    const Table = Parse.Object.extend("_User");
     let query = new Parse.Query(Table);
+    console.log("Usuario", CONSTANTS.USUARIO, username)
     query.equalTo(CONSTANTS.USUARIO, username);
 
     try {
         const results = await query.first();
         // Enviar error si no existe un paciente con ese curp
         if ( !results ) {
-            return resultsColaborador(null, 'No se encontró un colaborador con ese ID');
+            return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
         }
         // Enviar el error si el paciente no esta activo
         if ( !results.get(CONSTANTS.ACTIVO)) {
@@ -239,4 +240,35 @@ exports.cerrarSesionColaborador = async() => {
     } catch (error) {
         return resultsColaborador(null, error.message);
     }
+}
+
+/**
+ * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
+ * @returns Todos los pacientes registrados en nefrovida
+ */
+ exports.consultarColaboradores = async () => {
+     console.log("HO")
+    const table = Parse.Object.extend("_User");
+    let query = new Parse.Query(table);
+    
+    try {
+        const results = await query.find();
+
+        if (!results) {
+            return {
+                data: null,
+                error: 'No hay empleados registrados actualmente'
+            }
+        }
+        console.log("Test", results.length)
+        return {
+            data: results,
+            error: null
+        }
+    } catch (error) {
+        return {
+            data: null,
+            error: error.message
+        }
+    } 
 }

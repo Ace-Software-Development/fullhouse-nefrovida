@@ -45,7 +45,9 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
      */
     useEffect(() => {
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
-        if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol') !== 'nutriologo') {
+        if (ReactSession.get('rol') !== 'doctor' && 
+            ReactSession.get('rol') !== 'quimico' && 
+            ReactSession.get('rol') !== 'nutriologo') {
             window.location.href = '/';
         }
         getEstudio(params.idEstudio);

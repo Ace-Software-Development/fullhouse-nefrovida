@@ -5,7 +5,7 @@ const colaboradorController = require('../controllers/colaboradorController')
 const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 
 // Ruta de tipo 'GET' para obtener todos los pacientes.
-router.get('/todosColaborador', 
+router.get('/todosColaboradores', 
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.consultarColaborador);
 

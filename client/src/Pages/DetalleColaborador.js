@@ -31,6 +31,7 @@
       * @returns 
       */
      async function getColaborador() {
+         console.log(params.username, 'GET')
              httpConfig(params.username, 'GET');                                                           
      }
  
@@ -42,6 +43,7 @@
          if (ReactSession.get('rol') !== 'admin') {
              window.location.href = '/403';
          }
+         console.log(getColaborador())
          getColaborador();
      }, [])
  

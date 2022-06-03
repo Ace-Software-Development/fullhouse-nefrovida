@@ -19,6 +19,7 @@ import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import Temp from './pages/Temp';
 import DetalleColaborador from './pages/DetalleColaborador';
+import ConsultarColaborador from './pages/ConsultarColaborador';
 
 
 function App() {
@@ -66,8 +67,9 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-
-
+          <Route exact path='/listaCol/:username' element={<PrivateRoute/>}>
+            <Route exact path='/listaCol/:username' element={<ConsultarColaborador/>}/>
+          </Route>
 
           <Route exact path='/colaborador/:username' element={<PrivateRoute/>}>
             <Route exact path= '/colaborador/:username' element={<DetalleColaborador/>}/>
