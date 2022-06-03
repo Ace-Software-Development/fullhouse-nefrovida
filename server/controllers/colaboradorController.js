@@ -194,6 +194,7 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
  */
 module.exports.consutarDetalleColaborador = async(request, response) => {
     // Se obtiene el curp de los parametros de la ruta
+    console.log("Paso por controller");
     const idUsuario = request.query.idUsuario;
 
     try {
