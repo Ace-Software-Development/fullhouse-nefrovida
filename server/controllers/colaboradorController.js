@@ -194,10 +194,10 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
  */
 module.exports.consutarDetalleColaborador = async(request, response) => {
     // Se obtiene el curp de los parametros de la ruta
-    const idUsuario = request.query.idUsuario;
+    const username = request.query.username;
 
     try {
-        const results = await colaboradorModel.buscarPorId(idUsuario);
+        const results = await colaboradorModel.buscarPorId(username);
 
         if (results.error) {
             return response.status(400).send({

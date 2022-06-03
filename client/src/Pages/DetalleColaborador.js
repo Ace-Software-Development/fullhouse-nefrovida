@@ -15,6 +15,7 @@
  import BtnRegresar from '../components/BtnRegresar';
  import Card from '../components/Card';
  import ContenidoDetalleCol from '../components/ContenidoDetalleCol';
+ import ContainerForm from '../components/ContainerForm';
  import useFetch from '../hooks/useFetch';
  import { ReactSession } from 'react-client-session';
  
@@ -22,7 +23,7 @@
  export default function DetalleColaborador() {
      const params = useParams();
      const [colaborador, setColaborador] = useState({});
-     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/empleado/detalle/username');
+     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle/username');
  
  
      /**
@@ -59,12 +60,13 @@
              <Navbar/>
              <Main>
              <br/><br/> 
-             <Link to = "/">
-                 <BtnRegresar/>
-             </Link>
-             <br/><br/>
              <Card>
-                 <CardTitulo icono="person" titulo="Detalle deL empleado"/>
+                <CardTitulo icono="person" titulo="Detalle del empleado"/>
+                <ContainerForm>
+                    <Link to = "/">
+                        <BtnRegresar/><br/><br/>
+                    </Link>
+                </ContainerForm>
                  { loading && (
                      <div className="center animate-new-element">
                          <br/><br/>
