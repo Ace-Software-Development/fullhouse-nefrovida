@@ -219,7 +219,7 @@ exports.cerrarSesionColaborador = async() => {
  * @returns Información del paciente en caso de encontrarlo o un error en caso de no existir.
  */
  exports.buscarPorUsuario = async (username) => {
-    
+    console.log("Paso por model");
     const Table = Parse.Object.extend(CONSTANTS.USUARIO);
     let query = new Parse.Query(Table);
     query.equalTo(CONSTANTS.USUARIO, username);

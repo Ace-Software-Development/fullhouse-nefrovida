@@ -4,6 +4,8 @@ const router = express.Router()
 const colaboradorController = require('../controllers/colaboradorController')
 const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 
+
+console.log("Pasa por inicio router");
 // Ruta de tipo 'GET' para obtener todos los pacientes.
 router.get('/todosColaborador', 
     authRol([CONSTANTS.ROLADMIN]),
