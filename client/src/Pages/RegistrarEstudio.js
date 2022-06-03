@@ -243,7 +243,7 @@ return(
                             </div>
                         </div>
 
-                        <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
+                        <div class="texto-grande blue-text text-darken-1">Cargando...</div>
 
                         <br/><br/>
                     </div>
