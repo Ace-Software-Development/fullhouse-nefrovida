@@ -28,65 +28,67 @@ import { useForm } from 'react-hook-form';
 import useFetch from '../hooks/useFetch';
 
 const RegistrarColaborador = () => {
-    const [errorSubmit, setErrorSubmit] = useState("")
-    const [isLoading, setIsLoading] = useState("")
-    const [postIsLoading, setPostIsLoading] = useState("")
-    const [errorFetch, setErrorFetch] = useState('');
-    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const [url, setUrl] = useState('http://localhost:6535/colaborador');
     const [roles, setRoles] = useState([]);
-
-    const urlGet = 'http://localhost:6535/colaborador/';
-    const urlPost = 'http://localhost:6535/colaborador/registrar';
-    const [url, setUrl] = useState(urlGet);
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
-    async function getRoles() {
-        setIsLoading(true);
+    /**
+     * Hook para validar que cambió estado de respuesta 
+     * de fetch y por lo tanto asumir que si es true,
+     * petición fue correcta para almacenar roles
+     * existentes en la base de datos.
+     * 
+     * Se llama a useEffect si cambia responseOk
+     * que solo cambia cuando response retorno true
+     * en ok
+     * 
+     * Se actualiza el url para que suceda el post en el submit.
+     */ 
+    useEffect(() => {
+        if (!responseJSON || !responseOk) {
+            return;
 
-        try {
-            const response = await fetch('http://localhost:6535/colaborador', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-            let miJayson = await response.json();
-            setIsLoading(false);
+        } else if(url === 'http://localhost:6535/colaborador') {
+            const arr = []
+            responseJSON.roles.map(
+                el => { 
+                arr.push({value:el.objectId, option:el.nombre,})}
+            )
+            setRoles(arr);
+            setUrl('http://localhost:6535/colaborador/registrar');
+        }
+        else if(url === 'http://localhost:6535/colaborador/registrar'){
 
-            if (!response.ok) {
-                setErrorFetch(miJayson.message);
-                return;
-            }
+            M.toast({ html: responseJSON.message});
+        }
 
-            miJayson = miJayson.roles;
-            setRoles(miJayson);
-            
-        } catch(e) {
-            setIsLoading(false);
-            setErrorFetch('Error de conexión. Inténtelo de nuevo.');
+    }, [responseOk])
+
+
+    function rolesExisten() {
+        if (roles[1] !== undefined ){
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
-    function miJson() {
-        const arr = []
-        roles.map(
-            el => { 
-            arr.push({option:el.nombre, value:el.objectId})}
-        )
-        return arr
-    }
-
     /**
-      * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
-      * @param {event} e - Evento del cambio
-      */
-        const handleChange = (e) => {
+     * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
+     * @param {event} e - Evento del cambio
+     */
+    const handleChange = (e) => {
         setValue(e.target.name, e.target.value)
-        // console.log(e.target.name, e.target.value)
     }
 
     /**
-      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
-    */
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+ */
     useEffect(() => {
-
-        setIsLoading(true);
-        getRoles();
+        // Armar petición GET
+        httpConfig(null, 'GET');
         
         // Variable para el usuario, requerido, con patrón.
         register('usuario', {
@@ -133,26 +135,6 @@ const RegistrarColaborador = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: "Nombre inválido"
-            }
-        });
-        
-        // Variable para la fecha de nacimiento, requerida, con patrón.
-        register('fechaNacimiento', {
-            required: {
-                value: true,
-                message: "La fecha es requerida"
-            },
-            pattern: {
-                value: /[0-9]+/,
-                message: "Fecha Inválida, wtf cómo hiciste override?"
-            }
-        });
-        
-        // Variable para el sexo, requerido.
-        register('sexo', {
-            required: {
-                value: true,
-                message: "El sexo es requerido"
             }
         });
         
@@ -217,62 +199,30 @@ const RegistrarColaborador = () => {
     }, []);
 
     /**
-      * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
-      * base de datos haciendo un fetch a la ruta de back.
-      * @param {object} data - Datos del paciente en el formulario 
-      * @param {evento} e - Evento para submit
-      * @returns 
-      */
+     * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
+     * base de datos haciendo un fetch a la ruta de back.
+     * @param {object} data - Datos del paciente en el formulario 
+     * @param {evento} e - Evento para submit
+     * @returns 
+     */
     async function onSubmit(data, e) {
-        // Actualizar valor para mostrar que esta cargando la información. E inicializar el error en nulo.
-        onSubmit="document.getElementById('submit').disabled=true"
-        setPostIsLoading(true)
-        setErrorSubmit("")
-        
-        // Cambiar los valores necesarios de string a número.
-        data.telefono = Number(data.telefono)
-        data.fechaNacimiento = String(data.fechaNacimiento)
-
-
-        e.preventDefault()
-        try {
-            // Hacer fetch a la ruta de back, enviando la información del formulario.
-            const response = await fetch('http://localhost:6535/colaborador', { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'} })
-            // console.log("response", response)
-            const colaborador = await response.json()
-            setPostIsLoading(false)
-            
-            // Mostrar error en caso de ser necesario
-            if (!response.ok) {
-                setErrorSubmit(colaborador.message)
-                return;
-            }
-
-            // Mostrar mensaje de éxito y redireccionar a la página principal
-            else {
-                await M.toast({ html: colaborador.message });
-                window.location.href = "/"
-            }
-            // console.log(colaborador)
-        } catch(e) {
-            // Mostrar mensaje de error en la conexión con la base de datos.
-            setPostIsLoading(false)
-            setErrorSubmit("Error de conexión. Inténtelo de nuevo.")
+        if(data.telefono !== undefined){
+            data.telefono = Number(data.telefono);
         }
+        e.preventDefault();
+        httpConfig(data,'POST')
     }
 
     return(
-        <div>
-            <Navbar/>
-            <Main>
+        <div>   
                 <br/><br/>
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Empleado"/>
                     <ContainerForm>
-                    <Link to = "/">
-                        <BtnRegresar />
-                    </Link>
-                    { isLoading && (
+                    
+                    <BtnRegresar />
+                    
+                    { loading && (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
 
@@ -294,29 +244,20 @@ const RegistrarColaborador = () => {
                         </div>
                     
                     )}
-                    { !isLoading && !errorFetch && (
+                    { !loading && !error && (
+                        
                         <div className="on-load-anim">
+                            <br/><br/>
                             <form
                                 id = "main-login"
-                                action = 'http://localhost:6535/colaborador'
+                                action = 'http://localhost:6535/colaboradores'
                                 method = 'post'
                                 onSubmit = { handleSubmit(onSubmit) }>
                                 <LineaCampos>
                                     <Input 
-                                        id = "usuario" 
-                                        label = "Usuario" 
-                                        tamano = "m3 s12" 
-                                        onChange = { handleChange }
-                                        elError = { errors.usuario && errors.usuario?.message }
-                                        maxLength = "20"
-                                        requerido = {true}
-
-
-                                    />
-                                    <Input 
                                         id = "nombre" 
                                         label = "Nombre" 
-                                        tamano = "m3 s12"
+                                        tamano = "m4 s12"
                                         onChange = {handleChange}
                                         elError = { errors.nombre && errors.nombre?.message }
                                         maxLength = "20"
@@ -325,7 +266,7 @@ const RegistrarColaborador = () => {
                                     <Input 
                                         id = "apellidoPaterno" 
                                         label = "Apellido Paterno" 
-                                        tamano = "m3 s12"
+                                        tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
                                         requerido = {true}
@@ -333,29 +274,21 @@ const RegistrarColaborador = () => {
                                     <Input 
                                         id = "apellidoMaterno" 
                                         label = "Apellido Materno" 
-                                        tamano = "m3 s12"
+                                        tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
                                     />
                                 </LineaCampos>
                                 <LineaCampos>
-                                    <Datepicker 
-                                        id = "fechaNacimiento" 
-                                        label = "Fecha de nacimiento" 
-                                        tamano = "s8 m4"
-                                        onChange = { handleChange }
-                                        elError = { errors.fechaNacimiento && errors.fechaNacimiento?.message }
-                                        requerido = {true}
-                                    />
-                                    <Select 
-                                        id = "sexo" 
-                                        label = "Sexo" 
-                                        value = ""
-                                        arr = { [{value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino"}] }
-                                        handleChange = { handleChange }
-                                        elError = { errors.sexo && errors.sexo?.message }
-                                        requerido = { true }
-                                    />
+                                    <Input 
+                                            id = "correo" 
+                                            label = "Correo electrónico" 
+                                            tamano = "s12 m6"
+                                            type = "email"
+                                            onChange = { handleChange }
+                                            elError = { errors.correo && errors.correo?.message }
+                                            requerido = { true }
+                                        />
                                     <Input 
                                         id = "telefono" 
                                         label = "Telefono" 
@@ -366,25 +299,31 @@ const RegistrarColaborador = () => {
                                         min = "0"
                                         elError = { errors.telefono && errors.telefono?.message }
                                     />
-                                    <Select 
-                                        id = "rol" 
-                                        label = "Rol" 
-                                        value = ""
-                                        arr = { miJson() }
-                                        handleChange = { handleChange }
-                                        elError = { errors.rol && errors.rol?.message }
-                                        requerido = { true }
-                                    />
+                                    { rolesExisten() ? 
+                                        <Select 
+                                            id = "rol" 
+                                            label = "Rol" 
+                                            value = ""
+                                            arr = { roles }
+                                            handleChange = { handleChange }
+                                            elError = { errors.rol && errors.rol?.message }
+                                            requerido = { true }
+                                        />
+                                        : <></>
+                                    }
+
+
                                 </LineaCampos>
                                 <LineaCampos>
-                                    <Input 
-                                        id = "correo" 
-                                        label = "Correo electrónico" 
-                                        tamano = "s12 m4"
-                                        type = "email"
+                                <Input 
+                                        id = "usuario" 
+                                        label = "Usuario" 
+                                        tamano = "m4 s12" 
                                         onChange = { handleChange }
-                                        elError = { errors.correo && errors.correo?.message }
-                                        requerido = { true }
+                                        elError = { errors.usuario && errors.usuario?.message }
+                                        maxLength = "20"
+                                        requerido = {true}
+
                                     />
                                     <Input 
                                         id = "password" 
@@ -410,12 +349,12 @@ const RegistrarColaborador = () => {
                             <br/><br/>
                         </div>
                     )}
-                    { errorFetch && (
+                    { error && (
                         <div>
                             <br/><br/><br/>
 
                             <div className="texto-grande red-text center animate-new-element">
-                                <strong> { errorFetch } </strong> 
+                                <strong> { error } </strong> 
                             </div>
 
                             <br/><br/><br/>
@@ -423,35 +362,8 @@ const RegistrarColaborador = () => {
                     )}
                     </ContainerForm>
                 </Card>
-            </Main>
         </div>
     )
 }
 
 export default RegistrarColaborador
-
-
-    // function handleSubmita (e) {
-    //     fetch('http://localhost:6535/colaboradores', {
-    //         method: 'POST',
-    //         mode: 'cors',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             "data": {
-    //                 "usuario": "user",
-    //                 "nombre": "Nombre",
-    //                 "paterno": "Apellido",
-    //                 "materno": "Apellido2",
-    //                 "nacimiento": "01/01/2000",
-    //                 "sexo": "M",
-    //                 "correo": "uer@gmail.com",
-    //                 "telefono": 44275565,
-    //                 "password": "abcd",
-    //                 "confpassword": "abcd"
-    //             }
-    //         })
-    //     });
-    // }

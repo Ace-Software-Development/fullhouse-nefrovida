@@ -242,9 +242,9 @@ const RegistrarPaciente = () => {
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
-                    <Link to = "/">
-                        <BtnRegresar />
-                    </Link>
+                    
+                    <BtnRegresar />
+                    
                     {
                         loading &&
                         <div class="preloader-wrapper small active">
