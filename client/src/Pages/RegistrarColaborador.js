@@ -25,6 +25,7 @@ import BtnGuardar from '../components/BtnGuardar';
 import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
+import useFetch from '../hooks/useFetch';
 
 const RegistrarColaborador = () => {
     const [errorSubmit, setErrorSubmit] = useState("")
@@ -33,6 +34,11 @@ const RegistrarColaborador = () => {
     const [errorFetch, setErrorFetch] = useState('');
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const [roles, setRoles] = useState([]);
+
+    const urlGet = 'http://localhost:6535/colaborador/';
+    const urlPost = 'http://localhost:6535/colaborador/registrar';
+    const [url, setUrl] = useState(urlGet);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
     async function getRoles() {
         setIsLoading(true);
@@ -227,7 +233,6 @@ const RegistrarColaborador = () => {
         data.telefono = Number(data.telefono)
         data.fechaNacimiento = String(data.fechaNacimiento)
 
-        console.log(data);
 
         e.preventDefault()
         try {
