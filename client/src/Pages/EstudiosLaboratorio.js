@@ -106,7 +106,7 @@ export default function EstudiosLaboratorio() {
                 <CardSubtitulo subtitulo = "Estudios" grande = {true}> 
                 { loading ?  (
                 <div className="center animate-new-element">
-                    Cargando
+                    Cargando...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
                 ) 
                 : estudiosExisten() ? (
@@ -137,26 +137,28 @@ export default function EstudiosLaboratorio() {
 
                 </CardSubtitulo>
                 { loading ?  (
-                <div className="center animate-new-element">
-                    <br/>
+                    <div className="center animate-new-element">
+                        <br/>
 
-                    <div className="preloader-wrapper med active">
-                        <div className="spinner-layer spinner-blue-only">
-                        <div className="circle-clipper left">
-                            <div className="circle"></div>
-                        </div><div className="gap-patch">
-                            <div className="circle"></div>
-                        </div><div className="circle-clipper right">
-                            <div className="circle"></div>
+                        <div className="animate-new-element">
+                            <div className="preloader-wrapper med active">
+                                <div className="spinner-layer spinner-blue-only">
+                                <div className="circle-clipper left">
+                                    <div className="circle"></div>
+                                </div><div className="gap-patch">
+                                    <div className="circle"></div>
+                                </div><div className="circle-clipper right">
+                                    <div className="circle"></div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
-                        </div>
+
+                        <br/>
+                        <br/>
                     </div>
-
-                    <br/>
-                    <br/>
-                </div>
                 ) 
-                : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
+                : <TablaEstudios datos = { estudios }/>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
