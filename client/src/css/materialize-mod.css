@@ -9444,7 +9444,7 @@ thead {
 }
 .espacio-3vw {
   font-weight: bold;
-  font-size: 36px;
+  font-size: 28px;
   line-height: 40px;
 }
 
@@ -9516,12 +9516,12 @@ thead {
 .rango-parametros {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .espacio-rango {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .fixed-height {
@@ -9603,6 +9603,10 @@ thead {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: min-content;
+  overflow-y: overlay;
+  max-height: 290px;
+  -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
 
 .no-margin-left {

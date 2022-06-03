@@ -92,21 +92,23 @@ function ConsultarPacientes() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Pacientes"/>
-                <br/>
-                <div className = "contenedor">
+
+                
                 { ReactSession.get('rol') === 'trabajoSocial' &&
                     <Link to = "/paciente">
                         <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
                     </Link>
                 }
+                
+                <div className="animate-new-element">
+                    <CardSubtitulo subtitulo= "Pacientes">
+                        <InputSearch
+                            id = "buscar"
+                            label = "Buscar"
+                            onChange = { handleChange }
+                        />
+                    </CardSubtitulo>
                 </div>
-                <CardSubtitulo subtitulo= "Pacientes">
-                    <InputSearch
-                        id = "buscar"
-                        label = "Buscar"
-                        onChange = { handleChange }
-                    />
-                </CardSubtitulo>
                 { loading ?  (
                     <div className="center animate-new-element">
                         <br/>

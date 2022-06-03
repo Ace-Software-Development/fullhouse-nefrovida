@@ -8,35 +8,37 @@ const TablaEstudios = ({ datos }) => {
     ))
 
 return(
-    <div>
-        <div className="card contenedor tabla-altura">
-        <table id="estudios" className="highlight">     
-            <thead  >
-            <tr className="figma"  >
+    <div className="animate-new-element">
+        <div>
+            <div className="card contenedor tabla-altura">
+            <table id="estudios" className="highlight">     
+                <thead  >
+                <tr className="figma"  >
 
-                <th className="tabla-padding">
-                    Tipo de estudio
-                </th>
-                <th  >
-                    Código
-                </th>
-                <th  >
-                    Químico/a
-                </th>
-                <th  >
-                    Fecha
-                </th>
-                <th className="center">
-                    Detalle
-                </th>
+                    <th className="tabla-padding">
+                        Tipo de estudio
+                    </th>
+                    <th  >
+                        Código
+                    </th>
+                    <th  >
+                        Químico/a
+                    </th>
+                    <th  >
+                        Fecha
+                    </th>
+                    <th className="center">
+                        Detalle
+                    </th>
 
-            </tr>
-            </thead>
-            { tableContent }
-        </table>
+                </tr>
+                </thead>
+                { tableContent }
+            </table>
+            </div>  
+            <br/>
+            <br/>
         </div>  
-        <br/>
-        <br/>
     </div>
     )
 }
