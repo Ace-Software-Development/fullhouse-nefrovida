@@ -183,6 +183,10 @@ const RegistrarColaborador = () => {
             minLength: {
                 value: 8,
                 message: "Tu contraseña debe tener 8 caracteres"
+            },
+            pattern: {
+                value: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
+                message: "La contraseña debe tener una letra mayúscula, una letra minúscula, un número y un caracter especial. \nEjemplo: N3frovida!"
             }
         });
         
