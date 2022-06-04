@@ -37,7 +37,7 @@ const RegistrarPaciente = () => {
      */
     useEffect(() => {
         if (ReactSession.get('rol') !== 'trabajoSocial') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         validation();
     }, []);
