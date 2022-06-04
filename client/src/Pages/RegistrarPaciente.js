@@ -37,7 +37,7 @@ const RegistrarPaciente = () => {
      */
     useEffect(() => {
         if (ReactSession.get('rol') !== 'trabajoSocial') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         validation();
     }, []);
@@ -242,9 +242,9 @@ const RegistrarPaciente = () => {
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
-                    <Link to = "/">
-                        <BtnRegresar />
-                    </Link>
+                    
+                    <BtnRegresar />
+                    
                     {
                         loading &&
                         <div class="preloader-wrapper small active">

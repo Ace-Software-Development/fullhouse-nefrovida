@@ -46,7 +46,7 @@ export default function ConsultarTipoEstudio() {
     useEffect(() => {
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
         if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' ) {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         getTipoEstudio(params.idTipoEstudio);
     }, []);

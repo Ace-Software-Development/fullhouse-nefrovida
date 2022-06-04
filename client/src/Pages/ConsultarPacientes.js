@@ -19,6 +19,7 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import { useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
+import ContainerForm from '../components/ContainerForm';
 
 function ConsultarPacientes() {
     const urlGetTodos = '/paciente/todos';
@@ -95,9 +96,11 @@ function ConsultarPacientes() {
 
                 
                 { ReactSession.get('rol') === 'trabajoSocial' &&
+                <ContainerForm>
                     <Link to = "/paciente">
                         <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
                     </Link>
+                </ContainerForm>
                 }
                 
                 <div className="animate-new-element">

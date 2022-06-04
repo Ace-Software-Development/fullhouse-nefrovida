@@ -100,24 +100,27 @@ exports.registrarColaborador = async(params) => {
     try {
         const colaboradorT = await queryTelefonoUnico.first();
         // Si ya existe registro con dicho teléfono, retornar mensaje de error.
-        if (colaboradorT) {
+        if (colaboradorT && params.telefono) {
             return resultsRegistrarColaborador(colaboradorT, 'Ya existe un empleado registrado con dicho teléfono.');
         }
         // Si no existe un empleado con dicho teléfono aún, crear registro.
         const colaborador = new Parse.User();
         colaborador.set(CONSTANTS.USUARIO, params.usuario);
         colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.apellidoPaterno);
+        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.apellidoMaterno);
         colaborador.set(CONSTANTS.CORREO, params.correo);
         colaborador.set(CONSTANTS.TELEFONO, params.telefono);
         colaborador.set(CONSTANTS.CONTRASENA, params.password)
         colaborador.set(CONSTANTS.ACTIVO, true);
-        colaborador.set(CONSTANTS.IDROL, params.idRol);
+        const rol = Parse.Object.extend("Rol")
+        let rolPointer = new rol();
+        rolPointer.id = params.rol;
+        colaborador.set("idRol", rolPointer);
 
         try {
             // Dar de alta colaborador en base de datos.
-            const colab = await colaborador.signUp();
+            const colab = await colaborador.save();
             return resultsRegistrarColaborador(colab, null);
 
         } 

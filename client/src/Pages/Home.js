@@ -1,8 +1,12 @@
 import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import Sidenav from '../components/Sidenav'
-
+import RegistrarColaborador from '../pages/RegistrarColaborador'
 import ConsultarPacientes from './ConsultarPacientes'
+import { ReactSession } from 'react-client-session';
+import TiposEstudio from './TiposEstudio';
+
+
 function Home() {
     return (
         <div>
@@ -10,8 +14,17 @@ function Home() {
                 <Sidenav/>
             </Navbar>
             <Main>
-                <br/><br/>
+            <br/><br/>
+            { ReactSession.get('rol') === 'admin' &&
+                <div>
+                    <RegistrarColaborador/>
+                    <TiposEstudio/>
+                </div>
+                
+            }
+            { ReactSession.get('rol') !== 'admin' &&
                 <ConsultarPacientes/>
+            }
             </Main>
         </div>
     )

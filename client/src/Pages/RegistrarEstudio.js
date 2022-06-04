@@ -165,7 +165,7 @@ async function onSubmit(data, e) {
 useEffect(() => {
     getTipoEstudio(params.idTipoEstudio);
     if (ReactSession.get('rol') !== 'quimico') {
-        window.location.href = '/';
+        window.location.href = '/403';
     }
 }, [])
 
@@ -199,7 +199,7 @@ useEffect(() => {
             setIsLoading(true);
             M.toast({ html: responseJSON.message });
             setTimeout(() => {
-                window.location.href = "/";
+                window.history.go(-1);
             }, 1000);
         }
 

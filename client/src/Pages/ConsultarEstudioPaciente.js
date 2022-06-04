@@ -46,7 +46,7 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
     useEffect(() => {
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
         if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol') !== 'nutriologo') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         getEstudio(params.idEstudio);
     }, []);
@@ -84,8 +84,10 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                 <CardTitulo icono="description" titulo="Detalle del estudio"/>
                     <ContainerForm>
                     
-                        {/* <BtnRegresar url="/"/><br/><br/> */}
-                        
+                        <BtnRegresar />
+                        <br/>
+                        <br/>
+                        <br/>
                         { loading && (
                             <div className="center animate-new-element">
                                 <br/><br/><br/>
