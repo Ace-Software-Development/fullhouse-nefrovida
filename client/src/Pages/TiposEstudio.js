@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
-const Temp = () => {
+const TiposEstudio = () => {
     // Parametro
     const params = useParams();
     const curp = params.curp;
@@ -99,4 +99,4 @@ const Temp = () => {
 }
 
 
-export default Temp;
+export default TiposEstudio;

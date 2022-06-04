@@ -19,7 +19,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 import EstudiosLaboratorio from './EstudiosLaboratorio'
-import Temp from './Temp'
+import TiposEstudio from './TiposEstudio'
 
 
 function DetallePaciente() {
@@ -108,7 +108,7 @@ function DetallePaciente() {
             </Card>
             { ReactSession.get('rol') === 'quimico' &&
                 <div>
-                    <Temp/>
+                    <TiposEstudio/>
                     <EstudiosLaboratorio/>
                 </div>
             }
@@ -119,7 +119,7 @@ function DetallePaciente() {
                 <EstudiosLaboratorio/>
             }
             { ReactSession.get('rol') === 'admin' &&
-                <Temp/>
+                <TiposEstudio/>
             }
             </Main>
         </div>

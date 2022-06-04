@@ -1,3 +1,4 @@
+import { ReactSession } from 'react-client-session';
 const CardEstudio = ({ nombreEstudio="undefined", idTipoEstudio = "undefined", idPaciente = "undefined" }) => {
     return (
         <>
@@ -9,12 +10,19 @@ const CardEstudio = ({ nombreEstudio="undefined", idTipoEstudio = "undefined", i
                 </div>
                 <br/>
                 <div className="card-mini-flex">
-                    <a href={"/consultarTipoEstudio" + "/"+idTipoEstudio}>
+                    
+                    { (ReactSession.get('rol') === 'admin' || ReactSession.get('rol') === 'quimico' ) &&
+                        <a href={"/consultarTipoEstudio" + "/"+idTipoEstudio}>
                         <i className="material-icons estudio-button icon-separator c-2E7EC8">description</i>
-                    </a>
-                    <a href={"/registrarEstudio"+ "/" + idPaciente + "/" + idTipoEstudio}>
+                        </a>
+                        
+                    }
+
+                    { ReactSession.get('rol') === 'quimico' &&
+                        <a href={"/registrarEstudio"+ "/" + idPaciente + "/" + idTipoEstudio}>
                         <i className="material-icons estudio-button icon-separator c-98D0A1">add</i>
-                    </a>
+                        </a>
+                    }
                 </div>
                 <br/>
                 </div>

@@ -62,7 +62,7 @@ app.use('/home', require('./routes/home'));
 
 app.use('/paciente', require('./routes/pacienteRouter'))
 
-app.use('/colaboradores', require('./routes/registrarColaboradorRouter'));
+app.use('/colaborador', require('./routes/colaboradorRouter'));
 
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
