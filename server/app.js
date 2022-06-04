@@ -65,7 +65,7 @@ app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
 app.use('/tipoEstudio', authUsuario, require('./routes/tipoEstudioRouter'));
 
-app.use('/colaborador', require('./routes/colaboradorRouter'));
+app.use('/colaborador', authUsuario,require('./routes/colaboradorRouter'));
 
 app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 

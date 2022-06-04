@@ -26,6 +26,7 @@ import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 const RegistrarColaborador = () => {
     const [url, setUrl] = useState('http://localhost:6535/colaborador');
@@ -87,6 +88,10 @@ const RegistrarColaborador = () => {
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
  */
     useEffect(() => {
+        
+        if (ReactSession.get('rol') !== 'admin') {
+            window.location.href = '/403';
+        }
         // Armar petición GET
         httpConfig(null, 'GET');
         
