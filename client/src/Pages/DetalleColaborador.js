@@ -1,7 +1,7 @@
 /**
- * Detalle paciente:
- * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
- * consultar la información de un paciente.
+ * Detalle colaborador:
+ * Esta vista se utiliza por el administrador, con la finalidad de 
+ * consultar la información de un colaborador.
  * 
  * Para obtener los datos usamos una petición de tipo GET al servidor que se ejecuta al 
  * en el primer rederizado, se envía el CURP del paciente en el body.
@@ -27,7 +27,7 @@
  
  
      /**
-      * Función asíncrona para obtener la información del paciente.
+      * Función asíncrona para obtener la información del colaborador.
       * @returns 
       */
      async function getColaborador() {
@@ -36,7 +36,7 @@
      }
  
      /**
-     * Hook que se ejecuta al renderizar el tipo de estudio.
+     * Hook que se ejecuta al renderizar la información del colaborador.
      */
      useEffect(() => {
          console.log(ReactSession.get('rol'))

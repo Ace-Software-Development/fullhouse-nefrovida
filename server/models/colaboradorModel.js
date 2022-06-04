@@ -214,8 +214,8 @@ exports.cerrarSesionColaborador = async() => {
 
 
 /**
- * asyncBuscarPorCurp Función asíncrona para buscar a un paciente por su curp. 
- * @param {string} username - Curp del paciente a buscar
+ * asyncBuscarPorUsuario función asíncrona para buscar a un colaborador por su username. 
+ * @param {string} username - Username del colaborador a buscar
  * @returns Información del paciente en caso de encontrarlo o un error en caso de no existir.
  */
  exports.buscarPorUsuario = async (username) => {

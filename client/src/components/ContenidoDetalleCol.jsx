@@ -11,13 +11,7 @@ const ContenidoDetalleCol = ({  colaborador }) => {
       <div className="col s5 l6">
       <br/>
         <div className="detalles-usuario">
-          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">
-            { colaborador.admin === null ?  '' : 'Administrador' }
-            { colaborador.trabajoSocial === null ?  '' : 'Trabajador Social' }
-            { colaborador.quimico === null ?  '' : 'Químico' }
-            { colaborador.doctor === null ?  '' : 'Doctor' }
-            { colaborador.nutriololgo === null ?  '' : 'Nutriólogo' }
-            { colaborador.psicologo === null ?  '' : 'Psicólogo' } </div>
+          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">{ colaborador.rol }</div>
         </div>
       <br/>
         {

@@ -1,9 +1,9 @@
 /**
- * Consultar pacientes:
- * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
- * consultar la lista de pacientes en el laboratorio. 
+ * Consultar colaborador:
+ * Esta vista se utiliza por el administrador, con la finalidad de 
+ * consultar la lista de colaboradores en NefroVida. 
  * 
- * La vista contiene un buscador para buscar un paciente por nombre o apellido.
+ * La vista divide las tablas dependiendo el rol del colaborador.
  * 
  * Para obtener los datos usamos una petición de tipo GET al servidor que se ejecuta al 
  * en el primer rederizado.
@@ -41,7 +41,7 @@ import Main from '../components/Main';
     }  
 
      /**
-     * Hook que se ejecuta al renderizar el tipo de estudio.
+     * Hook que se ejecuta al renderizar la información del paciente.
      */
      useEffect(() => {
          getColaboradores('');

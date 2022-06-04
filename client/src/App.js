@@ -67,8 +67,8 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-          <Route exact path='/listaCol/:username' element={<PrivateRoute/>}>
-            <Route exact path='/listaCol/:username' element={<ConsultarColaborador/>}/>
+          <Route exact path='/listaCol' element={<PrivateRoute/>}>
+            <Route exact path='/listaCol' element={<ConsultarColaborador/>}/>
           </Route>
 
           <Route exact path='/colaborador/:username' element={<PrivateRoute/>}>

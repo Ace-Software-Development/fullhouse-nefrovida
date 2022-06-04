@@ -153,8 +153,8 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
 
 
 /**
- * asyncConsultarPacientes Función asíncrona para obtener la información de todos los
- * pacientes registrados en Nefrovida.
+ * asyncConsultarColaborador función asíncrona para obtener la información de todos los
+ * colaboradores registrados en Nefrovida.
  * @param {object} request Información enviados al servidor
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición
@@ -187,14 +187,14 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
 
 
 /**
- * asyncConsutarDetallePaciente Función asíncrona para consultar la información 
- * de un paciente, buscandolo por curp.
+ * asyncConsutarDetalleColaborador función asíncrona para consultar la información 
+ * de un colaborador, buscandolo por username.
  * @param {object} request Información enviados al servidor
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición
  */
 module.exports.consutarDetalleColaborador = async(request, response) => {
-    // Se obtiene el curp de los parametros de la ruta
+    // Se obtiene el username de los parametros de la ruta
     const username = request.query.id;
 
     try {
