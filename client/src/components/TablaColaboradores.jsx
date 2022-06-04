@@ -1,4 +1,3 @@
-// Datos de ejemplo
 import FilaTablaColaborador from './FilaTablaColaborador';
 const TablaColaboradores = ({ datos }) => {
 
