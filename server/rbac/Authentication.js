@@ -94,8 +94,6 @@ function noAuthUsuario(request, response, next) {
  */
 function authRol(roles) {
     return (request, response, next) => {
-        
-        console.log("current rol",request.rol)
         if (!roles.includes(request.rol)) {
             return response.status(403).send({
                 message: 'Acceso no autorizado' 

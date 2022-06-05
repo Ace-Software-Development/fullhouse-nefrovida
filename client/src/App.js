@@ -71,8 +71,8 @@ function App() {
             <Route exact path='/listaCol' element={<ConsultarColaborador/>}/>
           </Route>
 
-          <Route exact path='/colaborador/:username' element={<PrivateRoute/>}>
-            <Route exact path= '/colaborador/:username' element={<DetalleColaborador/>}/>
+          <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
+            <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
           </Route>
 
           <Route exact path='/temp' element={<PrivateRoute/>}>  
