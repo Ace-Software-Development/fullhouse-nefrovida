@@ -11,9 +11,15 @@ router.get('/todosColaboradores',
     colaboradorController.consultarColaborador);
 
 // Ruta de tipo 'GET' para consultar la información del colaborador por username.
-router.get('/detalle/username', 
-authRol([CONSTANTS.ROLADMIN]),
-colaboradorController.consutarDetalleColaborador);
+router.get('/detalle/username',
+    authRol([CONSTANTS.ROLADMIN]),
+    colaboradorController.consutarDetalleColaborador);
+
+// Ruta de tipo 'GET' para buscar un colaborador por rol.
+router.get('/nombre', 
+    authRol([CONSTANTS.ROLADMIN]),
+    colaboradorController.consultarPorNombre);
+
 
 
 module.exports = router

@@ -15,7 +15,6 @@ import CardTitulo from '../components/CardTitulo';
 import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
 import ContenidoDetalleCol from '../components/ContenidoDetalleCol';
-import ContainerForm from '../components/ContainerForm';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
@@ -50,9 +49,6 @@ export default function DetalleColaborador() {
     }, [responseOk])
 
     
-
-    
-
     return (
         <div>
             <Navbar/>
@@ -88,7 +84,7 @@ export default function DetalleColaborador() {
                     </div>
                 
                 )}
-                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador }rol={rol}/></div>}
+                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador } rol={rol}/></div>}
                 { error && (
                     <div className="animate-new-element">
                         <br/><br/><br/>

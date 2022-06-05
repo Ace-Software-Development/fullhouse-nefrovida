@@ -26,7 +26,6 @@ function ConsultarPacientes() {
     const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
-
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
 
