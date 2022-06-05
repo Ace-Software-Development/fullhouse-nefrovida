@@ -3,6 +3,9 @@ import Main from '../components/Main';
 import Sidenav from '../components/Sidenav'
 
 import ConsultarPacientes from './ConsultarPacientes'
+
+import ConsultarColaborador from './ConsultarColaborador'
+
 function Home() {
     return (
         <div>
@@ -10,8 +13,9 @@ function Home() {
                 <Sidenav/>
             </Navbar>
             <Main>
+                <ConsultarColaborador/>
                 <br/><br/>
-                <ConsultarPacientes/>
+                {/* <ConsultarPacientes/> */}
             </Main>
         </div>
     )

@@ -218,13 +218,15 @@ exports.cerrarSesionColaborador = async() => {
  * @param {string} username - Username del colaborador a buscar
  * @returns Información del colaborador en caso de encontrarlo o un error en caso de no existir.
  */
- exports.buscarPorUsuario = async (username) => {
-    const Table = Parse.Object.extend("_User");
+exports.buscarPorUsuario = async (username) => {
+    const Table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(Table);
     query.equalTo(CONSTANTS.USUARIO, username);
+    query.include(CONSTANTS.IDROL);
 
     try {
         const results = await query.first();
+        console.log("Resultado", results)
         // Enviar error si no existe un colaborador con ese username
         if ( !results ) {
             return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
@@ -233,6 +235,7 @@ exports.cerrarSesionColaborador = async() => {
         if ( !results.get(CONSTANTS.ACTIVO)) {
             return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
         }
+        console.log("Resultado", results)
         return resultsColaborador(results, null);
 
     } catch (error) {
@@ -244,8 +247,8 @@ exports.cerrarSesionColaborador = async() => {
  * asynConsultarColaboradores función asíncrona para consultar todos los colaboradores de Nefrovida
  * @returns Todos los colaboradores registrados en Nefrovida
  */
- exports.consultarColaboradores = async () => {
-    const table = Parse.Object.extend("_User");
+exports.consultarColaboradores = async () => {
+    const table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(table);
     
     try {
@@ -257,7 +260,6 @@ exports.cerrarSesionColaborador = async() => {
                 error: 'No hay empleados registrados actualmente'
             }
         }
-        console.log("Test", results.length)
         return {
             data: results,
             error: null

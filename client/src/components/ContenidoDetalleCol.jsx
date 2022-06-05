@@ -1,4 +1,9 @@
 const ContenidoDetalleCol = ({  colaborador }) => {
+
+    if (colaborador === {}){
+    return false;
+    }
+    else{
     return(
     <div className="row ContainerForm left-align">
       <br/>
@@ -11,7 +16,7 @@ const ContenidoDetalleCol = ({  colaborador }) => {
       <div className="col s5 l6">
       <br/>
         <div className="detalles-usuario">
-          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">{ colaborador.rol }</div>
+          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">{ colaborador.hola }</div>
         </div>
       <br/>
         {
@@ -25,5 +30,6 @@ const ContenidoDetalleCol = ({  colaborador }) => {
     </div>
     )
   }
+}
   
 export default ContenidoDetalleCol
