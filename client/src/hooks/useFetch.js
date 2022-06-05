@@ -103,9 +103,7 @@ const useFetch = (url) => {
         else if (methodLocal === 'GET') {
             console.log("data: " + data);
             await setItemId(data);
-            console.log("Paso por setItem");
             await setMethod(methodLocal);
-            console.log("Paso por setMethod");
             await setConfig( {
                 method: 'GET',
                 mode: 'cors',
@@ -113,7 +111,6 @@ const useFetch = (url) => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log("Paso por setConfig");
         }
     }
 

@@ -7,7 +7,7 @@ const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 
 console.log("Pasa por inicio router");
 // Ruta de tipo 'GET' para obtener todos los pacientes.
-router.get('/todosColaborador', 
+router.get('/todosColaboradores', 
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.consultarColaborador);
 

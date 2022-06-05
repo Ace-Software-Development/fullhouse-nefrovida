@@ -30,9 +30,7 @@
       * @returns 
       */
      async function getColaborador() {
-             httpConfig(params.username, 'GET');
-             console.log(params.username);
-             console.log("Paso por get colaborador");                                                           
+             httpConfig(params.username, 'GET');                                                          
      }
  
      /**
@@ -49,8 +47,6 @@
  
      useEffect(() => {
          if (!responseJSON || !responseOk) {
-            console.log("bruh");
-            console.log(responseJSON)
              return
          } else {
                  setColaborador(responseJSON.data.data);
