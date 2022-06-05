@@ -212,9 +212,9 @@ const IniciarSesion = () => {
                                 }
                                 <br />
                                 <BtnIniciarSesion />
+                                {/* <br />
                                 <br />
-                                <br />
-                                <BtnRestablecer />
+                                <BtnRestablecer /> */}
                             </form>
                         </ContainerForm>
                 </CardLogin>
