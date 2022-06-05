@@ -1,41 +1,40 @@
-// Datos de ejemplo
 import FilaTablaColaborador from './FilaTablaColaborador';
 const TablaColaboradores = ({ datos }) => {
 
-  const tableContent = datos.map((colaborador, index) => (
+const tableContent = datos.map((colaborador, index) => (
     <FilaTablaColaborador key = { index } colaborador = { colaborador } />
-  ));
+    ));
 
-  return(
+return(
     <div>
-      <div className="card contenedor tabla-altura">
+    <div className="card contenedor tabla-altura">
         <table id="doctores" className="highlight">     
-          <thead  >
+        <thead  >
             <tr className="figma"  >
                 
                 <th className="tabla-padding">
-                  Nombre
+                    Nombre
                 </th>
                 
                 <th>
-                  Correo
+                    Correo
                 </th>
 
                 <th>
-                  Teléfono
+                    Teléfono
                 </th>
                 <th className="center">
-                  Detalles
+                    Detalles
                 </th>
             </tr>
-          </thead>
-          { tableContent }
+        </thead>
+        { tableContent }
         </table>
-      </div>  
-      <br/>
-      <br/>
+    </div>  
+    <br/>
+    <br/>
     </div>
-  )
-}
+    )
+    }
 
 export default TablaColaboradores
