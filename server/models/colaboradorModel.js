@@ -208,11 +208,6 @@ exports.cerrarSesionColaborador = async() => {
     }
 }
 
-
-
-
-
-
 /**
  * asyncBuscarPorUsuario función asíncrona para buscar a un colaborador por su username. 
  * @param {string} username - Username del colaborador a buscar
@@ -244,8 +239,8 @@ exports.buscarPorUsuario = async (username) => {
 }
 
 /**
- * asynConsultarColaboradores función asíncrona para consultar todos los colaboradores de Nefrovida
- * @returns Todos los colaboradores registrados en Nefrovida
+ * asynConsultarColaboradores función asíncrona para consultar todos los colaboradores de Nefrovida.
+ * @returns Todos los colaboradores registrados en Nefrovida.
  */
 exports.consultarColaboradores = async () => {
     const table = Parse.Object.extend(Parse.User);
@@ -274,13 +269,13 @@ exports.consultarColaboradores = async () => {
 }
 
 /**
- * asyncBuscarPorNombre Función asíncrona para buscar un paciente por nombre o apellidos
- * @param {string} nombre Nombre a buscar para ver si coincide con algún paciente.
- * @returns Paciente(s) cuyo nombre o apellidos incluyen esa string.
+ * asyncBuscarPorNombre Función asíncrona para buscar un colaborador por nombre o apellidos
+ * @param {string} nombre Nombre a buscar para ver si coincide con algún colaborador.
+ * @returns Colaborador(es) cuyo nombre o apellidos incluyen esa string.
  */
 exports.buscarPorNombre = async(nombre) => {
-    
-    console.log("pog");    nombre = nombre.toLowerCase();
+   
+    nombre = nombre.toLowerCase();
     const palabras = nombre.split(' ');
 
     const table = Parse.Object.extend(Parse.User);

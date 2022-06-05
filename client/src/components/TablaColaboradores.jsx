@@ -23,6 +23,7 @@ return(
                 <th>
                     Teléfono
                 </th>
+                
                 <th className="center">
                     Detalles
                 </th>

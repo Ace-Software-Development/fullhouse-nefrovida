@@ -24,12 +24,10 @@ export default function DetalleColaborador() {
     const rol = params.rol;
     const [colaborador, setColaborador] = useState({});
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle/username');
-
-
-    
+   
     /**
- * Hook que se ejecuta al renderizar la información del colaborador.
- */
+    * Hook que se ejecuta al renderizar la información del colaborador.
+    */
     useEffect(() => {
         if (ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
@@ -84,7 +82,7 @@ export default function DetalleColaborador() {
                     </div>
                 
                 )}
-                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador } rol={rol}/></div>}
+                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador } rol={ rol }/></div>}
                 { error && (
                     <div className="animate-new-element">
                         <br/><br/><br/>

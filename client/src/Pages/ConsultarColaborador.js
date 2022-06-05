@@ -43,9 +43,9 @@ export default function ConsultarColaborador() {
 
     
     /**
-     * Función asíncrona para obtener la lista de pacientes del laboratorio. Si recibe una string
+     * Función asíncrona para obtener la lista de colaboradores. Si recibe una string
      * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
-     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los pacientes.
+     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los colaboradores.
      * @returns 
      */
     async function getColaboradores(buscar) {
@@ -57,7 +57,7 @@ export default function ConsultarColaborador() {
     }
 
     /**
-     * Hook que se ejecuta al renderizar la información del paciente.
+     * Hook que se ejecuta al renderizar la información del colaborador.
      */
     useEffect(() => {
         getColaboradores('');
