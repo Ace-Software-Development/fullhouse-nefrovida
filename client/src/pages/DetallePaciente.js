@@ -25,7 +25,7 @@ import TiposEstudio from './TiposEstudio'
 function DetallePaciente() {
     const params = useParams();
     const [paciente, setPaciente] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/paciente/detalle/curp');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/detalle/curp');
 
 
     /**

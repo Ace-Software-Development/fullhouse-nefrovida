@@ -27,12 +27,17 @@ import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
 import useFetch from '../hooks/useFetch';
 
-const IniciarSesion = () => {
+const IniciarSesion = () => { 
+    //Variable que debe tener un valor de '' cuando pasa a despliege
+    const apiRoute = "http://localhost:6535";
+    
     
     const [errorSubmit, setErrorSubmit] = useState('');
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
+
     // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/iniciarSesion');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(apiRoute+ '/iniciarSesion');
+
 
     /**
      * Hook para asignar las validaciones necesarias a los campos.
@@ -92,7 +97,7 @@ const IniciarSesion = () => {
             ReactSession.set('usuario', responseJSON.usuario);
             ReactSession.set('nombre', responseJSON.nombre);
             ReactSession.set('apellido', responseJSON.apellido);
-            ReactSession.set('apiRoute','')
+            ReactSession.set('apiRoute',apiRoute)
             window.location.href = '/';
             M.toast({ html: message });
         }

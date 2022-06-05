@@ -81,6 +81,4 @@ function App() {
   )
 }
 
-// idEstudio = "MdQLqakPBb"
-
 export default App;

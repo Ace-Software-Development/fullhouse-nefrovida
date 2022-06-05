@@ -32,7 +32,7 @@ const RegistrarColaborador = () => {
     const [url, setUrl] = useState('/colaborador');
     const [roles, setRoles] = useState([]);
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
     /**
      * Hook para validar que cambió estado de respuesta 

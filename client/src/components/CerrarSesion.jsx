@@ -10,7 +10,7 @@ const CerrarSesion = () => {
     const {register, formState: { errors }, handleSubmit, setValue} = useForm();
 
     // Crear instancia de hook para realizar petición al servidor de cerrar sesión.
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('/cerrarSesion');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/cerrarSesion');
 
 
     /**

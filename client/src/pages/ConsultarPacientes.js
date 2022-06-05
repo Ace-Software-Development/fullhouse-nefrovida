@@ -28,7 +28,7 @@ function ConsultarPacientes() {
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
 
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 
 
