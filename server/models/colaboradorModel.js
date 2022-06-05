@@ -279,8 +279,8 @@ exports.consultarColaboradores = async () => {
  * @returns Paciente(s) cuyo nombre o apellidos incluyen esa string.
  */
 exports.buscarPorNombre = async(nombre) => {
-
-    nombre = nombre.toLowerCase();
+    
+    console.log("pog");    nombre = nombre.toLowerCase();
     const palabras = nombre.split(' ');
 
     const table = Parse.Object.extend(Parse.User);
