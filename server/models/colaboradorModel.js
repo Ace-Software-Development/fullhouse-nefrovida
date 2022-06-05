@@ -309,9 +309,9 @@ exports.buscarPorNombre = async(nombre) => {
 
             // Por cada una de las palabras recibidas ver si el nombre completo la incluye
             for (let j = 0; j < palabras.length; j++) {
-                const rol = json_res[i].iRol.toLowerCase();
+                const username = json_res[i].username.toLowerCase();
 
-                if (!nombreCompleto.includes(palabras[j]) && !rol.includes(palabras[j])) {
+                if (!nombreCompleto.includes(palabras[j]) && !username.includes(palabras[j])) {
                     includes = false;
                 }
             }

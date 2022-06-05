@@ -72,7 +72,7 @@ export default function ConsultarColaborador() {
 
     /**
      * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 
-     * función de obtener los pacientes envíandole el nuevo valor como parámetro.
+     * función de obtener los colaboradores envíandole el nuevo valor como parámetro.
      * @param {event} e Evento del cambio
      */
     function handleChange(e) {
