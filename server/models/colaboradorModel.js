@@ -70,7 +70,7 @@ function resultsRegistrarColaborador(colab, error){
  * @param {string} error - Mensaje de error en caso de existir
  * @returns 
  */
- function resultsColaborador(data, error) {
+function resultsColaborador(data, error) {
     return {
         data: data,
         error: error
@@ -271,4 +271,69 @@ exports.consultarColaboradores = async () => {
             error: error.message
         }
     } 
+}
+
+/**
+ * asyncBuscarPorNombre Función asíncrona para buscar un paciente por nombre o apellidos
+ * @param {string} nombre Nombre a buscar para ver si coincide con algún paciente.
+ * @returns Paciente(s) cuyo nombre o apellidos incluyen esa string.
+ */
+exports.buscarPorNombre = async(nombre) => {
+
+    nombre = nombre.toLowerCase();
+    const palabras = nombre.split(' ');
+
+    const table = Parse.Object.extend(Parse.User);
+    let query = new Parse.Query(table);
+
+    try {
+        const colaboradores = await query.find();
+        let results = [];
+
+        let json_res = JSON.parse(JSON.stringify(colaboradores));
+
+        // Iterar por ccada uno de los pacientes de nefrovida
+        for (let i = 0; i < json_res.length; i++){
+            // Obtener su nombre completo
+            let nombreCompleto = json_res[i].nombre + ' ' + json_res[i].apellidoPaterno + ' ';
+
+            if (json_res[i].apellidoMaterno) {
+                nombreCompleto += json_res[i].apellidoMaterno;
+            }
+
+            // Pasar el nombre a minúsculas
+            nombreCompleto = nombreCompleto.toLowerCase();
+            
+            let includes = true;
+
+
+            // Por cada una de las palabras recibidas ver si el nombre completo la incluye
+            for (let j = 0; j < palabras.length; j++) {
+                const rol = json_res[i].iRol.toLowerCase();
+
+                if (!nombreCompleto.includes(palabras[j]) && !rol.includes(palabras[j])) {
+                    includes = false;
+                }
+            }
+            // Si el nombre completo incluye las palabras, añadir el paciente al arreglo
+            if (includes) {
+                results.push(json_res[i]);
+            }
+
+            // Ordenar alfabéticamente
+            results.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1);
+        }
+
+        return {
+            data: results,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            data: null,
+            error: error.message
+        }
+    }
+
 }

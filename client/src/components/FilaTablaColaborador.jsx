@@ -5,14 +5,14 @@ const FilaTablaColaborador = ({ colaborador }) => {
 
   return(
     <tbody>
-      <tr  >
+      <tr>
         <td className="tabla-padding">
           <a href = { route }  >
             { colaborador.nombre } { colaborador.apellidoPaterno } { colaborador.apellidoMaterno }
           </a>
           <br/>
           <a className="tabla-sexo">
-            { colaborador.username }
+            { colaborador.idRol.nombre }
           </a>
         </td>
         

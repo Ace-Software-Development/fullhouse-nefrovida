@@ -18,26 +18,43 @@ import { useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import TablaColaboradores from '../components/TablaColaboradores';
-import Main from '../components/Main';
+import InputSearch from '../components/InputSearch';
 
 export default function ConsultarColaborador() {
+    const urlGetTodos = 'http://localhost:6535/colaborador/todosColaboradores';
+    const urlGetBuscar = 'http://localhost:6535/colaborador/nombre';
+    const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [colaboradores, setColaboradores] = useState([])
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/todosColaboradores');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return;
-        }
-        else {
-            setColaboradores(responseJSON.data.data);
+        } else {
+            if (url === urlGetTodos) {
+                setColaboradores(responseJSON.data.data);
+                setUrl(urlGetBuscar);
+            } else if (url === urlGetBuscar) {
+                setColaboradores(responseJSON.data.data);
+            }
         }
     }, [responseOk])
 
-
-    async function getColaboradores() {
-        httpConfig(null, 'GET');
-    }  
+    
+    /**
+     * Función asíncrona para obtener la lista de pacientes del laboratorio. Si recibe una string
+     * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
+     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los pacientes.
+     * @returns 
+     */
+    async function getColaboradores(buscar) {
+        if ( url === urlGetTodos ) {
+            httpConfig(null, 'GET');
+        } else if (url === urlGetBuscar) {
+            httpConfig(buscar, 'GET');
+        }
+    }
 
     /**
      * Hook que se ejecuta al renderizar la información del paciente.
@@ -53,6 +70,16 @@ export default function ConsultarColaborador() {
     }, [])
 
 
+    /**
+     * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 
+     * función de obtener los pacientes envíandole el nuevo valor como parámetro.
+     * @param {event} e Evento del cambio
+     */
+    function handleChange(e) {
+        getColaboradores(e.target.value);
+    }
+
+
     return (
         <div>
             <br/><br/>
@@ -66,11 +93,16 @@ export default function ConsultarColaborador() {
                     </Link>
                 }
                 </div>
-                <CardSubtitulo subtitulo= "Empleados"/>
+                <CardSubtitulo subtitulo= "Empleados">
+                <InputSearch
+                        id = "buscar"
+                        label = "Buscar"
+                        onChange = { handleChange }
+                    />
+                </CardSubtitulo>
                 { loading ?  (
-                    <div className="center animate-new-element">
-                        <br/>
-
+                <div className="center animate-new-element">
+                    <br/>
                         <div className="preloader-wrapper med active">
                             <div className="spinner-layer spinner-blue-only">
                             <div className="circle-clipper left">
@@ -86,12 +118,12 @@ export default function ConsultarColaborador() {
                         <br/>
                         <br/>
                     </div>
-                    ) 
+                    )
                 : <TablaColaboradores datos= { colaboradores }/>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
             </Card>
-        </div>
+        </div> 
     )
 }
