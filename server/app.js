@@ -22,9 +22,12 @@ var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
     console.log('DATABASE_URI not specified, falling back to localhost.');
 }
-app.use(express.static(
-	path.join(__dirname,
-							"../client/build")));
+// app.use(express.static(
+// 	path.join(__dirname,
+// 							"../client/build")));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 var api = new parseServer({
     databaseURI: databaseUri,
@@ -75,12 +78,16 @@ app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
 app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
-app.get("*", (req, res) => {
-	res.sendFile(
-			path.join(__dirname,
-						"../client/build/index.html")
-	);
-});
+// app.get("*", (req, res) => {
+// 	res.sendFile(
+// 			path.join(__dirname,
+// 						"../client/build/index.html")
+// 	);
+// });
+
+app.get('*', function(request, response) {
+    response.status(404).send();
+})
 
 // Start the server
 const PORT = process.env.PORT;
