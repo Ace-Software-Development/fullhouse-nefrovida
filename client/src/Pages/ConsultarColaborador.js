@@ -55,7 +55,6 @@ export default function ConsultarColaborador() {
 
     return (
         <div>
-            <Main>
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Empleados"/>
@@ -93,7 +92,6 @@ export default function ConsultarColaborador() {
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
             </Card>
-            </Main>
         </div>
     )
 }

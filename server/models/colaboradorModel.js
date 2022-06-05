@@ -250,6 +250,7 @@ exports.buscarPorUsuario = async (username) => {
 exports.consultarColaboradores = async () => {
     const table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(table);
+    query.include(CONSTANTS.IDROL);
     
     try {
         const results = await query.find();

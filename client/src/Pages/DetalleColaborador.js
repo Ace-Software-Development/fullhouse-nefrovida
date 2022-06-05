@@ -22,18 +22,12 @@ import { ReactSession } from 'react-client-session';
 
 export default function DetalleColaborador() {
     const params = useParams();
+    const rol = params.rol;
     const [colaborador, setColaborador] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle/username');
 
 
-    /**
-     * Función asíncrona para obtener la información del colaborador.
-     * @returns 
-     */
-    async function getColaborador() {                                                   
-        httpConfig(params.username, 'GET');   
-    }
-
+    
     /**
  * Hook que se ejecuta al renderizar la información del colaborador.
  */
@@ -41,8 +35,7 @@ export default function DetalleColaborador() {
         if (ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
-        
-        getColaborador();
+        httpConfig(params.username, 'GET'); 
     }, [])
 
 
@@ -56,9 +49,6 @@ export default function DetalleColaborador() {
         }
     }, [responseOk])
 
-    useEffect(() => {
-        console.log("cambio colaborador rol", colaborador.idRol.nombre)
-    }, [colaborador])
     
 
     
@@ -98,7 +88,7 @@ export default function DetalleColaborador() {
                     </div>
                 
                 )}
-                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador }/></div>}
+                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador }rol={rol}/></div>}
                 { error && (
                     <div className="animate-new-element">
                         <br/><br/><br/>

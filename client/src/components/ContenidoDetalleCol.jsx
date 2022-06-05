@@ -1,4 +1,4 @@
-const ContenidoDetalleCol = ({  colaborador }) => {
+const ContenidoDetalleCol = ({  colaborador, rol }) => {
 
     if (colaborador === {}){
     return false;
@@ -16,7 +16,7 @@ const ContenidoDetalleCol = ({  colaborador }) => {
       <div className="col s5 l6">
       <br/>
         <div className="detalles-usuario">
-          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">{ colaborador.hola }</div>
+          <i className="material-icons icon-separator small c-908F98"> person </i><div className="detalles-lista left-align c-908F98 light-pequeno">{ rol }</div>
         </div>
       <br/>
         {
