@@ -1,6 +1,7 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require('../constantsProject');
 const rolModel = require('../models/rolModel');
+const seguridad = require('../util/seguridad');
 
 /**
  * obtenerTodos Función asíncrona que retorna lista completa de colaboradores registrados en base de datos.
@@ -35,6 +36,29 @@ exports.obtenerTodos = async() => {
 exports.obtenerColaborador = async(id) => {
     const queryColab = new Parse.Query(Parse.User);
     queryColab.equalTo(CONSTANTS.OBJECTID, id);
+
+    try {
+        var colab = await queryColab.first();
+        return {
+            colaborador: colab,
+            error: null
+        }
+    } catch(error) {
+        return {
+            colaborador: null,
+            error: error
+        }
+    }
+}
+
+/**
+ * obtenerColaboradorUsuario Función asíncrona para buscar información de colaborador en base de datos dado un usuario.
+ * @param {string} usuario credencial de acceso de Colaborador
+ * @returns json con colaborador o mensaje de error.
+ */
+exports.obtenerColaboradorUsuario = async(usuario) => {
+    const queryColab = new Parse.Query(Parse.User);
+    queryColab.equalTo(CONSTANTS.USUARIO, usuario);
 
     try {
         var colab = await queryColab.first();
@@ -144,11 +168,13 @@ exports.iniciarSesionColaborador = async(params) => {
             // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
+            const token = seguridad.encriptar(nombreRol, process.env.SECRET_ENCRYPT);
+            
             return {
                 usuario: colaborador.username,
                 nombre: colaborador.nombre,
                 apellido: colaborador.apellidoPaterno,
-                sessionToken: colaborador.sessionToken,
+                sessionToken: token,
                 rol: nombreRol,
                 error: null
             }

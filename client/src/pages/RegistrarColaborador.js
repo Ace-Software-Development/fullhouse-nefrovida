@@ -26,12 +26,13 @@ import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import { useForm } from 'react-hook-form';
 import useFetch from '../hooks/useFetch';
+import { ReactSession } from 'react-client-session';
 
 const RegistrarColaborador = () => {
-    const [url, setUrl] = useState('http://localhost:6535/colaborador');
+    const [url, setUrl] = useState('/colaborador');
     const [roles, setRoles] = useState([]);
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
     /**
      * Hook para validar que cambió estado de respuesta 
@@ -49,16 +50,16 @@ const RegistrarColaborador = () => {
         if (!responseJSON || !responseOk) {
             return;
 
-        } else if(url === 'http://localhost:6535/colaborador') {
+        } else if(url === '/colaborador') {
             const arr = []
             responseJSON.roles.map(
                 el => { 
                 arr.push({value:el.objectId, option:el.nombre,})}
             )
             setRoles(arr);
-            setUrl('http://localhost:6535/colaborador/registrar');
+            setUrl('/colaborador/registrar');
         }
-        else if(url === 'http://localhost:6535/colaborador/registrar'){
+        else if(url === '/colaborador/registrar'){
 
             M.toast({ html: responseJSON.message});
         }
@@ -87,6 +88,10 @@ const RegistrarColaborador = () => {
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
  */
     useEffect(() => {
+        
+        if (ReactSession.get('rol') !== 'admin') {
+            window.location.href = '/403';
+        }
         // Armar petición GET
         httpConfig(null, 'GET');
         
@@ -254,7 +259,7 @@ const RegistrarColaborador = () => {
                             <br/><br/>
                             <form
                                 id = "main-login"
-                                action = 'http://localhost:6535/colaboradores'
+                                action = '/colaboradores'
                                 method = 'post'
                                 onSubmit = { handleSubmit(onSubmit) }>
                                 <LineaCampos>

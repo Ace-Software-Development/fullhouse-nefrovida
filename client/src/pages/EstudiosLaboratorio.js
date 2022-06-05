@@ -27,7 +27,7 @@ export default function EstudiosLaboratorio() {
         const [currentEstudio, setCurrentEstudio] = useState('%20');
         const [ascendente, setAscendente] = useState('%20');
 
-        const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/estudios');
+        const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/estudios');
         
         // Funcion que obtiene el estudio correspondiente al id.
         async function getEstudios(id, nombreTipoEstudio = '%20', ascendente = '%20') {

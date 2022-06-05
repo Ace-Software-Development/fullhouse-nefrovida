@@ -79,8 +79,6 @@ module.exports.registrarColaborador = async(request, response) => {
  */
 module.exports.iniciarSesionColaborador = async(request, response) => {
     try {
-        // Envío de credenciales al modelo.
-        Parse.User.enableUnsafeCurrentUser()
         const results = await colaboradorModel.iniciarSesionColaborador(request.body);
         // Si hubo error, no se permite acceso.
         if (results.error) {

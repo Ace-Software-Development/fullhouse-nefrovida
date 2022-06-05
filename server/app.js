@@ -15,13 +15,19 @@ app.use(express.json());
 app.use(cors());
 
 // Para enviar estilos CSS de manera estática cuando un documento lo requiera
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
     console.log('DATABASE_URI not specified, falling back to localhost.');
 }
+// app.use(express.static(
+// 	path.join(__dirname,
+// 							"../client/build")));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 var api = new parseServer({
     databaseURI: databaseUri,
@@ -56,25 +62,28 @@ app.use(function(req, res, next) {
 
 app.use('/iniciarSesion', require('./routes/iniciarSesionRouter'));
 // Validar que usuario esté autenticado
-app.use(authUsuario);
+app.use('/home', authUsuario, require('./routes/home'));
 
-app.use('/home', require('./routes/home'));
+app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
-app.use('/paciente', require('./routes/pacienteRouter'))
+app.use('/tipoEstudio', authUsuario, require('./routes/tipoEstudioRouter'));
 
-app.use('/colaborador', require('./routes/colaboradorRouter'));
+app.use('/colaborador', authUsuario,require('./routes/colaboradorRouter'));
 
-app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
+app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
-app.use('/estudio', require('./routes/estudioRouter'));
+app.use('/cerrarSesion', authUsuario, require('./routes/cerrarSesionRouter'));
 
-app.use('/cerrarSesion', require('./routes/cerrarSesionRouter'));
+app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
-app.use('/paciente', require('./routes/pacienteRouter'))
+app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
-app.use('/estudio', require('./routes/estudioRouter'));
-
-app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
+// app.get("*", (req, res) => {
+// 	res.sendFile(
+// 			path.join(__dirname,
+// 						"../client/build/index.html")
+// 	);
+// });
 
 app.get('*', function(request, response) {
     response.status(404).send();

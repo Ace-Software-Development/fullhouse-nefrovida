@@ -13,7 +13,7 @@ const TiposEstudio = () => {
     const curp = params.curp;
 
     const [tiposEstudio, setTiposEstudio] = useState([])
-    const { httpConfig, loading, responseJSON, error, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
+    const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + '/tipoEstudio/');
 
     function listaTiposEstudio() {
 

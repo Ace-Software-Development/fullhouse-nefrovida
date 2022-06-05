@@ -22,13 +22,13 @@ import { ReactSession } from 'react-client-session';
 import ContainerForm from '../components/ContainerForm';
 
 function ConsultarPacientes() {
-    const urlGetTodos = 'http://localhost:6535/paciente/todos';
-    const urlGetBuscar = 'http://localhost:6535/paciente/nombre';
+    const urlGetTodos = '/paciente/todos';
+    const urlGetBuscar = '/paciente/nombre';
     const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
 
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 
 
