@@ -13,9 +13,9 @@ function Home() {
                 <Sidenav/>
             </Navbar>
             <Main>
-                <ConsultarColaborador/>
+                <ConsultarColaborador/> 
                 <br/><br/>
-                {/* <ConsultarPacientes/> */}
+                {/* <ConsultarPacientes/> */} 
             </Main>
         </div>
     )
