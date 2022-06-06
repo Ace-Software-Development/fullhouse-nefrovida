@@ -3,8 +3,8 @@ const TablaColaboradores = ({ datos, nombreRol }) => {
 
 const tableContent = datos.map((colaborador, index) => (
 
-    colaborador.idRol.nombre == nombreRol ?
-    <FilaTablaColaborador key = { index } colaborador = { colaborador } /> : null
+    colaborador.idRol.nombre === nombreRol ?
+        <FilaTablaColaborador key = { index } colaborador = { colaborador } /> : null
     ));
 
 return(
