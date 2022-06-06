@@ -20,11 +20,8 @@ import { ReactSession } from 'react-client-session';
 import TablaColaboradores from '../components/TablaColaboradores';
 
 export default function ConsultarColaborador() {
-    const urlGetTodos = 'http://localhost:6535/colaborador/todosColaboradores';
-    const [url] = useState(urlGetTodos);
     const [colaboradores, setColaboradores] = useState([])
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
-    //const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/colaborador/todosColaboradores');
 
     /**
      * Hook que se ejecuta al obtener los colaboradores.
@@ -43,9 +40,7 @@ export default function ConsultarColaborador() {
      * @returns 
      */
     async function getColaboradores() {
-        if ( url === urlGetTodos ) {
             httpConfig(null, 'GET');
-        }
     }
 
     /**
@@ -68,7 +63,7 @@ export default function ConsultarColaborador() {
                 <br/>
                 <div className = "contenedor">
                 { ReactSession.get('rol') === 'admin' &&
-                    <Link to = "/">
+                    <Link to = "/registrarColaborador">
                         <BtnEditRegis icono = "person_add" texto = "Registrar empleado" posicion = "left"/>
                     </Link>
                 }

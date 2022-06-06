@@ -20,6 +20,7 @@ import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
 import TiposEstudio from './pages/TiposEstudio';
+import RegistrarColaborador from './pages/RegistrarColaborador';
 
 
 
@@ -68,8 +69,12 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-          <Route exact path='/listaCol' element={<PrivateRoute/>}>
-            <Route exact path='/listaCol' element={<ConsultarColaborador/>}/>
+          <Route exact path='/colaborador' element={<PrivateRoute/>}>
+            <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/registrarColaborador' element={<PrivateRoute/>}>
+            <Route exact path='/registrarColaborador' element={<RegistrarColaborador/>}/>
           </Route>
 
           <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
