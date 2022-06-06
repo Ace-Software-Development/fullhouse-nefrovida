@@ -9,7 +9,7 @@ const ContenidoDetalleCol = ({  colaborador, rol }) => {
       <br/>
       <div className="col s7 l6 identificacion-usuario">
           <i className="material-icons icon-separator large c-908F98 hide-on-small-and-down"> account_circle </i>
-          <div className="detalles-lista negrita-grande left-align black-text"> { /*`${ colaborador.nombre } ${ colaborador.apellidoPaterno } ${ colaborador.apellidoMaterno ? colaborador.apellidoMaterno : ''}`*/ "lol" } </div><br/>
+          <div className="detalles-lista negrita-grande left-align black-text"> { `${ colaborador.nombre } ${ colaborador.apellidoPaterno } ${ colaborador.apellidoMaterno ? colaborador.apellidoMaterno : ''}` } </div><br/>
           <div className="detalles-lista negrita-pequeno c-908F98 left-align"> { colaborador.email } </div><br/>
       </div>
 

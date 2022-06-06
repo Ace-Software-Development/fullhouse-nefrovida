@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom'
 
 const FilaTablaColaborador = ({ colaborador }) => {
   const route = "/colaborador/" + colaborador.username +"/"+ colaborador.idRol.nombre
-  console.log(colaborador);
 
   return(
     <tbody>

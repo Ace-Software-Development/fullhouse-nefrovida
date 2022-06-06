@@ -18,41 +18,32 @@ import { useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import TablaColaboradores from '../components/TablaColaboradores';
-import InputSearch from '../components/InputSearch';
 
 export default function ConsultarColaborador() {
     const urlGetTodos = 'http://localhost:6535/colaborador/todosColaboradores';
-    const urlGetBuscar = 'http://localhost:6535/colaborador/nombre';
-    const [url, setUrl] = useState(urlGetTodos);
-    const params = useParams();
+    const [url] = useState(urlGetTodos);
     const [colaboradores, setColaboradores] = useState([])
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
+    /**
+     * Hook que se ejecuta al obtener los colaboradores.
+     */
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return;
         } else {
-            if (url === urlGetTodos) {
-                setColaboradores(responseJSON.data.data);
-                setUrl(urlGetBuscar);
-            } else if (url === urlGetBuscar) {
-                setColaboradores(responseJSON.data.data);
-            }
+            setColaboradores(responseJSON.data.data);
         }
     }, [responseOk])
 
     
     /**
-     * Función asíncrona para obtener la lista de colaboradores. Si recibe una string
-     * es para obtener los pacientes cuyo nombre o apellido contengan dicha string.
-     * @param {string} buscar Nombre que se quiere buscar en el nombre y apellido de los colaboradores.
+     * Función asíncrona para obtener la lista de colaboradores.
      * @returns 
      */
-    async function getColaboradores(buscar) {
+    async function getColaboradores() {
         if ( url === urlGetTodos ) {
             httpConfig(null, 'GET');
-        } else if (url === urlGetBuscar) {
-            httpConfig(buscar, 'GET');
         }
     }
 
@@ -60,24 +51,12 @@ export default function ConsultarColaborador() {
      * Hook que se ejecuta al renderizar la información del colaborador.
      */
     useEffect(() => {
-        getColaboradores('');
+        getColaboradores();
         if (ReactSession.get('rol') !== 'admin') {
             console.log('roles enter')
             window.location.href = '/403';
         }
-        console.log("Params", params.username)
-        getColaboradores(params.username);
     }, [])
-
-
-    /**
-     * Función que se ejecuta cuando hay un cambio en el formulario de buscar. Manda llamar la 
-     * función de obtener los colaboradores envíandole el nuevo valor como parámetro.
-     * @param {event} e Evento del cambio
-     */
-    function handleChange(e) {
-        getColaboradores(e.target.value);
-    }
 
 
     return (
@@ -93,31 +72,6 @@ export default function ConsultarColaborador() {
                     </Link>
                 }
                 </div>
-                <CardSubtitulo subtitulo= "Administradores">
-                </CardSubtitulo>
-                { loading ?  (
-                <div className="center animate-new-element">
-                    <br/>
-                        <div className="preloader-wrapper med active">
-                            <div className="spinner-layer spinner-blue-only">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <br/>
-                        <br/>
-                    </div>
-                    )
-                : <TablaColaboradores datos= { colaboradores } nombreRol= "administrador"/>}
-                { error 
-                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
-                }
 
                 <CardSubtitulo subtitulo= "Doctores">
                 </CardSubtitulo>
@@ -141,6 +95,84 @@ export default function ConsultarColaborador() {
                     </div>
                     )
                 : <TablaColaboradores datos= { colaboradores } nombreRol= "doctor"/>}
+                { error 
+                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
+                }
+
+                <CardSubtitulo subtitulo= "Químicos">
+                </CardSubtitulo>
+                { loading ?  (
+                <div className="center animate-new-element">
+                    <br/>
+                        <div className="preloader-wrapper med active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                    </div>
+                    )
+                : <TablaColaboradores datos= { colaboradores } nombreRol= "quimico"/>}
+                { error 
+                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
+                }
+
+                <CardSubtitulo subtitulo= "Psicólogos">
+                </CardSubtitulo>
+                { loading ?  (
+                <div className="center animate-new-element">
+                    <br/>
+                        <div className="preloader-wrapper med active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                    </div>
+                    )
+                : <TablaColaboradores datos= { colaboradores } nombreRol= "psicologo"/>}
+                { error 
+                    && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
+                }
+
+                <CardSubtitulo subtitulo= "Trabajadores Sociales">
+                </CardSubtitulo>
+                { loading ?  (
+                <div className="center animate-new-element">
+                    <br/>
+                        <div className="preloader-wrapper med active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                    </div>
+                    )
+                : <TablaColaboradores datos= { colaboradores } nombreRol= "trabajoSocial"/>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
