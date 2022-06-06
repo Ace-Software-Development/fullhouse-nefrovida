@@ -216,37 +216,3 @@ module.exports.consutarDetalleColaborador = async(request, response) => {
         });
     }
 }
-
-
-/**
- * asyncConsultarPorNombre Función asíncrona para buscar un colaborador por nombre,
- * se devuelven los colaboradores cuyo nombre o apellidos contengan la string recibida.
- * @param {object} request Información enviados al servidor
- * @param {object} response - Respuesta de la petición al servidor
- * @returns Respuesta de la petición
- */
-module.exports.consultarPorNombre = async(request, response) => {
-    // Se obtiene el curp de los parametros de la ruta
-    const nombre = request.query.id;
-    try {
-        const results = await colaboradorModel.buscarPorNombre(nombre)
-        if (results.error) {
-            return response.status(400).send({
-                status: 'error',
-                data: null,
-                message: 'Error. ' + results.error
-            });
-        }
-        response.status(200).send({
-            status: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
-        });
-    } catch(error) {
-        response.status(200).send({
-            status: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
-        });
-    }
-}

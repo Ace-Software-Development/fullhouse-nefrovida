@@ -15,11 +15,6 @@ router.get('/detalle/username',
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.consutarDetalleColaborador);
 
-// Ruta de tipo 'GET' para buscar un colaborador por rol.
-router.get('/nombre', 
-    authRol([CONSTANTS.ROLADMIN]),
-    colaboradorController.consultarPorNombre);
-
 // Ruta de tipo 'GET' para registrar un colaborador por rol.
 router.get('/',
     authRol([CONSTANTS.ROLADMIN]),

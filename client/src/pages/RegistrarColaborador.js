@@ -224,9 +224,9 @@ const RegistrarColaborador = () => {
 
     return(
         <div>   
-                <br/><br/>
                 <Navbar/>
                 <Main>
+                <br></br>
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Empleado"/>
                     <ContainerForm>
