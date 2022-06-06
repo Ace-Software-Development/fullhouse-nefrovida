@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom'
 
 const FilaTablaColaborador = ({ colaborador }) => {
   const route = "/colaborador/" + colaborador.username +"/"+ colaborador.idRol.nombre
+  console.log(colaborador);
 
   return(
     <tbody>
@@ -12,7 +13,7 @@ const FilaTablaColaborador = ({ colaborador }) => {
           </a>
           <br/>
           <a className="tabla-sexo">
-            { colaborador.idRol.nombre }
+            { colaborador.username }
           </a>
         </td>
         

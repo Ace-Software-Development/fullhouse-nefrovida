@@ -94,11 +94,6 @@ export default function ConsultarColaborador() {
                 }
                 </div>
                 <CardSubtitulo subtitulo= "Administradores">
-                <InputSearch
-                        id = "buscar"
-                        label = "Buscar"
-                        onChange = { handleChange }
-                    />
                 </CardSubtitulo>
                 { loading ?  (
                 <div className="center animate-new-element">
@@ -125,11 +120,6 @@ export default function ConsultarColaborador() {
                 }
 
                 <CardSubtitulo subtitulo= "Doctores">
-                <InputSearch
-                        id = "buscar"
-                        label = "Buscar"
-                        onChange = { handleChange }
-                    />
                 </CardSubtitulo>
                 { loading ?  (
                 <div className="center animate-new-element">
