@@ -19,13 +19,13 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
 import EstudiosLaboratorio from './EstudiosLaboratorio'
-import Temp from './Temp'
+import TiposEstudio from './TiposEstudio'
 
 
 function DetallePaciente() {
     const params = useParams();
     const [paciente, setPaciente] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/detalle/curp');
 
 
     /**
@@ -108,7 +108,7 @@ function DetallePaciente() {
             </Card>
             { ReactSession.get('rol') === 'quimico' &&
                 <div>
-                    <Temp/>
+                    <TiposEstudio/>
                     <EstudiosLaboratorio/>
                 </div>
             }
@@ -119,7 +119,7 @@ function DetallePaciente() {
                 <EstudiosLaboratorio/>
             }
             { ReactSession.get('rol') === 'admin' &&
-                <Temp/>
+                <TiposEstudio/>
             }
             </Main>
         </div>

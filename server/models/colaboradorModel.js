@@ -1,6 +1,7 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require('../constantsProject');
 const rolModel = require('../models/rolModel');
+const seguridad = require('../util/seguridad');
 
 /**
  * obtenerTodos Función asíncrona que retorna lista completa de colaboradores registrados en base de datos.
@@ -35,6 +36,29 @@ exports.obtenerTodos = async() => {
 exports.obtenerColaborador = async(id) => {
     const queryColab = new Parse.Query(Parse.User);
     queryColab.equalTo(CONSTANTS.OBJECTID, id);
+
+    try {
+        var colab = await queryColab.first();
+        return {
+            colaborador: colab,
+            error: null
+        }
+    } catch(error) {
+        return {
+            colaborador: null,
+            error: error
+        }
+    }
+}
+
+/**
+ * obtenerColaboradorUsuario Función asíncrona para buscar información de colaborador en base de datos dado un usuario.
+ * @param {string} usuario credencial de acceso de Colaborador
+ * @returns json con colaborador o mensaje de error.
+ */
+exports.obtenerColaboradorUsuario = async(usuario) => {
+    const queryColab = new Parse.Query(Parse.User);
+    queryColab.equalTo(CONSTANTS.USUARIO, usuario);
 
     try {
         var colab = await queryColab.first();
@@ -90,24 +114,27 @@ exports.registrarColaborador = async(params) => {
     try {
         const colaboradorT = await queryTelefonoUnico.first();
         // Si ya existe registro con dicho teléfono, retornar mensaje de error.
-        if (colaboradorT) {
+        if (colaboradorT && params.telefono) {
             return resultsRegistrarColaborador(colaboradorT, 'Ya existe un empleado registrado con dicho teléfono.');
         }
         // Si no existe un empleado con dicho teléfono aún, crear registro.
         const colaborador = new Parse.User();
         colaborador.set(CONSTANTS.USUARIO, params.usuario);
         colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.apellidoPaterno);
+        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.apellidoMaterno);
         colaborador.set(CONSTANTS.CORREO, params.correo);
         colaborador.set(CONSTANTS.TELEFONO, params.telefono);
         colaborador.set(CONSTANTS.CONTRASENA, params.password)
         colaborador.set(CONSTANTS.ACTIVO, true);
-        colaborador.set(CONSTANTS.IDROL, params.idRol);
+        const rol = Parse.Object.extend("Rol")
+        let rolPointer = new rol();
+        rolPointer.id = params.rol;
+        colaborador.set("idRol", rolPointer);
 
         try {
             // Dar de alta colaborador en base de datos.
-            const colab = await colaborador.signUp();
+            const colab = await colaborador.save();
             return resultsRegistrarColaborador(colab, null);
 
         } 
@@ -155,11 +182,13 @@ exports.iniciarSesionColaborador = async(params) => {
             // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
+            const token = seguridad.encriptar(nombreRol, process.env.SECRET_ENCRYPT);
+            
             return {
                 usuario: colaborador.username,
                 nombre: colaborador.nombre,
                 apellido: colaborador.apellidoPaterno,
-                sessionToken: colaborador.sessionToken,
+                sessionToken: token,
                 rol: nombreRol,
                 error: null
             }

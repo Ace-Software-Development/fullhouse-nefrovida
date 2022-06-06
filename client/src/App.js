@@ -17,9 +17,10 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
-import Temp from './pages/Temp';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
+import TiposEstudio from './pages/TiposEstudio';
+
 
 
 function App() {
@@ -75,10 +76,6 @@ function App() {
             <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
           </Route>
 
-          <Route exact path='/temp' element={<PrivateRoute/>}>  
-            <Route exact path='/temp' element={<Temp />} />
-          </Route>
-
           <Route exact path='/403' element={<PrivateRoute/>}>
             <Route exact path='/403' element={<Forbidden />} />
           </Route>
@@ -93,7 +90,5 @@ function App() {
     
   )
 }
-
-// idEstudio = "MdQLqakPBb"
 
 export default App;

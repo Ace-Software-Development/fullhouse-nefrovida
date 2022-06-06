@@ -6,7 +6,7 @@
  * de cada paciente.
  */
 
- import { ReactSession } from 'react-client-session';
+import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
@@ -26,7 +26,7 @@ import useFetch from '../hooks/useFetch';
 export default function ConsultarEstudioPaciente({ idEstudio }) {
     const params = useParams();
     const [estudio, setEstudio] = useState({})
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/estudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute")+'/estudio/id');
 
 
     //Hook para actualizar los datos de el estudio y los parametros
@@ -48,7 +48,7 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
         if (ReactSession.get('rol') !== 'doctor' && 
             ReactSession.get('rol') !== 'quimico' && 
             ReactSession.get('rol') !== 'nutriologo') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         getEstudio(params.idEstudio);
     }, []);
@@ -86,8 +86,10 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                 <CardTitulo icono="description" titulo="Detalle del estudio"/>
                     <ContainerForm>
                     
-                        {/* <BtnRegresar url="/"/><br/><br/> */}
-                        
+                        <BtnRegresar />
+                        <br/>
+                        <br/>
+                        <br/>
                         { loading && (
                             <div className="center animate-new-element">
                                 <br/><br/><br/>

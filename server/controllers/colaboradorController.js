@@ -48,7 +48,7 @@ module.exports.getRegistrarColaborador = async(request, response) => {
 module.exports.registrarColaborador = async(request, response) => {
     try {
         // Envia información de registro a modelo.
-        const results = await colaboradorModel.registrarColaborador(request.body.data);
+        const results = await colaboradorModel.registrarColaborador(request.body);
         // Si hubo un error en el registro retorna mensaje de error.
         if (results.error) {
             return response.status(400).send( {
@@ -81,8 +81,6 @@ module.exports.registrarColaborador = async(request, response) => {
  */
 module.exports.iniciarSesionColaborador = async(request, response) => {
     try {
-        // Envío de credenciales al modelo.
-        Parse.User.enableUnsafeCurrentUser()
         const results = await colaboradorModel.iniciarSesionColaborador(request.body);
         // Si hubo error, no se permite acceso.
         if (results.error) {

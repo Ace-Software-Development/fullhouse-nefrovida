@@ -28,9 +28,10 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useParams } from 'react-router-dom';
 
+
 export default function RegistrarEstudio() {
-const urlGet = 'http://localhost:6535/tipoEstudio/id';
-const urlPost = 'http://localhost:6535/estudio';
+const urlGet = '/tipoEstudio/id';
+const urlPost = '/estudio';
 const [url, setUrl] = useState(urlGet);
 const [isLoading, setIsLoading] = useState(false);
 const [tipoEstudio, setTipoEstudio] = useState({});
@@ -40,7 +41,7 @@ const curp = params.curp;
 const idTipoEstudio = params.idTipoEstudio;
 
 const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 /**
  * Función para realizar las validaciones necesarias para cada uno de los parámetros del estudio.
@@ -145,14 +146,15 @@ async function onSubmit(data, e) {
         parametrosArr.push(paramObj);
     }
 
+    const usuario = ReactSession.get("usuario");
     let send = {
+        usuario: usuario,
         fecha: fecha,
         observaciones: observaciones,
         idTipoEstudio: idTipoEstudio,
         curp: curp,
         parametros: parametrosArr
     }
-    console.log('send', send)
 
     httpConfig(send, 'POST');
 };
@@ -163,7 +165,7 @@ async function onSubmit(data, e) {
 useEffect(() => {
     getTipoEstudio(params.idTipoEstudio);
     if (ReactSession.get('rol') !== 'quimico') {
-        window.location.href = '/';
+        window.location.href = '/403';
     }
 }, [])
 
@@ -197,7 +199,7 @@ useEffect(() => {
             setIsLoading(true);
             M.toast({ html: responseJSON.message });
             setTimeout(() => {
-                window.location.href = "/";
+                window.history.go(-1);
             }, 1000);
         }
 
@@ -241,7 +243,7 @@ return(
                             </div>
                         </div>
 
-                        <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
+                        <div class="texto-grande blue-text text-darken-1">Cargando...</div>
 
                         <br/><br/>
                     </div>
@@ -262,7 +264,7 @@ return(
 
                         <form 
                             id = "registrar-estudio"
-                            action = 'http://localhost:6535/estudio'
+                            action = {ReactSession.get("apiRoute")+"/estudio"}
                             method = 'post'
                             onSubmit = { handleSubmit(onSubmit) }>
                             <LineaParametros>

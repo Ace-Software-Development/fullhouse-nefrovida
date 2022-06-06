@@ -7,7 +7,7 @@ const Tabla = ({ datos }) => {
   ))
 
   return(
-    <div>
+    <div className="animate-new-element">
       <div className="card contenedor tabla-altura">
         <table id="doctores" className="highlight">     
           <thead  >

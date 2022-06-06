@@ -20,6 +20,14 @@ router.get('/nombre',
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.consultarPorNombre);
 
+// Ruta de tipo 'GET' para registrar un colaborador por rol.
+router.get('/',
+    authRol([CONSTANTS.ROLADMIN]),
+    colaboradorController.getRegistrarColaborador);
 
+// Ruta de tipo 'POST' para registrar un colaborador por rol.
+router.post('/registrar', 
+    authRol([CONSTANTS.ROLADMIN]),
+    colaboradorController.registrarColaborador);
 
-module.exports = router
+module.exports = router;

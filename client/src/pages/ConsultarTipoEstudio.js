@@ -25,7 +25,7 @@ export default function ConsultarTipoEstudio() {
     const params = useParams();
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/tipoEstudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/tipoEstudio/id');
 
 
     //Hook para actualizar los datos de el estudio y los parametros
@@ -46,7 +46,7 @@ export default function ConsultarTipoEstudio() {
     useEffect(() => {
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
         if (ReactSession.get('rol') !== 'admin' && ReactSession.get('rol') !== 'quimico' ) {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         getTipoEstudio(params.idTipoEstudio);
     }, []);
