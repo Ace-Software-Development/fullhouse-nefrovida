@@ -49,9 +49,8 @@ export default function ConsultarColaborador() {
      * Hook que se ejecuta al renderizar la información del colaborador.
      */
     useEffect(() => {
-        getColaboradores();
+        getColaboradores('');
         if (ReactSession.get('rol') !== 'admin') {
-            console.log('roles enter')
             window.location.href = '/403';
         }
         getPacientes(params.username);

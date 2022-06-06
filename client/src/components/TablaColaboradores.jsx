@@ -11,7 +11,7 @@ const tableContent = datos.map((colaborador, index) => (
 return(
     <div>
     <div className="card contenedor tabla-altura">
-        <table id="doctores" className="highlight">     
+        <table id="empleados" className="highlight">     
         <thead  >
             <tr className="figma"  >
                 
