@@ -1,8 +1,10 @@
 import FilaTablaColaborador from './FilaTablaColaborador';
-const TablaColaboradores = ({ datos }) => {
+const TablaColaboradores = ({ datos, nombreRol }) => {
 
 const tableContent = datos.map((colaborador, index) => (
-    <FilaTablaColaborador key = { index } colaborador = { colaborador } />
+
+    colaborador.idRol.nombre == nombreRol ?
+    <FilaTablaColaborador key = { index } colaborador = { colaborador } /> : null
     ));
 
 return(
