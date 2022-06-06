@@ -54,7 +54,7 @@ export default function ConsultarColaborador() {
             console.log('roles enter')
             window.location.href = '/403';
         }
-        getPacientes(params.username);
+        getColaboradores(params.username);
     }, [])
 
 
