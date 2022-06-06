@@ -20,6 +20,7 @@ import { ReactSession } from 'react-client-session';
 import TablaColaboradores from '../components/TablaColaboradores';
 
 export default function ConsultarColaborador() {
+    const params = useParams();
     const [colaboradores, setColaboradores] = useState([])
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/colaborador/todosColaboradores');
 
@@ -53,6 +54,7 @@ export default function ConsultarColaborador() {
             console.log('roles enter')
             window.location.href = '/403';
         }
+        getPacientes(params.username);
     }, [])
 
 
