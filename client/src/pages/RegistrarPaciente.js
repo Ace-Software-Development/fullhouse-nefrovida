@@ -29,7 +29,7 @@ import { ReactSession } from 'react-client-session';
 
 const RegistrarPaciente = () => {
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/registrar');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/registrar');
 
     
     /**
@@ -37,7 +37,7 @@ const RegistrarPaciente = () => {
      */
     useEffect(() => {
         if (ReactSession.get('rol') !== 'trabajoSocial') {
-            window.location.href = '/';
+            window.location.href = '/403';
         }
         validation();
     }, []);
@@ -242,9 +242,9 @@ const RegistrarPaciente = () => {
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Paciente"/>
                     <ContainerForm>
-                    <Link to = "/">
-                        <BtnRegresar />
-                    </Link>
+                    
+                    <BtnRegresar />
+                    
                     {
                         loading &&
                         <div class="preloader-wrapper small active">

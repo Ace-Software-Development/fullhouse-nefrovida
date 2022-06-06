@@ -15,7 +15,8 @@ import { ReactSession } from 'react-client-session'
 const PrivateRoute = () => {
     try {
         const sess = ReactSession.get("rol");
-        if (sess) {
+        const token = ReactSession.get("sessionToken");
+        if (sess && token) {
             return <Outlet />;
         }
         else {

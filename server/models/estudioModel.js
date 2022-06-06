@@ -1,4 +1,5 @@
 let CONSTANTS = require("../constantsProject");
+const { obtenerColaboradorUsuario } = require("./colaboradorModel");
 
 const Estudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
 const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
@@ -52,9 +53,11 @@ exports.registrarResultadosEstudio = async(data) => {
 
         // Asignar el pointer de idPaciente al estudio, y asignar la química que lo creo.
         estudio.set(CONSTANTS.IDPACIENTE, paciente);
-        estudio.set(CONSTANTS.IDUSUARIO, Parse.User.current());
+        
 
         try {
+            const colaborador = await obtenerColaboradorUsuario(data.usuario);
+            estudio.set(CONSTANTS.IDUSUARIO, colaborador.colaborador);
             // Guardar el nuevo estudio
             const estudioSaved = await estudio.save();
 

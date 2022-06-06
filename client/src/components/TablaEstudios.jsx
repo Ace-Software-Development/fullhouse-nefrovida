@@ -8,11 +8,12 @@ const TablaEstudios = ({ datos, idPaciente}) => {
     ))
 
 return(
-    <div>
-        <div className="card contenedor tabla-altura">
-        <table id="estudios" className="highlight">     
-            <thead  >
-            <tr className="figma"  >
+    <div className="animate-new-element">
+        <div>
+            <div className="card contenedor tabla-altura">
+            <table id="estudios" className="highlight">     
+                <thead  >
+                <tr className="figma"  >
 
                 <th className="tabla-padding">
                     Tipo de estudio
@@ -37,8 +38,6 @@ return(
             { tableContent }
         </table>
         </div>  
-        <br/>
-        <br/>
     </div>
     )
 }

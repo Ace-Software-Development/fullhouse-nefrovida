@@ -8,7 +8,7 @@ const Tabla = ({ datos }) => {
   ))
 
   return(
-    <>
+    <div className="animate-new-element">
       <div className="card contenedor tabla-altura"  >
         <table id="doctores" className="highlight"  >
             
@@ -34,7 +34,7 @@ const Tabla = ({ datos }) => {
       </div>  
       <br  />
       <br  />
-    </>
+    </div>
   )
 }
 
