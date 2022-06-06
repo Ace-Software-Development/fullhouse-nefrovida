@@ -1,10 +1,10 @@
 // Datos de ejemplo
 import FilaTablaEstudios from './FilaTablaEstudios';
 
-const TablaEstudios = ({ datos }) => {
+const TablaEstudios = ({ datos, idPaciente}) => {
 
     const tableContent = datos.map((estudio, index) =>(
-        <FilaTablaEstudios key = { index } estudio = { estudio } />
+        <FilaTablaEstudios key = { index } estudio = { estudio } idPaciente = {idPaciente}/>
     ))
 
 return(
@@ -29,7 +29,9 @@ return(
                 <th className="center">
                     Detalle
                 </th>
-
+                <th className="center">
+                    PDF
+                </th>
             </tr>
             </thead>
             { tableContent }

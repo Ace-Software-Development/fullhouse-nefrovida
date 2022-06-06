@@ -205,6 +205,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudio = new Parse.Query(tablaEstudio);
     queryObtenerEstudio.include(CONSTANTS.IDTIPOESTUDIO);
+    queryObtenerEstudio.include(CONSTANTS.IDPACIENTE);
     try {
         const estudio = await queryObtenerEstudio.get(idEstudio);
         
@@ -233,6 +234,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
             })
 
             const estudioPaciente = {
+                nombrePaciente: jsonEstudio.idPaciente.nombre + " " + jsonEstudio.idPaciente.apellidoPaterno + " " + jsonEstudio.idPaciente.apellidoMaterno,
                 idEstudio: idEstudio,
                 nombreTipoEstudio: jsonEstudio.idTipoEstudio.nombre,
                 fechaEstudio: jsonEstudio.fecha,

@@ -18,6 +18,7 @@ import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import Temp from './pages/Temp';
+import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 
 
 function App() {
@@ -47,6 +48,10 @@ function App() {
           
           <Route exact path='/estudio/:idEstudio' element={<PrivateRoute/>}>
             <Route exact path='/estudio/:idEstudio' element={<ConsultarEstudioPaciente/>} />
+          </Route>
+
+          <Route exact path='/estudio/PDF/:idEstudio' element={<PrivateRoute/>}>
+            <Route exact path='/estudio/PDF/:idEstudio/:idPaciente' element={<GenerarEstudioPDF/>} />
           </Route>
 
           <Route exact path='/paciente/:idPaciente/estudios' element={<PrivateRoute/>}>

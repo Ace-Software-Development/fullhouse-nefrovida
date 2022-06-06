@@ -156,7 +156,7 @@ export default function EstudiosLaboratorio() {
                     <br/>
                 </div>
                 ) 
-                : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
+                : <div className="animate-new-element"> <TablaEstudios datos = { estudios } idPaciente = {id} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }

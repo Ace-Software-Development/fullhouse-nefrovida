@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom'
 
 
-const FilaTablaEstudios = ({ estudio }) => {
+const FilaTablaEstudios = ({ estudio, idPaciente }) => {
     const route = "/estudio/" + estudio.objectIdEstudio
+    const routePDF = "/estudio/PDF/" + estudio.objectIdEstudio + "/" + idPaciente
 
     return(
         <tbody>
@@ -33,6 +34,14 @@ const FilaTablaEstudios = ({ estudio }) => {
                 
                 <td className="center">
                     <Link to = { route }>
+                        <i className="material-icons">
+                        insert_drive_file
+                        </i>
+                    </Link>
+                </td>
+
+                <td className="center">
+                    <Link to = { routePDF }>
                         <i className="material-icons">
                         insert_drive_file
                         </i>
