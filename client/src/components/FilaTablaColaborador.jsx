@@ -10,15 +10,11 @@ const FilaTablaColaborador = ({ colaborador }) => {
           <a href = { route }  >
             { colaborador.nombre } { colaborador.apellidoPaterno } { colaborador.apellidoMaterno }
           </a>
-          <br/>
-          <a className="tabla-sexo">
-            { colaborador.username }
-          </a>
         </td>
         
         <td  >
           <a href = { route }>
-            { colaborador.email }
+            { colaborador.username }
           </a>
         </td>
       

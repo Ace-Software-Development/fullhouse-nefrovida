@@ -20,7 +20,7 @@ return(
                 </th>
                 
                 <th>
-                    Correo
+                    Usuario
                 </th>
 
                 <th>
