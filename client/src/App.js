@@ -17,7 +17,6 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
-import Temp from './pages/Temp';
 import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
 
