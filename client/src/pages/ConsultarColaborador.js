@@ -53,7 +53,7 @@ export default function ConsultarColaborador() {
         if (ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
-        getPacientes(params.username);
+        getColaboradores(params.username);
     }, [])
 
 
