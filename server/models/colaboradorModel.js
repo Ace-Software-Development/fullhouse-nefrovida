@@ -1,6 +1,7 @@
 const parseServer = require('parse-server').ParseServer;
 let CONSTANTS = require('../constantsProject');
 const rolModel = require('../models/rolModel');
+const seguridad = require('../util/seguridad');
 
 /**
  * obtenerTodos Función asíncrona que retorna lista completa de colaboradores registrados en base de datos.
@@ -51,6 +52,29 @@ exports.obtenerColaborador = async(id) => {
 }
 
 /**
+ * obtenerColaboradorUsuario Función asíncrona para buscar información de colaborador en base de datos dado un usuario.
+ * @param {string} usuario credencial de acceso de Colaborador
+ * @returns json con colaborador o mensaje de error.
+ */
+exports.obtenerColaboradorUsuario = async(usuario) => {
+    const queryColab = new Parse.Query(Parse.User);
+    queryColab.equalTo(CONSTANTS.USUARIO, usuario);
+
+    try {
+        var colab = await queryColab.first();
+        return {
+            colaborador: colab,
+            error: null
+        }
+    } catch(error) {
+        return {
+            colaborador: null,
+            error: error
+        }
+    }
+}
+
+/**
  * resultsRegistrarColaborador Función auxiliar para armar json de respuesta a registro de colaborador.
  * @param {object} colab objeto con información del colaborador registrado.
  * @param {string} error Mensaje de error en caso de haberlo.
@@ -61,6 +85,20 @@ function resultsRegistrarColaborador(colab, error){
         colaborador: colab,
         error: error
     };
+}
+
+
+/**
+ * Función auxiliar para retornar los datos y el error.
+ * @param {Object} data - Datos a retornar
+ * @param {string} error - Mensaje de error en caso de existir
+ * @returns 
+ */
+function resultsColaborador(data, error) {
+    return {
+        data: data,
+        error: error
+    }
 }
 
 /**
@@ -76,24 +114,27 @@ exports.registrarColaborador = async(params) => {
     try {
         const colaboradorT = await queryTelefonoUnico.first();
         // Si ya existe registro con dicho teléfono, retornar mensaje de error.
-        if (colaboradorT) {
+        if (colaboradorT && params.telefono) {
             return resultsRegistrarColaborador(colaboradorT, 'Ya existe un empleado registrado con dicho teléfono.');
         }
         // Si no existe un empleado con dicho teléfono aún, crear registro.
         const colaborador = new Parse.User();
         colaborador.set(CONSTANTS.USUARIO, params.usuario);
         colaborador.set(CONSTANTS.NOMBRE, params.nombre);
-        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.paterno);
-        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.materno);
+        colaborador.set(CONSTANTS.APELLIDOPATERNO, params.apellidoPaterno);
+        colaborador.set(CONSTANTS.APELLIDOMATERNO, params.apellidoMaterno);
         colaborador.set(CONSTANTS.CORREO, params.correo);
         colaborador.set(CONSTANTS.TELEFONO, params.telefono);
         colaborador.set(CONSTANTS.CONTRASENA, params.password)
         colaborador.set(CONSTANTS.ACTIVO, true);
-        colaborador.set(CONSTANTS.IDROL, params.idRol);
+        const rol = Parse.Object.extend("Rol")
+        let rolPointer = new rol();
+        rolPointer.id = params.rol;
+        colaborador.set("idRol", rolPointer);
 
         try {
             // Dar de alta colaborador en base de datos.
-            const colab = await colaborador.signUp();
+            const colab = await colaborador.save();
             return resultsRegistrarColaborador(colab, null);
 
         } 
@@ -141,11 +182,13 @@ exports.iniciarSesionColaborador = async(params) => {
             // Consultar rol del usuario autenticado y devolverlo en json.
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
+            const token = seguridad.encriptar(nombreRol, process.env.SECRET_ENCRYPT);
+            
             return {
                 usuario: colaborador.username,
                 nombre: colaborador.nombre,
                 apellido: colaborador.apellidoPaterno,
-                sessionToken: colaborador.sessionToken,
+                sessionToken: token,
                 rol: nombreRol,
                 error: null
             }
@@ -192,4 +235,64 @@ exports.cerrarSesionColaborador = async() => {
             error: error.message
         }
     }
+}
+
+/**
+ * asyncBuscarPorUsuario función asíncrona para buscar a un colaborador por su username. 
+ * @param {string} username - Username del colaborador a buscar
+ * @returns Información del colaborador en caso de encontrarlo o un error en caso de no existir.
+ */
+exports.buscarPorUsuario = async (username) => {
+    const Table = Parse.Object.extend(Parse.User);
+    let query = new Parse.Query(Table);
+    query.equalTo(CONSTANTS.USUARIO, username);
+    query.include(CONSTANTS.IDROL);
+
+    try {
+        const results = await query.first();
+        console.log("Resultado", results)
+        // Enviar error si no existe un colaborador con ese username
+        if ( !results ) {
+            return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
+        }
+        // Enviar el error si el colaborador no esta activo
+        if ( !results.get(CONSTANTS.ACTIVO)) {
+            return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
+        }
+        console.log("Resultado", results)
+        return resultsColaborador(results, null);
+
+    } catch (error) {
+        return resultsColaborador(null, error.message);
+    }
+}
+
+/**
+ * asynConsultarColaboradores función asíncrona para consultar todos los colaboradores de Nefrovida.
+ * @returns Todos los colaboradores registrados en Nefrovida.
+ */
+exports.consultarColaboradores = async () => {
+    const table = Parse.Object.extend(Parse.User);
+    let query = new Parse.Query(table);
+    query.include(CONSTANTS.IDROL);
+    
+    try {
+        const results = await query.find();
+
+        if (!results) {
+            return {
+                data: null,
+                error: 'No hay empleados registrados actualmente'
+            }
+        }
+        return {
+            data: results,
+            error: null
+        }
+    } catch (error) {
+        return {
+            data: null,
+            error: error.message
+        }
+    } 
 }

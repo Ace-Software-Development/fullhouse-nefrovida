@@ -17,8 +17,11 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
-import Temp from './pages/Temp';
 import RegistrarResumenConsulta from './pages/RegistrarResumenConsulta';
+import DetalleColaborador from './pages/DetalleColaborador';
+import ConsultarColaborador from './pages/ConsultarColaborador';
+import RegistrarColaborador from './pages/RegistrarColaborador';
+import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 
 
 function App() {
@@ -50,6 +53,10 @@ function App() {
             <Route exact path='/estudio/:idEstudio' element={<ConsultarEstudioPaciente/>} />
           </Route>
 
+          <Route exact path='/estudio/PDF/:idEstudio' element={<PrivateRoute/>}>
+            <Route exact path='/estudio/PDF/:idEstudio/:idPaciente' element={<GenerarEstudioPDF/>} />
+          </Route>
+
           <Route exact path='/paciente/:idPaciente/estudios' element={<PrivateRoute/>}>
             <Route exact path='/paciente/:idPaciente/estudios' element={<EstudiosLaboratorio/>} />
           </Route>
@@ -66,10 +73,20 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-          <Route exact path='/registrarConsulta' element={<RegistrarResumenConsulta />} />
+          <Route exact path='/registrarConsulta' element={<PrivateRoute/>}>
+            <Route exact path='/registrarConsulta' element={<RegistrarResumenConsulta />} />
+          </Route>
 
-          <Route exact path='/temp' element={<PrivateRoute/>}>  
-            <Route exact path='/temp' element={<Temp />} />
+          <Route exact path='/colaborador' element={<PrivateRoute/>}>
+            <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/registrarColaborador' element={<PrivateRoute/>}>
+            <Route exact path='/registrarColaborador' element={<RegistrarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
+            <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
           </Route>
 
           <Route exact path='/403' element={<PrivateRoute/>}>
@@ -86,7 +103,5 @@ function App() {
     
   )
 }
-
-// idEstudio = "MdQLqakPBb"
 
 export default App;
