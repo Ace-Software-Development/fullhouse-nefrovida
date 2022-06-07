@@ -226,7 +226,7 @@ const RegistrarColaborador = () => {
         <div>   
                 <Navbar/>
                 <Main>
-                <br></br>
+                <br/><br/><br/><br/>
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Empleado"/>
                     <ContainerForm>
