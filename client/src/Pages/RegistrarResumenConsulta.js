@@ -52,6 +52,7 @@ return(
                     <div>
                         <LineaCampos>
                                 <br/>
+                                <div align="left">
                                 <Input 
                                     id="consulta" 
                                     label="Escribe las notas de la consulta aquí" 
@@ -60,6 +61,7 @@ return(
                                     tamano="m12 s12"
                                     //onChange = { handleChange }
                                     />
+                                </div>
                         </LineaCampos>
                         <br/><br/>
                         <BtnGuardar form="registrar-estudio"/> 
