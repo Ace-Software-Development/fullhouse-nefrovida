@@ -19,7 +19,6 @@ import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
-import TiposEstudio from './pages/TiposEstudio';
 import RegistrarColaborador from './pages/RegistrarColaborador';
 
 
