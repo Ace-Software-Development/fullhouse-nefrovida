@@ -1,11 +1,14 @@
-let CONSTANTS = require("../constantsProject");
+const CONSTANTS = require("../constantsProject");
+const parametroEstudio = require("./parametroEstudioModel");
+
+const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
 
 
    /**
     * Función auxiliar para retornar los datos y el error.
     * @param {Object} data - Datos a retornar
     * @param {string} error - Mensaje de error en caso de existir
-    * @returns 
+    * @returns
     */
    function results(data, error) {
       return {
@@ -16,14 +19,14 @@ let CONSTANTS = require("../constantsProject");
 
 
    /**
-    * asyncConsularParametrosDeEstudio Función asíncrona para obtener todos los parámetros 
+    * asyncConsultarParametrosDeEstudio Función asíncrona para obtener todos los parámetros
     * de un estudio; recibe el ID del estudio que desea buscar.
     * @param {string} idTipoEstudio ObjectId del tipo de estudio
     * @returns Lista con todos los parámetros del tipo de estudio y la información del tipo de estudio.
     */
 
 
-   exports.consularParametrosDeEstudio = async(idTipoEstudio) => {
+   exports.consultarParametrosDeEstudio = async(idTipoEstudio) => {
       const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
       let query = new Parse.Query(table);
 
@@ -32,8 +35,8 @@ let CONSTANTS = require("../constantsProject");
 
          // Obtener el tipo de estudio
          const tipoEstudio = await query.get(idTipoEstudio);
-         
-         // Obtener de la tabla ParametroEstudio todos los registros cuyo 
+
+         // Obtener de la tabla ParametroEstudio todos los registros cuyo
          // pointer a idTipoEstudio sea el estudio.
          const tableParametroEstudio = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
          let queryParametros = new Parse.Query(tableParametroEstudio);
@@ -44,7 +47,7 @@ let CONSTANTS = require("../constantsProject");
 
          try {
                let parametros = await queryParametros.find();
-         
+
                // Mostrar error si no hay parámetros
                if (!parametros || parametros === []) {
                   return results(null, 'No hay parámetros registrados para este tipo de estudio.');
@@ -95,12 +98,48 @@ exports.consultarTiposDeEstudio = async() => {
          error: null
       }
    } catch (error) {
-      
+
       //Devolver error al intentar obtener tipos de estudio
       return {
          data: null,
          error: error.message
       }
+   }
+
+}
+
+
+/**
+ * asyncRegistrarTipoEstudio Función asíncrona para registrar un nuevo tipo de estudio,
+ * recibe los datos del tipo de estudio a guardar.
+ * @param {object} data - Objeto que contenga la información del nuevo tipo de estudio
+ * @returns Información del nuevo tipo de estudio o un error en caso de existir.
+ */
+exports.registrarTipoEstudio = async(data) => {
+   try {
+      const tipoEstudio = new TipoEstudio();
+      tipoEstudio.set(CONSTANTS.NOMBRE, data.nombre);
+      tipoEstudio.set(CONSTANTS.DESCRIPCION, data.descripcion);
+
+      if (data.codigo) {
+         tipoEstudio.set(CONSTANTS.CODIGO, data.codigo);
+      }
+
+      const resultsTipoEstudio = await tipoEstudio.save()
+      try {
+         data.parametros.map(async(idParametro) => {
+            resultsTipoEstudio = await parametroEstudio.registrarParametroEstudio( idParametro, data.idTipoEstudio)
+
+         })
+      } catch (error) {
+         return results(null, error.message);
+
+      }
+      return results(resultsTipoEstudio, null);
+
+   } catch (error) {
+
+      return results(null, error.message);
    }
 
 }

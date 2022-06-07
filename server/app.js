@@ -78,6 +78,8 @@ app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
 
 app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
+app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
+
 // app.get("*", (req, res) => {
 // 	res.sendFile(
 // 			path.join(__dirname,

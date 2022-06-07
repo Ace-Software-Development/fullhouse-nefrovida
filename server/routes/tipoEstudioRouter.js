@@ -11,4 +11,7 @@ router.get('/',authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.
 // ruta get para consutar los detalles y parametros de un tipo de estudio
 router.get('/id', authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.consultarTipoEstudio);
 
+// ruta post para registrar un nuevo tipo de estudio
+router.post('/registrar', authRol([CONSTANTS.ROLQUIMICO]), tipoEstudio.registrarTipoEstudio);
+
 module.exports = router;
