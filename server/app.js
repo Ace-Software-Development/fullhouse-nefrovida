@@ -76,6 +76,8 @@ app.use('/estudio', require('./routes/estudioRouter'));
 
 app.use('/tipoEstudio', require('./routes/tipoEstudioRouter'));
 
+app.use('/parametro', require('./routes/parametroRouter'));
+
 app.get('*', function(request, response) {
     response.status(404).send();
 })

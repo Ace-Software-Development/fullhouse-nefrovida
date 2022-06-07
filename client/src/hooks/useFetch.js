@@ -101,7 +101,6 @@ const useFetch = (url) => {
         } 
         // Si se desea realizar un GET
         else if (methodLocal === 'GET') {
-            console.log("data: " + data);
             await setItemId(data);
             await setMethod(methodLocal);
             await setConfig( {
