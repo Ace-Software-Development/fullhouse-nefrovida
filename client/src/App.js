@@ -18,6 +18,7 @@ import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import TiposEstudio from './pages/TiposEstudio';
+import EditarPaciente from './pages/EditarPaciente';
 
 
 
@@ -58,6 +59,10 @@ function App() {
             <Route exact path='/paciente' element={<RegistrarPaciente />} />
           </Route>
 
+          <Route exact path='/paciente/editar/:curp' element={<PrivateRoute/>}>  
+            <Route exact path='/paciente/editar/:curp' element={<EditarPaciente />} />
+          </Route>
+
           <Route exact path='/paciente/:curp' element={<PrivateRoute/>}>
             <Route exact path= '/paciente/:curp' element={<DetallePaciente/>}/>
           </Route>
@@ -65,6 +70,7 @@ function App() {
           <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<PrivateRoute/>}>  
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
+
 
           <Route exact path='/403' element={<PrivateRoute/>}>
             <Route exact path='/403' element={<Forbidden />} />
