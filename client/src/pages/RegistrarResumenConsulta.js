@@ -121,8 +121,7 @@ return(
             <Card>
             <CardTitulo icono="note_add" titulo="Registrar resumen de consulta"/>
                 <ContainerForm>
-                
-                <Link to = "/">
+                <Link to = "/paciente/:curp">
                     <BtnRegresar/>
                 </Link>
                 <div className='subrayado c-000000 right-align'>  { fecha } </div><br/><br/>
@@ -167,7 +166,9 @@ return(
                                 </div>
                         </LineaCampos>
                         <br/><br/>
-                        <BtnGuardar/> 
+                        <Link to = {"/paciente/" + params.curp}>
+                            <BtnGuardar/> 
+                        </Link>
                         </form>
                         </div>
                     : null

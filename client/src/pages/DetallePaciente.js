@@ -20,6 +20,7 @@ import { ReactSession } from 'react-client-session';
 
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
+import BtnEditRegis from '../components/BtnEditRegis';
 
 
 function DetallePaciente() {
@@ -121,6 +122,10 @@ function DetallePaciente() {
             { ReactSession.get('rol') === 'admin' &&
                 <TiposEstudio/>
             }
+            <br/><br/>
+            <Link to = {"/registrarConsulta/" + params.curp}>
+                <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+            </Link>
             </Main>
         </div>
     )
