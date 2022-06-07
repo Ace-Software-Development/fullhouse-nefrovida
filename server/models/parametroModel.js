@@ -34,3 +34,8 @@ exports.consultarTiposDeValor = async() => {
         return resultsTipoValor(null, error.message);
     }
 }
+
+exports.registrarParametro = async(data) => {
+    console.log(data);
+    return resultsTipoValor(null, null);
+}

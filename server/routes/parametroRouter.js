@@ -9,4 +9,9 @@ router.get('/tipoValor',
     authRol([CONSTANTS.ROLQUIMICO]),
     parametroController.consultarTiposDeValor);
 
+// Ruta de tipo 'POST' para registrar un nuevo parámetro
+router.post('/registrar',
+    authRol([CONSTANTS.ROLQUIMICO]),
+    parametroController.registrarParametro);
+
 module.exports = router;

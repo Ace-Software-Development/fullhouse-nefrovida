@@ -42,7 +42,7 @@ export default function RegistrarNuevoParametro() {
         register('tipoParametro', {
             required: {
                 value: true,
-                message: 'El tipoParametro es requerido'
+                message: 'El tipo de parámetro es requerido'
             }
         });
 
@@ -69,6 +69,50 @@ export default function RegistrarNuevoParametro() {
         });
     }
 
+    /**
+    * Función para realizar las validaciones necesarias para los valores de referencia
+    */
+    function valueValidation() {
+
+        if (paramTipo === 'Numérico') {
+            // Variable para el valor inicial, requerido
+            register('valInicial', {
+                required: {
+                    value: true,
+                    message: 'El valor inicial de referencia es requerido'
+                }
+            });
+
+            // Variable para el valor inicial, requerido
+            register('valFinal', {
+                required: {
+                    value: true,
+                    message: 'El valor final de referencia es requerido'
+                }
+            });
+        }
+
+        else if (paramTipo === 'Texto') {
+            // Variable para el valor inicial, requerido
+            register('valString', {
+                required: {
+                    value: true,
+                    message: 'El valor de referencia es requerido'
+                }
+            });
+        }
+
+        else if (paramTipo === 'Positivo/Negativo') {
+            // Variable para el valor inicial, requerido
+            register('valorBool', {
+                required: {
+                    value: true,
+                    message: 'El valor de referencia es requerido'
+                }
+            });
+        }
+    }
+
 
     /**
     * Hook que se ejecuta al renderizar, y obtiene los tipos de valor
@@ -89,7 +133,6 @@ export default function RegistrarNuevoParametro() {
      * @returns Lista con todos los tipos de dato.
      */
     async function getTiposValor() {
-        console.log('get');
         httpConfig(null, 'GET');
     }
     
@@ -113,6 +156,9 @@ export default function RegistrarNuevoParametro() {
         }
     }, [responseOk])
 
+    /**
+    * Hook que se ejecuta cuando se obtienen los tipos de valores
+    */
     useEffect(() => {
         setIsLoading(false);
     }, [tiposValor])
@@ -129,9 +175,15 @@ export default function RegistrarNuevoParametro() {
                 }
             } 
         }
-        console.log(e.target.name, e.target.value);
         setValue(e.target.name, e.target.value);
     }
+
+    /**
+    * Hook que se ejecuta cuando se obtienen los tipos de valores
+    */
+    useEffect(() => {
+        valueValidation();
+    }, [paramTipo])
 
     async function onSubmit(data, e) {
         e.preventDefault();
@@ -139,7 +191,7 @@ export default function RegistrarNuevoParametro() {
         console.log('data', data);
     }
 
-    console.log(tiposValor);
+    console.log(errors);
 
     return(
         <div className="row ContainerForm left-align">
@@ -189,7 +241,7 @@ export default function RegistrarNuevoParametro() {
                                     type="text"
                                     tamano = "m4 s12" 
                                     onChange = { handleChange }
-                                    //elError = { errors.usuario && errors.usuario?.message }
+                                    elError = { errors.nombre && errors.nombre?.message }
                                     maxLength = "20"
                                     requerido = {true}
                                 />
@@ -200,7 +252,7 @@ export default function RegistrarNuevoParametro() {
                                     value = ""
                                     arr = { tiposValor }
                                     handleChange = { handleChange }
-                                    //elError = { errors.sexo && errors.sexo?.message }
+                                    elError = { errors.tipoParametro && errors.tipoParametro?.message }
                                     requerido = { true }
                                 />
                                 <Select 
@@ -210,7 +262,7 @@ export default function RegistrarNuevoParametro() {
                                     tamano = "m4 s12"
                                     arr = { [{ value: true, option: "Verdadero"}, {value: false, option: "Falso" }] }
                                     handleChange = { handleChange }
-                                    // elError = { errors.sexo && errors.sexo?.message }
+                                    elError = { errors.rango && errors.rango?.message }
                                     requerido = { true }
                                 />
 
@@ -225,7 +277,7 @@ export default function RegistrarNuevoParametro() {
                                     maxLength = "10"
                                     min = "0"
                                     onChange = { handleChange }
-                                    //elError = { errors.sexo && errors.sexo?.message }
+                                    elError = { errors.unidad && errors.unidad?.message }
                                     requerido = { false }
                                 />
                                 <Input 
@@ -236,7 +288,7 @@ export default function RegistrarNuevoParametro() {
                                     onChange = { handleChange }
                                     maxLength = "10"
                                     min = "0"
-                                    //elError = { errors.telefono && errors.telefono?.message }
+                                    elError = { errors.codigo && errors.codigo?.message }
                                 />
                                 {
                                     paramTipo === 'Numérico' &&
@@ -249,18 +301,18 @@ export default function RegistrarNuevoParametro() {
                                             onChange = { handleChange }
                                             maxLength = "10"
                                             min = "0"
-                                            //elError = { errors.telefono && errors.telefono?.message }
+                                            elError = { errors.valInicial && errors.valInicial?.message }
                                             requerido = { true }
                                         />
                                         <Input 
-                                            id = "ValFinal" 
+                                            id = "valFinal" 
                                             label = "Valor final" 
                                             type = "number"
                                             tamano = "s12 m2"
                                             onChange = { handleChange }
                                             maxLength = "10"
                                             min = "0"
-                                            //elError = { errors.telefono && errors.telefono?.message }
+                                            elError = { errors.valFinal && errors.valFinal?.message }
                                             requerido = { true }
                                         />
                                     </div>
@@ -275,7 +327,7 @@ export default function RegistrarNuevoParametro() {
                                             onChange = { handleChange }
                                             maxLength = "10"
                                             min = "0"
-                                            //elError = { errors.telefono && errors.telefono?.message }
+                                            elError = { errors.valString && errors.valString?.message }
                                             requerido = { true }
                                         />
                                 }
@@ -288,7 +340,7 @@ export default function RegistrarNuevoParametro() {
                                         tamano = "m4 s12"
                                         arr = { [{ value: true, option: "Positivo"}, {value: false, option: "Negativo" }] }
                                         handleChange = { handleChange }
-                                        // elError = { errors.sexo && errors.sexo?.message }
+                                        elError = { errors.valorBool && errors.valorBool?.message }
                                         requerido = { true }
                                     />
 

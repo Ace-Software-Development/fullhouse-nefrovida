@@ -11,8 +11,6 @@ module.exports.consultarTiposDeValor = async(request, response) => {
     try {
         const results = await parametroModel.consultarTiposDeValor();
 
-        console.log = JSON.parse(JSON.stringify(results));
-
         // Envía error en caso de ser necesario
         if (results.error) {
             return response.status(400).send({
@@ -30,6 +28,38 @@ module.exports.consultarTiposDeValor = async(request, response) => {
 
     } catch(error) {
         response.status(400).send({
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        })
+    }
+}
+
+/**
+ * asyncRegistrarParametro Función asíncrona para registrar un nuevo parámetro, 
+ * llama a la función registrarParametro en el modelo de parámetro.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+module.exports.registrarParametro = async(request, response) => {
+    try {
+        const results = await parametroModel.registrarParametro(request.body);
+
+        if (results.error) {
+            return response.status(400).send( {
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            })
+        }
+        response.status(200).send( {
+            success: 'true',
+            data: results,
+            message: 'Paciente creado exitosamente'
+        })
+    } catch(error) {
+        return response.status(400).send( {
             status: 'error',
             data: null,
             message: 'Error. ' + error.message
