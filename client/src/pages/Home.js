@@ -5,7 +5,7 @@ import RegistrarColaborador from '../pages/RegistrarColaborador'
 import ConsultarPacientes from './ConsultarPacientes'
 import { ReactSession } from 'react-client-session';
 import TiposEstudio from './TiposEstudio';
-
+import ConsultarColaborador from './ConsultarColaborador';
 
 function Home() {
     return (
@@ -17,7 +17,7 @@ function Home() {
             <br/><br/>
             { ReactSession.get('rol') === 'admin' &&
                 <div>
-                    <RegistrarColaborador/>
+                    <ConsultarColaborador/>
                     <TiposEstudio/>
                 </div>
                 

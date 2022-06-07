@@ -17,9 +17,11 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
+import DetalleColaborador from './pages/DetalleColaborador';
+import ConsultarColaborador from './pages/ConsultarColaborador';
+import RegistrarColaborador from './pages/RegistrarColaborador';
 import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
-
 
 
 function App() {
@@ -69,6 +71,18 @@ function App() {
 
           <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<PrivateRoute/>}>  
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
+          </Route>
+
+          <Route exact path='/colaborador' element={<PrivateRoute/>}>
+            <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/registrarColaborador' element={<PrivateRoute/>}>
+            <Route exact path='/registrarColaborador' element={<RegistrarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
+            <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
           </Route>
 
           <Route exact path='/403' element={<PrivateRoute/>}>
