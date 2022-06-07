@@ -14,30 +14,91 @@ import BtnAnadirParametro from '../components/BtnAnadirParametro';
 import BtnEditRegis from '../components/BtnEditRegis';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
+import { useForm } from 'react-hook-form';
+
 
 export default function RegistrarTipoEstudio() {
 
     const [url, setUrl] = useState('/parametro/todos');
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+
     const [parametros, setParametros] = useState([]);
+
+    const [primerParametro, setPrimerParametro] = useState(false);
 
     useEffect(() => {
         httpConfig(null, 'GET')
+
+        // Variable para el nombre, requerido, con patrón.
+        register('nombre', {
+            required: {
+                value: true,
+                message: "El nombre es requerido"
+            },
+            pattern: {
+                value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
+                message: "Nombre inválido"
+            }
+        });
+        // Variable para el descripcion, requerido, con patrón.
+        register('descripcion', {
+            required: {
+                value: true,
+                message: "La descripción es requerida"
+            },
+            pattern: {
+                value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
+                message: "Descripcion inválida"
+            }
+        });
 
     }, [])
 
     useEffect(() => {
         if(responseOk){
-            // console.log(responseJSON);
-            // const parametrosTemp
-            // responseJSON.map((el)=>{
-            //     parametros
-            // })
-            setParametros(responseJSON.data.data)
+            const parametrosTemp = [];
+            responseJSON.data.data.map((el)=>{
+                parametrosTemp.push({value: el.objectId , option : el.nombre })
+            });
+            setParametros(parametrosTemp);
+
+            if (url !=='/tipoEstudio/registrar' ){
+                setUrl('/tipoEstudio/registrar');
+            }
+            else{
+                //set data
+            }
         }
+        
 
     },[responseOk])
+
+    function parametrosExisten() {
+        if (parametros[1] !== undefined ){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
+     * @param {event} e - Evento del cambio
+     */
+    const handleChange = (e) => {
+        if(e.target.name === "parametro" && !primerParametro){
+            setPrimerParametro(true);
+        }
+        setValue(e.target.name, e.target.value);
+    }
+
+    async function onSubmit(data, e) {
+        e.preventDefault();
+        httpConfig(data,'POST');
+    }
 
 
 
@@ -78,53 +139,70 @@ return(
                 )*/}
                 {
                     //!isLoading && !errorFetch ?
-                    <div>
-                        <LineaCampos>
-                                <div align="left">
-                                <div className='detalles-usuario'>
-                                <div className="detalles-lista negrita-grande c-64646A left-align"> Información:</div><br/>
-                                </div>
-                                </div>
-                                <br/>
-                                <Input
-                                    id="nombre"
-                                    label="Nombre"
-                                    tamano="m4 s12"
-                                    //onChange = { handleChange }
-                                    />
-                                <Input
-                                    id="descripcion"
-                                    label="Descripción"
-                                    tamano="m6 s12"
-                                    //onChange = { handleChange }
-                                    />
-                        </LineaCampos>
-                        <div className='identificacion-registrar'/>
-                        <br/>
-                        <LineaCampos>
-                                <div align="left">
-                                <div className='detalles-usuario'>
-                                <div className="detalles-lista negrita-grande c-64646A left-align"> Parámetros:</div><br/>
-                                </div>
-                                </div>
-                                <br/>
-                                <Select
-                                    id="parametro"
-                                    label="Parámetro"
-                                    tamano="m3 s12"
-                                    value=""
-                                    arr={ [] }
-                                    //handleChange = { handleChange }
-                                    //elError = { errors.sexo && errors.sexo?.message }
-                                    //requerido = { true }
-                                />
-                        </LineaCampos>
-                        <div className='identificacion-registrar'/>
-                        <br/>
-                        <BtnAnadirParametro/>
-                        <br/><br/><br/><br/><br/><br/>
-                        <BtnGuardar form="registrar-estudio"/>
+                    <div className="on-load-anim">
+                        <form
+                        id = "registar-colaborador"
+                        action = '/tipoEstudio/registrar'
+                        method = 'post'
+                        onSubmit = { handleSubmit(onSubmit) }>
+                            <LineaCampos>
+                                    <div align="left">
+                                    <div className='detalles-usuario'>
+                                    <div className="detalles-lista negrita-grande c-64646A left-align"> Información:</div><br/>
+                                    </div>
+                                    </div>
+                                    <br/>
+                                    <Input
+                                        id="nombre"
+                                        label="Nombre"
+                                        tamano="m4 s12"
+                                        //onChange = { handleChange }
+                                        />
+                                    <Input
+                                        id="descripcion"
+                                        label="Descripción"
+                                        tamano="m6 s12"
+                                        //onChange = { handleChange }
+                                        />
+                                    <Input
+                                        id="codigo"
+                                        label="Codigo"
+                                        tamano="m2 s12"
+                                        //onChange = { handleChange }
+                                        />
+                            </LineaCampos>
+                            <div className='identificacion-registrar'/>
+                            <br/>
+                            <LineaCampos>
+                                    <div align="left">
+                                    <div className='detalles-usuario'>
+                                    <div className="detalles-lista negrita-grande c-64646A left-align"> Parámetros:</div><br/>
+                                    </div>
+                                    </div>
+                                    <br/>
+                                    { parametrosExisten() ?
+                                        <Select
+                                            id="parametro"
+                                            label="Parámetro"
+                                            tamano="m3 s12"
+                                            value=""
+                                            arr={ parametros }
+                                            handleChange = { handleChange }
+                                            //elError = { errors.sexo && errors.sexo?.message }
+                                            requerido = { primerParametro }
+                                        />
+                                        : <></>
+                                    }
+                                    
+                            </LineaCampos>
+                            <div className='identificacion-registrar'/>
+                            <br/>
+                            <BtnAnadirParametro/>
+                            <br/><br/><br/><br/><br/><br/>
+                            <BtnGuardar form="registrar-estudio"/>
+                        </form>
                     </div>
+                    
                     //: null
                 }
                 </ContainerForm>
