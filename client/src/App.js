@@ -20,7 +20,8 @@ import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
 import RegistrarColaborador from './pages/RegistrarColaborador';
-
+import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
+import TiposEstudio from './pages/TiposEstudio';
 
 
 function App() {
