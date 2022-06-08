@@ -113,10 +113,10 @@ return(
             <Card>
             <CardTitulo icono="note_add" titulo="Registrar resumen de consulta"/>
                 <ContainerForm>
-                <Link to = "/paciente/:curp">
+                <Link to = {"/paciente/" + params.curp}>
                     <BtnRegresar/>
                 </Link>
-                <div className='subrayado c-000000 right-align'>  { fecha } </div><br/><br/>
+                <div className='subrayado c-2E7EC8 right-align'>  { fecha } </div><br/><br/>
                 { loading && !isLoading && (
                     <div className="center animate-new-element">
                         <br/>

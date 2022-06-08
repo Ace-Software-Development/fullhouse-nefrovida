@@ -2,6 +2,38 @@ const tipoEstudio = require('../models/tipoEstudioModel')
 
 
 /**
+ * asyncEliminarEstudioPaciente Funciòn asíncrona para registrar los resultados de un
+ * nuevo estudio para un paciente.
+*/
+module.exports.eliminarTipoEstudio = async(request, response) => {
+    try {
+        const results = await tipoEstudio.borrarTipoEstudio(request.body);
+        // Envía error en caso de ser necesario
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            })
+        }
+        // Respuesta exitosa
+        response.status(200).send({
+            success: 'success',
+            data: results.estudio,
+            message: 'Tipo de estudio eliminado exitosamente.'
+        })
+
+    } catch(error) {
+        response.status(400).send({
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        })
+    }
+}
+
+
+/**
 * asyncConsularParametrosDeEstudio Función asíncrona para obtener todos los parámetros 
 * de un estudio; recibe el ID del estudio que desea buscar.
 * @param {object} request Información enviados al servidor
