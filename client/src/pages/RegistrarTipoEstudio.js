@@ -27,8 +27,7 @@ export default function RegistrarTipoEstudio() {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
     const [parametros, setParametros] = useState([]);
-    const [options, setOptions] = useState([{}]);
-    
+
     useEffect(() => {
         httpConfig(null, 'GET')
 
@@ -210,6 +209,7 @@ return(
                                     onChange ={ handleChange }
                                     onSelect={ onSelect }
                                     onRemove={ onRemove }
+                                    closeIcon="cancel"
                                     />
                                     :<></>
                                 }
@@ -223,7 +223,7 @@ return(
                         </form>
                     </div>
 
-                    : 
+                    :
                     error && (
                         <div>
                             <br/><br/><br/>
@@ -235,7 +235,7 @@ return(
                             <br/><br/><br/>
                         </div>
                     )}
-                    
+
                 </ContainerForm>
             </Card>
         </Main>
