@@ -7,7 +7,7 @@ const NotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
  * Función auxiliar para retornar los datos y el error.
  * @param {Object} data - Datos a retornar
  * @param {string} error - Mensaje de error en caso de existir
- * @returns 
+ * @returns - Datos y el error
  */
 function resultsConsulta(data, error) {
     return {

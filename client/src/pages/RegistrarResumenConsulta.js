@@ -65,13 +65,11 @@ export default function RegistrarResumenConsulta() {
 
         let { consulta } = data;
 
-    console.log()
         const usuario = ReactSession.get("usuario");
         let send = {
         usuario: usuario,
         fecha: fecha,
         notas: consulta,
-        //idArea: idArea,
         curp: curp,
     }
 
@@ -79,6 +77,7 @@ export default function RegistrarResumenConsulta() {
         console.log(send)
     };
 
+    
     /**
      * Hook que se ejecuta cada vez que el responseOk cambia, si no fue correcta la respuesta no
      * debe mostrar ningún mensaje. Si la respuesta es correcta muestra un toast con el mensaje 
