@@ -18,6 +18,7 @@ import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
 import ConsultarResumenConsulta from './pages/ConsultarResumenConsulta';
+import RegistrarResumenConsulta from './pages/RegistrarResumenConsulta';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
 import RegistrarColaborador from './pages/RegistrarColaborador';
@@ -81,6 +82,9 @@ function App() {
 
 
           <Route exact path='/consultarConsulta' element={<ConsultarResumenConsulta />} />
+          <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
+            <Route exact path='/registrarConsulta/:curp' element={<RegistrarResumenConsulta />} />
+          </Route>
 
           <Route exact path='/colaborador' element={<PrivateRoute/>}>
             <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>

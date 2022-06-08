@@ -212,7 +212,7 @@ let currentDate = new Date();
 let cDay = currentDate.getDate();
 let cMonth = currentDate.getMonth() + 1;
 let cYear = currentDate.getFullYear();
-let fecha = cYear + "/" + cMonth + "/" + cDay;
+let fecha = cDay + "/" + cMonth + "/" + cYear;
 
 return(
     <div className="row ContainerForm left-align">

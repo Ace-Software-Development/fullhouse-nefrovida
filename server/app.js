@@ -74,9 +74,8 @@ app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
 app.use('/cerrarSesion', authUsuario, require('./routes/cerrarSesionRouter'));
 
-app.use('/paciente', authUsuario, require('./routes/pacienteRouter'))
+app.use('/consulta', authUsuario, require('./routes/consultaRouter'))
 
-app.use('/estudio', authUsuario, require('./routes/estudioRouter'));
 
 // app.get("*", (req, res) => {
 // 	res.sendFile(

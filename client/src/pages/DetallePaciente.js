@@ -19,6 +19,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
+import BtnEditRegis from '../components/BtnEditRegis';
 
 
 function DetallePaciente() {
@@ -117,14 +118,33 @@ function DetallePaciente() {
                 </div>
             }
             { ReactSession.get('rol') === 'doctor' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+                </div>
             }
             { ReactSession.get('rol') === 'nutriologo' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+            </div>
+            }
+            { ReactSession.get('rol') === 'psicologo' &&
+                <div>
+                
+                <Link to = {"/registrarConsulta/" + params.curp}>
+                    <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                </Link>
+            </div>
             }
             { ReactSession.get('rol') === 'admin' &&
                 <TiposEstudio/>
             }
+            <br/><br/>
             </Main>
         </div>
     )
