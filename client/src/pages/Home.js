@@ -1,3 +1,7 @@
+/**
+ * Navegación principal del sistema (engloba las historias consultar colaboradores, consultar pacientes
+ * y consultar tipos de estudio)
+ */
 import Navbar from '../components/Navbar';
 import Main from '../components/Main';
 import Sidenav from '../components/Sidenav'
