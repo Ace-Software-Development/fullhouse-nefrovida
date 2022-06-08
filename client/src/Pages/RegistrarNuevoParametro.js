@@ -1,7 +1,19 @@
+/**
+ * Registrar nuevo parámetro:
+ * Esta vista se utiliza para el químico con la finalidad de registrar un parámetro. 
+ * Se trata de un formulario con ciertos campos obligatorios.
+ * 
+ * Para la verificación en el front para los formularios utilizamos useEffect, useState y 
+ * useForm de react-hook-form.
+ * 
+ * Para capturar los datos y mandarlos al onSubmit() también utilizamos useState, así como una
+ * petición de tipo POST al servidor que se ejecuta al mismo tiempo que esta app web.
+ */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import { useForm } from 'react-hook-form';
+import M from "materialize-css/dist/js/materialize.min.js";
 import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
@@ -17,12 +29,13 @@ import useFetch from '../hooks/useFetch';
 
 export default function RegistrarNuevoParametro() {
     const urlGet = 'http://localhost:6535/parametro/tipoValor';
+    const urlPost = 'http://localhost:6535/parametro/registrar';
     const [url, setUrl] = useState(urlGet);
     const [tiposValor, setTiposValor] = useState([]);
     const [paramTipo, setParamTipo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const {register, unregister, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
 
     /**
@@ -46,14 +59,6 @@ export default function RegistrarNuevoParametro() {
             }
         });
 
-        // Variable booleana para el rango, requerido
-        register('rango', {
-            required: {
-                value: true,
-                message: 'Este campo es requerido'
-            }
-        });
-
         // Variable booleana para la unidad, no requerido
         register('unidad', {
             required: {
@@ -69,12 +74,17 @@ export default function RegistrarNuevoParametro() {
         });
     }
 
+    console.log(paramTipo);
+
     /**
     * Función para realizar las validaciones necesarias para los valores de referencia
     */
     function valueValidation() {
 
         if (paramTipo === 'Numérico') {
+            unregister('valBool');
+            unregister('valString');
+
             // Variable para el valor inicial, requerido
             register('valInicial', {
                 required: {
@@ -90,9 +100,22 @@ export default function RegistrarNuevoParametro() {
                     message: 'El valor final de referencia es requerido'
                 }
             });
+
+            // Variable booleana para el rango, requerido
+            register('rango', {
+                required: {
+                    value: true,
+                    message: 'Este campo es requerido'
+                }
+            });
         }
 
         else if (paramTipo === 'Texto') {
+            unregister('valInicial');
+            unregister('valFinal');
+            unregister('valBool');
+            unregister('rango');
+
             // Variable para el valor inicial, requerido
             register('valString', {
                 required: {
@@ -103,8 +126,13 @@ export default function RegistrarNuevoParametro() {
         }
 
         else if (paramTipo === 'Positivo/Negativo') {
+            unregister('valInicial');
+            unregister('valFinal');
+            unregister('valString');
+            unregister('rango');
+
             // Variable para el valor inicial, requerido
-            register('valorBool', {
+            register('valBool', {
                 required: {
                     value: true,
                     message: 'El valor de referencia es requerido'
@@ -140,6 +168,7 @@ export default function RegistrarNuevoParametro() {
         if (!responseJSON || !responseOk) {
             return;
         } else {
+            // Si estamos haciendo el get guardamos los tipos de datos
             if (url === urlGet) {
                 setIsLoading(true);
                 const data = responseJSON.data.data;
@@ -152,6 +181,15 @@ export default function RegistrarNuevoParametro() {
                     tipos.push(obj);
                 }
                 setTiposValor(tipos);
+                // Cambiamos la url
+                setUrl(urlPost);
+            } else if (url === urlPost) {
+                // Mostramos un mensaje en un toaster
+                setIsLoading(true);
+                M.toast({ html: responseJSON.message });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
             }
         }
     }, [responseOk])
@@ -188,7 +226,26 @@ export default function RegistrarNuevoParametro() {
     async function onSubmit(data, e) {
         e.preventDefault();
 
+        if (paramTipo === 'Positivo/Negativo') {
+            if (data.valBool === 'true') {
+                data.valBool = true;
+            } else if (data.valBool === 'false') {
+                data.valBool = false;
+            }
+        } else if (paramTipo === 'Numérico') {
+            if (data.rango === 'true') {
+                data.rango = true;
+            } else if (data.rango === 'false') {
+                data.rango = false;
+            }
+
+            data.valInicial = Number(data.valInicial);
+            data.valFinal = Number(data.valFinal);
+        }
+
         console.log('data', data);
+
+        httpConfig(data, 'POST');
     }
 
     console.log(errors);
@@ -222,7 +279,7 @@ export default function RegistrarNuevoParametro() {
                                 </div>
                                 </div>
                             </div>
-                            <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
+                            <div class="texto-grande blue-text text-darken-1">Cargando</div>
                             <br/><br/><br/>
                         </div>
                     }
@@ -255,31 +312,6 @@ export default function RegistrarNuevoParametro() {
                                     elError = { errors.tipoParametro && errors.tipoParametro?.message }
                                     requerido = { true }
                                 />
-                                <Select 
-                                    id = "rango"  
-                                    label = "¿Tiene rango?"
-                                    value = ""
-                                    tamano = "m4 s12"
-                                    arr = { [{ value: true, option: "Verdadero"}, {value: false, option: "Falso" }] }
-                                    handleChange = { handleChange }
-                                    elError = { errors.rango && errors.rango?.message }
-                                    requerido = { true }
-                                />
-
-                            </LineaCampos>
-
-                            <LineaCampos>
-                                <Input 
-                                    id = "unidad" 
-                                    label = "Unidad" 
-                                    tamano = "s12 m4"
-                                    type = "text"
-                                    maxLength = "10"
-                                    min = "0"
-                                    onChange = { handleChange }
-                                    elError = { errors.unidad && errors.unidad?.message }
-                                    requerido = { false }
-                                />
                                 <Input 
                                     id = "codigo" 
                                     label = "Código" 
@@ -290,6 +322,34 @@ export default function RegistrarNuevoParametro() {
                                     min = "0"
                                     elError = { errors.codigo && errors.codigo?.message }
                                 />
+
+                            </LineaCampos>
+
+                            <LineaCampos>
+                                <Input 
+                                        id = "unidad" 
+                                        label = "Unidad" 
+                                        tamano = "s12 m4"
+                                        type = "text"
+                                        maxLength = "10"
+                                        min = "0"
+                                        onChange = { handleChange }
+                                        elError = { errors.unidad && errors.unidad?.message }
+                                        requerido = { false }
+                                    />
+                                {
+                                    paramTipo === 'Numérico' &&
+                                    <Select 
+                                        id = "rango"  
+                                        label = "¿Tiene rango?"
+                                        value = ""
+                                        tamano = "m4 s12"
+                                        arr = { [{ value: true, option: "Verdadero"}, {value: false, option: "Falso" }] }
+                                        handleChange = { handleChange }
+                                        elError = { errors.rango && errors.rango?.message }
+                                        requerido = { true }
+                                    />
+                                }
                                 {
                                     paramTipo === 'Numérico' &&
                                     <div>
@@ -301,6 +361,7 @@ export default function RegistrarNuevoParametro() {
                                             onChange = { handleChange }
                                             maxLength = "10"
                                             min = "0"
+                                            step="0.01"
                                             elError = { errors.valInicial && errors.valInicial?.message }
                                             requerido = { true }
                                         />
@@ -312,6 +373,7 @@ export default function RegistrarNuevoParametro() {
                                             onChange = { handleChange }
                                             maxLength = "10"
                                             min = "0"
+                                            step="0.01"
                                             elError = { errors.valFinal && errors.valFinal?.message }
                                             requerido = { true }
                                         />
@@ -320,27 +382,27 @@ export default function RegistrarNuevoParametro() {
                                 {
                                     paramTipo === 'Texto' &&
                                     <Input 
-                                            id = "valString" 
-                                            label = "Valor de Referencia" 
-                                            type = "text"
-                                            tamano = "s12 m4"
-                                            onChange = { handleChange }
-                                            maxLength = "10"
-                                            min = "0"
-                                            elError = { errors.valString && errors.valString?.message }
-                                            requerido = { true }
-                                        />
+                                        id = "valString" 
+                                        label = "Valor de Referencia" 
+                                        type = "text"
+                                        tamano = "s12 m4"
+                                        onChange = { handleChange }
+                                        maxLength = "30"
+                                        min = "0"
+                                        elError = { errors.valString && errors.valString?.message }
+                                        requerido = { true }
+                                    />
                                 }
                                 {
                                     paramTipo === 'Positivo/Negativo' &&
                                     <Select 
-                                        id = "valorBool"  
+                                        id = "valBool"  
                                         label = "Valor de Referencia"
                                         value = ""
                                         tamano = "m4 s12"
                                         arr = { [{ value: true, option: "Positivo"}, {value: false, option: "Negativo" }] }
                                         handleChange = { handleChange }
-                                        elError = { errors.valorBool && errors.valorBool?.message }
+                                        elError = { errors.valBool && errors.valBool?.message }
                                         requerido = { true }
                                     />
 

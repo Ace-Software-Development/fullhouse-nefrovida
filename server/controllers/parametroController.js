@@ -46,6 +46,7 @@ module.exports.registrarParametro = async(request, response) => {
     try {
         const results = await parametroModel.registrarParametro(request.body);
 
+        console.log(results);
         if (results.error) {
             return response.status(400).send( {
                 status: 'error',
@@ -56,7 +57,7 @@ module.exports.registrarParametro = async(request, response) => {
         response.status(200).send( {
             success: 'true',
             data: results,
-            message: 'Paciente creado exitosamente'
+            message: 'Parámetro creado exitosamente'
         })
     } catch(error) {
         return response.status(400).send( {
