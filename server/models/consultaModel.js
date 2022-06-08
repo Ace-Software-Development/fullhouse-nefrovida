@@ -24,11 +24,12 @@ function resultsConsulta(data, error) {
  * @returns Información de los resultados o un error en caso de existir.
  */
 exports.registrarConsulta = async(data) => {
-    
+    console.log("hola", data)
     // Crear un nuevo estudio y asignar la fecha y las observaciones
     const consulta = new NotaMedica;
     consulta.set(CONSTANTS.FECHA, data.fecha);
-    consulta.set(CONSTANTS.OBSERVACIONES, data.notas);
+    consulta.set(CONSTANTS.NOTAS, data.notas);
+    consulta.set(CONSTANTS.CURP, data.curp);
 
     // Buscar el paciente por curp para asignarlo al estudio.
     const tablaPaciente = Parse.Object.extend(CONSTANTS.PACIENTE);

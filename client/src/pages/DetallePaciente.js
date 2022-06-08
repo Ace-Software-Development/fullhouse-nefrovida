@@ -114,18 +114,33 @@ function DetallePaciente() {
                 </div>
             }
             { ReactSession.get('rol') === 'doctor' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+                </div>
             }
             { ReactSession.get('rol') === 'nutriologo' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+            </div>
+            }
+            { ReactSession.get('rol') === 'psicologo' &&
+                <div>
+                
+                <Link to = {"/registrarConsulta/" + params.curp}>
+                    <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                </Link>
+            </div>
             }
             { ReactSession.get('rol') === 'admin' &&
                 <TiposEstudio/>
             }
             <br/><br/>
-            <Link to = {"/registrarConsulta/" + params.curp}>
-                <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
-            </Link>
             </Main>
         </div>
     )

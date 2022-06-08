@@ -9945,3 +9945,11 @@ body {
   -webkit-print-color-adjust: exact;
   } 
 }
+
+textarea {
+  resize: none;
+  border-radius: 12px;
+  background-color: white;
+  font-size: 18px;
+  height: 140px;
+}

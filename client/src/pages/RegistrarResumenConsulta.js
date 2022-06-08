@@ -5,7 +5,6 @@ import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
 import LineaCampos from '../components/LineaCampos';
-import Input from '../components/Input';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
@@ -14,13 +13,15 @@ import { useForm } from 'react-hook-form';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useParams } from 'react-router-dom';
+import InputTextArea from '../components/InputTextArea';
 
 export default function RegistrarResumenConsulta() {
 
     const params = useParams();
     const curp = params.curp;
+    const [isLoading, setIsLoading] = useState(false);
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/registrar');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/consulta/registrar');
 
     
     /**
@@ -32,7 +33,7 @@ export default function RegistrarResumenConsulta() {
         && ReactSession.get('rol') !== 'psicologo') {
             window.location.href = '/403';
         }
-        // Variable para el nombre, requerido, con patrón.
+        // Variable para la consulta, requerida, con patrón.
         register('consulta', {
             required: {
                 value: true,
@@ -62,29 +63,20 @@ export default function RegistrarResumenConsulta() {
 
         e.preventDefault();
 
-        let { notas, ...rest } = data;
-        let params = Object.entries(rest);
-
-        let parametrosArr = [];
-        for (let i = 0; i < params.length; i++) {
-        let paramObj = {};
-        paramObj['objectId'] = params[i][0];
-        paramObj['valor'] = params[i][1];
-
-        parametrosArr.push(paramObj);
-    }
+        let { consulta } = data;
 
     console.log()
         const usuario = ReactSession.get("usuario");
         let send = {
         usuario: usuario,
         fecha: fecha,
-        observaciones: notas,
+        notas: consulta,
         //idArea: idArea,
         curp: curp,
     }
 
-        httpConfig(data, 'POST');
+        httpConfig(send, 'POST');
+        console.log(send)
     };
 
     /**
@@ -97,8 +89,9 @@ export default function RegistrarResumenConsulta() {
             return
         } else {
             M.toast({ html: message });
+            setIsLoading(true);
             setTimeout(() => {
-                window.location.href = '/';
+                window.location.href = '/paciente/' + params.curp;
             }, 1000);
         }
     }, [responseOk])
@@ -117,7 +110,7 @@ return(
     <div>
         <Navbar/>
         <Main>
-            <br/><br/><br/><br/><br/><br/><br/>    
+            <br/><br/><br/><br/><br/> 
             <Card>
             <CardTitulo icono="note_add" titulo="Registrar resumen de consulta"/>
                 <ContainerForm>
@@ -125,7 +118,7 @@ return(
                     <BtnRegresar/>
                 </Link>
                 <div className='subrayado c-000000 right-align'>  { fecha } </div><br/><br/>
-                { loading && (
+                { loading && !isLoading && (
                     <div className="center animate-new-element">
                         <br/>
 
@@ -148,27 +141,26 @@ return(
 
                 )}
                 {
-                    !loading && !error ?
+                    !loading && !isLoading && !error ?
                     <div className="loader-anim">
 
                         <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
                                 <br/>
                                 <div align="left">
-                                <Input 
+                                <InputTextArea 
                                     id="consulta" 
                                     label="Escribe las notas de la consulta aquí" 
                                     type="text"
                                     maxLength="500"
                                     tamano="m12 s12"
                                     onChange = { handleChange }
+                                    elError = { errors.consulta && errors.consulta?.message }
                                     />
                                 </div>
                         </LineaCampos>
                         <br/><br/>
-                        <Link to = {"/paciente/" + params.curp}>
                             <BtnGuardar/> 
-                        </Link>
                         </form>
                         </div>
                     : null
