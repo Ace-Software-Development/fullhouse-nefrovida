@@ -120,6 +120,7 @@ exports.registrarTipoEstudio = async(data) => {
       const tipoEstudio = new TipoEstudio();
       tipoEstudio.set(CONSTANTS.NOMBRE, data.nombre);
       tipoEstudio.set(CONSTANTS.DESCRIPCION, data.descripcion);
+      tipoEstudio.set(CONSTANTS.ACTIVO, true);
 
       if (data.codigo) {
          tipoEstudio.set(CONSTANTS.CODIGO, data.codigo);

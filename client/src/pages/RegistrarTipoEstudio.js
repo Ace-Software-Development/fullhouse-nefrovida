@@ -16,6 +16,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useForm } from 'react-hook-form';
 import { Multiselect } from 'multiselect-react-dropdown';
+import M from "materialize-css/dist/js/materialize.min.js";
 
 
 export default function RegistrarTipoEstudio() {
@@ -27,10 +28,7 @@ export default function RegistrarTipoEstudio() {
 
     const [parametros, setParametros] = useState([]);
     const [options, setOptions] = useState([{}]);
-    // const [selectedParameters, setSelectedParameters] = useState([]);
-    let selectedParameters;
-
-
+    
     useEffect(() => {
         httpConfig(null, 'GET')
 
@@ -59,7 +57,7 @@ export default function RegistrarTipoEstudio() {
         // Variable para los paramteros, requerido.
         register('parametros', {
             required: {
-                value: true,
+                value:true,
                 message: "Debes seleccionar al menos un parametro"
             }
         });
@@ -67,19 +65,16 @@ export default function RegistrarTipoEstudio() {
     }, [])
 
     useEffect(() => {
-        if(responseOk){
+        if(responseOk && url !=='/tipoEstudio/registrar' ){
             const parametrosTemp = [];
             responseJSON.data.data.map((el)=>{
                 parametrosTemp.push({value: el.objectId , option : el.nombre })
             });
             setParametros(parametrosTemp);
-
-            if (url !=='/tipoEstudio/registrar' ){
-                setUrl('/tipoEstudio/registrar');
-            }
-            else{
-                //set data
-            }
+            setUrl('/tipoEstudio/registrar');
+        }
+        else if (responseOk){
+            M.toast({ html: responseJSON.message});
         }
 
 
@@ -99,7 +94,6 @@ export default function RegistrarTipoEstudio() {
      * @param {event} e - Evento del cambio
      */
     const handleChange = (e) => {
-        console.log(e.target.name, e.target.value,"handle change")
         setValue(e.target.name, e.target.value);
     }
 
@@ -109,9 +103,7 @@ export default function RegistrarTipoEstudio() {
      * @param selectedItem - item del parametro seleccionado
      */
     function onSelect(selectedList, selectedItem) {
-        // setSelectedParameters(selectedList);
-        selectedParameters = selectedList;
-        console.log("selectedParameters", selectedParameters);
+        setValue("parametros",selectedList)
     }
 
     /**
@@ -120,15 +112,15 @@ export default function RegistrarTipoEstudio() {
      * @param selectedItem - item del parametro borrado
      */
     function onRemove(selectedList, removedItem) {
-        // setSelectedParameters(selectedList);
-        selectedParameters = selectedList;
-        console.log(selectedList);
+        setValue("parametros",selectedList)
     }
 
     async function onSubmit(data, e) {
-        console.log (data, "sumbmit")
         e.preventDefault();
-        //httpConfig(data,'POST');
+        httpConfig(data,'POST');
+        setValue("nombre", null)
+        setValue("descripcion", null)
+        setValue("parametros", null)
     }
 
 return(
@@ -146,27 +138,27 @@ return(
                 </Link>
                 <BtnEditRegis icono="format_list_numbered" texto="Registrar parámetro"/>
                 <br/><br/>
-                { /*isLoading && (
+                {loading && (
                     <div className="center">
                         <br/><br/><br/>
-                        <div class="preloader-wrapper big active">
-                            <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
+                        <div className="preloader-wrapper big active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
                             </div>
                             </div>
                         </div>
-                        <div class="texto-grande blue-text text-darken-1">Cargando formulario</div>
+                        <div className="texto-grande blue-text text-darken-1">Cargando formulario</div>
                         <br/><br/><br/>
                     </div>
 
-                )*/}
+                ) }
                 {
-                    //!isLoading && !errorFetch ?
+                    (!loading && !error) ?
                     <div className="on-load-anim">
                         <form
                         id = "registar-tipo-estudio"
@@ -185,12 +177,14 @@ return(
                                         label="Nombre"
                                         tamano="m4 s12"
                                         onChange = { handleChange }
+                                        elError ={ errors.nombre && errors.nombre?.message}
                                         />
                                     <Input
                                         id="descripcion"
                                         label="Descripción"
                                         tamano="m6 s12"
                                         onChange = { handleChange }
+                                        elError ={ errors.descripcion && errors.descripcion?.message}
                                         />
                                     <Input
                                         id="codigo"
@@ -229,8 +223,19 @@ return(
                         </form>
                     </div>
 
-                    //: null
-                }
+                    : 
+                    error && (
+                        <div>
+                            <br/><br/><br/>
+
+                            <div className="texto-grande red-text center animate-new-element">
+                                <strong> { error } </strong>
+                            </div>
+
+                            <br/><br/><br/>
+                        </div>
+                    )}
+                    
                 </ContainerForm>
             </Card>
         </Main>
