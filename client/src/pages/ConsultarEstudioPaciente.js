@@ -36,7 +36,8 @@ export default function ConsultarEstudioPaciente() {
         if (!responseJSON || !responseOk) {
             return;
 
-        } else if(url === '/estudio/id') {
+        }
+        else if(url === '/estudio/id') {
             setEstudio(responseJSON.estudio);
             setUrl('/estudio/id/borrar');
         }
@@ -188,12 +189,8 @@ export default function ConsultarEstudioPaciente() {
                             </div>
                         )}
                         
+                        
                     </ContainerForm>
-                    { ReactSession.get('rol') === 'quimico' &&
-                        <div>
-
-                        </div>
-                    }
                 </Card>
             </Main>
             </div>

@@ -275,8 +275,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
 
 
 /**
- * asyncRegistrarResultadosEstudio Función asíncrona para registrar los resultados de cada 
- * parámetro de un estudio.
+ * asyncEliminarEstudio Función asíncrona para eliminar un estudio del paciente.
  * @param {Object} data Información enviada en el body, debe incluir información del estudio
  * y el resultado de cada parámetro
  * @returns Información de los resultados o un error en caso de existir.
@@ -286,7 +285,6 @@ exports.eliminarEstudio = async(data) => {
     query.equalTo(CONSTANTS.OBJECTID, data.idEstudio);
     const result = await query.first();
     result.set(CONSTANTS.ACTIVO, false);
-    console.log(result)
     try{
         await result.save();
         return {
