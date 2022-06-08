@@ -153,19 +153,19 @@ return(
                                         id="nombre"
                                         label="Nombre"
                                         tamano="m4 s12"
-                                        //onChange = { handleChange }
+                                        onChange = { handleChange }
                                         />
                                     <Input
                                         id="descripcion"
                                         label="Descripción"
                                         tamano="m6 s12"
-                                        //onChange = { handleChange }
+                                        onChange = { handleChange }
                                         />
                                     <Input
                                         id="codigo"
                                         label="Codigo"
                                         tamano="m2 s12"
-                                        //onChange = { handleChange }
+                                        onChange = { handleChange }
                                         />
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
@@ -178,8 +178,13 @@ return(
                                     </div>
                                     <br/>
                                     {console.log(parametros)}
-                                    <Multiselect options={parametros} displayValue="name" />
-                                    {/* { multiselect here } */}
+                                    { parametrosExisten ? 
+                                    <Multiselect options={parametros} displayValue="option" onChange = { handleChange } />
+                                    :<></>
+
+                                    }
+                                    
+                                    
 
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
