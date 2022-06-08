@@ -32,6 +32,7 @@ exports.registrarResultadosEstudio = async(data) => {
     const estudio = new Estudio;
     estudio.set(CONSTANTS.FECHA, data.fecha);
     estudio.set(CONSTANTS.OBSERVACIONES, data.observaciones);
+    estudio.set(CONSTANTS.ACTIVO, true);
 
     // Asignar el pointer de idTipoEstudio al tipo de estudio recibido
     const tipoEstudio = new TipoEstudio();
@@ -221,6 +222,14 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
         queryResultados.equalTo(CONSTANTS.IDESTUDIO, estudio);
         try {
             const parametros = await queryResultados.find();
+
+            // Enviar el error si el estudio no esta activo
+            if ( !estudio.get(CONSTANTS.ACTIVO)) {
+                return { 
+                    estudio: null,
+                    error: 'El estudio fue eliminado anteriormente.'
+                }
+            }
 
             const jsonEstudio = JSON.parse(JSON.stringify(estudio));
             const jsonParametros = JSON.parse(JSON.stringify(parametros));
