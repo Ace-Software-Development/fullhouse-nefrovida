@@ -28,6 +28,11 @@ export default function RegistrarTipoEstudio() {
 
     const [primerParametro, setPrimerParametro] = useState(false);
 
+    const [numParametros, setNumParametros] = useState(1);
+
+    const[ selectValues, setSelectValues]=  useState([]);
+
+
     useEffect(() => {
         httpConfig(null, 'GET')
 
@@ -71,7 +76,7 @@ export default function RegistrarTipoEstudio() {
                 //set data
             }
         }
-        
+
 
     },[responseOk])
 
@@ -85,10 +90,90 @@ export default function RegistrarTipoEstudio() {
     }
 
     /**
+   * setContext
+   * @description Saves selected worker and part in variables
+   * @param id: id of the worker or part
+   * @param type: specifies if the id is a worker or part
+   */
+    function setContext(num) {
+        setNumParametros(num);
+        selectValues.push({});
+    }
+
+    function agregarParametrosCampos() {
+        console.log("here")
+
+        let selectsParams = []
+        for (let i = 0; i < numParametros; i += 3) {
+            if (parametrosExisten()) {
+                selectsParams.push(
+                    <div className = "row">
+                        <div className="col s12 m4">
+                            <Select
+                            id={"parametro_" + i}
+                            label="Parámetro"
+                            tamano="m12 s12"
+                            value={ selectValues[i] === {} ? "" : selectValues[i]}
+                            arr={ parametros }
+                            handleChange = { handleChange }
+                            //elError = { errors.sexo && errors.sexo?.message }
+                            requerido = { primerParametro }
+                            />
+                        </div>
+                        { i +1 < numParametros ?
+                            <div className="col s12 m4">
+                                <Select
+                                id={"parametro_" + (i+1)}
+                                label="Parámetro"
+                                tamano="m12 s12"
+                                value={ selectValues[i+1]}
+                                arr={ parametros }
+                                handleChange = { handleChange }
+                                //elError = { errors.sexo && errors.sexo?.message }
+                                requerido = { primerParametro }
+                                />
+                            </div>
+                            :
+                            <></>
+                        }
+                        { i +2 < numParametros ?
+                            <div className="col s12 m4">
+                                <Select
+                                id={"parametro_" + (i+2)}
+                                label="Parámetro"
+                                tamano="m12 s12"
+                                value={ selectValues[i+2]}
+                                arr={ parametros }
+                                handleChange = { handleChange }
+                                //elError = { errors.sexo && errors.sexo?.message }
+                                requerido = { primerParametro }
+                                />
+                            </div>
+                            :
+                            <></>
+                        }
+
+                    </div>
+
+
+
+                );
+            }
+            else return(<></>)
+        }
+        return selectsParams;
+    }
+
+    /**
      * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
      * @param {event} e - Evento del cambio
      */
     const handleChange = (e) => {
+        const selected ={ option : e.target.options[e.target.selectedIndex].text, value:e.target.value };
+        const index = e.target.id.split('_')[1];
+        updateSelectValues(selected,index)
+
+        console.log(selectValues);
         if(e.target.name === "parametro" && !primerParametro){
             setPrimerParametro(true);
         }
@@ -100,7 +185,12 @@ export default function RegistrarTipoEstudio() {
         httpConfig(data,'POST');
     }
 
-
+    async function updateSelectValues(data, index) {
+        console.log(selectValues,"update");
+        const tempSelectedValues = selectValues;
+        tempSelectedValues[index] = data
+        setSelectValues(tempSelectedValues)
+    }
 
 
 return(
@@ -180,29 +270,22 @@ return(
                                     </div>
                                     </div>
                                     <br/>
-                                    { parametrosExisten() ?
-                                        <Select
-                                            id="parametro"
-                                            label="Parámetro"
-                                            tamano="m3 s12"
-                                            value=""
-                                            arr={ parametros }
-                                            handleChange = { handleChange }
-                                            //elError = { errors.sexo && errors.sexo?.message }
-                                            requerido = { primerParametro }
-                                        />
-                                        : <></>
-                                    }
-                                    
+                                    { agregarParametrosCampos() }
+
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
                             <br/>
-                            <BtnAnadirParametro/>
+                            <BtnAnadirParametro
+                                onClickAction={(num) => {
+                                    setContext(num);
+                                }}
+                                numParameter={ numParametros } />
+                            {/* { console.log("numParametros", numParametros) } */}
                             <br/><br/><br/><br/><br/><br/>
                             <BtnGuardar form="registrar-estudio"/>
                         </form>
                     </div>
-                    
+
                     //: null
                 }
                 </ContainerForm>
