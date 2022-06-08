@@ -5,7 +5,7 @@
  * Se trata de una card que desglosa la información solicitada de los estudios
  * de cada paciente.
  */
-
+import M from 'materialize-css/dist/js/materialize.min.js';
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
@@ -23,19 +23,29 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
 
-export default function ConsultarEstudioPaciente({ idEstudio }) {
+export default function ConsultarEstudioPaciente() {
+    const [url, setUrl] = useState('/estudio/id');
     const params = useParams();
     const [estudio, setEstudio] = useState({})
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute")+'/estudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 
     //Hook para actualizar los datos de el estudio y los parametros
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return;
-        }
-        else {
+
+        } else if(url === '/estudio/id') {
             setEstudio(responseJSON.estudio);
+            setUrl('/estudio/id/borrar');
+        }
+        else if(url === '/estudio/id/borrar'){
+            console.log("Quiero redirigir")
+            M.toast({ html: responseJSON.message});
+            setTimeout(() => {
+                window.location.href = '/paciente/' + params.curp;
+            }, 1000);
+            
         }
     }, [responseOk])
 
@@ -63,6 +73,22 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
         await httpConfig(id, 'GET');
     }
 
+
+    /**
+     * Función que se ejecuta al dar click en el botón de eliminar estudio, para registrar el paciente en la
+     * base de datos haciendo un fetch a la ruta de back.
+     * @param {object} data - Datos del paciente en el formulario 
+     * @param {evento} e - Evento para submit
+     * @returns 
+     */
+    async function eliminarEstudio(e) {
+        let json = {
+            idEstudio: params.idEstudio,
+            idPaciente: params.curp
+        }
+        e.preventDefault();
+        httpConfig(json,'POST');
+    }
 
 
     // Funcion para obtener los parametros del estudio.
@@ -140,8 +166,9 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                                 </LineaCampos>
                                 <br></br>
 
-                                {/*<BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
-                                {/*<BtnEditRegis icono='create' texto='Editar estudio'/>  */} 
+                                <form onSubmit = { eliminarEstudio }>
+                                    <BtnEliminar texto="Eliminar estudio" posicion="right"/>
+                                </form>
                             </div>
                         )}
                         { error && (
@@ -157,6 +184,11 @@ export default function ConsultarEstudioPaciente({ idEstudio }) {
                         )}
                         
                     </ContainerForm>
+                    { ReactSession.get('rol') === 'quimico' &&
+                        <div>
+
+                        </div>
+                    }
                 </Card>
             </Main>
             </div>

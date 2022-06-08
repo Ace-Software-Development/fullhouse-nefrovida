@@ -132,13 +132,13 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     const queryObtenerIdTiposEstudio = new Parse.Query(tablaTipoEstudio);
     queryObtenerIdTiposEstudio.equalTo(CONSTANTS.ACTIVO, true);
     const idTiposEstudio = await queryObtenerIdTiposEstudio.find();
-    console.log(JSON.parse(JSON.stringify(idTiposEstudio)));
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
     queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
+    queryObtenerEstudios.equalTo(CONSTANTS.ACTIVO, true);
     queryObtenerEstudios.containedIn(CONSTANTS.IDTIPOESTUDIO, idTiposEstudio);
     //queryObtenerEstudios.equalTo(CONSTANTS.IDTIPOESTUDIO+'.'+CONSTANTS.ACTIVO, true);
 
@@ -153,7 +153,6 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     try {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
-        console.log(jsonEstudios);
 
         //Guardar nombres de los tipos de estudio del paciente
         let arrTiposEstudio = [];

@@ -252,14 +252,42 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
             }
         } catch (error) {
             return {
-                paciente: null,
+                estudio: null,
                 error: error.message
             }
         }
     } catch (error) {
         return {
-            paciente: null,
+            estudio: null,
             error: 'No se encontró dicho estudio del paciente.'
+        }
+    }
+}
+
+
+/**
+ * asyncRegistrarResultadosEstudio Función asíncrona para registrar los resultados de cada 
+ * parámetro de un estudio.
+ * @param {Object} data Información enviada en el body, debe incluir información del estudio
+ * y el resultado de cada parámetro
+ * @returns Información de los resultados o un error en caso de existir.
+ */
+exports.eliminarEstudio = async(data) => {
+    const query = new Parse.Query(CONSTANTS.ESTUDIO);
+    query.equalTo(CONSTANTS.OBJECTID, data.idEstudio);
+    const result = await query.first();
+    result.set(CONSTANTS.ACTIVO, false);
+    console.log(result)
+    try{
+        await result.save();
+        return {
+            estudio: result,
+            error: null
+        }
+    } catch (error) {
+        return {
+            estudio: null,
+            error: 'No se pudo eliminar el estudio.'
         }
     }
 }
