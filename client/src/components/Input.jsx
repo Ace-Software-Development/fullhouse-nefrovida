@@ -1,4 +1,4 @@
-const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "Nombre", type="text", elError, ...rest}) => {
+const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "Nombre", type="text", elError, isActive = false, ...rest}) => {
   return(
     <div className={"input-field col " + tamano}  >
       <input 
@@ -9,7 +9,7 @@ const Input = ({ requerido = false, tamano = "s12 m4", id = "nombre", label = "N
         {...rest}/>
 
 
-      <label htmlFor={id}  >
+      <label className={isActive ? "active" : ""} htmlFor={id}  >
         {label} { requerido 
           ? <span className="red-text"> *</span> 
           : null }

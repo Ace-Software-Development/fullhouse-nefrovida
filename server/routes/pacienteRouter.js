@@ -13,11 +13,11 @@ router.get('/todos',
 router.get('/detalle/curp', 
     authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
     pacienteController.consutarDetallePaciente);
+
 // Ruta de tipo 'GET' para buscar un paciente por nombre.
 router.get('/nombre', 
     authRol([CONSTANTS.ROLTRABAJOSOCIAL, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
     pacienteController.consultarPorNombre);
-
 
 // Ruta de tipo 'GET' para obtener los estudios de un paciente.
 router.get('/estudios',
@@ -25,8 +25,13 @@ router.get('/estudios',
     pacienteController.mostrarEstudiosPaciente);
 
 // Ruta de tipo 'POST' para registrar un nuevo paciente.
-router.post('/registrar', 
+router.post('/registrar',
     authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
     pacienteController.crearPaciente)
+
+// Ruta de tipo 'POST' para editar información de un nuevo paciente.
+router.post('/editar',
+    authRol([CONSTANTS.ROLTRABAJOSOCIAL]),
+    pacienteController.editarPaciente)
 
 module.exports = router
