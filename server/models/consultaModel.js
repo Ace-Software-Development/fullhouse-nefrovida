@@ -17,21 +17,21 @@ function resultsConsulta(data, error) {
 }
 
 /**
- * asyncRegistrarResultadosEstudio Función asíncrona para registrar los resultados de cada 
+ * asyncRegistrarConsulta función asíncrona para registrar los resultados de cada 
  * parámetro de un estudio.
- * @param {Object} data Información enviada en el body, debe incluir información del estudio
- * y el resultado de cada parámetro
+ * @param {Object} data Información enviada en el body, debe incluir información del
+ * resumen de consulta
  * @returns Información de los resultados o un error en caso de existir.
  */
 exports.registrarConsulta = async(data) => {
-    console.log("hola", data)
-    // Crear un nuevo estudio y asignar la fecha y las observaciones
+
+    // Crear un nuevo resumen de consulta y asignar la fecha y la nota
     const consulta = new NotaMedica;
     consulta.set(CONSTANTS.FECHA, data.fecha);
     consulta.set(CONSTANTS.NOTAS, data.notas);
     consulta.set(CONSTANTS.CURP, data.curp);
 
-    // Buscar el paciente por curp para asignarlo al estudio.
+    // Buscar el paciente por curp para asignarlo al resumen de consulta.
     const tablaPaciente = Parse.Object.extend(CONSTANTS.PACIENTE);
     let query = new Parse.Query(tablaPaciente);
     query.equalTo(CONSTANTS.CURP, data.curp);
@@ -44,13 +44,14 @@ exports.registrarConsulta = async(data) => {
             return results(null, 'No se encontró un paciente con ese CURP');
         }
 
-        // Asignar el pointer de idPaciente al estudio, y asignar la química que lo creo.
+        // Asignar el pointer de idPaciente al resumen de consulta, y asignar el usuario que lo creo.
         consulta.set(CONSTANTS.IDPACIENTE, paciente);
 
         try {
             const colaborador = await obtenerColaboradorUsuario(data.usuario);
             consulta.set(CONSTANTS.IDUSUARIO, colaborador.colaborador);
-            // Guardar el nuevo estudio
+            
+            // Guardar el nuevo resumen de consulta
             const results = await consulta.save()
             return resultsConsulta(results, null);       
         } catch (error) {

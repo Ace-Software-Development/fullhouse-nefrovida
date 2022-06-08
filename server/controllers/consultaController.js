@@ -1,8 +1,8 @@
 const consultaModel = require('../models/consultaModel')
 
 /**
- * asyncRegistrarResultadosEstudio Funciòn asíncrona para registrar los resultados de un
- * nuevo estudio para un paciente.
+ * asyncRegistrarConsulra función asíncrona para registrar un
+ * nuevo resumen de consulta para un paciente.
 */
 module.exports.registrarConsulta = async(request, response) => {
     try {

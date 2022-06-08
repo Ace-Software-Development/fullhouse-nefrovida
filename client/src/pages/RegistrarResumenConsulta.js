@@ -33,7 +33,7 @@ export default function RegistrarResumenConsulta() {
         && ReactSession.get('rol') !== 'psicologo') {
             window.location.href = '/403';
         }
-        // Variable para la consulta, requerida, con patrón.
+        // Variable para la consulta requerida.
         register('consulta', {
             required: {
                 value: true,
@@ -53,9 +53,9 @@ export default function RegistrarResumenConsulta() {
 
 
     /**
-     * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
-     * base de datos haciendo un fetch a la ruta de back.
-     * @param {object} data - Datos del paciente en el formulario 
+     * Función que se ejecuta al dar click en el botón de Guardar el resumen de consulta, para registrar el resumen de consulta
+     * en la base de datos haciendo un fetch a la ruta de back.
+     * @param {object} data - Datos de la consulta en el formulario 
      * @param {evento} e - Evento para submit
      * @returns 
      */
@@ -71,7 +71,6 @@ export default function RegistrarResumenConsulta() {
         usuario: usuario,
         fecha: fecha,
         notas: consulta,
-        //idArea: idArea,
         curp: curp,
     }
 
