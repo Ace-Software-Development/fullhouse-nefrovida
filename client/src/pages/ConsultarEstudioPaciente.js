@@ -26,6 +26,7 @@ import useFetch from '../hooks/useFetch';
 export default function ConsultarEstudioPaciente() {
     const [url, setUrl] = useState('/estudio/id');
     const params = useParams();
+    const [isLoading, setIsLoading] = useState(false);
     const [estudio, setEstudio] = useState({})
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
@@ -40,7 +41,7 @@ export default function ConsultarEstudioPaciente() {
             setUrl('/estudio/id/borrar');
         }
         else if(url === '/estudio/id/borrar'){
-            console.log("Quiero redirigir")
+            setIsLoading(true);
             M.toast({ html: responseJSON.message});
             setTimeout(() => {
                 window.location.href = '/paciente/' + params.curp;
@@ -116,7 +117,7 @@ export default function ConsultarEstudioPaciente() {
                         <br/>
                         <br/>
                         <br/>
-                        { loading && (
+                        { loading || isLoading && (
                             <div className="center animate-new-element">
                                 <br/><br/><br/>
 
@@ -138,7 +139,7 @@ export default function ConsultarEstudioPaciente() {
                             </div>
                         
                         )}
-                        { !loading && !error && (
+                        { !loading && !isLoading && !error && (
                             <div className = "on-load-anim">
                                 <div align="left">               
                                     <div className="detalles-lista negrita-grande c-64646A left-align"> {estudio.nombreTipoEstudio}  </div><span>  {estudio.fechaEstudio}</span><br/>
@@ -166,9 +167,13 @@ export default function ConsultarEstudioPaciente() {
                                 </LineaCampos>
                                 <br></br>
 
-                                <form onSubmit = { eliminarEstudio }>
-                                    <BtnEliminar texto="Eliminar estudio" posicion="right"/>
-                                </form>
+                                { ReactSession.get('rol') === 'quimico' &&
+                                    <div>
+                                        <form onSubmit = { eliminarEstudio }>
+                                            <BtnEliminar texto="Eliminar estudio" posicion="right"/>
+                                        </form>
+                                    </div>
+                                }
                             </div>
                         )}
                         { error && (
