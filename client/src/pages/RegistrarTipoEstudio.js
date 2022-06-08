@@ -56,6 +56,13 @@ export default function RegistrarTipoEstudio() {
                 message: "Descripcion inválida"
             }
         });
+        // Variable para los paramteros, requerido.
+        register('parametros', {
+            required: {
+                value: true,
+                message: "Debes seleccionar al menos un parametro"
+            }
+        });
 
     }, [])
 
@@ -92,12 +99,14 @@ export default function RegistrarTipoEstudio() {
      * @param {event} e - Evento del cambio
      */
     const handleChange = (e) => {
+        console.log(e.target.name, e.target.value,"handle change")
         setValue(e.target.name, e.target.value);
     }
 
     async function onSubmit(data, e) {
+        console.log (data, "sumbmit")
         e.preventDefault();
-        httpConfig(data,'POST');
+        //httpConfig(data,'POST');
     }
 
 return(
@@ -138,7 +147,7 @@ return(
                     //!isLoading && !errorFetch ?
                     <div className="on-load-anim">
                         <form
-                        id = "registar-colaborador"
+                        id = "registar-tipo-estudio"
                         action = '/tipoEstudio/registrar'
                         method = 'post'
                         onSubmit = { handleSubmit(onSubmit) }>
@@ -177,9 +186,13 @@ return(
                                     </div>
                                     </div>
                                     <br/>
-                                    {console.log(parametros)}
                                     { parametrosExisten ? 
-                                    <Multiselect options={parametros} displayValue="option" onChange = { handleChange } />
+                                    <Multiselect 
+                                    id="parametros"
+                                    options={parametros}
+                                    displayValue="option" 
+                                    onChange ={ handleChange }
+                                    />
                                     :<></>
 
                                     }
@@ -192,7 +205,7 @@ return(
                             <BtnAnadirParametro/>
                             {/* { console.log("numParametros", numParametros) } */}
                             <br/><br/><br/><br/><br/><br/>
-                            <BtnGuardar form="registrar-estudio"/>
+                            <BtnGuardar form="registar-tipo-estudio"/>
                         </form>
                     </div>
 
