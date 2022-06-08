@@ -228,6 +228,7 @@ const EditarPaciente = () => {
         httpConfig(data, 'POST');
     };
 
+
     /**
      * Hook que se ejecuta cada vez que el responseOk cambia, si no fue correcta la respuesta no
      * debe mostrar ningún mensaje. Si la respuesta es correcta muestra un toast con el mensaje 
@@ -250,6 +251,10 @@ const EditarPaciente = () => {
         }
     }, [responseOk])
 
+    /**
+     * Se utiliza para hacer el render adecuado hasta que los datos ya existan.
+     * @returns true si ya existen los datos, false si todavía no.
+     */
     function rolesExisten() {
         if (paciente.nombre !== undefined ){
             return true;
@@ -259,13 +264,34 @@ const EditarPaciente = () => {
         }
     }
 
+    /**
+     * Devuelve la fecha en formato YYYY-MM-DD para que el datepicker y el setValue no
+     * marquen un error de formato y puedan visualizarse los datos guardados correctamente.
+     * @returns fecha convertida en YYYY-MM-DD.
+     */
     function convertirFecha() {
         if (paciente.fechaNacimiento !== undefined) {
             const dateString = paciente.fechaNacimiento;
             const date = "" + dateString.substring(6,10) + "-" + dateString.substring(3, 5) + "-" + dateString.substring(0,2)
+            console.log(date);
             return date
         }
     }
+
+    /**
+     * Devuelve la fecha maxima para el datepicker, obtiene la fecha de hoy y le resta un día
+     * para que no se puedan meter fechas a futuro de la fecha de <<< Hoy >>>.
+     * @returns La fecha de <<< hoy >>> menos uno. YYYY-MM-DD
+     */
+    function obtenerFechaMax() {
+        var hoy = new Date();
+        hoy.setDate( hoy.getDate() - 1)
+
+        return (hoy.getFullYear() + "-" + 
+                ('0' + (hoy.getMonth()+1)).slice(-2) + "-" + 
+                ('0' + hoy.getDate()).slice(-2));
+    }
+
 
     return(
         <div>
@@ -345,6 +371,8 @@ const EditarPaciente = () => {
                                 onChange = { handleChange }
                                 defaultValue = {convertirFecha()}
                                 elError= { errors.fechaNacimiento && errors.fechaNacimiento?.message }
+                                max = {obtenerFechaMax()}
+                                min = "1920-01-01"
                             />
                             {setValue("fechaNacimiento", convertirFecha())}
                             <Select 

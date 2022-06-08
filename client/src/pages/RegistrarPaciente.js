@@ -233,6 +233,20 @@ const RegistrarPaciente = () => {
         }
     }, [responseOk])
 
+    /**
+     * Devuelve la fecha maxima para el datepicker, obtiene la fecha de hoy y le resta un día
+     * para que no se puedan meter fechas a futuro de la fecha de <<< Hoy >>>.
+     * @returns La fecha de <<< hoy >>> menos uno.
+     */
+    function obtenerFechaMax() {
+        var hoy = new Date();
+        hoy.setDate( hoy.getDate() - 1)
+
+        return (hoy.getFullYear() + "-" + 
+                ('0' + (hoy.getMonth()+1)).slice(-2) + "-" + 
+                ('0' + hoy.getDate()).slice(-2));
+    }
+
 
     return(
         <div>
@@ -294,6 +308,8 @@ const RegistrarPaciente = () => {
                                 tamano="s8 m4"
                                 onChange = { handleChange }
                                 elError= { errors.fechaNacimiento && errors.fechaNacimiento?.message }
+                                max = {obtenerFechaMax()}
+                                min = "1920-01-01"
                             />
                             <Select 
                                 id="sexo" 
