@@ -40,7 +40,6 @@ module.exports.getRegistrarColaborador = async(request, response) => {
  * información de colaborador de Nefrovida en base de datos.
  * Envía datos recibidos del formulario al modelo para que 
  * los almacene en base de datos.
- * 
  * @param {object} request - Petición al servidor
  * @param {object} response - Respuesta a la petición realizada al servidor.
  * @returns response - Respuesta a la petición actualizada con colaborador registrado o mensaje de error.
@@ -74,7 +73,6 @@ module.exports.registrarColaborador = async(request, response) => {
 /**
  * iniciarSesionColaborador Función asíncrona que valida credenciales 
  * de acceso permitiendo o no el acceso al resto de la aplicación.
- * 
  * @param {object} request - Petición al servidor
  * @param {object} response - Respuesta a la petición realizada al servidor.
  * @returns response - Respuesta a la petición actualizada con colaborador autenticado o mensaje de error.
@@ -120,7 +118,6 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
 /**
  * cerrarSesionColaborador Función asíncrona para eliminar sesión 
  * de usuario y denegar acceso al sistema hasta nueva autenticación.
- * 
  * @param {object} request - Petición al servidor
  * @param {object} response - Respuesta a la petición realizada al servidor.
  * @returns response - Respuesta a la petición. Sesión destruida.
@@ -152,7 +149,7 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
  * asyncConsultarColaborador función asíncrona para obtener la información de todos los
  * colaboradores registrados en Nefrovida.
  * @param {object} request Información enviados al servidor
- * @param {object} response - Respuesta de la petición al servidor
+ * @param {object} response Respuesta de la petición al servidor
  * @returns Respuesta de la petición
  */
 module.exports.consultarColaborador = async(request, response) => {
