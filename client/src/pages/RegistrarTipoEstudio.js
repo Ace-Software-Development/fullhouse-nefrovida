@@ -15,6 +15,7 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import { useForm } from 'react-hook-form';
+import { Multiselect } from 'multiselect-react-dropdown';
 
 
 export default function RegistrarTipoEstudio() {
@@ -25,12 +26,9 @@ export default function RegistrarTipoEstudio() {
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
 
     const [parametros, setParametros] = useState([]);
+    const [options, setOptions] = useState([{}]);
 
-    const [primerParametro, setPrimerParametro] = useState(false);
 
-    const [numParametros, setNumParametros] = useState(1);
-
-    const[ selectValues, setSelectValues]=  useState([]);
 
 
     useEffect(() => {
@@ -90,93 +88,10 @@ export default function RegistrarTipoEstudio() {
     }
 
     /**
-   * setContext
-   * @description Saves selected worker and part in variables
-   * @param id: id of the worker or part
-   * @param type: specifies if the id is a worker or part
-   */
-    function setContext(num) {
-        setNumParametros(num);
-        selectValues.push({});
-    }
-
-    function agregarParametrosCampos() {
-        console.log("here")
-
-        let selectsParams = []
-        for (let i = 0; i < numParametros; i += 3) {
-            if (parametrosExisten()) {
-                selectsParams.push(
-                    <div className = "row">
-                        <div className="col s12 m4">
-                            <Select
-                            id={"parametro_" + i}
-                            label="Parámetro"
-                            tamano="m12 s12"
-                            value={ selectValues[i] === {} ? "" : selectValues[i]}
-                            arr={ parametros }
-                            handleChange = { handleChange }
-                            //elError = { errors.sexo && errors.sexo?.message }
-                            requerido = { primerParametro }
-                            />
-                        </div>
-                        { i +1 < numParametros ?
-                            <div className="col s12 m4">
-                                <Select
-                                id={"parametro_" + (i+1)}
-                                label="Parámetro"
-                                tamano="m12 s12"
-                                value={ selectValues[i+1]}
-                                arr={ parametros }
-                                handleChange = { handleChange }
-                                //elError = { errors.sexo && errors.sexo?.message }
-                                requerido = { primerParametro }
-                                />
-                            </div>
-                            :
-                            <></>
-                        }
-                        { i +2 < numParametros ?
-                            <div className="col s12 m4">
-                                <Select
-                                id={"parametro_" + (i+2)}
-                                label="Parámetro"
-                                tamano="m12 s12"
-                                value={ selectValues[i+2]}
-                                arr={ parametros }
-                                handleChange = { handleChange }
-                                //elError = { errors.sexo && errors.sexo?.message }
-                                requerido = { primerParametro }
-                                />
-                            </div>
-                            :
-                            <></>
-                        }
-
-                    </div>
-
-
-
-                );
-            }
-            else return(<></>)
-        }
-        return selectsParams;
-    }
-
-    /**
      * Función que se ejecuta cuando hay un cambio en el formulario, para actualizar el valor del campo que cambio
      * @param {event} e - Evento del cambio
      */
     const handleChange = (e) => {
-        const selected ={ option : e.target.options[e.target.selectedIndex].text, value:e.target.value };
-        const index = e.target.id.split('_')[1];
-        updateSelectValues(selected,index)
-
-        console.log(selectValues);
-        if(e.target.name === "parametro" && !primerParametro){
-            setPrimerParametro(true);
-        }
         setValue(e.target.name, e.target.value);
     }
 
@@ -184,14 +99,6 @@ export default function RegistrarTipoEstudio() {
         e.preventDefault();
         httpConfig(data,'POST');
     }
-
-    async function updateSelectValues(data, index) {
-        console.log(selectValues,"update");
-        const tempSelectedValues = selectValues;
-        tempSelectedValues[index] = data
-        setSelectValues(tempSelectedValues)
-    }
-
 
 return(
     <div className="row ContainerForm left-align">
@@ -270,16 +177,14 @@ return(
                                     </div>
                                     </div>
                                     <br/>
-                                    { agregarParametrosCampos() }
+                                    {console.log(parametros)}
+                                    <Multiselect options={parametros} displayValue="name" />
+                                    {/* { multiselect here } */}
 
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
                             <br/>
-                            <BtnAnadirParametro
-                                onClickAction={(num) => {
-                                    setContext(num);
-                                }}
-                                numParameter={ numParametros } />
+                            <BtnAnadirParametro/>
                             {/* { console.log("numParametros", numParametros) } */}
                             <br/><br/><br/><br/><br/><br/>
                             <BtnGuardar form="registrar-estudio"/>
