@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 
 
 const FilaTablaEstudios = ({ estudio, idPaciente }) => {
-    const route = "/estudio/" + estudio.objectIdEstudio
+    const route = "/paciente/" + idPaciente + "/estudio/" + estudio.objectIdEstudio
     const routePDF = "/estudio/PDF/" + estudio.objectIdEstudio + "/" + idPaciente
 
     return(
