@@ -53,6 +53,11 @@ const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
                   return results(null, 'No hay parámetros registrados para este tipo de estudio.');
                }
 
+                       // Enviar el error si el paciente no esta activo
+               if ( !tipoEstudio.get(CONSTANTS.ACTIVO)) {
+                     return results(null, 'El tipo de estudio fue eliminado anteriormente.');
+               }
+
                // Añadir la información del tipo de estudio a los resultados
                parametros.push(tipoEstudio);
 
@@ -73,11 +78,10 @@ const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
  * consultarTiposDeEstudio Función asíncrona para obtener todos los tipos de estudio.
  * @returns Lista con todos los tipo de estudio.
  */
-
-
 exports.consultarTiposDeEstudio = async() => {
    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
    const query = new Parse.Query(table);
+   query.equalTo(CONSTANTS.ACTIVO, true);
 
    try {
 
@@ -142,5 +146,27 @@ exports.registrarTipoEstudio = async(data) => {
 
       return results(null, error.message);
    }
-
+/*
+ * asyncBorrarTipoEstudio Función asíncrona para eliminar un tipo de estudio
+ * @param {Object} data Información enviada en el body, debe incluir información del estudio
+ * y el resultado de cada parámetro
+ * @returns Información de los resultados o un error en caso de existir.
+ */
+exports.borrarTipoEstudio = async(data) => {
+   const query = new Parse.Query(CONSTANTS.TIPOESTUDIO);
+   query.equalTo(CONSTANTS.OBJECTID, data.idTipoEstudio);
+   const result = await query.first();
+   result.set(CONSTANTS.ACTIVO, false);
+   try{
+      await result.save();
+      return {
+         tipoEstudio: result,
+         error: null
+      }
+   } catch (error) {
+      return {
+         tipoEstudio: null,
+         error: 'No se pudo eliminar el tipo de estudio.'
+      }
+   }
 }

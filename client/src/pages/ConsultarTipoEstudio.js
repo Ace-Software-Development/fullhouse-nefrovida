@@ -6,14 +6,15 @@
  * 
  * Los datos llegan desde la base de datos y se muestran.   
 */
-
+import M from 'materialize-css/dist/js/materialize.min.js';
+import BtnRegresar from '../components/BtnRegresar';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import Card from '../components/Card';
 import ContainerForm from '../components/ContainerForm';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
-import BtnRegresar from '../components/BtnRegresar';
+import BtnEliminar from '../components/BtnEliminar';
 import LineaParametros from '../components/LineaParametros';
 import { ParametroTexto, ParametroRango, ParametroBooleano } from '../components/ParametroTipoEstudio';
 import { useParams } from 'react-router-dom';
@@ -22,10 +23,12 @@ import { ReactSession } from 'react-client-session';
 
 
 export default function ConsultarTipoEstudio() {
+    const [url, setUrl] = useState('/tipoEstudio/id');
+    const [isLoading, setIsLoading] = useState(false);
     const params = useParams();
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/tipoEstudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 
     //Hook para actualizar los datos de el estudio y los parametros
@@ -33,9 +36,17 @@ export default function ConsultarTipoEstudio() {
         if (!responseJSON || !responseOk) {
             return;
         }
-        else {
+        else if(url === '/tipoEstudio/id') {
             setTipoEstudio(responseJSON.data.data.pop());
             setParametros(responseJSON.data.data);
+            setUrl('/tipoEstudio/id/borrar');
+        }
+        else if(url === '/tipoEstudio/id/borrar') {
+            setIsLoading(true);
+            M.toast({ html: responseJSON.message});
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
         }
     }, [responseOk])
 
@@ -59,7 +70,22 @@ export default function ConsultarTipoEstudio() {
     */
     async function getTipoEstudio(id) {
         await httpConfig(id, 'GET');
-    }   
+    }
+
+    /**
+     * Función que se ejecuta al dar click en el botón de eliminar estudio, para registrar el paciente en la
+     * base de datos haciendo un fetch a la ruta de back.
+     * @param {object} data - Datos del paciente en el formulario 
+     * @param {evento} e - Evento para submit
+     * @returns 
+     */
+    async function eliminarTipoEstudio(e) {
+        let json = {
+            idTipoEstudio: params.idTipoEstudio,
+        }
+        e.preventDefault();
+        httpConfig(json,'POST');
+    }
 
 
     /**
@@ -114,7 +140,7 @@ export default function ConsultarTipoEstudio() {
                 
                     <BtnRegresar/>
                     <br/>
-                    { loading && (
+                    { loading || isLoading&& (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
                             <div className="preloader-wrapper big active">
@@ -133,7 +159,7 @@ export default function ConsultarTipoEstudio() {
                         </div>
                     
                     )}
-                    { !loading && !error && (
+                    { !loading && !isLoading && !error && (
                         <div className="on-load-anim">
                                 <br/><br/>  
                                 <div className="row div-detalles-estudio">
@@ -156,7 +182,13 @@ export default function ConsultarTipoEstudio() {
                                 </LineaParametros>
                                     
                                     
-                                    {/* <BtnEliminar texto='Eliminar estudio' posicion='right'/> */}
+                                { ReactSession.get('rol') === 'admin' &&
+                                <div>
+                                    <form onSubmit = { eliminarTipoEstudio }>
+                                        <BtnEliminar texto="Eliminar tipo estudio" posicion="right"/>
+                                    </form>
+                                </div>
+                                }
                                     {/* <BtnEditRegis icono='create' texto='Editar estudio'/>               */}
                             
 
