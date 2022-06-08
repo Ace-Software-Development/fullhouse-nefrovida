@@ -1,6 +1,7 @@
 const colaboradorModel = require('../models/colaboradorModel');
 const rolModel = require('../models/rolModel');
 
+
 /**
  * getRegistrarColaborador Función asíncrona para mostrar roles 
  * en formulario de registro de colaborador.
@@ -191,7 +192,6 @@ module.exports.consultarColaborador = async(request, response) => {
 module.exports.consutarDetalleColaborador = async(request, response) => {
     // Se obtiene el username de los parametros de la ruta
     const username = request.query.id;
-    console.log("controller", username)
 
     try {
         const results = await colaboradorModel.buscarPorUsuario(username);
@@ -214,5 +214,37 @@ module.exports.consutarDetalleColaborador = async(request, response) => {
             data: results,
             message: 'Empleado obtenido exitosamente'
         });
+    }
+}
+
+
+/**
+ * asyncEliminarEstudioPaciente Funciòn asíncrona para registrar los resultados de un
+ * nuevo estudio para un paciente.
+*/
+module.exports.borrarColaborador = async(request, response) => {
+    try {
+        const results = await colaboradorModel.borrarEmpleado(request.body);
+        // Envía error en caso de ser necesario
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            })
+        }
+        // Respuesta exitosa
+        response.status(200).send({
+            success: 'success',
+            data: results.empleado,
+            message: 'Empleado eliminado exitosamente.'
+        })
+
+    } catch(error) {
+        response.status(400).send({
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        })
     }
 }

@@ -73,8 +73,7 @@ export default function ConsultarTipoEstudio() {
     }
 
     /**
-     * Función que se ejecuta al dar click en el botón de eliminar estudio, para registrar el paciente en la
-     * base de datos haciendo un fetch a la ruta de back.
+     * Función que se ejecuta al dar click en el botón de eliminar tipo de estudio
      * @param {object} data - Datos del paciente en el formulario 
      * @param {evento} e - Evento para submit
      * @returns 
@@ -139,7 +138,7 @@ export default function ConsultarTipoEstudio() {
 
                     <BtnRegresar/>
                     <br/>
-                    { loading || isLoading&& (
+                    { loading || isLoading && (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
                             <div className="preloader-wrapper big active">

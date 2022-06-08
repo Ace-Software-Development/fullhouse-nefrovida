@@ -242,15 +242,14 @@ exports.cerrarSesionColaborador = async() => {
  * @param {string} username - Username del colaborador a buscar
  * @returns Información del colaborador en caso de encontrarlo o un error en caso de no existir.
  */
-exports.buscarPorUsuario = async (username) => {
+exports.buscarPorUsuario = async (objectId) => {
     const Table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(Table);
-    query.equalTo(CONSTANTS.USUARIO, username);
+    query.equalTo(CONSTANTS.OBJECTID, objectId);
     query.include(CONSTANTS.IDROL);
 
     try {
         const results = await query.first();
-        console.log("Resultado", results)
         // Enviar error si no existe un colaborador con ese username
         if ( !results ) {
             return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
@@ -259,7 +258,6 @@ exports.buscarPorUsuario = async (username) => {
         if ( !results.get(CONSTANTS.ACTIVO)) {
             return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
         }
-        console.log("Resultado", results)
         return resultsColaborador(results, null);
 
     } catch (error) {
@@ -274,6 +272,7 @@ exports.buscarPorUsuario = async (username) => {
 exports.consultarColaboradores = async () => {
     const table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(table);
+    query.equalTo(CONSTANTS.ACTIVO, true);
     query.include(CONSTANTS.IDROL);
     
     try {
@@ -295,4 +294,32 @@ exports.consultarColaboradores = async () => {
             error: error.message
         }
     } 
+}
+
+
+/**
+ * asyncBorrarTipoEstudio Función asíncrona para eliminar un tipo de estudio
+ * @param {Object} data Información enviada en el body, debe incluir información del estudio
+ * y el resultado de cada parámetro
+ * @returns Información de los resultados o un error en caso de existir.
+ */
+exports.borrarEmpleado = async(data) => {
+    var User = Parse.Object.extend(Parse.User);
+    var query = new Parse.Query(User);
+    let result = await query.get(data.objectId, { useMasterKey: true });
+    if (!result) new Error('Usuario no encontrado!');
+
+    result.set(CONSTANTS.ACTIVO, false);
+    try{
+        result.save(null, { useMasterKey: true });
+        return {
+            empleado: result,
+            error: null
+        }
+    } catch (error) {
+        return {
+            empleado: null,
+            error: 'No se pudo eliminar el empleado.'
+        }
+    }
 }
