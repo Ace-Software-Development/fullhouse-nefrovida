@@ -49,6 +49,8 @@ const EditarPaciente = () => {
         validation();
     }, []);
 
+    console.log(paciente.peso)
+    console.log(paciente.estatura)
 
     /**
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
@@ -204,8 +206,6 @@ const EditarPaciente = () => {
      * @returns 
      */
     async function onSubmit(data, e) {
-        console.log(data);
-
         // Cambiar los valores necesarios de string a número.
         data.estatura = Number(data.estatura);
         data.peso = Number(data.peso);
@@ -222,6 +222,8 @@ const EditarPaciente = () => {
         
 
         e.preventDefault();
+
+        console.log("Submit data: ", data)
 
         httpConfig(data, 'POST');
     };
@@ -258,7 +260,7 @@ const EditarPaciente = () => {
     }
 
     function convertirFecha() {
-        if (paciente.nombre !== undefined) {
+        if (paciente.fechaNacimiento !== undefined) {
             const dateString = paciente.fechaNacimiento;
             const date = "" + dateString.substring(6,10) + "-" + dateString.substring(3, 5) + "-" + dateString.substring(0,2)
             return date
@@ -274,7 +276,10 @@ const EditarPaciente = () => {
                     <CardTitulo icono="edit" titulo="Editar Paciente"/>
                     <ContainerForm>
                     
-                    <BtnRegresar />
+                    <Link to = { "/paciente/" + paciente.curp }>
+                        <BtnRegresar />
+                    </Link>
+                    
                     
                     <br/>
                     
@@ -327,7 +332,7 @@ const EditarPaciente = () => {
                                 tamano="m4 s12"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.apellidoMaterno }
-                                isActive = { true }
+                                isActive = { paciente.apellidoMaterno ? true: false }
                                 elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
                             />
                             {setValue("apellidoMaterno", paciente.apellidoMaterno)}
@@ -343,10 +348,10 @@ const EditarPaciente = () => {
                             />
                             {setValue("fechaNacimiento", convertirFecha())}
                             <Select 
-                                id="sexo" 
-                                label="Sexo"
-                                defaultValue={ paciente.sexo }
-                                arr={ [{ value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino" }] }
+                                id = "sexo" 
+                                label = "Sexo"
+                                value = { paciente.sexo }
+                                arr = { [{ value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino" }] }
                                 handleChange = { handleChange }
                                 elError = { errors.sexo && errors.sexo?.message }
                                 requerido = { true }
@@ -360,10 +365,10 @@ const EditarPaciente = () => {
                                 onChange={ handleChange }
                                 maxLength = "10"
                                 defaultValue = { paciente.telefono }
-                                isActive = { true }
+                                isActive = { paciente.telefono ? true : false }
                                 elError = { errors.telefono && errors.telefono?.message }
                             />
-                            {setValue("telefono", paciente.telefono)}
+                            {setValue("telefono", (paciente.telefono ? paciente.telefono : undefined))}
                         </LineaCampos>
                         <LineaCampos>
                             <Input 
@@ -373,19 +378,20 @@ const EditarPaciente = () => {
                                 type="email"
                                 onChange={ handleChange }
                                 defaultValue = { paciente.email }
-                                isActive = { true }
+                                isActive = { paciente.email ? true : false }
                                 elError={ errors.correo && errors.correo?.message }
                             />
                             {setValue("correo", paciente.email)}
                             <Input 
                                 id="curp" 
-                                label="CURP o Folio Nefrovida" 
+                                label="CURP o Folio Nefrovida (🚫)" 
                                 tamano="s12 m4"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.curp }
                                 isActive = { true }
                                 elError = { errors.curp && errors.curp?.message }
-                                requerido = { true }
+                                requerido = { false }
+                                disabled
                             />
                             {setValue("curp", paciente.curp)}
                             <Input 
@@ -396,10 +402,10 @@ const EditarPaciente = () => {
                                 tamano = "s12 m2"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.peso }
-                                isActive = { true }
+                                isActive = { paciente.peso ? true : false }
                                 elError = { errors.peso && errors.peso?.message }
                             />
-                            {setValue("peso", paciente.peso)}
+                            {setValue("peso", (paciente.peso ? paciente.peso : undefined))}
                             <Input 
                                 id = "estatura" 
                                 label = "Estatura (cm)" 
@@ -408,10 +414,10 @@ const EditarPaciente = () => {
                                 tamano = "s12 m2" 
                                 onChange = { handleChange }
                                 defaultValue = { paciente.estatura }
-                                isActive = { true }
+                                isActive = { paciente.estatura ? true : false }
                                 elError = { errors.estatura && errors.estatura?.message }
                             />
-                            {setValue("estatura", paciente.estatura)}
+                            {setValue("estatura", (paciente.estatura ? paciente.estatura : undefined))}
                         </LineaCampos>
                         { error 
                             && <div> 
@@ -421,8 +427,8 @@ const EditarPaciente = () => {
                                     <br/><br/> 
                                 </div>
                         }
-            
-                        <BtnGuardar/>
+                        { !loading && <BtnGuardar/>}
+                        
                     </form>
 
                     ) :

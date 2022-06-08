@@ -309,7 +309,7 @@ exports.buscarPorNombre = async(nombre) => {
  * @param {object} data - Objeto que contenga la información nueva del paciente
  * @returns Paciente actualizado o un error en caso de existir.
  */
- exports.updatePaciente = async(data) => {
+exports.updatePaciente = async(data) => {
     const query = new Parse.Query(CONSTANTS.PACIENTE);
     query.equalTo(CONSTANTS.CURP, data.curp);
     
@@ -360,6 +360,7 @@ exports.buscarPorNombre = async(nombre) => {
         }
 
     } catch (error) {
+        console.log(error)
         return resultsPaciente(null, error.message);
     }
 }

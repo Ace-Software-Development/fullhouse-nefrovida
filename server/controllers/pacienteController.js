@@ -202,7 +202,7 @@ module.exports.consultarPorNombre = async(request, response) => {
             response.status(200).send( {
                 success: 'true',
                 data: results,
-                message: 'Paciente creado exitosamente'
+                message: 'Paciente editado exitosamente'
             })
         } catch (error) {
         }
