@@ -184,7 +184,7 @@ export default function ConsultarTipoEstudio() {
                                 { ReactSession.get('rol') === 'admin' &&
                                 <div>
                                     <form onSubmit = { eliminarTipoEstudio }>
-                                        <BtnEliminar texto="Eliminar estudio" posicion="right"/>
+                                        <BtnEliminar texto="Eliminar tipo estudio" posicion="right"/>
                                     </form>
                                 </div>
                                 }
