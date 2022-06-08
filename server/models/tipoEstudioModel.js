@@ -146,6 +146,7 @@ exports.registrarTipoEstudio = async(data) => {
 
       return results(null, error.message);
    }
+}
 /*
  * asyncBorrarTipoEstudio Función asíncrona para eliminar un tipo de estudio
  * @param {Object} data Información enviada en el body, debe incluir información del estudio
