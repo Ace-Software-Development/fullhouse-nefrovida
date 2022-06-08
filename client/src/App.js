@@ -17,9 +17,12 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
+import DetalleColaborador from './pages/DetalleColaborador';
+import ConsultarColaborador from './pages/ConsultarColaborador';
+import RegistrarColaborador from './pages/RegistrarColaborador';
+import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
-
 
 
 function App() {
@@ -51,6 +54,10 @@ function App() {
             <Route exact path='/estudio/:idEstudio' element={<ConsultarEstudioPaciente/>} />
           </Route>
 
+          <Route exact path='/estudio/PDF/:idEstudio' element={<PrivateRoute/>}>
+            <Route exact path='/estudio/PDF/:idEstudio/:idPaciente' element={<GenerarEstudioPDF/>} />
+          </Route>
+
           <Route exact path='/paciente/:idPaciente/estudios' element={<PrivateRoute/>}>
             <Route exact path='/paciente/:idPaciente/estudios' element={<EstudiosLaboratorio/>} />
           </Route>
@@ -71,6 +78,20 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
+<<<<<<< HEAD
+=======
+          <Route exact path='/colaborador' element={<PrivateRoute/>}>
+            <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/registrarColaborador' element={<PrivateRoute/>}>
+            <Route exact path='/registrarColaborador' element={<RegistrarColaborador/>}/>
+          </Route>
+
+          <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
+            <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
+          </Route>
+>>>>>>> e8a2b53a6ab34dd10ddbae0d0b730e1a907d255d
 
           <Route exact path='/403' element={<PrivateRoute/>}>
             <Route exact path='/403' element={<Forbidden />} />

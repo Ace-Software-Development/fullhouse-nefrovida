@@ -122,15 +122,25 @@ exports.buscarPorCurp = async (curp) => {
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
 exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
+    //Buscar paciente
     const queryObtenerIdPaciente = new Parse.Query(Paciente);
     queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
     const idPaciente = await queryObtenerIdPaciente.first();
+
+    //Buscar tipos de estudio activos
+    const tablaTipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
+    const queryObtenerIdTiposEstudio = new Parse.Query(tablaTipoEstudio);
+    queryObtenerIdTiposEstudio.equalTo(CONSTANTS.ACTIVO, true);
+    const idTiposEstudio = await queryObtenerIdTiposEstudio.find();
+    console.log(JSON.parse(JSON.stringify(idTiposEstudio)));
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
     queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
+    queryObtenerEstudios.containedIn(CONSTANTS.IDTIPOESTUDIO, idTiposEstudio);
+    //queryObtenerEstudios.equalTo(CONSTANTS.IDTIPOESTUDIO+'.'+CONSTANTS.ACTIVO, true);
 
     // Los datos se ordenan por fecha de manera ascendente o no
     if((ascendente == 'true') || (ascendente == ' ')) {
@@ -143,6 +153,7 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     try {
         const estudios = await queryObtenerEstudios.find();
         const jsonEstudios = JSON.parse(JSON.stringify(estudios));
+        console.log(jsonEstudios);
 
         //Guardar nombres de los tipos de estudio del paciente
         let arrTiposEstudio = [];
@@ -233,8 +244,7 @@ exports.consultarPacientes = async () => {
             data: null,
             error: error.message
         }
-    }
-    
+    } 
 }
 
 
