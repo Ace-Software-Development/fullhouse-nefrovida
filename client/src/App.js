@@ -78,8 +78,6 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-<<<<<<< HEAD
-=======
           <Route exact path='/colaborador' element={<PrivateRoute/>}>
             <Route exact path='/colaborador' element={<ConsultarColaborador/>}/>
           </Route>
@@ -91,7 +89,6 @@ function App() {
           <Route exact path='/colaborador/:username/:rol' element={<PrivateRoute/>}>
             <Route exact path= '/colaborador/:username/:rol' element={<DetalleColaborador/>}/>
           </Route>
->>>>>>> e8a2b53a6ab34dd10ddbae0d0b730e1a907d255d
 
           <Route exact path='/403' element={<PrivateRoute/>}>
             <Route exact path='/403' element={<Forbidden />} />
