@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Main from '../components/Main';
 import Card from '../components/Card';
@@ -27,8 +27,8 @@ export default function RegistrarTipoEstudio() {
 
     const [parametros, setParametros] = useState([]);
     const [options, setOptions] = useState([{}]);
-
-
+    // const [selectedParameters, setSelectedParameters] = useState([]);
+    let selectedParameters;
 
 
     useEffect(() => {
@@ -101,6 +101,28 @@ export default function RegistrarTipoEstudio() {
     const handleChange = (e) => {
         console.log(e.target.name, e.target.value,"handle change")
         setValue(e.target.name, e.target.value);
+    }
+
+    /**
+     * Función que se ejecuta cuando se selecciona un parametro
+     * @param selectedList - lista de parametros seleccionados
+     * @param selectedItem - item del parametro seleccionado
+     */
+    function onSelect(selectedList, selectedItem) {
+        // setSelectedParameters(selectedList);
+        selectedParameters = selectedList;
+        console.log("selectedParameters", selectedParameters);
+    }
+
+    /**
+     * Función que se ejecuta cuando se elimina un parametro
+     * @param selectedList - lista de parametros seleccionados
+     * @param selectedItem - item del parametro borrado
+     */
+    function onRemove(selectedList, removedItem) {
+        // setSelectedParameters(selectedList);
+        selectedParameters = selectedList;
+        console.log(selectedList);
     }
 
     async function onSubmit(data, e) {
@@ -186,26 +208,24 @@ return(
                                     </div>
                                     </div>
                                     <br/>
-                                    { parametrosExisten ? 
-                                    <Multiselect 
+                                    { parametrosExisten ?
+                                    <Multiselect
                                     id="parametros"
                                     options={parametros}
-                                    displayValue="option" 
+                                    displayValue="option"
                                     onChange ={ handleChange }
+                                    onSelect={ onSelect }
+                                    onRemove={ onRemove }
                                     />
                                     :<></>
-
-                                    }
-                                    
-                                    
+                                }
 
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
                             <br/>
                             <BtnAnadirParametro/>
-                            {/* { console.log("numParametros", numParametros) } */}
                             <br/><br/><br/><br/><br/><br/>
-                            <BtnGuardar form="registar-tipo-estudio"/>
+                            <BtnGuardar/>
                         </form>
                     </div>
 
