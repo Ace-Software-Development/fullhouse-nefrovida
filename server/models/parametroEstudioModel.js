@@ -5,6 +5,19 @@ let CONSTANTS = require('../constantsProject');
 const ParametroEstudio = Parse.Object.extend(CONSTANTS.PARAMETROESTUDIO);
 
 /**
+    * Función auxiliar para retornar los datos y el error.
+    * @param {Object} data - Datos a retornar
+    * @param {string} error - Mensaje de error en caso de existir
+    * @returns
+    */
+    function results(data, error) {
+        return {
+        data: data,
+        error: error
+        }
+    }
+
+/**
  * asyncRegistrarParametroEstudio Función asíncrona para registrar un nuevo parametroEstudio,
  * recibe los datos del parámetro y tipo de estudio a guardar.
  * @param {object} data - Objeto que contenga la información del nuevo parámetro y tipo de estudio
