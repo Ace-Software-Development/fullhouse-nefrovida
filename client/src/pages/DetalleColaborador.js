@@ -123,10 +123,11 @@ export default function DetalleColaborador() {
                     <div className="loader-anim">
                         <ContenidoDetalleCol colaborador={ colaborador } rol={ rol }/>
                     { ReactSession.get('rol') === 'admin' &&
-                        <div>
+                        <div className="contenedor">
                             <form onSubmit = { eliminarEmpleado }>
                                 <BtnEliminar texto="Eliminar empleado" posicion="right"/>
                             </form>
+                            <br/><br/><br/>
                         </div>
                     }
                     </div>
