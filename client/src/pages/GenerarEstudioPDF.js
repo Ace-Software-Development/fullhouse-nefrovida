@@ -1,4 +1,6 @@
 /**
+ * US : IT 4-9 Generar archivo PDF de los estudios
+ * Matriz de trazabilidad: //docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Generar PDF del estudio del paciente:
  * Esta vista se ultiliza para el químico, doctor y nutriologa con la finalidad
  * de consultar los estudios del paciente.

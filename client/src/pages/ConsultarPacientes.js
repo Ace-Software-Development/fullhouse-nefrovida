@@ -1,4 +1,6 @@
 /**
+ * US: IT2-7 Consultar información de pacientes
+ * Matriz de trazabilidad://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Consultar pacientes:
  * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
  * consultar la lista de pacientes en el laboratorio. 

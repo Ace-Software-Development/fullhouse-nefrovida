@@ -1,4 +1,6 @@
 /**
+ * US: IT1-7: Registrar la información del paciente
+ * Matriz de Trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Registrar paciente:
  * Esta vista se utiliza para el trabajador social con la finalidad de registrar a un paciente. 
  * Se trata de un formulario con ciertos campos obligatorios.
