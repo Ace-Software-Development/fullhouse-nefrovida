@@ -1,12 +1,12 @@
 /**
  * Registrar colaborador:
  * Esta vista se utiliza para el admininistrador con la finalidad de registrar a un colaborador.
- * Puede ser un Químico, Doctor, Nutriólogo, Psicólogo o un Trabajador Social. 
+ * Puede ser un Químico, Doctor, Nutriólogo, Psicólogo o un Trabajador Social.
  * Se trata de un formulario con ciertos campos obligatorios.
- * 
- * Para la verificación en el front para los formularios utilizamos useEffect, useState y 
+ *
+ * Para la verificación en el front para los formularios utilizamos useEffect, useState y
  * useForm de react-hook-form.
- * 
+ *
  * Para capturar los datos y mandarlos al onSubmit() también utilizamos useState, así como una
  * petición de tipo POST al servidor que se ejecuta al mismo tiempo que esta app web.
  */
@@ -35,17 +35,17 @@ const RegistrarColaborador = () => {
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
     /**
-     * Hook para validar que cambió estado de respuesta 
+     * Hook para validar que cambió estado de respuesta
      * de fetch y por lo tanto asumir que si es true,
      * petición fue correcta para almacenar roles
      * existentes en la base de datos.
-     * 
+     *
      * Se llama a useEffect si cambia responseOk
      * que solo cambia cuando response retorno true
      * en ok
-     * 
+     *
      * Se actualiza el url para que suceda el post en el submit.
-     */ 
+     */
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return;
@@ -53,7 +53,7 @@ const RegistrarColaborador = () => {
         } else if(url === '/colaborador') {
             const arr = []
             responseJSON.roles.map(
-                el => { 
+                el => {
                 arr.push({value:el.objectId, option:el.nombre,})}
             )
             setRoles(arr);
@@ -88,13 +88,13 @@ const RegistrarColaborador = () => {
      * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
  */
     useEffect(() => {
-        
+
         if (ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
         // Armar petición GET
         httpConfig(null, 'GET');
-        
+
         // Variable para el usuario, requerido, con patrón.
         register('usuario', {
             required: {
@@ -118,7 +118,7 @@ const RegistrarColaborador = () => {
                 message: "Nombre inválido"
             }
         });
-        
+
         // Variable para el apellido paterno, requerido, con patrón.
         register('apellidoPaterno', {
             required: {
@@ -130,7 +130,7 @@ const RegistrarColaborador = () => {
                 message: "Nombre inválido"
             }
         });
-        
+
         // Variable para el apellido materno, requerido, con patrón.
         register('apellidoMaterno', {
             required: {
@@ -142,7 +142,7 @@ const RegistrarColaborador = () => {
                 message: "Nombre inválido"
             }
         });
-        
+
         // Variable para el teléfono, no requerido y con longitud fija.
         register('telefono', {
             required: {
@@ -166,7 +166,7 @@ const RegistrarColaborador = () => {
                 message: "El rol es requerido"
             }
         });
-        
+
         // Variable para el correo, requerido y con patrón.
         register('correo', {
             required: {
@@ -178,7 +178,7 @@ const RegistrarColaborador = () => {
                 message: "Correo inválido"
             }
         });
-        
+
         // Variable para la contraseña, requerido.
         register('password', {
             required: {
@@ -194,7 +194,7 @@ const RegistrarColaborador = () => {
                 message: "La contraseña debe tener una letra mayúscula, una letra minúscula, un número y un caracter especial. \nEjemplo: N3frovida!"
             }
         });
-        
+
         // Variable para confirmar la contraseña, compara el valor y es requerido.
         register('confPassword', {
             required: {
@@ -203,16 +203,16 @@ const RegistrarColaborador = () => {
             },
             validate: {
                 value: value => value === getValues("password") || "La contraseña no coincide."
-            } 
+            }
         });
     }, []);
 
     /**
      * Función que se ejecuta al dar click en el botón de Guardar el paciente, para registrar el paciente en la
      * base de datos haciendo un fetch a la ruta de back.
-     * @param {object} data - Datos del paciente en el formulario 
+     * @param {object} data - Datos del paciente en el formulario
      * @param {evento} e - Evento para submit
-     * @returns 
+     * @returns
      */
     async function onSubmit(data, e) {
         if(data.telefono !== undefined){
@@ -223,38 +223,40 @@ const RegistrarColaborador = () => {
     }
 
     return(
-        <div>   
-                <br/><br/>
+        <div>
+                <Navbar/>
+                <Main>
+                <br/><br/><br/><br/>
                 <Card>
                     <CardTitulo icono="person_add" titulo="Registrar Empleado"/>
                     <ContainerForm>
-                    
+
                     <BtnRegresar />
-                    
+
                     { loading && (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
 
-                            <div class="preloader-wrapper big active">
-                                <div class="spinner-layer spinner-blue-only">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                    <div class="circle"></div>
-                                </div><div class="circle-clipper right">
-                                    <div class="circle"></div>
+                            <div className="preloader-wrapper big active">
+                                <div className="spinner-layer spinner-blue-only">
+                                <div className="circle-clipper left">
+                                    <div className="circle"></div>
+                                </div><div className="gap-patch">
+                                    <div className="circle"></div>
+                                </div><div className="circle-clipper right">
+                                    <div className="circle"></div>
                                 </div>
                                 </div>
                             </div>
 
-                            <div class="texto-grande blue-text text-darken-1">Cargando</div>
+                            <div className="texto-grande blue-text text-darken-1">Cargando</div>
 
                             <br/><br/><br/>
                         </div>
-                    
+
                     )}
                     { !loading && !error && (
-                        
+
                         <div className="on-load-anim">
                             <br/><br/>
                             <form
@@ -263,44 +265,44 @@ const RegistrarColaborador = () => {
                                 method = 'post'
                                 onSubmit = { handleSubmit(onSubmit) }>
                                 <LineaCampos>
-                                    <Input 
-                                        id = "nombre" 
-                                        label = "Nombre" 
+                                    <Input
+                                        id = "nombre"
+                                        label = "Nombre"
                                         tamano = "m4 s12"
                                         onChange = {handleChange}
                                         elError = { errors.nombre && errors.nombre?.message }
                                         maxLength = "20"
                                         requerido = {true}
                                     />
-                                    <Input 
-                                        id = "apellidoPaterno" 
-                                        label = "Apellido Paterno" 
+                                    <Input
+                                        id = "apellidoPaterno"
+                                        label = "Apellido Paterno"
                                         tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
                                         requerido = {true}
                                     />
-                                    <Input 
-                                        id = "apellidoMaterno" 
-                                        label = "Apellido Materno" 
+                                    <Input
+                                        id = "apellidoMaterno"
+                                        label = "Apellido Materno"
                                         tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
                                     />
                                 </LineaCampos>
                                 <LineaCampos>
-                                    <Input 
-                                            id = "correo" 
-                                            label = "Correo electrónico" 
+                                    <Input
+                                            id = "correo"
+                                            label = "Correo electrónico"
                                             tamano = "s12 m6"
                                             type = "email"
                                             onChange = { handleChange }
                                             elError = { errors.correo && errors.correo?.message }
                                             requerido = { true }
                                         />
-                                    <Input 
-                                        id = "telefono" 
-                                        label = "Telefono" 
+                                    <Input
+                                        id = "telefono"
+                                        label = "Telefono"
                                         type = "number"
                                         tamano = "s8 m4"
                                         onChange = { handleChange }
@@ -308,10 +310,10 @@ const RegistrarColaborador = () => {
                                         min = "0"
                                         elError = { errors.telefono && errors.telefono?.message }
                                     />
-                                    { rolesExisten() ? 
-                                        <Select 
-                                            id = "rol" 
-                                            label = "Rol" 
+                                    { rolesExisten() ?
+                                        <Select
+                                            id = "rol"
+                                            label = "Rol"
                                             value = ""
                                             arr = { roles }
                                             handleChange = { handleChange }
@@ -324,28 +326,28 @@ const RegistrarColaborador = () => {
 
                                 </LineaCampos>
                                 <LineaCampos>
-                                <Input 
-                                        id = "usuario" 
-                                        label = "Usuario" 
-                                        tamano = "m4 s12" 
+                                <Input
+                                        id = "usuario"
+                                        label = "Usuario"
+                                        tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.usuario && errors.usuario?.message }
                                         maxLength = "20"
                                         requerido = {true}
 
                                     />
-                                    <Input 
-                                        id = "password" 
-                                        label = "Contraseña" 
-                                        tamano = "s12 m4" 
+                                    <Input
+                                        id = "password"
+                                        label = "Contraseña"
+                                        tamano = "s12 m4"
                                         type = "password"
                                         onChange = { handleChange }
                                         elError = { errors.password && errors.password?.message }
                                         requerido = { true }
                                     />
-                                    <Input 
-                                        id = "confPassword" 
-                                        label = "Confirmar contraseña" 
+                                    <Input
+                                        id = "confPassword"
+                                        label = "Confirmar contraseña"
                                         tamano = "s12 m4"
                                         type = "password"
                                         onChange = { handleChange }
@@ -363,7 +365,7 @@ const RegistrarColaborador = () => {
                             <br/><br/><br/>
 
                             <div className="texto-grande red-text center animate-new-element">
-                                <strong> { error } </strong> 
+                                <strong> { error } </strong>
                             </div>
 
                             <br/><br/><br/>
@@ -371,6 +373,7 @@ const RegistrarColaborador = () => {
                     )}
                     </ContainerForm>
                 </Card>
+                </Main>
         </div>
     )
 }

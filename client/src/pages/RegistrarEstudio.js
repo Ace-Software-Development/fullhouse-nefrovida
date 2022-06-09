@@ -2,10 +2,10 @@
  * Registrar estudio:
  * Esta vista se utiliza para los químicos con la finalidad de registrar un estudio de un paciente.
  * Donde debemos de llenar ciertos parámetros.
- * 
+ *
  * Para la verificación en el front para los parámetros utilizamos useEffect, useState y useForm de
  * rect-hook-form.
- * 
+ *
  * Para capturar los datos y mandarlos al onSubmit() también utilizamos useState, así como una
  * petición de tipo POST al servidor que se ejecuta al mismo tiempo que esta app web.
  */
@@ -74,40 +74,40 @@ function listaParametros() {
     return parametros.map(el => {
         let objectId = el.idParametro.objectId;
         if (el.idParametro.idTipoValor.nombre === 'Numérico'){
-            return  <EntradaParametroNum 
+            return  <EntradaParametroNum
                         id = { el.idParametro.objectId }
-                        nombreParametro = { el.idParametro.nombre } 
-                        valorMin = { el.idParametro.valorMin } 
-                        valorMax = { el.idParametro.valorMax } 
-                        unidad = { el.idParametro.unidad } 
-                        codigo = { el.idParametro.codigo } 
-                        key = { el.idParametro.objectId } 
-                        handleChange = { handleChange } 
+                        nombreParametro = { el.idParametro.nombre }
+                        valorMin = { el.idParametro.valorMin }
+                        valorMax = { el.idParametro.valorMax }
+                        unidad = { el.idParametro.unidad }
+                        codigo = { el.idParametro.codigo }
+                        key = { el.idParametro.objectId }
+                        handleChange = { handleChange }
                         elError = { errors[objectId] && errors[objectId]?.message }
                     />
         }
         else if(el.idParametro.idTipoValor.nombre === 'Positivo/Negativo'){
-            return <EntradaParametroBool 
+            return <EntradaParametroBool
                         id = { el.idParametro.objectId }
-                        nombreParametro = { el.idParametro.nombre } 
-                        valorBool ={ el.idParametro.valorBool } 
-                        codigo = { el.idParametro.codigo } 
-                        key = { el.idParametro.objectId } 
+                        nombreParametro = { el.idParametro.nombre }
+                        valorBool ={ el.idParametro.valorBool }
+                        codigo = { el.idParametro.codigo }
+                        key = { el.idParametro.objectId }
                         handleChange = { handleChange }
                         elError = { errors[objectId] && errors[objectId]?.message }
                     />
         }
         else if(el.idParametro.idTipoValor.nombre === 'Texto'){
-            return <EntradaParametroString 
+            return <EntradaParametroString
                         id = { el.idParametro.objectId }
-                        nombreParametro = { el.idParametro.nombre } 
-                        valorString = { el.idParametro.valorString } 
-                        codigo = { el.idParametro.codigo } 
-                        key = { el.idParametro.objectId } 
+                        nombreParametro = { el.idParametro.nombre }
+                        valorString = { el.idParametro.valorString }
+                        codigo = { el.idParametro.codigo }
+                        key = { el.idParametro.objectId }
                         handleChange = { handleChange }
                         elError = { errors[objectId] && errors[objectId]?.message }
                     />
-        }            
+        }
     })
 
 }
@@ -116,19 +116,19 @@ function listaParametros() {
  * Función asíncrona para obtener la lista de parámetros del estudio. Si recibe una string
  * es para obtener los estudios cuyo nombre contengan dicha string.
  * @param {string} id - Datos del estudio con los parámetros
- * @returns 
+ * @returns
  */
 async function getTipoEstudio() {
-    
+
     httpConfig(params.idTipoEstudio, 'GET');
 }
 
 /**
  * Función que se ejecuta al dar click en el botón de Guardar el estudio, para registrar el paciente en la
  * base de datos haciendo un fetch a la ruta de back.
- * @param {object} data - Datos del estudio 
+ * @param {object} data - Datos del estudio
  * @param {evento} e - Evento para submit
- * @returns 
+ * @returns
  */
 async function onSubmit(data, e) {
 
@@ -220,7 +220,7 @@ return(
     <div>
         <Navbar/>
         <Main>
-            <br></br>    
+            <br></br>
             <Card>
             <CardTitulo icono="note_add" titulo="Registrar estudio"/>
                 <ContainerForm>
@@ -231,19 +231,19 @@ return(
                     <div className="center animate-new-element">
                         <br/>
 
-                        <div class="preloader-wrapper big active">
-                            <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
+                        <div className="preloader-wrapper big active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
                             </div>
                             </div>
                         </div>
 
-                        <div class="texto-grande blue-text text-darken-1">Cargando...</div>
+                        <div className="texto-grande blue-text text-darken-1">Cargando...</div>
 
                         <br/><br/>
                     </div>
@@ -254,7 +254,7 @@ return(
                     <div className="loader-anim">
 
 
-                        <div align="left">        
+                        <div align="left">
                             <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
                         </div>
@@ -262,7 +262,7 @@ return(
 
                         <div className='identificacion-registrar'/>
 
-                        <form 
+                        <form
                             id = "registrar-estudio"
                             action = {ReactSession.get("apiRoute")+"/estudio"}
                             method = 'post'
@@ -278,15 +278,15 @@ return(
                                 <div className='detalles-usuario'>
                                 <i className="material-icons icon-separator small c-000000">remove_red_eye</i><div className="detalles-lista negrita-grande c-64646A left-align">Observaciones:</div><br/>
                                 </div>
-                                <Input 
-                                    id="observaciones" 
-                                    label="Ingresa aquí la observación del estudio" 
+                                <Input
+                                    id="observaciones"
+                                    label="Ingresa aquí la observación del estudio"
                                     tamano="m12 s12"
                                     onChange = { handleChange }/>
                                     </div>
                             </LineaCampos>
                             <br/>
-                            <BtnGuardar form="registrar-estudio"/> 
+                            <BtnGuardar form="registrar-estudio"/>
                         </form>
                     </div>
                     : null
@@ -296,16 +296,16 @@ return(
                         <br/><br/>
 
                         <div className="texto-grande red-text center">
-                            <strong> { error } </strong> 
+                            <strong> { error } </strong>
                         </div>
 
                         <br/><br/><br/>
                     </div>
-                )}             
+                )}
                 </ContainerForm>
             </Card>
         </Main>
         </div>
     </div>
     )
-} 
+}

@@ -178,3 +178,40 @@ module.exports.consultarPorNombre = async(request, response) => {
         });
     }
 }
+
+
+/**
+ * asyncEditarPaciente Función asíncrona para registrar un nuevo paciente, 
+ * llama a la función registrarPaciente en el modelo de paciente.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+ module.exports.editarPaciente = async(request, response) => {
+    try {
+        const results = await pacienteModel.updatePaciente(request.body);
+
+        try {
+            if (results.error) {
+                return response.status(400).send( {
+                    status: 'error',
+                    data: null,
+                    message: 'Error. ' + results.error
+                })
+            }
+            response.status(200).send( {
+                success: 'true',
+                data: results,
+                message: 'Paciente editado exitosamente'
+            })
+        } catch (error) {
+        }
+
+    } catch(error) {
+        return response.status(400).send( {
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        })
+    }
+}
