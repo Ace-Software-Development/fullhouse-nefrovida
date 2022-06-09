@@ -17,7 +17,7 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
             </div>
             <br/><br/>
             <LineaCampos>
-                <Input
+                <Input 
                     id = { id }
                     name = { id }
                     type= "number"
@@ -29,9 +29,9 @@ const EntradaParametroNum = ({ id, nombreParametro, valorMin, valorMax, unidad, 
                     elError = { elError }
                 />
             </LineaCampos>
-
-        <div className="identificacion-registrar"/>
-        </div>
+            
+        <div class="identificacion-registrar"/>
+        </div>                             
     )
 }
 
@@ -61,8 +61,8 @@ const EntradaParametroBool = ({ id, nombreParametro, valorBool, codigo, handleCh
                     elError = { elError }
                 />
             </LineaCampos>
-            <div className="identificacion-registrar"/>
-        </div>
+            <div class="identificacion-registrar"/>
+        </div>     
     )
 
 }
@@ -80,7 +80,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
             </div>
             <br/><br/>
             <LineaCampos>
-                <Input
+                <Input 
                     id= { id }
                     name = { id }
                     type= "text"
@@ -92,7 +92,7 @@ const EntradaParametroString = ({ id, nombreParametro, valorString, codigo, hand
                     elError = { elError }
                 />
             </LineaCampos>
-            <div className="identificacion-registrar"/>
+            <div class="identificacion-registrar"/>
         </div>
     )
 }

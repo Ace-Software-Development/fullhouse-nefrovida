@@ -87,20 +87,6 @@ function resultsRegistrarColaborador(colab, error){
     };
 }
 
-
-/**
- * Función auxiliar para retornar los datos y el error.
- * @param {Object} data - Datos a retornar
- * @param {string} error - Mensaje de error en caso de existir
- * @returns 
- */
-function resultsColaborador(data, error) {
-    return {
-        data: data,
-        error: error
-    }
-}
-
 /**
  * registrarColaborador Función asíncrona para dar de alta información de colaborador en base de datos.
  * @param {object} params objeto con infrormación recibida de formulario de registro.
@@ -235,64 +221,4 @@ exports.cerrarSesionColaborador = async() => {
             error: error.message
         }
     }
-}
-
-/**
- * asyncBuscarPorUsuario función asíncrona para buscar a un colaborador por su username. 
- * @param {string} username - Username del colaborador a buscar
- * @returns Información del colaborador en caso de encontrarlo o un error en caso de no existir.
- */
-exports.buscarPorUsuario = async (username) => {
-    const Table = Parse.Object.extend(Parse.User);
-    let query = new Parse.Query(Table);
-    query.equalTo(CONSTANTS.USUARIO, username);
-    query.include(CONSTANTS.IDROL);
-
-    try {
-        const results = await query.first();
-        console.log("Resultado", results)
-        // Enviar error si no existe un colaborador con ese username
-        if ( !results ) {
-            return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
-        }
-        // Enviar el error si el colaborador no esta activo
-        if ( !results.get(CONSTANTS.ACTIVO)) {
-            return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
-        }
-        console.log("Resultado", results)
-        return resultsColaborador(results, null);
-
-    } catch (error) {
-        return resultsColaborador(null, error.message);
-    }
-}
-
-/**
- * asynConsultarColaboradores función asíncrona para consultar todos los colaboradores de Nefrovida.
- * @returns Todos los colaboradores registrados en Nefrovida.
- */
-exports.consultarColaboradores = async () => {
-    const table = Parse.Object.extend(Parse.User);
-    let query = new Parse.Query(table);
-    query.include(CONSTANTS.IDROL);
-    
-    try {
-        const results = await query.find();
-
-        if (!results) {
-            return {
-                data: null,
-                error: 'No hay empleados registrados actualmente'
-            }
-        }
-        return {
-            data: results,
-            error: null
-        }
-    } catch (error) {
-        return {
-            data: null,
-            error: error.message
-        }
-    } 
 }

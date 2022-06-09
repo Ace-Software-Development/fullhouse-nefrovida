@@ -17,6 +17,7 @@ import Card from '../components/Card';
 import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
+
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
 
@@ -63,15 +64,10 @@ function DetallePaciente() {
         <div>
             <Navbar/>
             <Main>
-            <br/><br/>
-            { ( (ReactSession.get('rol') === 'quimico') || 
-                (ReactSession.get('rol') === 'doctor') || 
-                (ReactSession.get('rol') === 'nutriologo') || 
-                (ReactSession.get('rol') ==='psicologo')) &&
-                <Link to = "/">
-                    <BtnRegresar/>
-                </Link>
-            }
+            <br/><br/> 
+            <Link to = "/">
+                <BtnRegresar/>
+            </Link>
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Detalle de paciente"/>
