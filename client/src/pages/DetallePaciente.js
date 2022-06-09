@@ -1,4 +1,6 @@
 /**
+ * US: IT2-7 consultar información del paciente
+ * matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Detalle paciente:
  * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
  * consultar la información de un paciente.
@@ -19,6 +21,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
+import BtnEditRegis from '../components/BtnEditRegis';
 
 
 function DetallePaciente() {
@@ -117,14 +120,33 @@ function DetallePaciente() {
                 </div>
             }
             { ReactSession.get('rol') === 'doctor' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+                </div>
             }
             { ReactSession.get('rol') === 'nutriologo' &&
-                <EstudiosLaboratorio/>
+                <div>
+                    <EstudiosLaboratorio/>
+                    <Link to = {"/registrarConsulta/" + params.curp}>
+                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                    </Link>
+            </div>
+            }
+            { ReactSession.get('rol') === 'psicologo' &&
+                <div>
+                
+                <Link to = {"/registrarConsulta/" + params.curp}>
+                    <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
+                </Link>
+            </div>
             }
             { ReactSession.get('rol') === 'admin' &&
                 <TiposEstudio/>
             }
+            <br/><br/>
             </Main>
         </div>
     )

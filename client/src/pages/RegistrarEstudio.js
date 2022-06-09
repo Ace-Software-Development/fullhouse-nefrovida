@@ -1,4 +1,6 @@
 /**
+ * US:IT3-9 Registrar estudio del paciente
+ * Matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Registrar estudio:
  * Esta vista se utiliza para los químicos con la finalidad de registrar un estudio de un paciente.
  * Donde debemos de llenar ciertos parámetros.
@@ -212,7 +214,7 @@ let currentDate = new Date();
 let cDay = currentDate.getDate();
 let cMonth = currentDate.getMonth() + 1;
 let cYear = currentDate.getFullYear();
-let fecha = cYear + "/" + cMonth + "/" + cDay;
+let fecha = cDay + "/" + cMonth + "/" + cYear;
 
 return(
     <div className="row ContainerForm left-align">

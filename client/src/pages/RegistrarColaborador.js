@@ -1,4 +1,6 @@
 /**
+ * US: IT1-5 Registrar la información del colaborador
+ * Matiz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Registrar colaborador:
  * Esta vista se utiliza para el admininistrador con la finalidad de registrar a un colaborador.
  * Puede ser un Químico, Doctor, Nutriólogo, Psicólogo o un Trabajador Social.

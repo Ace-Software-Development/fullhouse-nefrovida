@@ -9956,4 +9956,13 @@ body {
   height: 70%;
   width: auto;
   margin: 0 0 0 8px;
+  } 
+}
+
+textarea {
+  resize: none;
+  border-radius: 12px;
+  background-color: white;
+  font-size: 18px;
+  height: 140px;
 }
