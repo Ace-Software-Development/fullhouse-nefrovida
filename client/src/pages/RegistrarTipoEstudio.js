@@ -8,9 +8,7 @@ import Input from '../components/Input';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
-import Select from '../components/Select';
 import BtnGuardar from '../components/BtnGuardar';
-import BtnAnadirParametro from '../components/BtnAnadirParametro';
 import BtnEditRegis from '../components/BtnEditRegis';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
@@ -216,9 +214,6 @@ return(
 
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
-                            <br/>
-                            <BtnAnadirParametro/>
-                            <br/><br/><br/><br/><br/><br/>
                             <BtnGuardar/>
                         </form>
                     </div>

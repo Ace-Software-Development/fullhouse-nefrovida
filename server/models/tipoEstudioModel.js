@@ -130,17 +130,16 @@ exports.registrarTipoEstudio = async(data) => {
          tipoEstudio.set(CONSTANTS.CODIGO, data.codigo);
       }
 
-      const resultsTipoEstudio = await tipoEstudio.save()
-      try {
-         data.parametros.map(async(idParametro) => {
-            resultsTipoEstudio = await parametroEstudio.registrarParametroEstudio( idParametro, data.idTipoEstudio)
+      const resultsTipoEstudio = await tipoEstudio.save();
+      
 
-         })
-      } catch (error) {
-         return results(null, error.message);
+      let resultParametros 
+      data.parametros.map(async(parametro) => {
+         resultParametros = await parametroEstudio.registrarParametroEstudio( parametro.value, resultsTipoEstudio.id);
+      });
 
-      }
-      return results(resultsTipoEstudio, null);
+      return results(resultParametros, null);
+         
 
    } catch (error) {
 
