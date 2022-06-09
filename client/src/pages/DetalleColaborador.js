@@ -1,4 +1,6 @@
 /**
+ * US: IT4-17  Consultar información del personal
+ * Matriz de Trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=1997536299
  * Detalle colaborador:
  * Esta vista se utiliza por el administrador, con la finalidad de 
  * consultar la información de un colaborador.

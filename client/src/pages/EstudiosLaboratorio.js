@@ -1,3 +1,10 @@
+/**
+ * US:IT1-10 consultar estudios del paciente
+ * Matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
+ * 
+ */
+
+
 import { useParams } from 'react-router';
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';

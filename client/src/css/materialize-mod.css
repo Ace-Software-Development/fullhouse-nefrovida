@@ -4979,7 +4979,7 @@ small {
   justify-content: center;
   background-color: #E6E6E6;
   border-bottom: 2px solid #A0A0A0;
-  border-radius: 12px 12px 0px 0px; 
+  border-radius: 12px 12px 0px 0px;
   font-weight: 500;
   color: #376698;
   font-size: x-large;
@@ -6293,7 +6293,7 @@ label {
   color: #d1d1d1;
 }
 
-/* Text inputs 
+/* Text inputs
   MODIFICADO EN WIDTH Y PADDING */
 input:not([type]),
 input[type=text]:not(.browser-default),
@@ -7714,7 +7714,7 @@ input[type=range]::-ms-thumb {
 
 @media only screen and (min-width: 992px){
   .sidenav{
-   top: 64px; 
+   top: 64px;
    z-index: 1;
   }
 
@@ -9926,12 +9926,12 @@ body {
   line-height: 2px;
 }
 
-.zoomed { 
-  zoom: 1.0; 
-  -moz-transform: scale(1.0); 
+.zoomed {
+  zoom: 1.0;
+  -moz-transform: scale(1.0);
   -moz-transform-origin: 0 0;
   -webkit-print-color-adjust: exact;
-} 
+}
 
 .footer-override {
   padding-left: 0px;
@@ -9939,13 +9939,25 @@ body {
 
 @media print {
   .dontPrint { display: none !important;}
-  .zoomed { 
-  zoom: 0.7; 
-  -moz-transform: scale(0.7); 
+  .zoomed {
+  zoom: 0.7;
+  -moz-transform: scale(0.7);
   -moz-transform-origin: 0 0;
   -webkit-print-color-adjust: exact;
-  } 
+  }
 }
+
+.chip {
+  width: fit-content;
+  background: #1e88e5;
+}
+
+.chip > img {
+  height: 70%;
+  width: auto;
+  margin: 0 0 0 8px;
+} 
+
 
 textarea {
   resize: none;
