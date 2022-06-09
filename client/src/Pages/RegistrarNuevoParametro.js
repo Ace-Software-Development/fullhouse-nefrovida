@@ -74,8 +74,6 @@ export default function RegistrarNuevoParametro() {
         });
     }
 
-    console.log(paramTipo);
-
     /**
     * Función para realizar las validaciones necesarias para los valores de referencia
     */
@@ -243,12 +241,8 @@ export default function RegistrarNuevoParametro() {
             data.valFinal = Number(data.valFinal);
         }
 
-        console.log('data', data);
-
         httpConfig(data, 'POST');
     }
-
-    console.log(errors);
 
     return(
         <div className="row ContainerForm left-align">
