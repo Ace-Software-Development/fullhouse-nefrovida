@@ -7,8 +7,40 @@ import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
 import BtnEditRegis from '../components/BtnEditRegis'
+import useFetch from '../hooks/useFetch';
+import { useParams } from 'react-router';
+import { ReactSession } from 'react-client-session';
 
 export default function ConsultarResumenConsulta() {
+
+    const [url, setUrl] = useState('/consulta/id');
+    const params = useParams();
+    const [isLoading, setIsLoading] = useState(false);
+    const [estudio, setConsulta] = useState({})
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
+
+    /**
+     * Hook que se ejecuta una sola vez al renderizar la aplicación por primera vez.
+     */
+    /*
+     useEffect(() => {
+        //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
+        if (ReactSession.get('rol') !== 'doctor' && 
+            ReactSession.get('rol') !== 'quimico' && 
+            ReactSession.get('rol') !== 'psicologo') {
+            window.location.href = '/403';
+        }
+        getConsulta(params.idConsulta);
+    }, []);
+    */
+    /**
+    * getTipoEstudio Función asíncrona para obtener el detalle  
+    * de un estudio del paciente; recibe el ID del estudio a buscar.
+    * @param { string } id 
+    */
+     async function getConsulta(id) {
+        await httpConfig(id, 'GET');
+    }
 
 // Variables para sacar la fecha actual.
 let currentDate = new Date();
@@ -32,7 +64,7 @@ return(
                 <BtnRegresar/>
                 <br/><br/>
                 </Link>
-                { /*isLoading && (
+                { isLoading && (
                     <div className="center">
                         <br/><br/><br/>
                         <div class="preloader-wrapper big active">
@@ -50,7 +82,7 @@ return(
                         <br/><br/><br/>
                     </div>
                 
-                )*/}
+                )}
                 {
                     //!isLoading && !errorFetch ?
                     <div>
