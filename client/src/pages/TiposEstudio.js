@@ -1,3 +1,7 @@
+/**
+ * US: IT3-8 Consultar los tipos de estudio
+ * Matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
+*/
 import { useParams } from 'react-router';
 import CardEstudio from '../components/CardEstudio';
 import LineaCardsEstudios from '../components/LineaCardsEstudios';
@@ -7,13 +11,13 @@ import { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
-const Temp = () => {
+const TiposEstudio = () => {
     // Parametro
     const params = useParams();
     const curp = params.curp;
 
     const [tiposEstudio, setTiposEstudio] = useState([])
-    const { httpConfig, loading, responseJSON, error, responseOk } = useFetch('http://localhost:6535/tipoEstudio/');
+    const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + '/tipoEstudio/');
 
     function listaTiposEstudio() {
 
@@ -99,4 +103,4 @@ const Temp = () => {
 }
 
 
-export default Temp;
+export default TiposEstudio;

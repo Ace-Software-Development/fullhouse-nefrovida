@@ -1,42 +1,43 @@
 // Datos de ejemplo
 import FilaTablaEstudios from './FilaTablaEstudios';
 
-const TablaEstudios = ({ datos }) => {
+const TablaEstudios = ({ datos, idPaciente}) => {
 
     const tableContent = datos.map((estudio, index) =>(
-        <FilaTablaEstudios key = { index } estudio = { estudio } />
+        <FilaTablaEstudios key = { index } estudio = { estudio } idPaciente = {idPaciente}/>
     ))
 
 return(
-    <div>
-        <div className="card contenedor tabla-altura">
-        <table id="estudios" className="highlight">     
-            <thead  >
-            <tr className="figma"  >
-
-                <th className="tabla-padding">
-                    Tipo de estudio
-                </th>
-                <th  >
-                    Código
-                </th>
-                <th  >
-                    Químico/a
-                </th>
-                <th  >
-                    Fecha
-                </th>
-                <th className="center">
-                    Detalle
-                </th>
-
-            </tr>
-            </thead>
-            { tableContent }
-        </table>
+    <div className="animate-new-element">
+        <div>
+            <div className="card contenedor tabla-altura">
+                <table id="estudios" className="highlight">     
+                    <thead  >
+                    <tr className="figma"  >
+                        <th className="tabla-padding">
+                            Tipo de estudio
+                        </th>
+                        <th  >
+                            Código
+                        </th>
+                        <th  >
+                            Químico/a
+                        </th>
+                        <th  >
+                            Fecha
+                        </th>
+                        <th className="center">
+                            Detalle
+                        </th>
+                        <th className="center">
+                            PDF
+                        </th>
+                    </tr>
+                    </thead>
+                    { tableContent }
+                </table>
+            </div>
         </div>  
-        <br/>
-        <br/>
     </div>
     )
 }

@@ -1,4 +1,6 @@
 /**
+ * US: IT3-3 Iniciar sesión en el sistema 
+ * Matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Iniciar Sesión: IT3-3 (https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit?usp=sharing)
  * Esta vista es la pantalla principal con la que se 
  * encuentra un colaborador de Nefrovida para darse de 
@@ -27,12 +29,17 @@ import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
 import useFetch from '../hooks/useFetch';
 
-const IniciarSesion = () => {
+const IniciarSesion = () => { 
+    //Variable que debe tener un valor de '' cuando pasa a despliege
+    const apiRoute = "http://localhost:6535";
+    
     
     const [errorSubmit, setErrorSubmit] = useState('');
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
+
     // Crear instancia de hook para realizar petición al servidor de iniciar sesión.
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/iniciarSesion');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(apiRoute+ '/iniciarSesion');
+
 
     /**
      * Hook para asignar las validaciones necesarias a los campos.
@@ -92,6 +99,7 @@ const IniciarSesion = () => {
             ReactSession.set('usuario', responseJSON.usuario);
             ReactSession.set('nombre', responseJSON.nombre);
             ReactSession.set('apellido', responseJSON.apellido);
+            ReactSession.set('apiRoute',apiRoute)
             window.location.href = '/';
             M.toast({ html: message });
         }
@@ -206,9 +214,9 @@ const IniciarSesion = () => {
                                 }
                                 <br />
                                 <BtnIniciarSesion />
+                                {/* <br />
                                 <br />
-                                <br />
-                                <BtnRestablecer />
+                                <BtnRestablecer /> */}
                             </form>
                         </ContainerForm>
                 </CardLogin>

@@ -1,12 +1,11 @@
-const sessionModel = require('../models/sessionModel');
+const seguridad = require('../util/seguridad');
 
 /**
  * authUsuario Función para validar que usuario 
  * se haya autenticado en el sistema.
  * 
- * Recibe token de session desde React para 
- * validarlo obteniendo el rol con el que 
- * cuenta el usuario.
+ * Recibe token con rol cifrado desde React para 
+ * validarlo y asignarlo a cada petición.
  * 
  * @param {object} request - Petición al servidor
  * @param {object} response - Respuesta a la petición realizada al servidor.
@@ -20,12 +19,15 @@ function authUsuario(request, response, next) {
         if (request.body && request.body.session && request.body.session.sessionToken) {
             sessionToken = request.body.session.sessionToken;
         }
-
     } 
     // Si petición fue GET o DELETE obtener token dentro de ruta
     else {
         if (request.query.token) {
             sessionToken = request.query.token;
+        } else if (request.headers?.cookie) {
+            let cookies = request.headers?.cookie.split("__react_session__=")
+            let values = JSON.parse(cookies[1])
+            sessionToken = values["sessionToken"]
         }
     }
 
@@ -36,25 +38,16 @@ function authUsuario(request, response, next) {
         });
     }
     
-    // Consultar rol del token de session obtenido
-    sessionModel.obtenerSession(sessionToken)
-        .then((session) => {
-            // Si no se obtuo rol o hubo error en consulta
-            if(session && !session.rol) {
-                // Retornar "Session invalida" para que usuario se autentique nuevamente
-                return response.status(401).send({
-                    
-                    message: session.message
-                });
-            } else {
-                request.rol = session.rol;
-                next()
-            }
-        }, (error) => {
-            return response.status(401).send({
-                message: error.message
-            });
-        })
+    const nombreRol = seguridad.desencriptar(sessionToken, process.env.SECRET_ENCRYPT);
+    
+    if (nombreRol) {
+        request.rol = nombreRol;
+        next()
+    } else {
+        return response.status(401).send({
+            message: "Error al obtener sesión de usuario."
+        });
+    }
 }
 
 /**
@@ -71,7 +64,6 @@ function noAuthUsuario(request, response, next) {
         if (request.body && request.body.session && request.body.session.sessionToken) {
             sessionToken = request.body.session.sessionToken;
         }
-
     } else {
         if (request.query.token) {
             sessionToken = request.query.token;
@@ -94,7 +86,6 @@ function noAuthUsuario(request, response, next) {
  */
 function authRol(roles) {
     return (request, response, next) => {
-        
         if (!roles.includes(request.rol)) {
             return response.status(403).send({
                 message: 'Acceso no autorizado' 

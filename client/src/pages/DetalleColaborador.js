@@ -1,7 +1,9 @@
 /**
- * Detalle paciente:
- * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
- * consultar la información de un paciente.
+ * US: IT4-17  Consultar información del personal
+ * Matriz de Trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=1997536299
+ * Detalle colaborador:
+ * Esta vista se utiliza por el administrador, con la finalidad de 
+ * consultar la información de un colaborador.
  * 
  * Para obtener los datos usamos una petición de tipo GET al servidor que se ejecuta al 
  * en el primer rederizado, se envía el CURP del paciente en el body.
@@ -14,40 +16,26 @@ import Main from '../components/Main';
 import CardTitulo from '../components/CardTitulo';
 import BtnRegresar from '../components/BtnRegresar';
 import Card from '../components/Card';
-import ContenidoDetallesPx from '../components/ContenidoDetallesPx';
+import ContenidoDetalleCol from '../components/ContenidoDetalleCol';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
-import EstudiosLaboratorio from './EstudiosLaboratorio'
-import Temp from './Temp'
 
-
-function DetallePaciente() {
+export default function DetalleColaborador() {
     const params = useParams();
-    const [paciente, setPaciente] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/detalle/curp');
-
-
+    const rol = params.rol;
+    const [colaborador, setColaborador] = useState({});
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle/username');
+    //const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + 'colaborador/detalle/username');
+   
     /**
-     * Función asíncrona para obtener la información del paciente.
-     * @returns 
-     */
-    async function getPaciente() {
-            httpConfig(params.curp, 'GET');
-    }
-
-    /**
-    * Hook que se ejecuta al renderizar el tipo de estudio.
+    * Hook que se ejecuta al renderizar la información del colaborador.
     */
     useEffect(() => {
-        if (ReactSession.get('rol') !== 'trabajoSocial' 
-        && ReactSession.get('rol') !== 'quimico'
-        && ReactSession.get('rol') !== 'doctor'
-        && ReactSession.get('rol') !== 'nutriologo'
-        && ReactSession.get('rol') !== 'psicologo') {
+        if (ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
-        getPaciente();
+        httpConfig(params.username, 'GET'); 
     }, [])
 
 
@@ -55,22 +43,26 @@ function DetallePaciente() {
         if (!responseJSON || !responseOk) {
             return
         } else {
-                setPaciente(responseJSON.data.data);
+            console.log(colaborador,"respose ok")
+            setColaborador(responseJSON.data.data);
+            console.log(colaborador)
         }
     }, [responseOk])
 
-
+    
     return (
         <div>
             <Navbar/>
             <Main>
             <br/><br/> 
-            <Link to = "/">
-                <BtnRegresar/>
-            </Link>
-            <br/><br/>
             <Card>
-                <CardTitulo icono="person" titulo="Detalle de paciente"/>
+            <CardTitulo icono="person" titulo="Detalle del empleado"/>
+            <div className="contenedor">
+                <br/>
+                <Link to = "/">
+                    <BtnRegresar/>
+                </Link>
+            </div>
                 { loading && (
                     <div className="center animate-new-element">
                         <br/><br/>
@@ -93,7 +85,7 @@ function DetallePaciente() {
                     </div>
                 
                 )}
-                { !loading && !error && <div className="loader-anim"><ContenidoDetallesPx paciente={ paciente }/></div>}
+                { !loading && !error && <div className="loader-anim"><ContenidoDetalleCol colaborador={ colaborador } rol={ rol }/></div>}
                 { error && (
                     <div className="animate-new-element">
                         <br/><br/><br/>
@@ -106,24 +98,7 @@ function DetallePaciente() {
                     </div>
                 )}
             </Card>
-            { ReactSession.get('rol') === 'quimico' &&
-                <div>
-                    <Temp/>
-                    <EstudiosLaboratorio/>
-                </div>
-            }
-            { ReactSession.get('rol') === 'doctor' &&
-                <EstudiosLaboratorio/>
-            }
-            { ReactSession.get('rol') === 'nutriologo' &&
-                <EstudiosLaboratorio/>
-            }
-            { ReactSession.get('rol') === 'admin' &&
-                <Temp/>
-            }
             </Main>
         </div>
     )
 }
-
-export default DetallePaciente;

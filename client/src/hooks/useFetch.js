@@ -151,7 +151,7 @@ const useFetch = (url) => {
                 setLoading(true);
                 try {
                     // Armar ruta con datos de session y id
-                    const getUrl = `${url}/?token=${ReactSession.get("sessionToken")}&id=${itemId}`;
+                    const getUrl = `${url}?token=${ReactSession.get("sessionToken")}&id=${itemId}`;
                     const res = await fetch(getUrl, config);
                     const json = await res.json();
                     await setResponse(res);
@@ -160,7 +160,7 @@ const useFetch = (url) => {
                 } catch (error) {
                     await setError('Error de conexión. Inténtelo de nuevo.');
                 }
-                setLoading(false);
+                setLoading(false); 
 
             } 
             // Si métofo fue DELETE
@@ -205,6 +205,12 @@ const useFetch = (url) => {
         // Si petición retornó error.
         if(!response.ok) {
             if (response.status === 401) {
+                // Destruye los datos de la sesión.
+                ReactSession.remove('rol');
+                ReactSession.remove('nombre');
+                ReactSession.remove('apellido');
+                ReactSession.remove('sessionToken');
+                ReactSession.remove('usuario');
                 // TODO cuando esté cerrar sesion llamar a cerrarSesion
                 window.location.href = "/iniciarSesion";
             } else if (response.status === 403) {

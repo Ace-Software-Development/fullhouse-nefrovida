@@ -1,4 +1,6 @@
 /**
+ * US: IT2-7 Consultar información de pacientes
+ * Matriz de trazabilidad://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
  * Consultar pacientes:
  * Esta vista se utiliza por el trabajador social, los médicos y químicos, con la finalidad de 
  * consultar la lista de pacientes en el laboratorio. 
@@ -19,15 +21,16 @@ import BtnEditRegis from '../components/BtnEditRegis';
 import { useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
+import ContainerForm from '../components/ContainerForm';
 
 function ConsultarPacientes() {
-    const urlGetTodos = 'http://localhost:6535/paciente/todos';
-    const urlGetBuscar = 'http://localhost:6535/paciente/nombre';
+    const urlGetTodos = '/paciente/todos';
+    const urlGetBuscar = '/paciente/nombre';
     const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
 
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 
 
@@ -92,21 +95,25 @@ function ConsultarPacientes() {
             <br/><br/>
             <Card>
                 <CardTitulo icono="person" titulo="Pacientes"/>
-                <br/>
-                <div className = "contenedor">
+
+                
                 { ReactSession.get('rol') === 'trabajoSocial' &&
+                <ContainerForm>
                     <Link to = "/paciente">
                         <BtnEditRegis icono = "person_add" texto = "Registrar paciente" posicion = "left"/>
                     </Link>
+                </ContainerForm>
                 }
+                
+                <div className="animate-new-element">
+                    <CardSubtitulo subtitulo= "Pacientes">
+                        <InputSearch
+                            id = "buscar"
+                            label = "Buscar"
+                            onChange = { handleChange }
+                        />
+                    </CardSubtitulo>
                 </div>
-                <CardSubtitulo subtitulo= "Pacientes">
-                    <InputSearch
-                        id = "buscar"
-                        label = "Buscar"
-                        onChange = { handleChange }
-                    />
-                </CardSubtitulo>
                 { loading ?  (
                     <div className="center animate-new-element">
                         <br/>

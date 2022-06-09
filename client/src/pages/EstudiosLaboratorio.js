@@ -1,3 +1,10 @@
+/**
+ * US:IT1-10 consultar estudios del paciente
+ * Matriz de trazabilidad: https://docs.google.com/spreadsheets/d/15joWXNI4EA9Yy9C-vT1BVZVrxoVJNX1qjkBx73TFo5E/edit#gid=0
+ * 
+ */
+
+
 import { useParams } from 'react-router';
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
@@ -27,7 +34,7 @@ export default function EstudiosLaboratorio() {
         const [currentEstudio, setCurrentEstudio] = useState('%20');
         const [ascendente, setAscendente] = useState('%20');
 
-        const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/paciente/estudios');
+        const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/estudios');
         
         // Funcion que obtiene el estudio correspondiente al id.
         async function getEstudios(id, nombreTipoEstudio = '%20', ascendente = '%20') {
@@ -57,7 +64,7 @@ export default function EstudiosLaboratorio() {
         useEffect(() => {
             // Se deja solo el acceso a los roles permitidos
             if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
-                window.location.href = '/';
+                window.location.href = '/403';
             }
 
             getEstudios();
@@ -106,7 +113,7 @@ export default function EstudiosLaboratorio() {
                 <CardSubtitulo subtitulo = "Estudios" grande = {true}> 
                 { loading ?  (
                 <div className="center animate-new-element">
-                    Cargando
+                    Cargando...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
                 ) 
                 : estudiosExisten() ? (
@@ -137,26 +144,28 @@ export default function EstudiosLaboratorio() {
 
                 </CardSubtitulo>
                 { loading ?  (
-                <div className="center animate-new-element">
-                    <br/>
+                    <div className="center animate-new-element">
+                        <br/>
 
-                    <div className="preloader-wrapper med active">
-                        <div className="spinner-layer spinner-blue-only">
-                        <div className="circle-clipper left">
-                            <div className="circle"></div>
-                        </div><div className="gap-patch">
-                            <div className="circle"></div>
-                        </div><div className="circle-clipper right">
-                            <div className="circle"></div>
+                        <div className="animate-new-element">
+                            <div className="preloader-wrapper med active">
+                                <div className="spinner-layer spinner-blue-only">
+                                <div className="circle-clipper left">
+                                    <div className="circle"></div>
+                                </div><div className="gap-patch">
+                                    <div className="circle"></div>
+                                </div><div className="circle-clipper right">
+                                    <div className="circle"></div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
-                        </div>
+
+                        <br/>
+                        <br/>
                     </div>
-
-                    <br/>
-                    <br/>
-                </div>
                 ) 
-                : <div className="animate-new-element"> <TablaEstudios datos = { estudios }/> </div>}
+                : <div className="animate-new-element"> <TablaEstudios datos = { estudios } idPaciente = {id} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
