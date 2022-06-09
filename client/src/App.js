@@ -17,10 +17,6 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
-<<<<<<< HEAD
-import Temp from './pages/Temp';
-import RegistrarNuevoParametro from './pages/RegistrarNuevoParametro';
-=======
 import RegistrarResumenConsulta from './pages/RegistrarResumenConsulta';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
@@ -28,7 +24,7 @@ import RegistrarColaborador from './pages/RegistrarColaborador';
 import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
->>>>>>> 18b5cfd8148e4a413760f787185d86ed25a910f8
+import RegistrarNuevoParametro from './pages/RegistrarNuevoParametro';
 
 
 function App() {
