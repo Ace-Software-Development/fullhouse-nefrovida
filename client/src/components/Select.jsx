@@ -17,7 +17,7 @@ const Select = ({requerido = false, value, tamano = "s4 m2", id = "nombre", labe
       onChange={handleChange}
       index = {index}
     >
-      <option value="" disabled selected>
+      <option value="" disabled>
         {label}
       </option>
       {

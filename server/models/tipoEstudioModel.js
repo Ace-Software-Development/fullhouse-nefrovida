@@ -53,7 +53,7 @@ const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
                   return results(null, 'No hay parámetros registrados para este tipo de estudio.');
                }
 
-                       // Enviar el error si el paciente no esta activo
+               // Enviar el error si el tipo de estudio no esta activo
                if ( !tipoEstudio.get(CONSTANTS.ACTIVO)) {
                      return results(null, 'El tipo de estudio fue eliminado anteriormente.');
                }

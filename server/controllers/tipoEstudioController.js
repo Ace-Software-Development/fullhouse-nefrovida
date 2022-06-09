@@ -20,7 +20,7 @@ module.exports.eliminarTipoEstudio = async(request, response) => {
         // Respuesta exitosa
         response.status(200).send({
             success: 'success',
-            data: results.estudio,
+            data: results.tipoEstudio,
             message: 'Tipo de estudio eliminado exitosamente.'
         })
 
