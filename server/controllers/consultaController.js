@@ -33,3 +33,34 @@ module.exports.registrarConsulta = async(request, response) => {
         })
     }
 } 
+
+
+/**
+ * asyncConsultarEstudioPaciente Función asíncrona para obtener la información de un
+ * estudio registrado de un paciente en Nefrovida.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+module.exports.consultarConsulta = async(request, response) => {
+    const id = request.query.id;
+    try {
+        const results = await consultaModel.obtenerConsulta(id);
+        if (results.error) {
+            return response.status(404).send( {
+                consulta: null,
+                message: results.error
+            });
+        }
+        response.status(200).send( {
+            consulta: results.consulta,
+            message: 'Resumen de consulta obtenido!!!'
+        });
+        
+    } catch(error) {
+        response.status(404).send( {
+            consulta: null,
+            message: error.message
+        });
+    }
+}

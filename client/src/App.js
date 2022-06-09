@@ -25,6 +25,7 @@ import RegistrarColaborador from './pages/RegistrarColaborador';
 import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
+import ResumenConsulta from './pages/ResumenConsulta';
 
 
 function App() {
@@ -82,10 +83,14 @@ function App() {
 
           <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<PrivateRoute />}>
             <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<ConsultarResumenConsulta />} />
-          </Route>          
+          </Route>
 
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
             <Route exact path='/registrarConsulta/:curp' element={<RegistrarResumenConsulta />} />
+          </Route>
+
+          <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<PrivateRoute/>}>
+            <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<ResumenConsulta />} />
           </Route>
 
           <Route exact path='/colaborador' element={<PrivateRoute/>}>

@@ -56,7 +56,9 @@ export default function EstudiosLaboratorio() {
         // Hook que obtiene los estudios
         useEffect(() => {
             // Se deja solo el acceso a los roles permitidos
-            if (ReactSession.get('rol') !== 'doctor' && ReactSession.get('rol') !== 'quimico' && ReactSession.get('rol')!== 'nutriologo' ) {
+            if (ReactSession.get('rol') !== 'doctor' 
+            && ReactSession.get('rol') !== 'quimico' 
+            && ReactSession.get('rol')!== 'nutriologo' ) {
                 window.location.href = '/403';
             }
 
