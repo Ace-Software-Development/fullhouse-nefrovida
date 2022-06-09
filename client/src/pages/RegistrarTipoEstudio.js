@@ -120,6 +120,8 @@ export default function RegistrarTipoEstudio() {
         setValue("parametros", null)
     }
 
+    console.log(errors);
+
 return(
     <div className="row ContainerForm left-align">
 
@@ -173,8 +175,10 @@ return(
                                         id="nombre"
                                         label="Nombre"
                                         tamano="m4 s12"
+                                        maxLength="35"
                                         onChange = { handleChange }
                                         elError ={ errors.nombre && errors.nombre?.message}
+                                        requerido = { true }
                                         />
                                     <Input
                                         id="descripcion"
@@ -182,6 +186,7 @@ return(
                                         tamano="m6 s12"
                                         onChange = { handleChange }
                                         elError ={ errors.descripcion && errors.descripcion?.message}
+                                        requerido = { true }
                                         />
                                     <Input
                                         id="codigo"
@@ -195,20 +200,25 @@ return(
                             <LineaCampos>
                                     <div align="left">
                                     <div className='detalles-usuario'>
-                                    <div className="detalles-lista negrita-grande c-64646A left-align"> Parámetros:</div><br/>
+                                    <div className="detalles-lista negrita-grande c-64646A left-align"> Parámetros: </div><br/>
                                     </div>
                                     </div>
                                     <br/>
                                     { parametrosExisten ?
-                                    <Multiselect
-                                    id="parametros"
-                                    options={parametros}
-                                    displayValue="option"
-                                    onChange ={ handleChange }
-                                    onSelect={ onSelect }
-                                    onRemove={ onRemove }
-                                    closeIcon="cancel"
-                                    />
+                                    <div>
+                                        <Multiselect
+                                            id="parametros"
+                                            options={parametros}
+                                            displayValue="option"
+                                            onChange ={ handleChange }
+                                            onSelect={ onSelect }
+                                            onRemove={ onRemove }
+                                            closeIcon="cancel"
+                                        />
+                                        <span className="helper-text left red-text">
+                                            { errors.parametros && errors.parametros?.message }
+                                        </span>
+                                    </div>
                                     :<></>
                                 }
 
