@@ -19,7 +19,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
-import ResumenConsulta from './ResumenConsulta';
+import ConsultarResumenConsulta from './ConsultarResumenConsulta';
 
 
 function DetallePaciente() {
@@ -120,18 +120,18 @@ function DetallePaciente() {
             { ReactSession.get('rol') === 'doctor' &&
                 <div>
                     <EstudiosLaboratorio/>
-                    <ResumenConsulta/>
+                    <ConsultarResumenConsulta/>
                 </div>
             }
             { ReactSession.get('rol') === 'nutriologo' &&
                 <div>
                     <EstudiosLaboratorio/>
-                    <ResumenConsulta/>
+                    <ConsultarResumenConsulta/>
                 </div>
             }
             { ReactSession.get('rol') === 'psicologo' &&
                 <div>
-                    <ResumenConsulta/>
+                    <ConsultarResumenConsulta/>
                 </div>
             }
             { ReactSession.get('rol') === 'admin' &&

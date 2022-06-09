@@ -42,25 +42,28 @@ module.exports.registrarConsulta = async(request, response) => {
  * @param {object} response - Respuesta de la petición al servidor
  * @returns Respuesta de la petición
  */
-module.exports.consultarConsulta = async(request, response) => {
-    const id = request.query.id;
+module.exports.consultarDetalleConsulta = async(request, response) => {
+    const notas = JSON.parse(request.query.id);
     try {
-        const results = await consultaModel.obtenerConsulta(id);
+        const results = await consultaModel.obtenerConsulta(notas);
         if (results.error) {
             return response.status(404).send( {
-                consulta: null,
-                message: results.error
+                status: 'error',
+                data: null,
+                message: 'Error. ' + error.message
             });
         }
         response.status(200).send( {
-            consulta: results.consulta,
-            message: 'Resumen de consulta obtenido!!!'
+            success: 'success',
+            notas: results.notaMedica,
+            message: 'Resumen de consulta obtenido exitosamente'
         });
         
     } catch(error) {
-        response.status(404).send( {
-            consulta: null,
-            message: error.message
+        response.status(400).send( {
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
         });
     }
 }

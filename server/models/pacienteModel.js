@@ -261,7 +261,6 @@ exports.obtenerConsultas = async(curp, ascendente) => {
             error: error.message
         }
     }
-
 }
 
 

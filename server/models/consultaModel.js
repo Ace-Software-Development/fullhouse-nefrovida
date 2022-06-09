@@ -66,46 +66,39 @@ exports.registrarConsulta = async(data) => {
 
 /**
  * asyncObtenerEstudioPaciente Función asíncrona para obtener el resumen de consulta de un paciente.
- * @param {string} idNotaMedica - Identificador del resumen. 
+ * @param {string} notas - Identificador del resumen. 
  * @returns Información del resumen de consulta de un paciente.
  */
-exports.obtenerConsulta = async(idNotaMedica) => {
+exports.obtenerConsulta = async(curp) => {
+    //Buscar paciente
+    const queryObtenerIdPaciente = new Parse.Query(Paciente);
+    queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
+    const idPaciente = await queryObtenerIdPaciente.first();
+
     const tablaNotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
     const queryObtenerConsulta = new Parse.Query(tablaNotaMedica);
-    queryObtenerConsulta.include(CONSTANTS.IDPACIENTE);
+    queryObtenerConsulta.include(CONSTANTS.NOTAS);
+    queryObtenerConsulta.include(CONSTANTS.FECHA);
+    queryObtenerConsulta.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
 
     try {
-        const consulta = await queryObtenerConsulta.get(idNotaMedica);
-        
-        const tablaResultado = Parse.Object.extend(CONSTANTS.RESULTADO);
-        const queryResultados = new Parse.Query(tablaResultado);
+        const consulta = await queryObtenerConsulta.find();
+        const jsonConsulta = JSON.parse(JSON.stringify(consulta));
 
-        queryResultados.equalTo(CONSTANTS.IDNOTAMEDICA, consulta);
-        try {
-            const parametros = await queryResultados.find();
+        //Obtener los estudios por nombre de tipo de estudio
+        const arrConsulta = [];
 
-            const jsonNotaMedica = JSON.parse(JSON.stringify(consulta));
-
-            const consultaPaciente = {
-                idNotaMedica: idNotaMedica,
-                fechaNotaMedica: jsonNotaMedica.fecha,
-                notasNotaMedica: jsonNotaMedica.notas
-            };
-
-            return {
-                consulta: consultaPaciente,
-                error: null
-            }
-        } catch (error) {
-            return {
-                estudio: null,
-                error: error.message
-            }
-        }
-    } catch (error) {
         return {
-            estudio: null,
-            error: 'No se encontró dicho resumen de consulta.'
+            consulta: arrConsulta,
+            notaMedica: jsonConsulta,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            consultas: null,
+            error: error.message
         }
     }
-}
+} 
+

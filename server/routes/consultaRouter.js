@@ -10,8 +10,8 @@ router.post('/registrar',
     consultaController.registrarConsulta)
 
     // Ruta de tipo 'GET' para obtener el detalle de estudio.
-router.get('/id',
+router.get('/detalle/notas',
     authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
-    consultaController.consultarConsulta);
+    consultaController.consultarDetalleConsulta);
 
 module.exports = router

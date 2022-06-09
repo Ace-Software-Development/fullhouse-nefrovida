@@ -17,7 +17,7 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
-import ConsultarResumenConsulta from './pages/ConsultarResumenConsulta';
+import DetalleResumenConsulta from './pages/DetalleResumenConsulta';
 import RegistrarResumenConsulta from './pages/RegistrarResumenConsulta';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
@@ -25,7 +25,7 @@ import RegistrarColaborador from './pages/RegistrarColaborador';
 import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
-import ResumenConsulta from './pages/ResumenConsulta';
+import ConsultarResumenConsulta from './pages/ConsultarResumenConsulta';
 
 
 function App() {
@@ -81,8 +81,8 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
-          <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<PrivateRoute />}>
-            <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<ConsultarResumenConsulta />} />
+          <Route exact path='/consulta/:curp/resumen' element={<PrivateRoute />}>
+            <Route exact path='/consulta/:curp/resumen' element={<DetalleResumenConsulta />} />
           </Route>
 
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
@@ -90,7 +90,7 @@ function App() {
           </Route>
 
           <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<PrivateRoute/>}>
-            <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<ResumenConsulta />} />
+            <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<ConsultarResumenConsulta />} />
           </Route>
 
           <Route exact path='/colaborador' element={<PrivateRoute/>}>
