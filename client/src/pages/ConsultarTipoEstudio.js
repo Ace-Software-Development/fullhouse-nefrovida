@@ -133,12 +133,13 @@ export default function ConsultarTipoEstudio() {
         <div>
             <Navbar/>
             <Main>
+            
                 <br></br>    
                 <Card>
                 <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
                 <ContainerForm>
 
-
+                
                     <BtnRegresar/>
                     <br/>
                     { loading || isLoading&& (

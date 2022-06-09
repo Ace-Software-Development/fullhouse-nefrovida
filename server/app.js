@@ -77,6 +77,8 @@ app.use('/cerrarSesion', authUsuario, require('./routes/cerrarSesionRouter'));
 app.use('/consulta', authUsuario, require('./routes/consultaRouter'))
 
 
+app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
+
 // app.get("*", (req, res) => {
 // 	res.sendFile(
 // 			path.join(__dirname,
