@@ -30,8 +30,9 @@ import { useForm } from 'react-hook-form';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 
-const RegistrarColaborador = () => {
+export default function RegistrarColaborador() {
     const [url, setUrl] = useState('/colaborador');
+    const [isLoading, setIsLoading] = useState(false);
     const [roles, setRoles] = useState([]);
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
@@ -52,7 +53,8 @@ const RegistrarColaborador = () => {
         if (!responseJSON || !responseOk) {
             return;
 
-        } else if(url === '/colaborador') {
+        } else {
+            if(url === '/colaborador') {
             const arr = []
             responseJSON.roles.map(
                 el => {
@@ -62,9 +64,13 @@ const RegistrarColaborador = () => {
             setUrl('/colaborador/registrar');
         }
         else if(url === '/colaborador/registrar'){
-
+            setIsLoading(true);
             M.toast({ html: responseJSON.message});
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
         }
+    }
 
     }, [responseOk])
 
@@ -234,32 +240,30 @@ const RegistrarColaborador = () => {
                     <ContainerForm>
 
                     <BtnRegresar />
+                    { loading || isLoading && (
+                    <div className="center animate-new-element">
+                        <br/><br/>
 
-                    { loading && (
-                        <div className="center animate-new-element">
-                            <br/><br/><br/>
-
-                            <div className="preloader-wrapper big active">
-                                <div className="spinner-layer spinner-blue-only">
-                                <div className="circle-clipper left">
-                                    <div className="circle"></div>
-                                </div><div className="gap-patch">
-                                    <div className="circle"></div>
-                                </div><div className="circle-clipper right">
-                                    <div className="circle"></div>
-                                </div>
-                                </div>
+                        <div className="preloader-wrapper big active">
+                            <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
                             </div>
-
-                            <div className="texto-grande blue-text text-darken-1">Cargando</div>
-
-                            <br/><br/><br/>
+                            </div>
                         </div>
 
-                    )}
-                    { !loading && !error && (
+                        <div className="texto-grande blue-text text-darken-1">Cargando información</div>
 
-                        <div className="on-load-anim">
+                        <br/><br/>
+                    </div>
+                
+                )}
+                { !loading && !isLoading && !error && (
+                    <div className="loader-anim">
                             <br/><br/>
                             <form
                                 id = "main-login"
@@ -361,7 +365,8 @@ const RegistrarColaborador = () => {
                             </form>
                             <br/><br/>
                         </div>
-                    )}
+                        
+                        )}
                     { error && (
                         <div>
                             <br/><br/><br/>
@@ -379,5 +384,3 @@ const RegistrarColaborador = () => {
         </div>
     )
 }
-
-export default RegistrarColaborador

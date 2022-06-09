@@ -72,6 +72,9 @@ export default function RegistrarTipoEstudio() {
         }
         else if (responseOk){
             M.toast({ html: responseJSON.message});
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
         }
 
 

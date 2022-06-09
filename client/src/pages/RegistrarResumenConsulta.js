@@ -114,7 +114,7 @@ return(
             <CardTitulo icono="note_add" titulo="Registrar resumen de consulta"/>
                 <ContainerForm>
                 <Link to = {"/paciente/" + params.curp}>
-                    <BtnRegresar/>
+                    <BtnRegresar regresarOverride = {true}/>
                 </Link>
                 <div className='subrayado c-2E7EC8 right-align'>  { fecha } </div><br/><br/>
                 { loading && !isLoading && (

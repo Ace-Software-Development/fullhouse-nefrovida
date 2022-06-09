@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import { ReactSession } from 'react-client-session';
 
 
 const FilaTablaEstudios = ({ estudio, idPaciente }) => {
@@ -40,13 +41,25 @@ const FilaTablaEstudios = ({ estudio, idPaciente }) => {
                     </Link>
                 </td>
 
+
+                { ReactSession.get('rol') === 'doctor' &&
                 <td className="center">
                     <Link to = { routePDF }>
                         <i className="material-icons">
-                        insert_drive_file
+                            insert_drive_file
                         </i>
                     </Link>
                 </td>
+                        }
+                { ReactSession.get('rol') === 'nutriologo' &&
+                <td className="center">
+                    <Link to = { routePDF }>
+                        <i className="material-icons">
+                            insert_drive_file
+                        </i>
+                    </Link>
+                </td>
+                }
             </tr>
         </tbody>
     )

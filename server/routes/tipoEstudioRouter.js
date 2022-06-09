@@ -10,7 +10,7 @@ router.get('/',authRol([CONSTANTS.ROLADMIN, CONSTANTS.ROLQUIMICO]), tipoEstudio.
 
 // Ruta de tipo 'POST' para eliminar tipo de estudio
 router.post('/id/borrar', 
-    authRol([CONSTANTS.ROLADMIN]),
+    authRol([CONSTANTS.ROLQUIMICO]),
     tipoEstudio.eliminarTipoEstudio);
 
 // ruta get para consutar los detalles y parametros de un tipo de estudio
