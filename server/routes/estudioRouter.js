@@ -9,10 +9,6 @@ router.post('/',
     authRol([CONSTANTS.ROLQUIMICO]),
     estudioController.registrarResultadosEstudio);
 
-// Ruta de tipo 'POST' para eliminar estudio paciente
-router.post('/id/borrar', 
-    authRol([CONSTANTS.ROLQUIMICO]),
-    estudioController.eliminarEstudioPaciente);
 
 // Ruta de tipo 'GET' para obtener el detalle de estudio.
 router.get('/id',

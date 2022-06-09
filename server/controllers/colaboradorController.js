@@ -34,7 +34,6 @@ module.exports.getRegistrarColaborador = async(request, response) => {
     }
 }
 
-
 /**
  * registrarColaborador Función asíncrona para dar de alta 
  * información de colaborador de Nefrovida en base de datos.
@@ -69,7 +68,6 @@ module.exports.registrarColaborador = async(request, response) => {
         });
     }
 }
-
 
 /**
  * iniciarSesionColaborador Función asíncrona que valida credenciales 
@@ -116,7 +114,6 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
     }
 }
 
-
 /**
  * cerrarSesionColaborador Función asíncrona para eliminar sesión 
  * de usuario y denegar acceso al sistema hasta nueva autenticación.
@@ -143,76 +140,6 @@ module.exports.cerrarSesionColaborador = async(request, response) => {
     } catch(error) {
         return response.status(400).send( {
             message: error.message
-        });
-    }
-}
-
-
-/**
- * asyncConsultarColaborador función asíncrona para obtener la información de todos los
- * colaboradores registrados en Nefrovida.
- * @param {object} request Información enviados al servidor
- * @param {object} response - Respuesta de la petición al servidor
- * @returns Respuesta de la petición
- */
-module.exports.consultarColaborador = async(request, response) => {
-    try {
-        const results = await colaboradorModel.consultarColaboradores();
-
-        if (results.error) {
-            return response.status(400).send({
-                status: 'error',
-                data: null,
-                message: 'Error. ' + results.error
-            });
-        }
-        response.status(200).send({
-            success: 'success',
-            data: results,
-            message: 'Empleados obtenidos exitosamente.'
-        });
-    } catch(error) {
-        return response.status(400).send( {
-            status: 'error',
-            data: null,
-            message: 'Error. ' + error.message
-        });
-    }
-}
-
-
-/**
- * asyncConsutarDetalleColaborador función asíncrona para consultar la información 
- * de un colaborador, buscandolo por username.
- * @param {object} request Información enviados al servidor
- * @param {object} response - Respuesta de la petición al servidor
- * @returns Respuesta de la petición
- */
-module.exports.consutarDetalleColaborador = async(request, response) => {
-    // Se obtiene el username de los parametros de la ruta
-    const username = request.query.id;
-    console.log("controller", username)
-
-    try {
-        const results = await colaboradorModel.buscarPorUsuario(username);
-
-        if (results.error) {
-            return response.status(400).send({
-                status: 'error',
-                data: null,
-                message: 'Error. ' + results.error
-            });
-        }
-        response.status(200).send({
-            success: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
-        });
-    } catch(error) {
-        response.status(200).send({
-            status: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
         });
     }
 }

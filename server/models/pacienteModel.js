@@ -122,25 +122,15 @@ exports.buscarPorCurp = async (curp) => {
  * @returns Todos los estudios de un paciente registrados en nefrovida
  */
 exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
-    //Buscar paciente
     const queryObtenerIdPaciente = new Parse.Query(Paciente);
     queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
     const idPaciente = await queryObtenerIdPaciente.first();
-
-    //Buscar tipos de estudio activos
-    const tablaTipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
-    const queryObtenerIdTiposEstudio = new Parse.Query(tablaTipoEstudio);
-    queryObtenerIdTiposEstudio.equalTo(CONSTANTS.ACTIVO, true);
-    const idTiposEstudio = await queryObtenerIdTiposEstudio.find();
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
     queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
-    queryObtenerEstudios.equalTo(CONSTANTS.ACTIVO, true);
-    queryObtenerEstudios.containedIn(CONSTANTS.IDTIPOESTUDIO, idTiposEstudio);
-    //queryObtenerEstudios.equalTo(CONSTANTS.IDTIPOESTUDIO+'.'+CONSTANTS.ACTIVO, true);
 
     // Los datos se ordenan por fecha de manera ascendente o no
     if((ascendente == 'true') || (ascendente == ' ')) {
@@ -243,7 +233,8 @@ exports.consultarPacientes = async () => {
             data: null,
             error: error.message
         }
-    } 
+    }
+    
 }
 
 
@@ -310,66 +301,4 @@ exports.buscarPorNombre = async(nombre) => {
         }
     }
 
-}
-
-
-/**
- * asyncUpdatePaciente Función asíncrona para actualizar la información de un paciente.
- * @param {object} data - Objeto que contenga la información nueva del paciente
- * @returns Paciente actualizado o un error en caso de existir.
- */
-exports.updatePaciente = async(data) => {
-    const query = new Parse.Query(CONSTANTS.PACIENTE);
-    query.equalTo(CONSTANTS.CURP, data.curp);
-    
-    try {
-        const result = await query.first();
-
-        // Estandarizar el formato de los nombres, cada nombre debe iniciar con mayúscula y luego incluir minúsculas.
-        let nombre = data.nombre.split(' ');
-        for (let i = 0; i < nombre.length; i++) {
-            nombre[i] = nombre[i][0].toUpperCase() + nombre[i].substr(1).toLowerCase();
-        }
-        nombre = nombre.join(' ');
-
-        // Estandarizar el formato de los apellidos paternos, cada apellidos debe iniciar con mayúscula y luego incluir minúsculas.
-        let apellidoPaterno = data.apellidoPaterno.split(' ');
-        for (let i = 0; i < apellidoPaterno.length; i++) {
-            apellidoPaterno[i] = apellidoPaterno[i][0].toUpperCase() + apellidoPaterno[i].substr(1).toLowerCase();
-        }
-        apellidoPaterno = apellidoPaterno.join(' ');
-
-        let apellidoMaterno;
-        // Estandarizar el formato de los apellidos maternos, cada apellidos debe iniciar con mayúscula y luego incluir minúsculas.
-        if (data.apellidoMaterno) {
-            apellidoMaterno = data.apellidoMaterno.split(' ');
-            for (let i = 0; i < apellidoMaterno.length; i++) {
-                apellidoMaterno[i] = apellidoMaterno[i][0].toUpperCase() + apellidoMaterno[i].substr(1).toLowerCase();
-            }
-            apellidoMaterno = apellidoMaterno.join(' ');
-        }
-
-        result.set(CONSTANTS.CURP, data.curp);
-        result.set(CONSTANTS.NOMBRE, nombre);
-        result.set(CONSTANTS.APELLIDOPATERNO, apellidoPaterno);
-        result.set(CONSTANTS.APELLIDOMATERNO, apellidoMaterno);
-        result.set(CONSTANTS.FECHANACIMIENTO, data.fechaNacimiento);
-        result.set(CONSTANTS.CORREO, data.correo);
-        result.set(CONSTANTS.SEXO, data.sexo);
-        result.set(CONSTANTS.ESTATURA, data.estatura);
-        result.set(CONSTANTS.PESO, data.peso);
-        result.set(CONSTANTS.TELEFONO, data.telefono);
-        result.set(CONSTANTS.ACTIVO, true);
-
-        await result.save();
-
-        return {
-            data: result,
-            error: null
-        }
-
-    } catch (error) {
-        console.log(error)
-        return resultsPaciente(null, error.message);
-    }
 }

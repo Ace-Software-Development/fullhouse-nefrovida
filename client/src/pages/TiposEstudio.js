@@ -6,8 +6,6 @@ import CardTitulo from '../components/CardTitulo';
 import { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
-import BtnEditRegis from '../components/BtnEditRegis';
-import {Link} from 'react-router-dom'
 
 const TiposEstudio = () => {
     // Parametro
@@ -54,16 +52,6 @@ const TiposEstudio = () => {
     return(
         <Card>
             <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
-            <br/>
-            <div className='contenedor' style={{paddingLeft : "10px"}}>
-                { (ReactSession.get('rol') === 'quimico' ) &&
-                    <Link to = "/registrarTipoEstudio">
-                        <BtnEditRegis icono="note_add" texto="Registrar Tipo Estudio" posicion='left'/>
-                    </Link>
-                }
-                
-            </div>
-            
 
             <div className="contenedor animate-new-element">
                 { loading && (
@@ -88,8 +76,8 @@ const TiposEstudio = () => {
                 { !loading && !error && (
                 <div className="on-load-anim">  
                     <br/>
+
                     <LineaCardsEstudios>
-                        
                         { listaTiposEstudio() }
                     </LineaCardsEstudios>
 

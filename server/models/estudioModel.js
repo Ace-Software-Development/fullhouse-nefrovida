@@ -32,7 +32,6 @@ exports.registrarResultadosEstudio = async(data) => {
     const estudio = new Estudio;
     estudio.set(CONSTANTS.FECHA, data.fecha);
     estudio.set(CONSTANTS.OBSERVACIONES, data.observaciones);
-    estudio.set(CONSTANTS.ACTIVO, true);
 
     // Asignar el pointer de idTipoEstudio al tipo de estudio recibido
     const tipoEstudio = new TipoEstudio();
@@ -209,7 +208,6 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudio = new Parse.Query(tablaEstudio);
     queryObtenerEstudio.include(CONSTANTS.IDTIPOESTUDIO);
-    queryObtenerEstudio.include(CONSTANTS.IDPACIENTE);
     try {
         const estudio = await queryObtenerEstudio.get(idEstudio);
         
@@ -222,14 +220,6 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
         queryResultados.equalTo(CONSTANTS.IDESTUDIO, estudio);
         try {
             const parametros = await queryResultados.find();
-
-            // Enviar el error si el estudio no esta activo
-            if ( !estudio.get(CONSTANTS.ACTIVO)) {
-                return { 
-                    estudio: null,
-                    error: 'El estudio fue eliminado anteriormente.'
-                }
-            }
 
             const jsonEstudio = JSON.parse(JSON.stringify(estudio));
             const jsonParametros = JSON.parse(JSON.stringify(parametros));
@@ -246,7 +236,6 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
             })
 
             const estudioPaciente = {
-                nombrePaciente: jsonEstudio.idPaciente.nombre + " " + jsonEstudio.idPaciente.apellidoPaterno + " " + jsonEstudio.idPaciente.apellidoMaterno,
                 idEstudio: idEstudio,
                 nombreTipoEstudio: jsonEstudio.idTipoEstudio.nombre,
                 fechaEstudio: jsonEstudio.fecha,
@@ -261,40 +250,14 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
             }
         } catch (error) {
             return {
-                estudio: null,
+                paciente: null,
                 error: error.message
             }
         }
     } catch (error) {
         return {
-            estudio: null,
+            paciente: null,
             error: 'No se encontró dicho estudio del paciente.'
-        }
-    }
-}
-
-
-/**
- * asyncEliminarEstudio Función asíncrona para eliminar un estudio del paciente.
- * @param {Object} data Información enviada en el body, debe incluir información del estudio
- * y el resultado de cada parámetro
- * @returns Información de los resultados o un error en caso de existir.
- */
-exports.eliminarEstudio = async(data) => {
-    const query = new Parse.Query(CONSTANTS.ESTUDIO);
-    query.equalTo(CONSTANTS.OBJECTID, data.idEstudio);
-    const result = await query.first();
-    result.set(CONSTANTS.ACTIVO, false);
-    try{
-        await result.save();
-        return {
-            estudio: result,
-            error: null
-        }
-    } catch (error) {
-        return {
-            estudio: null,
-            error: 'No se pudo eliminar el estudio.'
         }
     }
 }
