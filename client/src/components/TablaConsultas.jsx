@@ -3,7 +3,6 @@ import FilaTablaConsultas from "./FilaTablaConsultas"
 
 const TablaConsultas = ({ datos, idPaciente}) => {
 
-    console.log(datos, 'adios')
     const tableContent = datos.map((consulta, index) =>(
         <FilaTablaConsultas key = { index } consulta = { consulta } idPaciente = {idPaciente}/>
     ))

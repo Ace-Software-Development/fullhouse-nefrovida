@@ -23,9 +23,8 @@ export default function DetalleColaborador() {
     const params = useParams();
     const rol = params.rol;
     const [colaborador, setColaborador] = useState({});
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/colaborador/detalle/username');
-    //const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + 'colaborador/detalle/username');
-   
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + 'colaborador/detalle/username');
+
     /**
     * Hook que se ejecuta al renderizar la información del colaborador.
     */
@@ -41,9 +40,7 @@ export default function DetalleColaborador() {
         if (!responseJSON || !responseOk) {
             return
         } else {
-            console.log(colaborador,"respose ok")
             setColaborador(responseJSON.data.data);
-            console.log(colaborador)
         }
     }, [responseOk])
 

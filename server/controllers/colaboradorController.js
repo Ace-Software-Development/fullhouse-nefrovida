@@ -188,7 +188,6 @@ module.exports.consultarColaborador = async(request, response) => {
 module.exports.consutarDetalleColaborador = async(request, response) => {
     // Se obtiene el username de los parametros de la ruta
     const username = request.query.id;
-    console.log("controller", username)
 
     try {
         const results = await colaboradorModel.buscarPorUsuario(username);
@@ -207,9 +206,9 @@ module.exports.consutarDetalleColaborador = async(request, response) => {
         });
     } catch(error) {
         response.status(200).send({
-            status: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
         });
     }
 }

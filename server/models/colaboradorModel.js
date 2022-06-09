@@ -250,7 +250,6 @@ exports.buscarPorUsuario = async (username) => {
 
     try {
         const results = await query.first();
-        console.log("Resultado", results)
         // Enviar error si no existe un colaborador con ese username
         if ( !results ) {
             return resultsColaborador(null, 'No se encontró un colaborador con ese Usuario');
@@ -259,7 +258,6 @@ exports.buscarPorUsuario = async (username) => {
         if ( !results.get(CONSTANTS.ACTIVO)) {
             return resultsColaborador(null, 'El objeto fue eliminado anteriormente.');
         }
-        console.log("Resultado", results)
         return resultsColaborador(results, null);
 
     } catch (error) {

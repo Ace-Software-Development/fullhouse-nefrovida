@@ -66,46 +66,26 @@ exports.registrarConsulta = async(data) => {
 
 /**
  * asyncObtenerEstudioPaciente Función asíncrona para obtener el resumen de consulta de un paciente.
- * @param {string} idNotaMedica - Identificador del resumen. 
+ * @param {string} idConsulta - Identificador del resumen. 
  * @returns Información del resumen de consulta de un paciente.
  */
-exports.obtenerConsulta = async(idNotaMedica) => {
-    const tablaNotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
-    const queryObtenerConsulta = new Parse.Query(tablaNotaMedica);
-    queryObtenerConsulta.include(CONSTANTS.IDPACIENTE);
+exports.obtenerConsulta = async(idConsulta) => {
+
+    // Busca el resumen de consulta que tenga el idConsulta
+    const queryConsulta = new Parse.Query(NotaMedica);
+    queryConsulta.equalTo(CONSTANTS.OBJECTID, idConsulta);
 
     try {
-        const consulta = await queryObtenerConsulta.get(idNotaMedica);
-        
-        const tablaResultado = Parse.Object.extend(CONSTANTS.RESULTADO);
-        const queryResultados = new Parse.Query(tablaResultado);
-
-        queryResultados.equalTo(CONSTANTS.IDNOTAMEDICA, consulta);
-        try {
-            const parametros = await queryResultados.find();
-
-            const jsonNotaMedica = JSON.parse(JSON.stringify(consulta));
-
-            const consultaPaciente = {
-                idNotaMedica: idNotaMedica,
-                fechaNotaMedica: jsonNotaMedica.fecha,
-                notasNotaMedica: jsonNotaMedica.notas
-            };
-
-            return {
-                consulta: consultaPaciente,
-                error: null
-            }
-        } catch (error) {
-            return {
-                estudio: null,
-                error: error.message
-            }
-        }
-    } catch (error) {
+        var consul = await queryConsulta.first();
         return {
-            estudio: null,
-            error: 'No se encontró dicho resumen de consulta.'
+            consulta: consul,
+            error: null
+        }
+    } catch(error) {
+        return {
+            consulta: null,
+            error: error
         }
     }
-}
+} 
+

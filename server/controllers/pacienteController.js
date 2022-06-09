@@ -66,7 +66,7 @@ module.exports.mostrarConsultas = async(request, response) => {
             message: 'Notas obtenidas exitosamente'
         });
     } catch(error) {
-        response.status(403).send({
+        response.status(400).send({
             status: 'error',
             data: null,
             message: 'Error. ' + error.message
