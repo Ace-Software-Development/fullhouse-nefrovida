@@ -17,7 +17,6 @@ export default function ConsultarResumenConsulta() {
         // Parametro
         const params = useParams();
         const id = params.curp;
-        
         const [consultas, setConsultas] = useState([])
         const [ascendente] = useState([]);
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/consultas');
@@ -96,8 +95,10 @@ export default function ConsultarResumenConsulta() {
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
                 <br/>
-                <CardConsulta nombre="Notas de Nutriólogo"/>
-                <CardConsulta nombre="Notas de Psicólogo"/>
+                <div className="row-cards-estudios">
+                    <CardConsulta nombre="Notas de Nutriólogo"/>
+                    <CardConsulta nombre="Notas de Psicólogo"/>
+                </div>
             </Card>
         </div>
     )
