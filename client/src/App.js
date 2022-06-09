@@ -80,8 +80,10 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
+          <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<PrivateRoute />}>
+            <Route exact path='/consultarConsulta/:curp/resumen/:idNotaMedica' element={<ConsultarResumenConsulta />} />
+          </Route>          
 
-          <Route exact path='/consultarConsulta' element={<ConsultarResumenConsulta />} />
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
             <Route exact path='/registrarConsulta/:curp' element={<RegistrarResumenConsulta />} />
           </Route>
