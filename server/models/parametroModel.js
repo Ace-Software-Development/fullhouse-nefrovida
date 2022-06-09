@@ -51,7 +51,6 @@ exports.registrarParametro = async(data) => {
     parametro.set(CONSTANTS.NOMBRE, data.nombre);
     parametro.set(CONSTANTS.CODIGO, data.codigo);
     parametro.set(CONSTANTS.UNIDAD, data.unidad);
-    parametro.set(CONSTANTS.TIENERANGO, data.rango);
     parametro.set(CONSTANTS.VALORMIN, data.valInicial);
     parametro.set(CONSTANTS.VALORMAX, data.valFinal);
     parametro.set(CONSTANTS.VALORBOOL, data.valBool);

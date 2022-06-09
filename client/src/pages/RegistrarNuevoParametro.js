@@ -98,21 +98,12 @@ export default function RegistrarNuevoParametro() {
                     message: 'El valor final de referencia es requerido'
                 }
             });
-
-            // Variable booleana para el rango, requerido
-            register('rango', {
-                required: {
-                    value: true,
-                    message: 'Este campo es requerido'
-                }
-            });
         }
 
         else if (paramTipo === 'Texto') {
             unregister('valInicial');
             unregister('valFinal');
             unregister('valBool');
-            unregister('rango');
 
             // Variable para el valor inicial, requerido
             register('valString', {
@@ -127,7 +118,6 @@ export default function RegistrarNuevoParametro() {
             unregister('valInicial');
             unregister('valFinal');
             unregister('valString');
-            unregister('rango');
 
             // Variable para el valor inicial, requerido
             register('valBool', {
@@ -231,12 +221,6 @@ export default function RegistrarNuevoParametro() {
                 data.valBool = false;
             }
         } else if (paramTipo === 'Numérico') {
-            if (data.rango === 'true') {
-                data.rango = true;
-            } else if (data.rango === 'false') {
-                data.rango = false;
-            }
-
             data.valInicial = Number(data.valInicial);
             data.valFinal = Number(data.valFinal);
         }
@@ -331,19 +315,6 @@ export default function RegistrarNuevoParametro() {
                                         elError = { errors.unidad && errors.unidad?.message }
                                         requerido = { false }
                                     />
-                                {
-                                    paramTipo === 'Numérico' &&
-                                    <Select 
-                                        id = "rango"  
-                                        label = "¿Tiene rango?"
-                                        value = ""
-                                        tamano = "m4 s12"
-                                        arr = { [{ value: true, option: "Verdadero"}, {value: false, option: "Falso" }] }
-                                        handleChange = { handleChange }
-                                        elError = { errors.rango && errors.rango?.message }
-                                        requerido = { true }
-                                    />
-                                }
                                 {
                                     paramTipo === 'Numérico' &&
                                     <div>

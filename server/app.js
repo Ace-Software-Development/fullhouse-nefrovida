@@ -76,6 +76,8 @@ app.use('/cerrarSesion', authUsuario, require('./routes/cerrarSesionRouter'));
 
 app.use('/consulta', authUsuario, require('./routes/consultaRouter'))
 
+app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
+
 
 // app.get("*", (req, res) => {
 // 	res.sendFile(
@@ -83,8 +85,6 @@ app.use('/consulta', authUsuario, require('./routes/consultaRouter'))
 // 						"../client/build/index.html")
 // 	);
 // });
-
-app.use('/parametro', require('./routes/parametroRouter'));
 
 app.get('*', function(request, response) {
     response.status(404).send();
