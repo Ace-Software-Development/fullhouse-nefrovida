@@ -96,8 +96,28 @@ export default function ConsultarResumenConsulta() {
                 }
                 <br/>
                 <div className="row-cards-estudios">
-                    <CardConsulta nombre="Notas de Nutriólogo"/>
-                    <CardConsulta nombre="Notas de Psicólogo"/>
+
+                { ReactSession.get('rol') === 'doctor' &&
+                    <div className="row-cards-estudios">
+                        <CardConsulta nombre="Notas de Nutriólogo"/>
+                        <CardConsulta nombre="Notas de Psicólogo"/>
+                    </div>
+                }
+
+                { ReactSession.get('rol') === 'nutriologo' &&
+                    <div className="row-cards-estudios">
+                        <CardConsulta nombre="Notas de Doctor"/>
+                        <CardConsulta nombre="Notas de Psicólogo"/>
+                    </div>
+                }
+
+                { ReactSession.get('rol') === 'psicologo' &&
+                    <div className="row-cards-estudios">
+                        <CardConsulta nombre="Notas de Doctor" titulo="aaa"/>
+                        <CardConsulta nombre="Notas de Nutriólogo"/>
+                    </div>
+                }
+
                 </div>
             </Card>
         </div>

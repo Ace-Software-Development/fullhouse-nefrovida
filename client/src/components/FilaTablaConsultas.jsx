@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom'
 
-
 const FilaTablaConsultas = ({ consulta, idPaciente }) => {
     const route = "/consulta/" + idPaciente + "/resumen/" + consulta.objectId
+    console.log(consulta);
 
     return(
         <tbody>

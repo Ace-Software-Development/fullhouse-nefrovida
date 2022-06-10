@@ -231,7 +231,7 @@ exports.obtenerConsultas = async(curp, ascendente) => {
     const tablaNotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
     const queryObtenerConsultas = new Parse.Query(tablaNotaMedica);
     queryObtenerConsultas.include(CONSTANTS.IDNOTAMEDICA);
-    queryObtenerConsultas.include(CONSTANTS.IDUSUARIO);
+    queryObtenerConsultas.include("idUsuario.idRol");
     queryObtenerConsultas.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
 
     // Los datos se ordenan por fecha de manera ascendente o no

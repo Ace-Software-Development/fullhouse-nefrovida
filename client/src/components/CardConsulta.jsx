@@ -1,5 +1,5 @@
 import { ReactSession } from 'react-client-session';
-const CardConsulta = ({ nombre="undefined" }) => {
+const CardConsulta = ({ nombre="undefined", titulo }) => {
     return (
         <>
             <div className="col s6 m4 l4 xl3 card-mini-separation no-margin-left">
