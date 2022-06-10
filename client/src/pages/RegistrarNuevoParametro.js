@@ -118,6 +118,7 @@ export default function RegistrarNuevoParametro() {
             unregister('valInicial');
             unregister('valFinal');
             unregister('valString');
+            unregister('unidad');
 
             // Variable para el valor inicial, requerido
             register('valBool', {
@@ -164,7 +165,7 @@ export default function RegistrarNuevoParametro() {
                 for (let i = 0; i < data.length; i++) {
                     const obj = {
                         value: data[i].objectId,
-                        option: data[i]. nombre
+                        option: data[i].nombre
                     }
                     tipos.push(obj);
                 }
@@ -176,7 +177,7 @@ export default function RegistrarNuevoParametro() {
                 setIsLoading(true);
                 M.toast({ html: responseJSON.message });
                 setTimeout(() => {
-                    window.location.href = "/";
+                    window.location.href = "/registrarTipoEstudio";
                 }, 1000);
             }
         }
@@ -304,7 +305,9 @@ export default function RegistrarNuevoParametro() {
                             </LineaCampos>
 
                             <LineaCampos>
-                                <Input 
+                                {
+                                    paramTipo !== 'Positivo/Negativo' &&
+                                    <Input 
                                         id = "unidad" 
                                         label = "Unidad" 
                                         tamano = "s12 m4"
@@ -315,6 +318,7 @@ export default function RegistrarNuevoParametro() {
                                         elError = { errors.unidad && errors.unidad?.message }
                                         requerido = { false }
                                     />
+                                }
                                 {
                                     paramTipo === 'Numérico' &&
                                     <div>
