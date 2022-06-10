@@ -45,7 +45,7 @@ roles.push(rolPsicologo);
 
 try{
     Parse.Object.saveAll(roles);
-    console.log("Roles guardados con éxito")
+    // console.log("Roles guardados con éxito")
 } catch(error){
-    console.log(error.message);
+    // console.log(error.message);
 }

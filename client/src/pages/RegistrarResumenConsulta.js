@@ -74,7 +74,6 @@ export default function RegistrarResumenConsulta() {
     }
 
         httpConfig(send, 'POST');
-        console.log(send)
     };
 
     

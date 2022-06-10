@@ -34,7 +34,6 @@ export default function ConsultarColaborador() {
             return;
         } else {
             setColaboradores(responseJSON.data.data);
-            console.log(responseJSON.data.data)
         }
     }, [responseOk])
 

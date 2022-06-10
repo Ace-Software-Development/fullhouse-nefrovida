@@ -417,7 +417,6 @@ exports.updatePaciente = async(data) => {
         }
 
     } catch (error) {
-        console.log(error)
         return resultsPaciente(null, error.message);
     }
 }

@@ -49,9 +49,6 @@ const EditarPaciente = () => {
         validation();
     }, []);
 
-    console.log(paciente.peso)
-    console.log(paciente.estatura)
-
     /**
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
      */
@@ -220,10 +217,7 @@ const EditarPaciente = () => {
             data.fechaNacimiento = day +'/' + month + '/' + year;
         }
         
-
         e.preventDefault();
-
-        console.log("Submit data: ", data)
 
         httpConfig(data, 'POST');
     };
@@ -273,7 +267,6 @@ const EditarPaciente = () => {
         if (paciente.fechaNacimiento !== undefined) {
             const dateString = paciente.fechaNacimiento;
             const date = "" + dateString.substring(6,10) + "-" + dateString.substring(3, 5) + "-" + dateString.substring(0,2)
-            console.log(date);
             return date
         }
     }
