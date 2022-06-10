@@ -7,6 +7,7 @@ const estudioModel = require('../models/estudioModel')
 module.exports.registrarResultadosEstudio = async(request, response) => {
     try {
         const results = await estudioModel.registrarResultadosEstudio(request.body);
+
         // Envía error en caso de ser necesario
         if (results.error) {
             return response.status(400).send({

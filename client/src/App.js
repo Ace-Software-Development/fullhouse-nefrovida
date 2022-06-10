@@ -25,6 +25,7 @@ import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import RegistrarTipoEstudio from './pages/RegistrarTipoEstudio';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
+import RegistrarNuevoParametro from './pages/RegistrarNuevoParametro';
 
 
 function App() {
@@ -82,6 +83,10 @@ function App() {
 
           <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<PrivateRoute/>}>
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
+          </Route>
+
+          <Route exact path='/registrarParametro' element={<PrivateRoute />} >
+            <Route exact path='/registrarParametro' element={<RegistrarNuevoParametro />} />
           </Route>
 
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
