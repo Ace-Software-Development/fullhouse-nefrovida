@@ -381,8 +381,18 @@ export default function RegistrarNuevoParametro() {
                             </LineaCampos>
                             <BtnGuardar/>
                         </form>
-                        : error
-                    }            
+                        : error && (
+                            <div>
+                                <br/><br/><br/>
+    
+                                <div className="texto-grande red-text center animate-new-element">
+                                    <strong> { error } </strong>
+                                </div>
+    
+                                <br/><br/><br/>
+                            </div>
+                        )
+                        }
                     </ContainerForm>
                 </Card>
             </Main>

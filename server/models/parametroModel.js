@@ -95,13 +95,18 @@ exports.registrarParametro = async(data) => {
         // Obtener el tipo de valor con su objectId
         const tipoValor = await query.get(data.tipoParametro);
         parametro.set(CONSTANTS.IDTIPOVALOR, tipoValor);
-        // Guardar el parámetro
-        const results = await parametro.save();
-        
-        return resultsTipoValor(results, null);
+
+        try {
+            // Guardar el parámetro
+            const results = await parametro.save();
+            return resultsTipoValor(results, null);
+        } catch(error) {
+            // Mostrar error al guardar el parámetro
+            return resultsTipoValor(null, error.message);
+        }
 
     } catch (error) {
         // Mostrar error al obtener el tipo de valor.
-        return resultsTipoValor(null, error.message);
+        return resultsTipoValor(null, 'Error al obtener el tipo de parámetro.');
     }
 }
