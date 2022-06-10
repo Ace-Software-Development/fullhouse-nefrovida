@@ -72,7 +72,7 @@ exports.registrarPaciente = async(data) => {
         paciente.set(CONSTANTS.ACTIVO, true);
 
         try {
-            const results = await paciente.save()
+            const results = await paciente.save();
             return resultsPaciente(results, null);
         } catch (error) {
             return resultsPaciente(null, error.message);

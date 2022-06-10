@@ -27,6 +27,7 @@ import RegistrarTipoEstudio from './pages/RegistrarTipoEstudio';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
 import ConsultarResumenConsulta from './pages/ConsultarResumenConsulta';
+import RegistrarNuevoParametro from './pages/RegistrarNuevoParametro';
 
 
 function App() {
@@ -88,6 +89,10 @@ function App() {
 
           <Route exact path='/consulta/:curp/resumen/:idResumen' element={<PrivateRoute />}>
             <Route exact path='/consulta/:curp/resumen/:idResumen' element={<DetalleResumenConsulta />} />
+          </Route>
+          
+          <Route exact path='/registrarParametro' element={<PrivateRoute />} >
+            <Route exact path='/registrarParametro' element={<RegistrarNuevoParametro />} />
           </Route>
 
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>

@@ -100,7 +100,7 @@ export default function RegistrarTipoEstudio() {
      * @param selectedItem - item del parametro seleccionado
      */
     function onSelect(selectedList, selectedItem) {
-        setValue("parametros",selectedList)
+        setValue("parametros", selectedList)
     }
 
     /**
@@ -109,7 +109,7 @@ export default function RegistrarTipoEstudio() {
      * @param selectedItem - item del parametro borrado
      */
     function onRemove(selectedList, removedItem) {
-        setValue("parametros",selectedList)
+        setValue("parametros", selectedList)
     }
 
     async function onSubmit(data, e) {
@@ -133,7 +133,6 @@ return(
                 <Link to = "/">
                 <BtnRegresar/>
                 </Link>
-                <BtnEditRegis icono="format_list_numbered" texto="Registrar parámetro"/>
                 <br/><br/>
                 {loading && (
                     <div className="center">
@@ -195,6 +194,9 @@ return(
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
                             <br/>
+                            <Link to="/registrarParametro">
+                                <BtnEditRegis icono="format_list_numbered" texto="Registrar parámetro" type="button"/>
+                            </Link>
                             <LineaCampos>
                                     <div align="left">
                                     <div className='detalles-usuario'>
