@@ -381,7 +381,7 @@ export default function RegistrarNuevoParametro() {
                             </LineaCampos>
                             <BtnGuardar/>
                         </form>
-                        : null
+                        : error
                     }            
                     </ContainerForm>
                 </Card>
