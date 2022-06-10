@@ -75,7 +75,7 @@ export default function DetalleResumenConsulta() {
                                 </div>
                                 </div>
                             </div>
-                            <div className="texto-grande blue-text text-darken-1">Cargando formulario</div>
+                            <div className="texto-grande blue-text text-darken-1">Cargando resumen de consulta</div>
                             <br/><br/><br/>
                         </div>
                     

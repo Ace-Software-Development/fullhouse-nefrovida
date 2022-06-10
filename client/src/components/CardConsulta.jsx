@@ -1,5 +1,5 @@
 import { ReactSession } from 'react-client-session';
-const CardConsulta = ({ nombre="undefined", titulo }) => {
+const CardConsulta = ({ nombre="undefined", ...rest }) => {
     return (
         <>
             <div className="col s6 m4 l4 xl3 card-mini-separation no-margin-left">
@@ -12,8 +12,8 @@ const CardConsulta = ({ nombre="undefined", titulo }) => {
                 <div className="card-mini-flex">
                     
                     { (ReactSession.get('rol') === 'doctor' || ReactSession.get('rol') === 'nutriologo' || ReactSession.get('rol') === 'psicologo') &&
-                        <a href={ '' }>
-                        <i className="material-icons estudio-button icon-separator c-2E7EC8">description</i>
+                        <a className="btn-nota-paciente" {...rest}>
+                            <i className="material-icons estudio-button icon-separator c-2E7EC8">description</i>
                         </a>
                         
                     }

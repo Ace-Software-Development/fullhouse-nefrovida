@@ -18,6 +18,7 @@ export default function ConsultarResumenConsulta() {
         const id = params.curp;
         const [consultas, setConsultas] = useState([])
         const [ascendente] = useState([]);
+        const [currentRole, setCurrentRole] = useState(ReactSession.get('rol'))
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/consultas');
         
         // Funcion que obtiene el estudio correspondiente al id.
@@ -66,7 +67,7 @@ export default function ConsultarResumenConsulta() {
                         <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
                 </Link>
                 </ContainerForm>
-                <CardSubtitulo subtitulo = "Notas" grande = {true}/> 
+                <CardSubtitulo subtitulo = {"Notas del " + currentRole} grande = {true}/> 
                 { loading ?  (
                     <div className="center animate-new-element">
                         <br/>
@@ -89,35 +90,35 @@ export default function ConsultarResumenConsulta() {
                         <br/>
                     </div>
                 ) 
-                : <div className="animate-new-element"> <TablaConsultas datos = { consultas } idPaciente = {id} /> </div>}
+                : <div className="animate-new-element"> <TablaConsultas datos = { consultas } idPaciente = {id} rol = {currentRole} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
                 <br/>
                 <div className="row-cards-estudios">
 
-                { ReactSession.get('rol') === 'doctor' &&
+                { currentRole === 'doctor' &&
                     <div className="row-cards-estudios">
-                        <CardConsulta nombre="Notas de Nutriólogo"/>
-                        <CardConsulta nombre="Notas de Psicólogo"/>
+                        <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
+                        <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>
                     </div>
                 }
 
-                { ReactSession.get('rol') === 'nutriologo' &&
+                { currentRole === 'nutriologo' &&
                     <div className="row-cards-estudios">
-                        <CardConsulta nombre="Notas de Doctor"/>
-                        <CardConsulta nombre="Notas de Psicólogo"/>
+                        <CardConsulta nombre="Notas de Doctor" onClick={() => setCurrentRole("doctor")}/>
+                        <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>
                     </div>
                 }
 
-                { ReactSession.get('rol') === 'psicologo' &&
+                { currentRole === 'psicologo' &&
                     <div className="row-cards-estudios">
-                        <CardConsulta nombre="Notas de Doctor" titulo="aaa"/>
-                        <CardConsulta nombre="Notas de Nutriólogo"/>
+                        <CardConsulta nombre="Notas de Doctor" onClick={() => setCurrentRole("doctor")}/>
+                        <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
                     </div>
                 }
-
                 </div>
+                <br/>
             </Card>
         </div>
     )

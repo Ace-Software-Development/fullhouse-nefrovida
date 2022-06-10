@@ -1,11 +1,10 @@
 // Datos de ejemplo
 import FilaTablaConsultas from "./FilaTablaConsultas"
-import { ReactSession } from 'react-client-session'
 
-const TablaConsultas = ({ datos, idPaciente}) => {
+const TablaConsultas = ({ datos, idPaciente, rol}) => {
 
     const tableContent = datos.map((consulta, index) =>(
-        consulta.idUsuario.idRol.nombre ===  ReactSession.get('rol') ? 
+        consulta.idUsuario.idRol.nombre ===  rol ? 
             <FilaTablaConsultas key = { index } consulta = { consulta } idPaciente = {idPaciente}/> : null
     ))
 
