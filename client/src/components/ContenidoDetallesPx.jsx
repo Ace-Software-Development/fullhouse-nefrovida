@@ -7,21 +7,19 @@ const ContenidoDetallesPx = ({  paciente }) => {
   
   function edadExiste() {
     if (paciente.fechaNacimiento !== undefined){
-        var hoy = new Date();
-        var nacimiento = new Date(paciente.fechaNacimiento);
-        console.log(nacimiento)
-        var edad = hoy.getFullYear() - nacimiento.getFullYear();
-        var mes = hoy.getMonth() - nacimiento.getMonth();
-        
-        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-            edad--;
-        }
-        
-        return edad
+      var hoy = new Date();
+      const nacimiento = new Date ("" + paciente.fechaNacimiento.substring(6,10) 
+                                      + "-" + paciente.fechaNacimiento.substring(3, 5) 
+                                      + "-" + paciente.fechaNacimiento.substring(0,2))
+      var edad = hoy.getFullYear() - nacimiento.getFullYear();
+      var mes = hoy.getMonth() - nacimiento.getMonth();
+      if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+          edad--;
+      }
+      
+      return edad
     }
   }
-  
-  edadExiste();
   
   return(
   <>
@@ -63,6 +61,7 @@ const ContenidoDetallesPx = ({  paciente }) => {
         <br/>
         <div className="detalles-usuario">
           <i className="material-icons icon-separator small c-908F98"> { paciente.sexo === 'masculino' ?  'male' : 'female' } </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.sexo === 'masculino' ?  'Masculino' : 'Femenino' } </div>
+          {console.log(paciente.sexo)}
         </div>
         <br/>
         { paciente.fechaNacimiento ?

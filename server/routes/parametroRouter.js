@@ -14,4 +14,9 @@ router.post('/registrar',
     authRol([CONSTANTS.ROLQUIMICO]),
     parametroController.registrarParametro);
 
-module.exports = router;
+
+// Ruta de tipo 'GET' para obtener todos los parámetros.
+router.get('/todos',
+    authRol([CONSTANTS.ROLQUIMICO]),
+    parametroController.consultarParametros)
+module.exports = router
