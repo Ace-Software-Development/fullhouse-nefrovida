@@ -1,8 +1,4 @@
 const FilaTablaEstudioPDF = ({ estudio }) => {
-
-    console.log("Dentro de FilaTablaEstudioPDF")
-    console.log(estudio)
-
     return(
         <tr>
             <td>{ estudio.nombreParametro }</td>

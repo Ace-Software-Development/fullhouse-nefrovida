@@ -39,6 +39,40 @@ module.exports.mostrarEstudiosPaciente = async(request, response) => {
     }
 }
 
+/**
+ * asyncMostrarEstudiosPaciente Función asíncrona para obtener la información de los
+ * estudios registrados de un paciente en Nefrovida.
+ * @param {object} request Información enviados al servidor
+ * @param {object} response - Respuesta de la petición al servidor
+ * @returns Respuesta de la petición
+ */
+module.exports.mostrarConsultas = async(request, response) => {
+    // Se obtiene los parametros desde la query del front
+    const queryJSON = JSON.parse(request.query.id);
+    const curp = queryJSON.idPaciente;
+    
+    try {
+        const results = await pacienteModel.obtenerConsultas(curp);
+        if (results.error) {
+            return response.status(400).send({
+                status: 'error',
+                data: null,
+                message: 'Error. ' + results.error
+            });
+        }
+        response.status(200).send({
+            status: 'success',
+            notas: results.notaMedica,
+            message: 'Notas obtenidas exitosamente'
+        });
+    } catch(error) {
+        response.status(400).send({
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
+        });
+    }
+}
 
 /**
  * asyncCrearPaciente Función asíncrona para registrar un nuevo paciente, 

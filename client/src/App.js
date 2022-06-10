@@ -17,6 +17,7 @@ import Forbidden from './pages/error/403Forbidden';
 import RegistrarPaciente from './pages/RegistrarPaciente'
 import DetallePaciente from './pages/DetallePaciente'
 import ConsultarTipoEstudio from './pages/ConsultarTipoEstudio';
+import DetalleResumenConsulta from './pages/DetalleResumenConsulta';
 import RegistrarResumenConsulta from './pages/RegistrarResumenConsulta';
 import DetalleColaborador from './pages/DetalleColaborador';
 import ConsultarColaborador from './pages/ConsultarColaborador';
@@ -25,6 +26,7 @@ import GenerarEstudioPDF from './pages/GenerarEstudioPDF';
 import RegistrarTipoEstudio from './pages/RegistrarTipoEstudio';
 import TiposEstudio from './pages/TiposEstudio';
 import EditarPaciente from './pages/EditarPaciente';
+import ConsultarResumenConsulta from './pages/ConsultarResumenConsulta';
 import RegistrarNuevoParametro from './pages/RegistrarNuevoParametro';
 
 
@@ -85,12 +87,20 @@ function App() {
             <Route exact path='/consultarTipoEstudio/:idTipoEstudio' element={<ConsultarTipoEstudio />} />
           </Route>
 
+          <Route exact path='/consulta/:curp/resumen/:idResumen' element={<PrivateRoute />}>
+            <Route exact path='/consulta/:curp/resumen/:idResumen' element={<DetalleResumenConsulta />} />
+          </Route>
+          
           <Route exact path='/registrarParametro' element={<PrivateRoute />} >
             <Route exact path='/registrarParametro' element={<RegistrarNuevoParametro />} />
           </Route>
 
           <Route exact path='/registrarConsulta/:curp' element={<PrivateRoute/>}>
             <Route exact path='/registrarConsulta/:curp' element={<RegistrarResumenConsulta />} />
+          </Route>
+
+          <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<PrivateRoute/>}>
+            <Route exact path='/registrarConsulta/:idPaciente/consultas' element={<ConsultarResumenConsulta />} />
           </Route>
 
           <Route exact path='/colaborador' element={<PrivateRoute/>}>

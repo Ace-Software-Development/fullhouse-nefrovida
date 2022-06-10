@@ -217,6 +217,54 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
 
 
 /**
+ * asyncObtenerConsultas Función asíncrona para consultar todos los resúmenes de consulta de un paciente de nefrovida
+ * @param {string} curp - Curp del paciente a buscar
+ * @param {string} ascendente - Los datos se ordenan por fecha de manera ascendente o no
+ * @returns Todos los resúmenes de consulta de un paciente registrados en nefrovida
+ */
+exports.obtenerConsultas = async(curp, ascendente) => {
+    //Buscar paciente
+    const queryObtenerIdPaciente = new Parse.Query(Paciente);
+    queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
+    const idPaciente = await queryObtenerIdPaciente.first();
+
+    const tablaNotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
+    const queryObtenerConsultas = new Parse.Query(tablaNotaMedica);
+    queryObtenerConsultas.include(CONSTANTS.IDNOTAMEDICA);
+    queryObtenerConsultas.include("idUsuario.idRol");
+    queryObtenerConsultas.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
+
+    // Los datos se ordenan por fecha de manera ascendente o no
+    if((ascendente == 'true') || (ascendente == ' ')) {
+        queryObtenerConsultas.ascending(CONSTANTS.FECHA);
+    }
+    else {
+        queryObtenerConsultas.descending(CONSTANTS.FECHA);
+    }
+
+    try {
+        const consultas = await queryObtenerConsultas.find();
+        const jsonConsultas = JSON.parse(JSON.stringify(consultas));
+
+        //Obtener los estudios por nombre de tipo de estudio
+        const arrConsultas = [];
+
+        return {
+            consultas: arrConsultas,
+            notaMedica: jsonConsultas,
+            error: null
+        }
+
+    } catch(error) {
+        return {
+            consultas: null,
+            error: error.message
+        }
+    }
+}
+
+
+/**
  * asynconsultarPacientes Función asíncrona para consultar todos los pacientes de nefrovida
  * @returns Todos los pacientes registrados en nefrovida
  */
@@ -369,7 +417,6 @@ exports.updatePaciente = async(data) => {
         }
 
     } catch (error) {
-        console.log(error)
         return resultsPaciente(null, error.message);
     }
 }

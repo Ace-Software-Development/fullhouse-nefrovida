@@ -21,7 +21,7 @@ import useFetch from '../hooks/useFetch';
 import { ReactSession } from 'react-client-session';
 import EstudiosLaboratorio from './EstudiosLaboratorio'
 import TiposEstudio from './TiposEstudio'
-import BtnEditRegis from '../components/BtnEditRegis';
+import ConsultarResumenConsulta from './ConsultarResumenConsulta';
 
 
 function DetallePaciente() {
@@ -61,7 +61,6 @@ function DetallePaciente() {
         }
     }, [responseOk])
 
-
     return (
         <div>
             <Navbar/>
@@ -72,7 +71,7 @@ function DetallePaciente() {
                 (ReactSession.get('rol') === 'nutriologo') || 
                 (ReactSession.get('rol') ==='psicologo')) &&
                 <Link to = "/">
-                    <BtnRegresar/>
+                    <BtnRegresar regresarOverride="true"/>
                 </Link>
             }
             <br/><br/>
@@ -122,26 +121,19 @@ function DetallePaciente() {
             { ReactSession.get('rol') === 'doctor' &&
                 <div>
                     <EstudiosLaboratorio/>
-                    <Link to = {"/registrarConsulta/" + params.curp}>
-                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
-                    </Link>
+                    <ConsultarResumenConsulta/>
                 </div>
             }
             { ReactSession.get('rol') === 'nutriologo' &&
                 <div>
                     <EstudiosLaboratorio/>
-                    <Link to = {"/registrarConsulta/" + params.curp}>
-                        <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
-                    </Link>
-            </div>
+                    <ConsultarResumenConsulta/>
+                </div>
             }
             { ReactSession.get('rol') === 'psicologo' &&
                 <div>
-                
-                <Link to = {"/registrarConsulta/" + params.curp}>
-                    <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
-                </Link>
-            </div>
+                    <ConsultarResumenConsulta/>
+                </div>
             }
             { ReactSession.get('rol') === 'admin' &&
                 <TiposEstudio/>

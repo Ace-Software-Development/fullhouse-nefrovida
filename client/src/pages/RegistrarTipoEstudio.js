@@ -120,8 +120,6 @@ export default function RegistrarTipoEstudio() {
         setValue("parametros", null)
     }
 
-    console.log(errors);
-
 return(
     <div className="row ContainerForm left-align">
 

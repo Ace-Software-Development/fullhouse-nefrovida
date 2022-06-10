@@ -1,0 +1,17 @@
+{
+    "apps": [{
+        "name": "Parse Prod Server NefroWeb",
+        "script": "app.js",
+        "env": {
+            "NAME": "NefroWebServerPROD",
+            "APP_NAME": "NefroWeb Server PROD",
+            "PORT": 6536,
+            "NODE_ENV": "production",
+            "DATABASE_URI": "mongodb://nefrovida:N3fr0v1d4.com@nefroweb.nefrovidaac.com/nefroweb?authMechanism=DEFAULT&authSource=admin",
+            "APP_ID": "app_id",
+            "MASTER_KEY": "master_key",
+            "SECRET_KEY_USERS": "secret_key",
+            "SERVER_URL": "http://localhost:6536/parse"
+        }
+    }]
+}

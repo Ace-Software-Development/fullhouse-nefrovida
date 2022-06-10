@@ -61,7 +61,6 @@ const ContenidoDetallesPx = ({  paciente }) => {
         <br/>
         <div className="detalles-usuario">
           <i className="material-icons icon-separator small c-908F98"> { paciente.sexo === 'masculino' ?  'male' : 'female' } </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.sexo === 'masculino' ?  'Masculino' : 'Femenino' } </div>
-          {console.log(paciente.sexo)}
         </div>
         <br/>
         { paciente.fechaNacimiento ?
