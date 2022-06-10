@@ -207,9 +207,9 @@ module.exports.consutarDetalleColaborador = async(request, response) => {
         });
     } catch(error) {
         response.status(200).send({
-            status: 'success',
-            data: results,
-            message: 'Empleado obtenido exitosamente'
+            status: 'error',
+            data: null,
+            message: 'Error. ' + error.message
         });
     }
 }

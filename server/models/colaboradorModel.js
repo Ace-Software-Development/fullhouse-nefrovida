@@ -183,6 +183,19 @@ exports.iniciarSesionColaborador = async(params) => {
             const rol = await rolModel.obtenerRol(colaborador.idRol.objectId);
             const nombreRol = rol.rol.get(CONSTANTS.NOMBRE);
             const token = seguridad.encriptar(nombreRol, process.env.SECRET_ENCRYPT);
+
+            // Enviar el error si el colaborador no esta activo
+            console.log(colaborador.activo);
+            if ( !colaborador.activo) {
+                return {
+                    usuario: null,
+                    nombre: null,
+                    apellido: null,
+                    sessionToken: null,
+                    rol: null,
+                    error: 'Credenciales inválidas'
+                }
+            }
             
             return {
                 usuario: colaborador.username,

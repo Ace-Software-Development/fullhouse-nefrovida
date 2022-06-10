@@ -6,7 +6,12 @@ const {authUsuario, noAuthUsuario, authRol} = require('../rbac/Authentication')
 
 // Ruta de tipo 'POST' para registrar un nuevo resumen de consulta.
 router.post('/registrar', 
-    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLQUIMICO]),
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
     consultaController.registrarConsulta)
+
+    // Ruta de tipo 'GET' para obtener el detalle de estudio.
+router.get('/detalle/notas',
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
+    consultaController.consultarDetalleConsulta);
 
 module.exports = router

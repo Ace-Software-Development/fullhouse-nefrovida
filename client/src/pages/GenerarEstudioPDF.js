@@ -78,7 +78,6 @@ export default function GenerarEstudioPDF() {
 
     function estoCargo() {
         if (estudio.fechaEstudio !== undefined){
-            console.log("si cargó")
             return true;
         }
     }
@@ -91,8 +90,6 @@ export default function GenerarEstudioPDF() {
             document.location.href = '/paciente/'+idPaciente;
         }
     }
-
-    console.log(estudio);
 
     return(
         estoCargo() ?

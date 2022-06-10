@@ -49,7 +49,7 @@ function ConsultarPacientes() {
     
 
     /**
-    * Hook que se ejecuta al renderizar el tipo de estudio.
+    * Hook que se ejecuta al renderizar los pacientes
     */
     useEffect(() => {
         getPacientes('');

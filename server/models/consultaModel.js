@@ -62,3 +62,30 @@ exports.registrarConsulta = async(data) => {
         return resultsConsulta(null, error.message);
     }
 }
+
+
+/**
+ * asyncObtenerEstudioPaciente Función asíncrona para obtener el resumen de consulta de un paciente.
+ * @param {string} idConsulta - Identificador del resumen. 
+ * @returns Información del resumen de consulta de un paciente.
+ */
+exports.obtenerConsulta = async(idConsulta) => {
+
+    // Busca el resumen de consulta que tenga el idConsulta
+    const queryConsulta = new Parse.Query(NotaMedica);
+    queryConsulta.equalTo(CONSTANTS.OBJECTID, idConsulta);
+
+    try {
+        var consul = await queryConsulta.first();
+        return {
+            consulta: consul,
+            error: null
+        }
+    } catch(error) {
+        return {
+            consulta: null,
+            error: error
+        }
+    }
+} 
+
