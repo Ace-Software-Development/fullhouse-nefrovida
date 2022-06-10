@@ -14,7 +14,6 @@ import CardConsulta from '../components/CardConsulta';
 
 export default function ConsultarResumenConsulta() {
 
-        // Parametro
         const params = useParams();
         const id = params.curp;
         const [consultas, setConsultas] = useState([])
