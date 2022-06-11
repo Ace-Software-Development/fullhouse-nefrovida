@@ -26,7 +26,6 @@ import { ReactSession } from 'react-client-session';
 
 export default function ConsultarTipoEstudio() {
     const [url, setUrl] = useState('/tipoEstudio/id');
-    const [isLoading, setIsLoading] = useState(false);
     const params = useParams();
     const [tipoEstudio, setTipoEstudio] = useState({})
     const [parametros, setParametros] = useState([])
@@ -44,7 +43,6 @@ export default function ConsultarTipoEstudio() {
             setUrl('/tipoEstudio/id/borrar');
         }
         else if(url === '/tipoEstudio/id/borrar') {
-            setIsLoading(true);
             M.toast({ html: responseJSON.message});
             setTimeout(() => {
                 window.location.href = '/';
@@ -141,7 +139,7 @@ export default function ConsultarTipoEstudio() {
                 
                     <BtnRegresar/>
                     <br/>
-                    { loading || isLoading && (
+                    { loading && (
                         <div className="center animate-new-element">
                             <br/><br/><br/>
                             <div className="preloader-wrapper big active">
@@ -160,7 +158,7 @@ export default function ConsultarTipoEstudio() {
                         </div>
                     
                     )}
-                    { !loading && !isLoading && !error && (
+                    { !loading && !error && (
                         <div className="on-load-anim">
                                 <br/><br/>  
                                 <div className="row div-detalles-estudio">
@@ -183,7 +181,7 @@ export default function ConsultarTipoEstudio() {
                                 </LineaParametros>
                                     
                                     
-                                { ReactSession.get('rol') === 'admin' &&
+                                { ReactSession.get('rol') === 'quimico' &&
                                 <div>
                                     <form onSubmit = { eliminarTipoEstudio }>
                                         <BtnEliminar texto="Eliminar tipo estudio" posicion="right"/>

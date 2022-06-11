@@ -185,7 +185,6 @@ exports.iniciarSesionColaborador = async(params) => {
             const token = seguridad.encriptar(nombreRol, process.env.SECRET_ENCRYPT);
 
             // Enviar el error si el colaborador no esta activo
-            console.log(colaborador.activo);
             if ( !colaborador.activo) {
                 return {
                     usuario: null,

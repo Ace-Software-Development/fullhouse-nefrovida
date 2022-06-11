@@ -1,5 +1,6 @@
 // Datos de ejemplo
 import FilaTablaEstudios from './FilaTablaEstudios';
+import { ReactSession } from 'react-client-session';
 
 const TablaEstudios = ({ datos, idPaciente}) => {
 
@@ -29,9 +30,16 @@ return(
                         <th className="center">
                             Detalle
                         </th>
+                        { ReactSession.get('rol') === 'doctor' &&
                         <th className="center">
                             PDF
                         </th>
+                        }
+                        { ReactSession.get('rol') === 'nutriologo' &&
+                        <th className="center">
+                            PDF
+                        </th>
+                        }
                     </tr>
                     </thead>
                     { tableContent }

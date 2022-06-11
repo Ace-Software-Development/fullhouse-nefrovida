@@ -71,7 +71,7 @@ function DetallePaciente() {
                 (ReactSession.get('rol') === 'nutriologo') || 
                 (ReactSession.get('rol') ==='psicologo')) &&
                 <Link to = "/">
-                    <BtnRegresar regresarOverride="true"/>
+                    <BtnRegresar regresarOverride = {true}/>
                 </Link>
             }
             <br/><br/>

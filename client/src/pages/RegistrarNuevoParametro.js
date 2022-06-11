@@ -28,15 +28,15 @@ import useFetch from '../hooks/useFetch';
 
 
 export default function RegistrarNuevoParametro() {
-    const urlGet = 'http://localhost:6535/parametro/tipoValor';
-    const urlPost = 'http://localhost:6535/parametro/registrar';
+    const urlGet = '/parametro/tipoValor';
+    const urlPost = '/parametro/registrar';
     const [url, setUrl] = useState(urlGet);
     const [tiposValor, setTiposValor] = useState([]);
     const [paramTipo, setParamTipo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const {register, unregister, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
     /**
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
