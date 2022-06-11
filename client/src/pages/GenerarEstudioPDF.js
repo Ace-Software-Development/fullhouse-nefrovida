@@ -33,7 +33,7 @@ export default function GenerarEstudioPDF() {
     const params = useParams();
     const idPaciente = params.idPaciente;
     const [estudio, setEstudio] = useState({})
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch('http://localhost:6535/estudio/id');
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + "/estudio/id");
 
 
   //Hook para actualizar los datos de el estudio y los parametros

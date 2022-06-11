@@ -17,7 +17,6 @@ const TiposEstudio = () => {
     // Parametro
     const params = useParams();
     const curp = params.curp;
-
     const [tiposEstudio, setTiposEstudio] = useState([])
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + '/tipoEstudio/');
 
