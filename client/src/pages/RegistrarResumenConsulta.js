@@ -115,7 +115,7 @@ return(
                 <Link to = {"/paciente/" + params.curp}>
                     <BtnRegresar regresarOverride = {true}/>
                 </Link>
-                <div className='subrayado c-2E7EC8 right-align'>  { fecha } </div><br/><br/>
+                <div className='light-pequeno c-908F98 right-align'>  { fecha } </div><br/><br/>
                 { loading && !isLoading && (
                     <div className="center animate-new-element">
                         <br/>
