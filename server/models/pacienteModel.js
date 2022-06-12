@@ -100,7 +100,7 @@ exports.buscarPorCurp = async (curp) => {
         const results = await query.first();
         // Enviar error si no existe un paciente con ese curp
         if ( !results ) {
-            return resultsPaciente(null, 'No se encontró un paciente con ese CURP');
+            return resultsPaciente(null, 'No se encontró un paciente con ese CURP o folio');
         }
         // Enviar el error si el paciente no esta activo
         if ( !results.get(CONSTANTS.ACTIVO)) {

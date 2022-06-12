@@ -220,9 +220,20 @@ const EditarPaciente = () => {
      */
     async function onSubmit(data, e) {
         // Cambiar los valores necesarios de string a número.
-        data.estatura = Number(data.estatura);
-        data.peso = Number(data.peso);
-        data.telefono = Number(data.telefono);
+        if (data.estatura === "") {
+            data.estatura = undefined;
+        }
+        else { data.estatura = Number(data.estatura); }
+        
+        if (data.peso === "") {
+            data.peso = undefined;
+        }
+        else { data.peso = Number(data.peso); }
+        
+        if (data.telefono === "") {
+            data.telefono = undefined;
+        }
+        else { data.telefono = Number(data.telefono); }
 
         // Se convierte la fecha a formato 'dd/mm/yyyy'
         if( data.fechaNacimiento){

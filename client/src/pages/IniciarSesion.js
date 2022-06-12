@@ -30,8 +30,8 @@ import { ReactSession } from 'react-client-session';
 import useFetch from '../hooks/useFetch';
 
 const IniciarSesion = () => { 
-    //Variable que debe tener un valor de '' cuando pasa a despliege
-    const apiRoute = '';
+    //Variable que debe tener un valor de '' cuando pasa a despliege y de http://localhost:6535 en desarollo
+    const apiRoute = 'http://localhost:6535';
     
     
     const [errorSubmit, setErrorSubmit] = useState('');

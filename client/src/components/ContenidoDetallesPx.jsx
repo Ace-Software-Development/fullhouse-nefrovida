@@ -2,22 +2,28 @@ import { ReactSession } from 'react-client-session';
 import BtnEditRegis from "./BtnEditRegis";
 import BtnRegresar from './BtnRegresar';
 import { Link } from 'react-router-dom';
+import moment from 'moment'
 
 const ContenidoDetallesPx = ({  paciente }) => {
   
+  
   function edadExiste() {
     if (paciente.fechaNacimiento !== undefined){
-      var hoy = new Date();
       const nacimiento = new Date ("" + paciente.fechaNacimiento.substring(6,10) 
-                                      + "-" + paciente.fechaNacimiento.substring(3, 5) 
-                                      + "-" + paciente.fechaNacimiento.substring(0,2))
-      var edad = hoy.getFullYear() - nacimiento.getFullYear();
-      var mes = hoy.getMonth() - nacimiento.getMonth();
-      if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-          edad--;
-      }
-      
-      return (edad + " años, " + mes)
+                                  + "-" + paciente.fechaNacimiento.substring(3, 5) 
+                                  + "-" + paciente.fechaNacimiento.substring(0,2))
+        var a = moment(moment.now());
+        var b = moment(nacimiento);
+        
+        var years = a.diff(b, 'year');
+        b.add(years, 'years');
+        
+        var months = a.diff(b, 'months');
+        b.add(months, 'months');
+        
+        //var days = a.diff(b, 'days');
+        
+        return(years + ' años, ' + months + ' meses ');
     }
   }
   

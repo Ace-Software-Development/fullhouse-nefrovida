@@ -1,6 +1,6 @@
 const ParametroEstudioPaciente = ({parametro, valor, unidad, referencia}) => {
     return(
-        <div className='col s12 l6 espacio-vertical center-align'>
+        <div className='col s12 l6 espacio-vertical center-align no-margin-left'>
             
             <br/>
 
@@ -13,8 +13,8 @@ const ParametroEstudioPaciente = ({parametro, valor, unidad, referencia}) => {
 
             <br/><br/>
 
-            <div className="detalles-lista espacio-pequeno c-64646A">Referencia: {referencia} {unidad}</div>
-
+            <div className="detalles-lista espacio-pequeno c-64646A">Referencia: {referencia} { referencia === true ? "Positivo" : "Negativo" } {unidad}</div>
+            
             <br/><br/><br/>
 
             <div className='identificacion-registrar'/>

@@ -14,10 +14,6 @@ app.use(express.json());
 
 app.use(cors());
 
-// Comentar lo siguiente si está en desarrollo:
-// Para enviar estilos CSS de manera estática cuando un documento lo requiera
-app.use(express.static(path.join(__dirname, 'public')));
-// Hasta aqui
 
 var databaseUri = process.env.DATABASE_URI;
 if (!databaseUri) {
@@ -25,8 +21,8 @@ if (!databaseUri) {
 }
 
 // Comentar lo siguiente si está en desarrollo:
-app.use(express.static(
-    path.join(__dirname, "../client/build")));
+// app.use(express.static(
+//     path.join(__dirname, "../client/build")));
 // Hasta aqui
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -86,11 +82,11 @@ app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
 
 
 // Comentar lo siguiente si está en desarrollo:
-app.get("*", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "../client/build/index.html")
-    );
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(
+//         path.join(__dirname, "../client/build/index.html")
+//     );
+// });
 // Hasta aqui
 
 app.get('*', function(request, response) {
