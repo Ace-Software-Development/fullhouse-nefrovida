@@ -167,6 +167,9 @@ export default function EstudiosLaboratorio() {
                         <br/>
                     </div>
                 ) 
+                :estudios.length === 0 ? (
+                    <div> <div className="blue-text text-darken-3 center"> <br/><strong> No hay estudios registrados para este paciente </strong> </div> <br/><br/> </div>
+                )
                 : <div className="animate-new-element"> <TablaEstudios datos = { estudios } idPaciente = {id} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>

@@ -89,7 +89,7 @@ export default function ConsultarResumenConsulta() {
                         <br/>
                         <br/>
                     </div>
-                ) 
+                )    
                 : <div className="animate-new-element"> <TablaConsultas datos = { consultas } idPaciente = {id} rol = {currentRole} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
@@ -97,26 +97,26 @@ export default function ConsultarResumenConsulta() {
                 <br/>
                 <div className="row-cards-estudios">
 
-                { currentRole === 'doctor' &&
-                    <div className="row-cards-estudios">
-                        <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
-                        <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>
-                    </div>
-                }
 
-                { currentRole === 'nutriologo' &&
+                {  currentRole === 'doctor' ?
+                    <div className="row-cards-estudios">
+                    <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
+                    <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>
+                    </div>
+                : currentRole === 'nutriologo'?
                     <div className="row-cards-estudios">
                         <CardConsulta nombre="Notas de Doctor" onClick={() => setCurrentRole("doctor")}/>
                         <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>
                     </div>
-                }
-
-                { currentRole === 'psicologo' &&
+                : currentRole === 'psicologo'?
                     <div className="row-cards-estudios">
                         <CardConsulta nombre="Notas de Doctor" onClick={() => setCurrentRole("doctor")}/>
                         <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
                     </div>
+                :<></>
                 }
+
+                
                 </div>
                 <br/>
             </Card>
