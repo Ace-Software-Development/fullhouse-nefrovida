@@ -86,6 +86,9 @@ function ConsultarPacientes() {
      * @param {event} e Evento del cambio
      */
     function handleChange(e) {
+        if (e.target.value){
+            setUrl(urlGetTodos)
+        }
         getPacientes(e.target.value);
     }
 
