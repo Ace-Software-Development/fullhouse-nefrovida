@@ -257,7 +257,7 @@ return(
 
 
                         <div align="left">
-                            <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='subrayado c-2E7EC8' >  { fecha } </span><br/>
+                            <div className="detalles-lista negrita-grande c-64646A left-align">{ tipoEstudio.nombre }  </div><span className='light-pequeno c-908F98' >  { fecha } </span><br/>
                             <div className="detalles-lista light-pequeno c-908F98 left-align">{ tipoEstudio.descripcion }</div>
                         </div>
 
