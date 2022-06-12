@@ -201,7 +201,7 @@ useEffect(() => {
             setIsLoading(true);
             M.toast({ html: responseJSON.message });
             setTimeout(() => {
-                window.history.go(-1);
+                window.history.back();
             }, 1000);
         }
 
