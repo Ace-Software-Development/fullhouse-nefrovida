@@ -110,9 +110,13 @@ export default function RegistrarColaborador() {
                 message: "El usuario es requerido"
             },
             pattern: {
-                value: /^(?:[A-Z\d][A-Z\d_-]{2,11}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
+                value: /^(?:[A-Z\d][A-Z\d_-]{2,15}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
                 message: "Usuario inválido"
-            }
+            },
+            maxLength: {
+                value: 16,
+                message: "El usuario no puede tener más de 16 caracteres"
+            },
         });
 
         // Variable para el nombre, requerido, con patrón.

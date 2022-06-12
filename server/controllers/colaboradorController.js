@@ -59,7 +59,7 @@ module.exports.registrarColaborador = async(request, response) => {
         // Si hubo éxito en el registro retorna información de colaborador registrada.
         response.status(200).send( {
             colaborador: results.colaborador,
-            message: "Colaborador registrado"
+            message: "¡Empleado registrado exitosamente!"
         });
         
     } catch(error) {
@@ -99,7 +99,7 @@ module.exports.iniciarSesionColaborador = async(request, response) => {
                 apellido: results.apellido,
                 sessionToken: results.sessionToken,
                 rol: results.rol,
-                message: "Inicio de Sesion exitoso!!"
+                message: "¡¡Inicio de Sesion exitoso!!"
             });
         }        
         
