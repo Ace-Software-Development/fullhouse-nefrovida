@@ -266,8 +266,6 @@ export default function RegistrarNuevoParametro() {
                         !loading && !isLoading && !error ?
                         <form
                             id = "main-login"
-                            //action = 'http://localhost:6535/colaboradores'
-                            //method = 'post'
                             onSubmit = { handleSubmit(onSubmit) }
                             >
                             <LineaCampos>
