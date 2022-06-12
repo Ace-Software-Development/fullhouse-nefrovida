@@ -53,7 +53,7 @@ const EditarPaciente = () => {
      * Función para realizar las validaciones necesarias para cada uno de los campos del paciente.
      */
     function validation() {
-        
+
         // Variable para el nombre, requerido, con patrón.
         register('nombre', {
             required: {
@@ -63,9 +63,13 @@ const EditarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El nombre puede contener máximo 40 caracteres'
+            },
         });
-        
+
         // Variable para el apellido, requerido, con patrón.
         register('apellidoPaterno', {
             required: {
@@ -75,7 +79,11 @@ const EditarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellidoPaterno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el apellido materno, no requerido, con patrón.
@@ -86,7 +94,11 @@ const EditarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellidoMaterno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para la fecha de nacimiento, requerida, con patrón.
@@ -131,7 +143,11 @@ const EditarPaciente = () => {
             pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: 'Correo inválido'
-            }
+            },
+            maxLength: {
+                value: 70,
+                message: 'El teléfono debe tener 10 digitos'
+            },
         });
 
         // Variable para el curp, requerido y con patrón.
@@ -158,11 +174,11 @@ const EditarPaciente = () => {
             },
             max: {
                 value: 700,
-                message: '¿El peso es correcto? 😯'
+                message: '¿El peso es correcto?'
             },
             min: {
-                value: 5,
-                message: '¿El peso es correcto? 😐'
+                value: 0.1,
+                message: '¿El peso es correcto? '
             }
         });
 
@@ -172,14 +188,14 @@ const EditarPaciente = () => {
                 value: false,
                 message: 'El nombre es requerido'
             },
-            
+
             max: {
                 value: 275,
-                message: '¿La estatura es correcta? 😯'
+                message: '¿La estatura es correcta?'
             },
             min: {
-                value: 65,
-                message: '¿La estatura es correcta? 😐'
+                value: 20,
+                message: '¿La estatura es correcta?'
             }
 
         });
@@ -249,7 +265,7 @@ const EditarPaciente = () => {
      * Se utiliza para hacer el render adecuado hasta que los datos ya existan.
      * @returns true si ya existen los datos, false si todavía no.
      */
-    function rolesExisten() {
+    function pacienteExiste() {
         if (paciente.nombre !== undefined ){
             return true;
         }
@@ -318,7 +334,7 @@ const EditarPaciente = () => {
                     }
                     <br/><br/>
 
-                    {rolesExisten() ?
+                    { pacienteExiste() ?
                     (
                     <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
@@ -328,16 +344,17 @@ const EditarPaciente = () => {
                                 tamano="m4 s12"
                                 onChange = { handleChange }
                                 elError = { errors.nombre && errors.nombre?.message }
-                                maxLength = "20"
-                                defaultValue = { paciente.nombre }
-                                isActive = { true }
+                                maxLength = "40"
                                 requerido = { true }
+                                isActive = { true }
+                                defaultValue = { paciente.nombre }
                             />
                             {setValue("nombre", paciente.nombre)}
                             <Input 
                                 id="apellidoPaterno" 
                                 label="Apellido Paterno" 
                                 tamano="m4 s12"
+                                maxLength = "40"
                                 onChange = { handleChange }
                                 elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
                                 defaultValue = { paciente.apellidoPaterno }
@@ -349,6 +366,7 @@ const EditarPaciente = () => {
                                 id="apellidoMaterno" 
                                 label="Apellido Materno" 
                                 tamano="m4 s12"
+                                maxLength = "40"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.apellidoMaterno }
                                 isActive = { paciente.apellidoMaterno ? true: false }
@@ -384,6 +402,7 @@ const EditarPaciente = () => {
                                 type="number"
                                 tamano="s8 m4"
                                 onChange={ handleChange }
+                                min = "0"
                                 maxLength = "10"
                                 defaultValue = { paciente.telefono }
                                 isActive = { paciente.telefono ? true : false }
@@ -393,20 +412,22 @@ const EditarPaciente = () => {
                         </LineaCampos>
                         <LineaCampos>
                             <Input 
-                                id="correo" 
-                                label="Correo electrónico" 
-                                tamano="s12 m4"
-                                type="email"
-                                onChange={ handleChange }
+                                id = "correo" 
+                                label = "Correo electrónico" 
+                                tamano = "s12 m4"
+                                type = "email"
+                                maxLength = "70"
+                                onChange = { handleChange }
                                 defaultValue = { paciente.email }
                                 isActive = { paciente.email ? true : false }
-                                elError={ errors.correo && errors.correo?.message }
+                                elError = { errors.correo && errors.correo?.message }
                             />
                             {setValue("correo", paciente.email)}
                             <Input 
-                                id="curp" 
-                                label="CURP o Folio Nefrovida (🚫)" 
-                                tamano="s12 m4"
+                                id = "curp" 
+                                label = "CURP o Folio Nefrovida (🚫)" 
+                                tamano = "s12 m4"
+                                maxLength = "18"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.curp }
                                 isActive = { true }
@@ -420,6 +441,7 @@ const EditarPaciente = () => {
                                 label = "Peso (Kg)"
                                 type = "number"
                                 min = "0"
+                                step=".1"
                                 tamano = "s12 m2"
                                 onChange = { handleChange }
                                 defaultValue = { paciente.peso }
@@ -431,7 +453,7 @@ const EditarPaciente = () => {
                                 id = "estatura" 
                                 label = "Estatura (cm)" 
                                 type = "number"
-                                min = "0"
+                                min = "0" 
                                 tamano = "s12 m2" 
                                 onChange = { handleChange }
                                 defaultValue = { paciente.estatura }
