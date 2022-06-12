@@ -17,7 +17,7 @@ const ContenidoDetallesPx = ({  paciente }) => {
           edad--;
       }
       
-      return edad
+      return (edad + " años, " + mes)
     }
   }
   
@@ -66,7 +66,7 @@ const ContenidoDetallesPx = ({  paciente }) => {
         { paciente.fechaNacimiento ?
         (
           <div className="detalles-usuario">
-            <i className="material-icons icon-separator small c-908F98"> cake </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.fechaNacimiento }, {edadExiste()} años </div>
+            <i className="material-icons icon-separator small c-908F98"> cake </i><div className="detalles-lista left-align c-908F98 light-pequeno"> { paciente.fechaNacimiento }, {edadExiste()} </div>
           </div>
         ) : null}
         <br/>

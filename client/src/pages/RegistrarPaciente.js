@@ -60,7 +60,11 @@ const RegistrarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El nombre puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el apellido, requerido, con patrón.
@@ -72,7 +76,11 @@ const RegistrarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellidoPaterno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el apellido materno, no requerido, con patrón.
@@ -83,7 +91,11 @@ const RegistrarPaciente = () => {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellidoMaterno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para la fecha de nacimiento, requerida, con patrón.
@@ -128,7 +140,11 @@ const RegistrarPaciente = () => {
             pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: 'Correo inválido'
-            }
+            },
+            maxLength: {
+                value: 70,
+                message: 'El teléfono debe tener 10 digitos'
+            },
         });
 
         // Variable para el curp, requerido y con patrón.
@@ -155,11 +171,11 @@ const RegistrarPaciente = () => {
             },
             max: {
                 value: 700,
-                message: '¿El peso es correcto? 😯'
+                message: '¿El peso es correcto?'
             },
             min: {
-                value: 5,
-                message: '¿El peso es correcto? 😐'
+                value: 0.1,
+                message: '¿El peso es correcto? '
             }
         });
 
@@ -172,11 +188,11 @@ const RegistrarPaciente = () => {
 
             max: {
                 value: 275,
-                message: '¿La estatura es correcta? 😯'
+                message: '¿La estatura es correcta?'
             },
             min: {
-                value: 65,
-                message: '¿La estatura es correcta? 😐'
+                value: 20,
+                message: '¿La estatura es correcta?'
             }
 
         });
@@ -189,6 +205,7 @@ const RegistrarPaciente = () => {
      */
     const handleChange = (e) => {
         setValue(e.target.name, e.target.value);
+        console.log(e.target.name, e.target.value);
     }
 
 
@@ -281,72 +298,77 @@ const RegistrarPaciente = () => {
                     <form onSubmit={ handleSubmit(onSubmit) }>
                         <LineaCampos>
                             <Input
-                                id="nombre"
-                                label="Nombre"
-                                tamano="m4 s12"
+                                id = "nombre"
+                                label = "Nombre"
+                                tamano = "m4 s12"
                                 onChange = { handleChange }
                                 elError = { errors.nombre && errors.nombre?.message }
-                                maxlength = "20"
+                                maxLength = "40"
                                 requerido = { true }
                             />
                             <Input
-                                id="apellidoPaterno"
-                                label="Apellido Paterno"
-                                tamano="m4 s12"
+                                id = "apellidoPaterno"
+                                label = "Apellido Paterno"
+                                tamano = "m4 s12"
+                                maxLength = "40"
                                 onChange = { handleChange }
                                 elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
                                 requerido = { true }
                             />
                             <Input
-                                id="apellidoMaterno"
-                                label="Apellido Materno"
-                                tamano="m4 s12"
+                                id = "apellidoMaterno"
+                                label = "Apellido Materno"
+                                tamano = "m4 s12"
+                                maxLength = "40"
                                 onChange = { handleChange }
                                 elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
                             />
                         </LineaCampos>
                         <LineaCampos>
                             <Datepicker
-                                id="fechaNacimiento"
-                                label="Fecha de nacimiento"
-                                tamano="s8 m4"
+                                id = "fechaNacimiento"
+                                label = "Fecha de nacimiento"
+                                tamano = "s8 m4"
                                 onChange = { handleChange }
                                 elError= { errors.fechaNacimiento && errors.fechaNacimiento?.message }
-                                max = {obtenerFechaMax()}
+                                max = { obtenerFechaMax() }
                                 min = "1920-01-01"
                             />
                             <Select
-                                id="sexo"
-                                label="Sexo"
-                                value=""
-                                arr={ [{ value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino" }] }
+                                id = "sexo"
+                                label = "Sexo"
+                                value = ""
+                                arr = { [{ value: "masculino", option: "Masculino"}, {value: "femenino", option: "Femenino" }] }
                                 handleChange = { handleChange }
                                 elError = { errors.sexo && errors.sexo?.message }
                                 requerido = { true }
                             />
                             <Input
-                                id="telefono"
-                                label="Telefono"
-                                type="number"
-                                tamano="s8 m4"
-                                onChange={ handleChange }
-                                maxlength = "10"
+                                id = "telefono"
+                                label = "Telefono"
+                                type = "number"
+                                tamano = "s8 m4"
+                                onChange = { handleChange }
+                                min = "0"
+                                maxLength = "10"
                                 elError = { errors.telefono && errors.telefono?.message }
                             />
                         </LineaCampos>
                         <LineaCampos>
                             <Input
-                                id="correo"
-                                label="Correo electrónico"
-                                tamano="s12 m4"
-                                type="email"
-                                onChange={ handleChange }
-                                elError={ errors.correo && errors.correo?.message }
+                                id = "correo"
+                                label = "Correo electrónico"
+                                tamano = "s12 m4"
+                                type = "email"
+                                maxLength = "70"
+                                onChange = { handleChange }
+                                elError = { errors.correo && errors.correo?.message }
                             />
                             <Input
-                                id="curp"
-                                label="CURP o Folio Nefrovida"
-                                tamano="s12 m4"
+                                id = "curp"
+                                label = "CURP o Folio Nefrovida"
+                                tamano = "s12 m4"
+                                maxLength = "18"
                                 onChange = { handleChange }
                                 elError = { errors.curp && errors.curp?.message }
                                 requerido = { true }
@@ -356,6 +378,7 @@ const RegistrarPaciente = () => {
                                 label = "Peso (Kg)"
                                 type = "number"
                                 min = "0"
+                                step=".1"
                                 tamano = "s12 m2"
                                 onChange = { handleChange }
                                 elError = { errors.peso && errors.peso?.message }
