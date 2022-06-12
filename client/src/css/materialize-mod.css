@@ -9432,13 +9432,6 @@ thead {
   font-size: medium;
 }
 
-.input-pequeno{
-  width: 100px !important;
-  height: 22px !important;
-  margin-top: 3px !important;
-  margin-right: 5px !important;
-}
-
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -9544,7 +9537,7 @@ thead {
   font-weight: 500;
 }
 .input-pequeno {
-  width: 100px !important;
+  width: 225px !important;
   height: 22px !important;
   margin-top: 3px !important;
   margin-right: 5px !important;

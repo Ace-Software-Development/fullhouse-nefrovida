@@ -109,7 +109,7 @@ function ConsultarPacientes() {
                     <CardSubtitulo subtitulo= "Pacientes">
                         <InputSearch
                             id = "buscar"
-                            label = "Buscar"
+                            label = "Buscar por Nombre/CURP/Folio"
                             onChange = { handleChange }
                         />
                     </CardSubtitulo>
