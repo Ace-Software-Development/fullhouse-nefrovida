@@ -211,7 +211,8 @@ const useFetch = (url) => {
                 ReactSession.remove('apellido');
                 ReactSession.remove('sessionToken');
                 ReactSession.remove('usuario');
-                // TODO cuando esté cerrar sesion llamar a cerrarSesion
+                ReactSession.remove('apiRoute');
+                
                 window.location.href = "/iniciarSesion";
             } else if (response.status === 403) {
                 window.location.href = "/403";

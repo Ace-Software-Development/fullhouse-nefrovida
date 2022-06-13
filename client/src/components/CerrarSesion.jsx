@@ -35,6 +35,7 @@ const CerrarSesion = () => {
         ReactSession.remove('apellido');
         ReactSession.remove('sessionToken');
         ReactSession.remove('usuario');
+        ReactSession.remove('apiRoute');
         
         //Redirige a página de Iniciar sesión
         window.location.href = "/IniciarSesion";
