@@ -31,7 +31,7 @@ import useFetch from '../hooks/useFetch';
 
 const IniciarSesion = () => { 
     //Variable que debe tener un valor de '' cuando pasa a despliege y de http://localhost:6535 en desarollo
-    const apiRoute = 'http://localhost:6535';
+    const apiRoute = '';
     
     
     const [errorSubmit, setErrorSubmit] = useState('');

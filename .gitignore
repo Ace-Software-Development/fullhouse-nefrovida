@@ -106,3 +106,4 @@ dist
 
 #serverConfig
 serverDEV.json
+serverPROD.json

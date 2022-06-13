@@ -21,11 +21,11 @@ if (!databaseUri) {
 }
 
 // Comentar lo siguiente si está en desarrollo:
-// app.use(express.static(
-//     path.join(__dirname, "../client/build")));
+app.use(express.static(
+path.join(__dirname, "../client/build")));
 // Hasta aqui
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 
 var api = new parseServer({
@@ -82,16 +82,16 @@ app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
 
 
 // Comentar lo siguiente si está en desarrollo:
-// app.get("*", (req, res) => {
-//     res.sendFile(
-//         path.join(__dirname, "../client/build/index.html")
-//     );
-// });
+app.get("*", (req, res) => {
+     res.sendFile(
+         path.join(__dirname, "../client/build/index.html")
+     );
+});
 // Hasta aqui
 
-app.get('*', function(request, response) {
-    response.status(404).send();
-})
+//app.get('*', function(request, response) {
+//    response.status(404).send();
+//})
 
 // Start the server
 const PORT = process.env.PORT;

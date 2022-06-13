@@ -276,7 +276,7 @@ export default function RegistrarNuevoParametro() {
                                     tamano = "m4 s12" 
                                     onChange = { handleChange }
                                     elError = { errors.nombre && errors.nombre?.message }
-                                    maxLength = "20"
+                                    maxLength = "100"
                                     requerido = {true}
                                 />
                                 <Select 
