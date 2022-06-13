@@ -9938,11 +9938,13 @@ body {
 @media print {
   .dontPrint { display: none !important;}
   .zoomed {
-  zoom: 0.7;
-  -moz-transform: scale(0.7);
-  -moz-transform-origin: 0 0;
-  -webkit-print-color-adjust: exact;
+    zoom: 0.75;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    
   }
+  @page { margin: 0; }
+  html { margin: 1cm; }
 }
 
 .chip {
