@@ -18,8 +18,8 @@ function Home() {
             <br/><br/>
             { ReactSession.get('rol') === 'admin' &&
                 <div>
-                    <TiposEstudio/>
                     <ConsultarColaborador/>
+                    <TiposEstudio/>
                 </div>
                 
             }
