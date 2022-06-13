@@ -10,17 +10,7 @@
 
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
-import Main from '../components/Main';
-import Card from '../components/Card';
-import ContainerForm from '../components/ContainerForm';
-import LineaParametros from '../components/LineaParametros';
-import LineaCampos from '../components/LineaCampos';
-import CardTitulo from '../components/CardTitulo';
-import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
-import BtnEditRegis from '../components/BtnEditRegis';
-import BtnEliminar from '../components/BtnEliminar';
-import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import useFetch from '../hooks/useFetch';
@@ -34,6 +24,7 @@ export default function GenerarEstudioPDF() {
     const params = useParams();
     const idPaciente = params.idPaciente;
     const [estudio, setEstudio] = useState({})
+    const [printed, setPrinted] = useState(false)
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + "/estudio/id");
 
 
@@ -80,12 +71,15 @@ export default function GenerarEstudioPDF() {
 
     function imprimir() {
         window.print();
-        setTimeout(closePrintView(), 3000);
+        setPrinted(true);
+        setTimeout( () => closePrintView(), 2000);
         
         function closePrintView() {
-            document.location.href = '/paciente/'+idPaciente;
+            document.location.href = '/paciente/' + idPaciente;
         }
     }
+
+    console.log(error)
 
     return(
         estoCargo() ?
@@ -94,15 +88,43 @@ export default function GenerarEstudioPDF() {
             <div className = "zoomed">
 
             <div className = "center-align dontPrint">
-                <br/><br/><br/>
-                <button 
-                    className =  { "waves-effect waves-dark btn btn-large btn-editar-registrar blue darken-1 white-text text-accent-4 dontPrint" }
-                    onClick = {() => imprimir()}
-                    >
-                    Descargar o imprimir PDF
-                    <i className = "material-icons left"  >picture_as_pdf</i>
-                </button>
-                <br/><br/><br/>
+                { printed ? (
+                    <>
+                    <br/><br/><br/><br/>
+                    <div className = "preloader-wrapper med active">
+                        <div className = "spinner-layer spinner-blue-only">
+                        <div className = "circle-clipper left">
+                            <div className = "circle"></div>
+                        </div><div className = "gap-patch">
+                            <div className = "circle"></div>
+                        </div><div className = "circle-clipper right">
+                            <div className = "circle"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <h5 className="blue-text text-darken-3"> Cargando </h5>
+                    <br/><br/><br/><br/>
+                    </>
+                ) :
+                (
+                    <>
+                        <br/><br/><br/>
+                        <button 
+                            className =  { "waves-effect waves-dark btn btn-large btn-editar-registrar blue darken-1 white-text text-accent-4 dontPrint" }
+                            onClick = {() => imprimir()}
+                            >
+                            Descargar o imprimir PDF
+                            <i className = "material-icons left"  >picture_as_pdf</i>
+                        </button>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span className='dontPrint'>¿No es el estudio correcto?</span><br/>
+                        <BtnRegresar posicion='center dontPrint'/>
+                        <br/>
+                        <br/><br/><br/>
+                    </>
+                ) }
             </div>
 
 
@@ -192,25 +214,31 @@ export default function GenerarEstudioPDF() {
         </div>
         )
         : (
-            <div className = "center animate-new-element">
-                <br/>
+            error ? (
+                <div className='center'> <br/><br/><br/> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> <BtnRegresar posicion='center'/> </div>
+            ) : (
+                <div className = "center animate-new-element">
+                    <br/>
 
-                <div className = "preloader-wrapper med active">
-                    <div className = "spinner-layer spinner-blue-only">
-                    <div className = "circle-clipper left">
-                        <div className = "circle"></div>
-                    </div><div className = "gap-patch">
-                        <div className = "circle"></div>
-                    </div><div className = "circle-clipper right">
-                        <div className = "circle"></div>
+                    <div className = "preloader-wrapper med active">
+                        <div className = "spinner-layer spinner-blue-only">
+                        <div className = "circle-clipper left">
+                            <div className = "circle"></div>
+                        </div><div className = "gap-patch">
+                            <div className = "circle"></div>
+                        </div><div className = "circle-clipper right">
+                            <div className = "circle"></div>
+                        </div>
+                        </div>
                     </div>
-                    </div>
+
+                    <br/>
+                    <br/>
                 </div>
+            )
 
-                <br/>
-                <br/>
-            </div>
         )
+        
     )
 
 }
