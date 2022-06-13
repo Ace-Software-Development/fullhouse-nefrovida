@@ -197,6 +197,15 @@ function obtenerValorReferenciaParametro(json) {
         const valorString = json.idParametro.valorString;
         return valorString
     }
+    else {
+        const valorBool = json.idParametro.valorBool;
+        if(valorBool) {
+            return 'Positivo'
+        }
+        else{
+            return 'Negativo'
+        }
+    }
 }
 
 
@@ -255,6 +264,7 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
                 observacionesEstudio: jsonEstudio.observaciones
             };
 
+            console.log(estudioPaciente);
             return {
                 estudio: estudioPaciente,
                 error: null
