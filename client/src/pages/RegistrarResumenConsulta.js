@@ -44,7 +44,8 @@ export default function RegistrarResumenConsulta() {
                 message: 'La consulta no puede estar vacía.'
             },
             maxLength: {
-                value: 1000
+                value: 1000,
+                message: 'La consulta no puede tener más de 1000 caracteres.'
             }
         });
     }, []);
