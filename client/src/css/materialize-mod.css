@@ -2154,8 +2154,10 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
-  overflow-y: overlay;
-  overflow-x: overlay;
+  overflow-y: overlay !important;
+  overflow-x: overlay !important;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* Sections
@@ -5113,8 +5115,10 @@ small {
 
 .tabs {
   position: relative;
-  overflow-x: overlay;
-  overflow-y: overlay;
+  overflow-y: overlay !important;
+  overflow-x: overlay !important;
+  overflow-y: auto;
+  overflow-x: auto;
   height: 48px;
   width: 100%;
   background-color: #fff;
@@ -9325,8 +9329,10 @@ table tr:last-child td:last-child {
 
 .tabla-altura {
   max-height: 552px;
-  overflow-y: overlay;
-  overflow-x: overlay;
+  overflow-y: overlay !important;
+  overflow-x: overlay !important;
+  overflow-y: auto;
+  overflow-x: auto;
   scrollbar-gutter: stable;
 }
 
@@ -9600,7 +9606,6 @@ thead {
   min-height: min-content;
   overflow-y: overlay;
   max-height: 290px;
-  -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
 
 .no-margin-left {
