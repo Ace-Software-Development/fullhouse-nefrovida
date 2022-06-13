@@ -221,7 +221,7 @@ return(
                                     </div>
                                     :<></>
                                 }
-
+                            <br/>
                             </LineaCampos>
                             <div className='identificacion-registrar'/>
                             <BtnGuardar/>
