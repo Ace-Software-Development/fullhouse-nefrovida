@@ -30,7 +30,7 @@ function authUsuario(request, response, next) {
             sessionToken = values["sessionToken"]
         }
     }
-
+    
     // Si no se obtiene token definir que debe iniciar sesión
     if ( !sessionToken ) {
         return response.status(401).send({
@@ -38,7 +38,8 @@ function authUsuario(request, response, next) {
         });
     }
     
-    const nombreRol = seguridad.desencriptar(sessionToken, process.env.SECRET_ENCRYPT);
+    const token = sessionToken.replace(' ', '+');
+    const nombreRol = seguridad.desencriptar(token, process.env.SECRET_ENCRYPT);
     
     if (nombreRol) {
         request.rol = nombreRol;
