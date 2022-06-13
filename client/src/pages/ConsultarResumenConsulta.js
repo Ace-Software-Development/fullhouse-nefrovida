@@ -13,13 +13,13 @@ import CardConsulta from '../components/CardConsulta';
 
 
 export default function ConsultarResumenConsulta() {
-
         const params = useParams();
         const id = params.curp;
         const [consultas, setConsultas] = useState([])
         const [ascendente] = useState([]);
         const [currentRole, setCurrentRole] = useState(ReactSession.get('rol'))
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/consultas');
+        
         
         // Funcion que obtiene el estudio correspondiente al id.
         async function getConsultas(id, ascendente) {

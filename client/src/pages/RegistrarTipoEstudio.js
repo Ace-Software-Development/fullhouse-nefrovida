@@ -18,10 +18,9 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 
 export default function RegistrarTipoEstudio() {
-
     const [url, setUrl] = useState('/parametro/todos');
-    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const [parametros, setParametros] = useState([]);
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
     useEffect(() => {

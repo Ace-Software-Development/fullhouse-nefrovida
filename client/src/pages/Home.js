@@ -4,7 +4,6 @@
  */
 import Navbar from '../components/Navbar';
 import Main from '../components/Main';
-import RegistrarColaborador from '../pages/RegistrarColaborador'
 import ConsultarPacientes from './ConsultarPacientes'
 import { ReactSession } from 'react-client-session';
 import TiposEstudio from './TiposEstudio';

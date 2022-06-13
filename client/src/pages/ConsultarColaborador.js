@@ -26,6 +26,7 @@ export default function ConsultarColaborador() {
     const [colaboradores, setColaboradores] = useState([])
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/colaborador/todosColaboradores');
 
+    
     /**
      * Hook que se ejecuta al obtener los colaboradores.
      */
