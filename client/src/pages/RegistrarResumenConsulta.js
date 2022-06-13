@@ -39,6 +39,13 @@ export default function RegistrarResumenConsulta() {
                 value: true,
                 message: 'La consulta es requerida'
             },
+            pattern: {
+                value: /\S/,
+                message: 'La consulta no puede estar vacía.'
+            },
+            maxLength: {
+                value: 1000
+            }
         });
     }, []);
 
