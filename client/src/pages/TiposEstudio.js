@@ -56,7 +56,7 @@ const TiposEstudio = () => {
 
     return(
         <Card>
-            <CardTitulo icono="description" titulo="Detalle del tipo de estudio"/>
+            <CardTitulo icono="description" titulo="Estudios de laboratorio"/>
             <br/>
 
             <div className="contenedor animate-new-element">
@@ -102,7 +102,7 @@ const TiposEstudio = () => {
             <div className='contenedor' style={{paddingLeft : "10px"}}>
                 { (ReactSession.get('rol') === 'quimico' ) &&
                     <Link to = "/registrarTipoEstudio">
-                        <BtnEditRegis icono="note_add" texto="Registrar Tipo Estudio" posicion='right'/>
+                        <BtnEditRegis icono="note_add" texto="Crear estudio de laboratorio" posicion='right'/>
                     </Link>
                 }
             </div>
