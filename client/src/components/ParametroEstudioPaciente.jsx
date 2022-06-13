@@ -13,7 +13,7 @@ const ParametroEstudioPaciente = ({parametro, valor, unidad, referencia}) => {
 
             <br/><br/>
 
-            <div className="detalles-lista espacio-pequeno c-64646A">Referencia: {referencia} { referencia === true ? "Positivo" : "Negativo" } {unidad}</div>
+            <div className="detalles-lista espacio-pequeno c-64646A">Referencia: {referencia} {unidad}</div>
             
             <br/><br/><br/>
 
