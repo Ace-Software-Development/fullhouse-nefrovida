@@ -9993,3 +9993,10 @@ textarea {
 .icono-empleado {
   font-size: 3rem !important;
 }
+
+.pdfTd {
+  padding: 3px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+}
