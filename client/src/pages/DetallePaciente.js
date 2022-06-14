@@ -135,9 +135,6 @@ function DetallePaciente() {
                     <ConsultarResumenConsulta/>
                 </div>
             }
-            { ReactSession.get('rol') === 'admin' &&
-                <TiposEstudio/>
-            }
             <br/><br/>
             </Main>
         </div>

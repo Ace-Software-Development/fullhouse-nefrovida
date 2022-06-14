@@ -201,7 +201,7 @@ useEffect(() => {
             setIsLoading(true);
             M.toast({ html: responseJSON.message });
             setTimeout(() => {
-                window.history.back();
+                window.location.href = '/paciente/' + params.curp;
             }, 1000);
         }
 
