@@ -40,6 +40,11 @@ return(
                             PDF
                         </th>
                         }
+                        { ReactSession.get('rol') === 'quimico' &&
+                        <th className="center">
+                            PDF
+                        </th>
+                        }
                     </tr>
                     </thead>
                     { tableContent }
