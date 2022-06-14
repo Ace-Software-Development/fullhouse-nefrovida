@@ -13,7 +13,7 @@ import { ReactSession } from 'react-client-session';
 import BtnEditRegis from '../components/BtnEditRegis';
 import {Link} from 'react-router-dom'
 
-const TiposEstudio = () => {
+function TiposEstudio() {
     // Parametro
     const params = useParams();
     const curp = params.curp;
@@ -28,7 +28,7 @@ const TiposEstudio = () => {
         }
         return tiposEstudio.map(el => {
             return(
-                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ curp }/>
+                <CardEstudio nombreEstudio={ el.nombre } idTipoEstudio={ el.objectId } idPaciente={ curp } key = { el.objectId }/>
             )
         })
     }
@@ -54,7 +54,7 @@ const TiposEstudio = () => {
     }, []);
 
 
-    return(
+    return (
         <Card>
             <CardTitulo icono="description" titulo="Estudios de laboratorio"/>
             <br/>
