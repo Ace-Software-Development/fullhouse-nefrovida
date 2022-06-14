@@ -68,7 +68,6 @@ export default function RegistrarTipoEstudio() {
             setUrl('/tipoEstudio/registrar');
         }
         else if (responseOk){
-            setIsLoading(true);
             M.toast({ html: responseJSON.message});
             setTimeout(() => {
                 window.location.href = '/';
@@ -135,7 +134,7 @@ return(
                 <BtnRegresar/>
                 </Link>
                 <br/><br/>
-                { loading || isLoading && (
+                { loading && (
                     <div className="center">
                         <br/><br/><br/>
                         <div className="preloader-wrapper big active">
@@ -155,7 +154,7 @@ return(
 
                 ) }
                 {
-                    (!loading && !isLoading && !error) ?
+                    (!loading && !error) ?
                     <div className="on-load-anim">
                         <form
                         id = "registar-tipo-estudio"
