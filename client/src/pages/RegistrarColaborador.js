@@ -110,12 +110,12 @@ export default function RegistrarColaborador() {
                 message: "El usuario es requerido"
             },
             pattern: {
-                value: /^(?:[A-Z\d][A-Z\d_-]{2,15}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
+                value: /^(?:[A-Z\d][A-Z\d_-]{2,19}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
                 message: "Usuario inválido"
             },
             maxLength: {
-                value: 16,
-                message: "El usuario no puede tener más de 16 caracteres"
+                value: 20,
+                message: "El usuario no puede tener más de 20 caracteres"
             },
         });
 
@@ -128,7 +128,11 @@ export default function RegistrarColaborador() {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: "Nombre inválido"
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El nombre puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el apellido paterno, requerido, con patrón.
@@ -140,7 +144,11 @@ export default function RegistrarColaborador() {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: "Nombre inválido"
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellido paterno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el apellido materno, requerido, con patrón.
@@ -152,7 +160,11 @@ export default function RegistrarColaborador() {
             pattern: {
                 value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: "Nombre inválido"
-            }
+            },
+            maxLength: {
+                value: 40,
+                message: 'El apellido materno puede contener máximo 40 caracteres'
+            },
         });
 
         // Variable para el teléfono, no requerido y con longitud fija.
@@ -281,7 +293,7 @@ export default function RegistrarColaborador() {
                                         tamano = "m4 s12"
                                         onChange = {handleChange}
                                         elError = { errors.nombre && errors.nombre?.message }
-                                        maxLength = "20"
+                                        maxLength = "40"
                                         requerido = {true}
                                     />
                                     <Input
@@ -290,6 +302,7 @@ export default function RegistrarColaborador() {
                                         tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoPaterno && errors.apellidoPaterno?.message }
+                                        maxLength = "40"
                                         requerido = {true}
                                     />
                                     <Input
@@ -298,6 +311,7 @@ export default function RegistrarColaborador() {
                                         tamano = "m4 s12"
                                         onChange = { handleChange }
                                         elError = { errors.apellidoMaterno && errors.apellidoMaterno?.message }
+                                        maxLength = "40"
                                     />
                                 </LineaCampos>
                                 <LineaCampos>

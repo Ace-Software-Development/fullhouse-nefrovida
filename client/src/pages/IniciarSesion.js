@@ -52,9 +52,13 @@ const IniciarSesion = () => {
                 message: 'El usuario o correo es requerido'
             },
             pattern: {
-                value: /^(?:[A-Z\d][A-Z\d_-]{2,11}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
+                value: /^(?:[A-Z\d][A-Z\d_-]{2,69}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
                 message: 'Usuario o Correo inválido'
-            }
+            },
+            maxLength: {
+                value: 70,
+                message: 'El usuario no puede tener más de 70 caracteres'
+            },
         });
 
         // Variable para campo de contraseña, requerido.
@@ -62,6 +66,10 @@ const IniciarSesion = () => {
             required: {
                 value: true,
                 message: 'La contraseña es requerida'
+            },
+            maxLength: {
+                value: 100,
+                message: 'La contraseña no puede tener más de 100 caracteres.'
             },
         });
     }, []);
@@ -204,7 +212,7 @@ const IniciarSesion = () => {
                                             type="password"
                                             onChange = { handleChange }
                                             elError = { errors.password && errors.password?.message }
-                                            maxlength = "50"
+                                            maxLength = "50"
                                             requerido = { true }
                                         />
                                     </div>

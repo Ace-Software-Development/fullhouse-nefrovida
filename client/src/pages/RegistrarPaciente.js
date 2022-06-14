@@ -58,7 +58,7 @@ const RegistrarPaciente = () => {
                 message: 'El nombre es requerido'
             },
             pattern: {
-                value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
+                value: /^[a-zA-ZFoxWareÑñÁáÉéÍíÓóÚúÜü\s]+$/,
                 message: 'Nombre inválido'
             },
             maxLength: {
@@ -79,7 +79,7 @@ const RegistrarPaciente = () => {
             },
             maxLength: {
                 value: 40,
-                message: 'El apellidoPaterno puede contener máximo 40 caracteres'
+                message: 'El apellido paterno puede contener máximo 40 caracteres'
             },
         });
 
@@ -94,7 +94,7 @@ const RegistrarPaciente = () => {
             },
             maxLength: {
                 value: 40,
-                message: 'El apellidoMaterno puede contener máximo 40 caracteres'
+                message: 'El apellido materno puede contener máximo 40 caracteres'
             },
         });
 
@@ -256,7 +256,7 @@ const RegistrarPaciente = () => {
             return
         } else {
             setIsLoading(true);
-            M.toast({ html: message });
+            M.toast({ html: responseJSON.message });
             setTimeout(() => {
                 window.location.href = '/';
             }, 1000);
