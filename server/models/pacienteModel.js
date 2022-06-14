@@ -137,6 +137,7 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
+    queryObtenerEstudios.include("createdAt");
     queryObtenerEstudios.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
     queryObtenerEstudios.equalTo(CONSTANTS.ACTIVO, true);
     queryObtenerEstudios.containedIn(CONSTANTS.IDTIPOESTUDIO, idTiposEstudio);
@@ -178,26 +179,53 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
         const arrEstudios = [];
 
         jsonEstudios.map(el => {
-            // Por un tipo de estudio
-            if(nombre == el.idTipoEstudio.nombre) {
-                arrEstudios.push({
-                    objectIdEstudio: el.objectId,
-                    nombreTipoEstudio: el.idTipoEstudio.nombre,
-                    codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
-                    fechaEstudio: el.fecha
-                });
-            }
-            // Todos los tipos de estudio
-            else if(nombre == ' ') {
-                arrEstudios.push({
-                    objectIdEstudio: el.objectId,
-                    nombreTipoEstudio: el.idTipoEstudio.nombre,
-                    codigoTipoEstudio: el.idTipoEstudio.codigo,
-                    nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
-                    fechaEstudio: el.fecha
-                });
-            }
+
+            //Guarda el apellido materno si es que hay
+            if(el.idUsuario.apellidoMaterno){
+                // Por un tipo de estudio
+                if(nombre == el.idTipoEstudio.nombre) {
+                    arrEstudios.push({
+                        objectIdEstudio: el.objectId,
+                        nombreTipoEstudio: el.idTipoEstudio.nombre,
+                        codigoTipoEstudio: el.idTipoEstudio.codigo,
+                        nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno +  ' ' + el.idUsuario.apellidoMaterno,
+                        fechaEstudio: el.fecha
+                    });
+                }
+                // Todos los tipos de estudio
+                else if(nombre == ' ') {
+                    arrEstudios.push({
+                        objectIdEstudio: el.objectId,
+                        nombreTipoEstudio: el.idTipoEstudio.nombre,
+                        codigoTipoEstudio: el.idTipoEstudio.codigo,
+                        nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno + ' ' + el.idUsuario.apellidoMaterno,
+                        fechaEstudio: el.fecha
+                    });
+                }
+
+            //Ignora el apellido materno si es que no existe
+            } else {
+                // Por un tipo de estudio
+                if(nombre == el.idTipoEstudio.nombre) {
+                    arrEstudios.push({
+                        objectIdEstudio: el.objectId,
+                        nombreTipoEstudio: el.idTipoEstudio.nombre,
+                        codigoTipoEstudio: el.idTipoEstudio.codigo,
+                        nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno,
+                        fechaEstudio: el.fecha
+                    });
+                }
+                // Todos los tipos de estudio
+                else if(nombre == ' ') {
+                    arrEstudios.push({
+                        objectIdEstudio: el.objectId,
+                        nombreTipoEstudio: el.idTipoEstudio.nombre,
+                        codigoTipoEstudio: el.idTipoEstudio.codigo,
+                        nombreColaborador: el.idUsuario.nombre + ' ' + el.idUsuario.apellidoPaterno,
+                        fechaEstudio: el.fecha
+                    });
+                }
+            }            
         })
 
         return {
@@ -232,14 +260,15 @@ exports.obtenerConsultas = async(curp, ascendente) => {
     const queryObtenerConsultas = new Parse.Query(tablaNotaMedica);
     queryObtenerConsultas.include(CONSTANTS.IDNOTAMEDICA);
     queryObtenerConsultas.include("idUsuario.idRol");
+    queryObtenerConsultas.include("createdAt");
     queryObtenerConsultas.equalTo(CONSTANTS.IDPACIENTE, idPaciente);
 
     // Los datos se ordenan por fecha de manera ascendente o no
     if((ascendente == 'true') || (ascendente == ' ')) {
-        queryObtenerConsultas.ascending(CONSTANTS.FECHA);
+        queryObtenerConsultas.ascending("createdAt");
     }
     else {
-        queryObtenerConsultas.descending(CONSTANTS.FECHA);
+        queryObtenerConsultas.descending("createdAt");
     }
 
     try {

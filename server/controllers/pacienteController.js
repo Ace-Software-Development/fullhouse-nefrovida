@@ -50,9 +50,10 @@ module.exports.mostrarConsultas = async(request, response) => {
     // Se obtiene los parametros desde la query del front
     const queryJSON = JSON.parse(request.query.id);
     const curp = queryJSON.idPaciente;
+    const ascendente = queryJSON.ascendente;
     
     try {
-        const results = await pacienteModel.obtenerConsultas(curp);
+        const results = await pacienteModel.obtenerConsultas(curp, ascendente);
         if (results.error) {
             return response.status(400).send({
                 status: 'error',
