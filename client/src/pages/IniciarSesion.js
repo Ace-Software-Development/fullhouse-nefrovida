@@ -101,6 +101,7 @@ const IniciarSesion = () => {
             // Asignar a session rol, nombre y apellido de usuario autenticado
             ReactSession.set('sessionToken', responseJSON.sessionToken);
             ReactSession.set('rol', responseJSON.rol);
+            ReactSession.set('usuario', responseJSON.usuario);
             ReactSession.set('apiRoute',apiRoute)
             window.location.href = '/';
             M.toast({ html: message });
