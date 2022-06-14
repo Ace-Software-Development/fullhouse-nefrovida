@@ -16,7 +16,7 @@ router.post('/id/borrar',
 
 // Ruta de tipo 'GET' para obtener el detalle de estudio.
 router.get('/id',
-    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLQUIMICO]),
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLQUIMICO, CONSTANTS.ROLADMIN]),
     estudioController.consultarEstudioPaciente);
 
 module.exports = router;

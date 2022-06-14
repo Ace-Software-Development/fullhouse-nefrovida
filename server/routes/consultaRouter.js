@@ -11,7 +11,7 @@ router.post('/registrar',
 
     // Ruta de tipo 'GET' para obtener el detalle de estudio.
 router.get('/detalle/notas',
-    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO]),
+    authRol([CONSTANTS.ROLDOCTOR, CONSTANTS.ROLNUTRIOLOGO, CONSTANTS.ROLPSICOLOGO,CONSTANTS.ROLADMIN]),
     consultaController.consultarDetalleConsulta);
 
 module.exports = router

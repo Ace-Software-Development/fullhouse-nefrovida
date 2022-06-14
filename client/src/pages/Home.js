@@ -19,6 +19,7 @@ function Home() {
                 <div>
                     <ConsultarColaborador/>
                     <TiposEstudio/>
+                    <ConsultarPacientes/>
                 </div>
                 
             }

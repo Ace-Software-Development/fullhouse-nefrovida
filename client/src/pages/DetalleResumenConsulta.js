@@ -31,7 +31,8 @@ export default function DetalleResumenConsulta() {
         // Se deja solo el acceso a los roles permitidos
         if (ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol')!== 'nutriologo'
-        && ReactSession.get('rol') !== 'psicologo') {
+        && ReactSession.get('rol') !== 'psicologo'
+        && ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
         httpConfig(params.idResumen, 'GET');

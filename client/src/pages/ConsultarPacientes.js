@@ -58,7 +58,8 @@ function ConsultarPacientes() {
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
-        && ReactSession.get('rol') !== 'psicologo') {
+        && ReactSession.get('rol') !== 'psicologo'
+        && ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
         getPacientes(params.idPacientes);

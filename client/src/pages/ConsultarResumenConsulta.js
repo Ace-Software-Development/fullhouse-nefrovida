@@ -47,7 +47,8 @@ export default function ConsultarResumenConsulta() {
             // Se deja solo el acceso a los roles permitidos
             if (ReactSession.get('rol') !== 'doctor'
             && ReactSession.get('rol')!== 'nutriologo'
-            && ReactSession.get('rol') !== 'psicologo') {
+            && ReactSession.get('rol') !== 'psicologo'
+            && ReactSession.get('rol')!== 'admin') {
                 window.location.href = '/403';
             }
             getConsultas();
@@ -63,11 +64,15 @@ export default function ConsultarResumenConsulta() {
             <Card>
                 <CardTitulo icono="description" titulo="Resumen de consultas"/>
                 <ContainerForm>
-                <Link to = {"/registrarConsulta/" + params.curp}>
+                    {
+                    ReactSession.get('rol')!== 'admin' &&
+                    <Link to = {"/registrarConsulta/" + params.curp}>
                         <BtnEditRegis icono="person_add" texto="Registrar nueva nota" posicion = "left"/>
-                </Link>
+                    </Link>
+                    }
+                
                 </ContainerForm>
-                <CardSubtitulo subtitulo = {"Notas del " + currentRole} grande = {true}/> 
+                <CardSubtitulo subtitulo = {"Notas del "+ (currentRole === 'admin' ? 'doctor' : currentRole)} grande = {true}/> 
                 { loading ?  (
                     <div className="center animate-new-element">
                         <br/>
@@ -90,7 +95,7 @@ export default function ConsultarResumenConsulta() {
                         <br/>
                     </div>
                 )    
-                : <div className="animate-new-element"> <TablaConsultas datos = { consultas } idPaciente = {id} rol = {currentRole} /> </div>}
+                : <div className="animate-new-element"> <TablaConsultas datos = { consultas } idPaciente = {id} rol = {currentRole === 'admin' ? 'doctor' : currentRole} /> </div>}
                 { error 
                     && <div> <div className="red-text center"> <strong> { error } </strong> </div> <br/><br/> </div>
                 }
@@ -98,7 +103,7 @@ export default function ConsultarResumenConsulta() {
                 <div className="row-cards-estudios">
 
 
-                {  currentRole === 'doctor' ?
+                {  (currentRole === 'doctor' || currentRole === 'admin') ?
                     <div className="row-cards-estudios">
                     <CardConsulta nombre="Notas de Nutriólogo" onClick={() => setCurrentRole("nutriologo")}/>
                     <CardConsulta nombre="Notas de Psicólogo" onClick={() => setCurrentRole("psicologo")}/>

@@ -59,7 +59,8 @@ export default function ConsultarEstudioPaciente() {
     useEffect(() => {
         //Asegurarnos que solo  administradores y quimicos accedan exitosamente a la pagina.
         if (ReactSession.get('rol') !== 'doctor' && 
-            ReactSession.get('rol') !== 'quimico' && 
+            ReactSession.get('rol') !== 'quimico' &&
+            ReactSession.get('rol') !== 'admin' && 
             ReactSession.get('rol') !== 'nutriologo') {
             window.location.href = '/403';
         }

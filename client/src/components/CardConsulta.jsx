@@ -11,7 +11,7 @@ const CardConsulta = ({ nombre="undefined", ...rest }) => {
                 <br/>
                 <div className="card-mini-flex">
                     
-                    { (ReactSession.get('rol') === 'doctor' || ReactSession.get('rol') === 'nutriologo' || ReactSession.get('rol') === 'psicologo') &&
+                    { (ReactSession.get('rol') === 'doctor' || ReactSession.get('rol') === 'nutriologo' || ReactSession.get('rol') === 'psicologo' || ReactSession.get('rol') === 'admin') &&
                         <a className="btn-nota-paciente" {...rest}>
                             <i className="material-icons estudio-button icon-separator c-2E7EC8">description</i>
                         </a>

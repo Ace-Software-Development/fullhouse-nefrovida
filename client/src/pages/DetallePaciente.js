@@ -46,7 +46,8 @@ function DetallePaciente() {
         && ReactSession.get('rol') !== 'quimico'
         && ReactSession.get('rol') !== 'doctor'
         && ReactSession.get('rol') !== 'nutriologo'
-        && ReactSession.get('rol') !== 'psicologo') {
+        && ReactSession.get('rol') !== 'psicologo'
+        && ReactSession.get('rol') !== 'admin') {
             window.location.href = '/403';
         }
         getPaciente();
@@ -132,6 +133,12 @@ function DetallePaciente() {
             }
             { ReactSession.get('rol') === 'psicologo' &&
                 <div>
+                    <ConsultarResumenConsulta/>
+                </div>
+            }
+            { ReactSession.get('rol') === 'admin' &&
+                <div>
+                    <EstudiosLaboratorio/>
                     <ConsultarResumenConsulta/>
                 </div>
             }

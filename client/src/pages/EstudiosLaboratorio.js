@@ -56,7 +56,8 @@ export default function EstudiosLaboratorio() {
             // Se deja solo el acceso a los roles permitidos
             if (ReactSession.get('rol') !== 'doctor' 
             && ReactSession.get('rol') !== 'quimico' 
-            && ReactSession.get('rol')!== 'nutriologo' ) {
+            && ReactSession.get('rol')!== 'nutriologo'
+            && ReactSession.get('rol')!== 'admin' ) {
                 window.location.href = '/403';
             }
 
