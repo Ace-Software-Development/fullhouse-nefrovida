@@ -24,17 +24,7 @@ const Navbar = ({children}) => {
           <ul className="right"  >            
             <CerrarSesion/>
           </ul>
-          
-          <ul className="header-flex right c-908F98 hide-usuario">
-            <i class="medium material-icons icon-separator icono-empleado">account_circle</i> 
-            <div>{ ReactSession.get('nombre') + " " + ReactSession.get('apellido') } &nbsp;&nbsp;&nbsp;&nbsp;</div>
-          </ul>
-
-          <ul className="header-flex left c-908F98 show-usuario hide-usuario-new">
-            &nbsp;&nbsp;&nbsp;&nbsp; <i class="medium material-icons icon-separator icono-empleado">account_circle</i> 
-            <div>{ ReactSession.get('nombre') + " " + ReactSession.get('apellido') } </div>
-          </ul>
-          
+    
         </div>
       </nav>
     </div>

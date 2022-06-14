@@ -207,10 +207,7 @@ const useFetch = (url) => {
             if (response.status === 401) {
                 // Destruye los datos de la sesión.
                 ReactSession.remove('rol');
-                ReactSession.remove('nombre');
-                ReactSession.remove('apellido');
                 ReactSession.remove('sessionToken');
-                ReactSession.remove('usuario');
                 ReactSession.remove('apiRoute');
                 
                 window.location.href = "/iniciarSesion";
