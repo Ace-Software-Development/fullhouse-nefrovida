@@ -60,6 +60,15 @@ const FilaTablaEstudios = ({ estudio, idPaciente }) => {
                     </Link>
                 </td>
                 }
+                { ReactSession.get('rol') === 'quimico' &&
+                <td className="center">
+                    <Link to = { routePDF }>
+                        <i className="material-icons">
+                            insert_drive_file
+                        </i>
+                    </Link>
+                </td>
+                }
             </tr>
         </tbody>
     )
