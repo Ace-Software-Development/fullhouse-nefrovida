@@ -263,8 +263,6 @@ exports.obtenerEstudioPaciente = async(idEstudio) => {
                 parametros: arrParametros,
                 observacionesEstudio: jsonEstudio.observaciones
             };
-
-            console.log(estudioPaciente);
             return {
                 estudio: estudioPaciente,
                 error: null

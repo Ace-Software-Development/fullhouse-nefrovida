@@ -81,8 +81,6 @@ export default function GenerarEstudioPDF() {
         }
     }
 
-    console.log(error)
-
     return(
         estoCargo() ?
         (
