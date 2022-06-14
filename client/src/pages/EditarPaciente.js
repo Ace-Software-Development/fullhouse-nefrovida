@@ -32,6 +32,7 @@ const EditarPaciente = () => {
     const [paciente, setPaciente] = useState([])
     const params = useParams();
     const id = params.curp;
+    const [isLoading, setIsLoading] = useState(false);
     const [url, setUrl] = useState('/paciente/detalle/curp');
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
@@ -264,7 +265,7 @@ const EditarPaciente = () => {
             setUrl('/paciente/editar');
         }
         else if(url === '/paciente/editar'){
-
+            setIsLoading(true);
             M.toast({ html: responseJSON.message});
             setTimeout(() => {
                 window.location.href = '/paciente/' + id;

@@ -21,6 +21,7 @@ export default function RegistrarTipoEstudio() {
 
     const [url, setUrl] = useState('/parametro/todos');
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const [isLoading, setIsLoading] = useState(false);
     const [parametros, setParametros] = useState([]);
     const { httpConfig, loading, responseJSON, error, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
@@ -69,6 +70,7 @@ export default function RegistrarTipoEstudio() {
             setUrl('/tipoEstudio/registrar');
         }
         else if (responseOk){
+            setIsLoading(true);
             M.toast({ html: responseJSON.message});
             setTimeout(() => {
                 window.location.href = '/';
@@ -135,7 +137,7 @@ return(
                 <BtnRegresar/>
                 </Link>
                 <br/><br/>
-                {loading && (
+                { loading || isLoading && (
                     <div className="center">
                         <br/><br/><br/>
                         <div className="preloader-wrapper big active">
@@ -155,7 +157,7 @@ return(
 
                 ) }
                 {
-                    (!loading && !error) ?
+                    (!loading && !isLoading && !error) ?
                     <div className="on-load-anim">
                         <form
                         id = "registar-tipo-estudio"

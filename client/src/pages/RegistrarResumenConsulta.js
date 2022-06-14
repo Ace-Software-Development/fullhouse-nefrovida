@@ -94,8 +94,8 @@ export default function RegistrarResumenConsulta() {
         if (!responseJSON || !responseOk) {
             return
         } else {
-            M.toast({ html: message });
             setIsLoading(true);
+            M.toast({ html: responseJSON.message });
             setTimeout(() => {
                 window.location.href = '/paciente/' + params.curp;
             }, 1000);
@@ -124,7 +124,7 @@ return(
                     <BtnRegresar regresarOverride = {true}/>
                 </Link>
                 <div className='light-pequeno c-908F98 right-align'>  { fecha } </div><br/><br/>
-                { loading && !isLoading && (
+                { loading || isLoading && (
                     <div className="center animate-new-element">
                         <br/>
 

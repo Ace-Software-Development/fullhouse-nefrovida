@@ -243,8 +243,7 @@ export default function RegistrarNuevoParametro() {
                     <BtnRegresar/>
                     <br/><br/>
                     </Link>
-                    { 
-                        loading || isLoading && 
+                    { loading || isLoading && 
                         <div className="center">
                             <br/><br/><br/>
                             <div class="preloader-wrapper big active">
