@@ -26,22 +26,24 @@ import ContainerForm from '../components/ContainerForm';
 function ConsultarPacientes() {
     const urlGetTodos = '/paciente/todos';
     const urlGetBuscar = '/paciente/nombre';
-    const [url, setUrl] = useState(urlGetTodos);
     const params = useParams();
     const [pacientes, setPacientes] = useState([]);
+    const [busqueda, setBusqueda] = useState({
+        url: urlGetTodos,
+        searchValue: ''
+    });
 
-    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + busqueda.url);
 
 
 
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return
-        } else {
-            if (url === urlGetTodos) {
+        } else { 
+            if (busqueda.url === urlGetTodos) {
                 setPacientes(responseJSON.data.data);
-                setUrl(urlGetBuscar);
-            } else if (url === urlGetBuscar) {
+            } else if (busqueda.url === urlGetBuscar) {
                 setPacientes(responseJSON.data.data);
             }
         }
@@ -72,12 +74,16 @@ function ConsultarPacientes() {
      */
 
     async function getPacientes(buscar) {
-        if ( url === urlGetTodos ) {
+        if ( busqueda.url === urlGetTodos ) {
             httpConfig(null, 'GET');
-        } else if (url === urlGetBuscar) {
+        } else if (busqueda.url === urlGetBuscar) {
             httpConfig(buscar, 'GET');
         }
     }
+    useEffect(() => {
+        getPacientes(busqueda.searchValue);
+    }, [busqueda])
+
 
 
     /**
@@ -86,10 +92,20 @@ function ConsultarPacientes() {
      * @param {event} e Evento del cambio
      */
     function handleChange(e) {
-        if (e.target.value){
-            setUrl(urlGetTodos)
+        let busqueda
+        if (e.target.value.length === 0){
+            busqueda = {
+                url: urlGetTodos,
+                searchValue: e.target.value
+            }
         }
-        getPacientes(e.target.value);
+        else {
+            busqueda = {
+                url: urlGetBuscar,
+                searchValue: e.target.value
+            }
+        }
+        setBusqueda(busqueda)
     }
 
 
