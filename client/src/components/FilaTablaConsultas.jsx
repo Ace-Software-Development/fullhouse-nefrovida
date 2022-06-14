@@ -17,6 +17,12 @@ const FilaTablaConsultas = ({ consulta, idPaciente }) => {
                         { consulta.notas }
                     </a>
                 </td>
+
+                <td  >
+                    <a href = { route }>
+                        { consulta.nombreColaborador }
+                    </a>
+                </td>
                 
                 <td className="center">
                     <Link to = { route }>

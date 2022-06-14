@@ -21,6 +21,9 @@ return(
                         <th  >
                             Nota
                         </th>
+                        <th  >
+                            Médico/a
+                        </th>
                         <th className="center">
                             Detalle
                         </th>
