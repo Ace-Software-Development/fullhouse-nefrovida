@@ -9380,7 +9380,6 @@ thead {
 
 .tabla-padding {
   padding-left: 15px;
-  width: 40%;
 }
 
 .icon-separator {
@@ -9999,4 +9998,19 @@ textarea {
   display: table-cell;
   text-align: left;
   vertical-align: middle;
+}
+
+.limitador-texto {
+  overflow: hidden !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.ancho-nota {
+  width: 55%;
+}
+
+.tabla-padding-dos {
+  padding-left: 15px;
 }

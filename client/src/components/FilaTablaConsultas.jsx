@@ -4,35 +4,33 @@ const FilaTablaConsultas = ({ consulta, idPaciente }) => {
     const route = "/consulta/" + idPaciente + "/resumen/" + consulta.objectId
 
     return(
-        <tbody>
-            <tr  >
-                <td className="tabla-padding">
-                    <a href = { route }  >
-                        { consulta.fecha }
-                    </a>
-                </td>
-                
-                <td  >
-                    <a href = { route }>
-                        { consulta.notas }
-                    </a>
-                </td>
+        <tr>
+            <td className="tabla-padding-dos">
+                <a href = { route }  >
+                    { consulta.fecha }
+                </a>
+            </td>
+            
+            <td  >
+                <a className="limitador-texto" href = { route }>
+                    { consulta.notas }
+                </a>
+            </td>
 
-                <td  >
-                    <a href = { route }>
-                        { consulta.nombreColaborador }
-                    </a>
-                </td>
-                
-                <td className="center">
-                    <Link to = { route }>
-                        <i className="material-icons">
-                        insert_drive_file
-                        </i>
-                    </Link>
-                </td>
-            </tr>
-        </tbody>
+            <td  >
+                <a href = { route }>
+                    { consulta.idUsuario.nombre + " " + consulta.idUsuario.apellidoPaterno} 
+                </a>
+            </td>
+            
+            <td className="center">
+                <Link to = { route }>
+                    <i className="material-icons">
+                    insert_drive_file
+                    </i>
+                </Link>
+            </td>
+        </tr>
     )
 }
 

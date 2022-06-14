@@ -12,13 +12,13 @@ return(
     <div className="animate-new-element">
         <div>
             <div className="card contenedor tabla-altura">
-                <table id="estudios" className="highlight">     
+                <table id="consultas" className="highlight">     
                     <thead  >
                     <tr className="figma"  >
-                        <th className="tabla-padding">
+                        <th className="tabla-padding-dos">
                             Fecha
                         </th>
-                        <th  >
+                        <th className="ancho-nota" >
                             Nota
                         </th>
                         <th  >
@@ -29,7 +29,9 @@ return(
                         </th>
                     </tr>
                     </thead>
-                    { tableContent }
+                    <tbody>
+                        { tableContent }
+                    </tbody>
                 </table>
                 {(tableContent.length === 0 )&&
                     <div> <div className="blue-text text-darken-3 center"> <br/><strong> No hay consultas registradas </strong> </div> <br/><br/> </div>
