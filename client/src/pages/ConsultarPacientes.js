@@ -36,7 +36,6 @@ function ConsultarPacientes() {
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + busqueda.url);
 
 
-
     useEffect(() => {
         if (!responseJSON || !responseOk) {
             return

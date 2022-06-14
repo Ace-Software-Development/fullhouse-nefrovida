@@ -18,7 +18,6 @@ import LineaCampos from '../components/LineaCampos';
 import CardTitulo from '../components/CardTitulo';
 import Navbar from '../components/Navbar';
 import BtnRegresar from '../components/BtnRegresar';
-import BtnEditRegis from '../components/BtnEditRegis';
 import BtnEliminar from '../components/BtnEliminar';
 import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 import { useParams } from 'react-router-dom';

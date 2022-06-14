@@ -20,7 +20,6 @@ import CardTitulo from '../components/CardTitulo';
 import LineaCampos from '../components/LineaCampos';
 import ContainerForm from '../components/ContainerForm'
 import Input from '../components/Input'
-import Datepicker from '../components/Datepicker';
 import Select from '../components/Select'
 import BtnRegresar from '../components/BtnRegresar';
 import BtnGuardar from '../components/BtnGuardar';
@@ -34,6 +33,7 @@ export default function RegistrarColaborador() {
     const [url, setUrl] = useState('/colaborador');
     const [isLoading, setIsLoading] = useState(false);
     const [roles, setRoles] = useState([]);
+    
     const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 

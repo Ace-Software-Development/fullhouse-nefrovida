@@ -8,33 +8,24 @@
 import { useParams } from 'react-router';
 import { ReactSession } from 'react-client-session';
 import { useEffect, useState } from 'react';
-import Main from '../components/Main';
 import Card from '../components/Card';
 import CardTitulo from '../components/CardTitulo';
 import CardSubtitulo from '../components/CardSubtitulo';
-import Navbar from '../components/Navbar';
-import BtnRegresar from '../components/BtnRegresar';
-import BtnEditRegis from '../components/BtnEditRegis';
-import BtnEliminar from '../components/BtnEliminar';
-import ParametroEstudioPaciente from '../components/ParametroEstudioPaciente';
 import TablaEstudios from '../components/TablaEstudios';
-import InputSearch from '../components/InputSearch';
 import SelectEstudios from '../components/SelectEstudios';
 import useFetch from '../hooks/useFetch';
 
 
 export default function EstudiosLaboratorio() {
-
-        // Parametro
         const params = useParams();
         const id = params.curp;
-        
         const [estudios, setEstudios] = useState([])
         const [tiposEstudio, setTiposEstudio] = useState([{}])
         const [currentEstudio, setCurrentEstudio] = useState('%20');
         const [ascendente, setAscendente] = useState('%20');
 
         const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/estudios');
+        
         
         // Funcion que obtiene el estudio correspondiente al id.
         async function getEstudios(id, nombreTipoEstudio = '%20', ascendente = '%20') {
