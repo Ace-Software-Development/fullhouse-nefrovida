@@ -28,7 +28,7 @@ return(
                     </thead>
                     { tableContent }
                 </table>
-                {(tableContent.length === 0 || !tableContent[0]) &&
+                {(tableContent.length === 0 )&&
                     <div> <div className="blue-text text-darken-3 center"> <br/><strong> No hay consultas registradas </strong> </div> <br/><br/> </div>
                 }
             </div>

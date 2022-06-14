@@ -32,18 +32,18 @@ import { useParams } from 'react-router-dom';
 
 
 export default function RegistrarEstudio() {
-const urlGet = '/tipoEstudio/id';
-const urlPost = '/estudio';
-const [url, setUrl] = useState(urlGet);
-const [isLoading, setIsLoading] = useState(false);
-const [tipoEstudio, setTipoEstudio] = useState({});
-const [parametros, setParametros] = useState([]);
-const params = useParams();
-const curp = params.curp;
-const idTipoEstudio = params.idTipoEstudio;
+    const urlGet = '/tipoEstudio/id';
+    const urlPost = '/estudio';
+    const [url, setUrl] = useState(urlGet);
+    const [isLoading, setIsLoading] = useState(false);
+    const [tipoEstudio, setTipoEstudio] = useState({});
+    const [parametros, setParametros] = useState([]);
+    const params = useParams();
+    const curp = params.curp;
+    const idTipoEstudio = params.idTipoEstudio;
 
-const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
-const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
+    const {register, formState: {errors}, handleSubmit, setValue, getValues} = useForm();
+    const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 
 /**
  * Función para realizar las validaciones necesarias para cada uno de los parámetros del estudio.

@@ -24,7 +24,6 @@ import LineaCampos from '../components/LineaCampos';
 import Input from '../components/Input';
 import BtnIniciarSesion from '../components/BtnIniciarSesion';
 import logo from '../img/logo.png';
-import BtnRestablecer from '../components/BtnRestablecer';
 import { useForm } from 'react-hook-form';
 import { ReactSession } from 'react-client-session';
 import useFetch from '../hooks/useFetch';
@@ -32,8 +31,6 @@ import useFetch from '../hooks/useFetch';
 const IniciarSesion = () => { 
     //Variable que debe tener un valor de '' cuando pasa a despliege y de http://localhost:6535 en desarollo
     const apiRoute = '';
-    
-    
     const [errorSubmit, setErrorSubmit] = useState('');
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
 

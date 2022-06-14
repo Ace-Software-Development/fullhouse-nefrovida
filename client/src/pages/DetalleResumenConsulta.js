@@ -20,7 +20,6 @@ import { ReactSession } from 'react-client-session';
 import ContenidoDetalleConsul from '../components/ContenidoDetalleConsul';
 
 export default function DetalleResumenConsulta() {
-
     const params = useParams();
     const [consulta, setConsulta] = useState({});
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/consulta/detalle/notas');

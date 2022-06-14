@@ -9982,6 +9982,7 @@ textarea {
   background-color: white;
   font-size: 18px;
   height: 140px;
+  padding: 0.5rem;
 }
 
 .btn-nota-paciente {

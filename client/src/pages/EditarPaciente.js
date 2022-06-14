@@ -34,6 +34,7 @@ const EditarPaciente = () => {
     const id = params.curp;
     const [isLoading, setIsLoading] = useState(false);
     const [url, setUrl] = useState('/paciente/detalle/curp');
+    
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + url);
 

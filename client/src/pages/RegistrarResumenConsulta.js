@@ -16,10 +16,10 @@ import { useParams } from 'react-router-dom';
 import InputTextArea from '../components/InputTextArea';
 
 export default function RegistrarResumenConsulta() {
-
     const params = useParams();
     const curp = params.curp;
     const [isLoading, setIsLoading] = useState(false);
+
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/consulta/registrar');
 

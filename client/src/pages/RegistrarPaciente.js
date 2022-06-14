@@ -31,6 +31,7 @@ import { ReactSession } from 'react-client-session';
 
 const RegistrarPaciente = () => {
     const [isLoading, setIsLoading] = useState(false);
+    
     const { register, formState: { errors }, handleSubmit, setValue, getValues } = useForm();
     const { httpConfig, loading, responseJSON, error, message, responseOk } = useFetch(ReactSession.get("apiRoute") + '/paciente/registrar');
 
