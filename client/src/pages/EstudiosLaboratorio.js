@@ -44,9 +44,8 @@ export default function EstudiosLaboratorio() {
                 return;
             }
             else {
-                const misDatos = responseJSON;
-                setEstudios(misDatos.estudios);
-                setTiposEstudio(misDatos.tiposEstudio);
+                setEstudios(responseJSON.estudios);
+                setTiposEstudio(responseJSON.tiposEstudio);
             }
         }, [responseOk])
 
