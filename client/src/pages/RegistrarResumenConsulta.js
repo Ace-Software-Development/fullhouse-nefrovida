@@ -44,8 +44,8 @@ export default function RegistrarResumenConsulta() {
                 message: 'La consulta no puede estar vacía.'
             },
             maxLength: {
-                value: 1000,
-                message: 'La consulta no puede tener más de 1000 caracteres.'
+                value: 15500,
+                message: 'La consulta no puede tener más de 15500 caracteres.'
             }
         });
     }, []);
@@ -158,7 +158,7 @@ return(
                                     id="consulta" 
                                     label="Escribe las notas de la consulta aquí" 
                                     type="text"
-                                    maxLength="500"
+                                    maxLength="15500"
                                     tamano="m12 s12"
                                     onChange = { handleChange }
                                     elError = { errors.consulta && errors.consulta?.message }
