@@ -83,9 +83,9 @@ app.use('/parametro', authUsuario, require('./routes/parametroRouter'));
 
 // Comentar lo siguiente si está en desarrollo:
 app.get("*", (req, res) => {
-     res.sendFile(
-         path.join(__dirname, "../client/build/index.html")
-     );
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html")
+    );
 });
 // Hasta aqui
 
