@@ -26,7 +26,7 @@ router.get('/detalle/username',
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.consutarDetalleColaborador);
 
-// Ruta de tipo 'GET' para consultar la información del colaborador por username.
+// Ruta de tipo 'POST' para eliminar la información del colaborador.
 router.post('/detalle/username/borrar',
     authRol([CONSTANTS.ROLADMIN]),
     colaboradorController.borrarColaborador);
