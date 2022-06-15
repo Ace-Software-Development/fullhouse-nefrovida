@@ -48,6 +48,10 @@ export default function RegistrarNuevoParametro() {
             required: {
                 value: true,
                 message: 'El nombre es requerido'
+            },
+            pattern: {
+                value: /[a-zA-Z0-9ÑñÁáÉéÍíÓóÚúÜü]+$/,
+                message: "Nombre inválido"
             }
         });
 
@@ -63,6 +67,10 @@ export default function RegistrarNuevoParametro() {
         register('unidad', {
             required: {
                 value: false
+            },
+            pattern: {
+                value: /\S/,
+                message: "Unidad inválida"
             }
         });
 
@@ -70,6 +78,10 @@ export default function RegistrarNuevoParametro() {
         register('codigo', {
             required: {
                 value: false
+            },
+            pattern: {
+                value: /\S/,
+                message: "Código inválido"
             }
         });
     }

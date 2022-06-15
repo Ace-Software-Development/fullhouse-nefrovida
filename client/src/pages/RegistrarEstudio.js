@@ -56,6 +56,10 @@ function validation() {
                 value: true,
                 message: "El valor de " + el.idParametro.nombre + " es requerido"
             },
+            pattern: {
+                value: /\S/,
+                message: el.idParametro.nombre + " inválido"
+            }
         });
     })
 

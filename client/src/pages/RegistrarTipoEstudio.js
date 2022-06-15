@@ -33,9 +33,9 @@ export default function RegistrarTipoEstudio() {
                 message: "El nombre es requerido"
             },
             pattern: {
-                value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
+                value: /[a-zA-Z0-9ÑñÁáÉéÍíÓóÚúÜü]+$/,
                 message: "Nombre inválido"
-            }
+            },
         });
         // Variable para el descripcion, requerido, con patrón.
         register('descripcion', {
@@ -44,7 +44,7 @@ export default function RegistrarTipoEstudio() {
                 message: "La descripción es requerida"
             },
             pattern: {
-                value: /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/,
+                value: /[a-zA-Z0-9ÑñÁáÉéÍíÓóÚúÜü]+$/,
                 message: "Descripcion inválida"
             }
         });
