@@ -12,6 +12,7 @@ const Parametro = Parse.Object.extend(CONSTANTS.PARAMETRO);
 exports.consultarParametros = async () => {
     const table = Parse.Object.extend(CONSTANTS.PARAMETRO);
     let query = new Parse.Query(table);
+    query.limit(999999);
 
     try {
         const results = await query.find();
@@ -55,6 +56,7 @@ function resultsTipoValor(data, error) {
  */
 exports.consultarTiposDeValor = async() => {
     let query = new Parse.Query(TipoValor);
+    query.limit(999999);
 
     try {
         //Obtener todos los tipos de datos.

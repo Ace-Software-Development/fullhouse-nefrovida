@@ -217,6 +217,7 @@ function obtenerValorReferenciaParametro(json) {
 exports.obtenerEstudioPaciente = async(idEstudio) => {
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudio = new Parse.Query(tablaEstudio);
+    queryObtenerEstudio.limit(999999);
     queryObtenerEstudio.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudio.include(CONSTANTS.IDPACIENTE);
     try {

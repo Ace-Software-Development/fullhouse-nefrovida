@@ -94,6 +94,7 @@ exports.buscarPorCurp = async (curp) => {
     
     const Table = Parse.Object.extend(CONSTANTS.PACIENTE);
     let query = new Parse.Query(Table);
+    query.limit(999999);
     query.equalTo(CONSTANTS.CURP, curp);
 
     try {
@@ -124,17 +125,20 @@ exports.buscarPorCurp = async (curp) => {
 exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
     //Buscar paciente
     const queryObtenerIdPaciente = new Parse.Query(Paciente);
+    queryObtenerIdPaciente.limit(999999);
     queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
     const idPaciente = await queryObtenerIdPaciente.first();
 
     //Buscar tipos de estudio activos
     const tablaTipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
     const queryObtenerIdTiposEstudio = new Parse.Query(tablaTipoEstudio);
+    queryObtenerIdTiposEstudio.limit(999999);
     queryObtenerIdTiposEstudio.equalTo(CONSTANTS.ACTIVO, true);
     const idTiposEstudio = await queryObtenerIdTiposEstudio.find();
 
     const tablaEstudio = Parse.Object.extend(CONSTANTS.ESTUDIO);
     const queryObtenerEstudios = new Parse.Query(tablaEstudio);
+    queryObtenerEstudios.limit(999999);
     queryObtenerEstudios.include(CONSTANTS.IDTIPOESTUDIO);
     queryObtenerEstudios.include(CONSTANTS.IDUSUARIO);
     queryObtenerEstudios.include("createdAt");
@@ -253,11 +257,13 @@ exports.obtenerEstudiosPaciente = async(curp, nombre, ascendente) => {
 exports.obtenerConsultas = async(curp, ascendente) => {
     //Buscar paciente
     const queryObtenerIdPaciente = new Parse.Query(Paciente);
+    queryObtenerIdPaciente.limit(999999);
     queryObtenerIdPaciente.equalTo(CONSTANTS.CURP, curp);
     const idPaciente = await queryObtenerIdPaciente.first();
 
     const tablaNotaMedica = Parse.Object.extend(CONSTANTS.NOTAMEDICA);
     const queryObtenerConsultas = new Parse.Query(tablaNotaMedica);
+    queryObtenerConsultas.limit(999999);
     queryObtenerConsultas.include(CONSTANTS.IDNOTAMEDICA);
     queryObtenerConsultas.include("idUsuario.idRol");
     queryObtenerConsultas.include("createdAt");
@@ -300,6 +306,7 @@ exports.obtenerConsultas = async(curp, ascendente) => {
 exports.consultarPacientes = async () => {
     const table = Parse.Object.extend(CONSTANTS.PACIENTE);
     let query = new Parse.Query(table);
+    query.limit(999999);
     
     try {
         const results = await query.find();
@@ -336,6 +343,7 @@ exports.buscarPorNombre = async(nombre) => {
 
     const table = Parse.Object.extend(CONSTANTS.PACIENTE);
     let query = new Parse.Query(table);
+    query.limit(999999);
 
     try {
         const pacientes = await query.find();

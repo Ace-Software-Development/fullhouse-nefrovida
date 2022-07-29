@@ -29,6 +29,7 @@ const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
    exports.consultarParametrosDeEstudio = async(idTipoEstudio) => {
       const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
       let query = new Parse.Query(table);
+      query.limit(999999);
 
 
       try {
@@ -81,6 +82,7 @@ const TipoEstudio = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
 exports.consultarTiposDeEstudio = async() => {
    const table = Parse.Object.extend(CONSTANTS.TIPOESTUDIO);
    const query = new Parse.Query(table);
+   query.limit(999999);
    query.equalTo(CONSTANTS.ACTIVO, true);
 
    try {
@@ -154,6 +156,7 @@ exports.registrarTipoEstudio = async(data) => {
  */
 exports.borrarTipoEstudio = async(data) => {
    const query = new Parse.Query(CONSTANTS.TIPOESTUDIO);
+   query.limit(999999);
    query.equalTo(CONSTANTS.OBJECTID, data.idTipoEstudio);
    const result = await query.first();
    result.set(CONSTANTS.ACTIVO, false);

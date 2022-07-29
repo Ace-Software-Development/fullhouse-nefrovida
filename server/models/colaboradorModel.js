@@ -9,6 +9,7 @@ const seguridad = require('../util/seguridad');
  */
 exports.obtenerTodos = async() => {
     var queryObtenerTodos = new Parse.Query(Parse.User);
+    queryObtenerTodos.limit(999999);
     queryObtenerTodos.include(CONSTANTS.IDROL);
     queryObtenerTodos.select(CONSTANTS.NOMBRE, CONSTANTS.APELLIDOPATERNO /
         CONSTANTS.APELLIDOMATERNO, CONSTANTS.FECHANACIMIENTO, CONSTANTS.SEXO,
@@ -35,6 +36,7 @@ exports.obtenerTodos = async() => {
  */
 exports.obtenerColaborador = async(id) => {
     const queryColab = new Parse.Query(Parse.User);
+    queryColab.limit(999999);
     queryColab.equalTo(CONSTANTS.OBJECTID, id);
 
     try {
@@ -58,6 +60,7 @@ exports.obtenerColaborador = async(id) => {
  */
 exports.obtenerColaboradorUsuario = async(usuario) => {
     const queryColab = new Parse.Query(Parse.User);
+    queryColab.limit(999999);
     queryColab.equalTo(CONSTANTS.USUARIO, usuario);
 
     try {
@@ -257,6 +260,7 @@ exports.cerrarSesionColaborador = async() => {
 exports.buscarPorUsuario = async (objectId) => {
     const Table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(Table);
+    query.limit(999999);
     query.equalTo(CONSTANTS.OBJECTID, objectId);
     query.include(CONSTANTS.IDROL);
 
@@ -284,6 +288,7 @@ exports.buscarPorUsuario = async (objectId) => {
 exports.consultarColaboradores = async () => {
     const table = Parse.Object.extend(Parse.User);
     let query = new Parse.Query(table);
+    query.limit(999999);
     query.equalTo(CONSTANTS.ACTIVO, true);
     query.include(CONSTANTS.IDROL);
     
@@ -318,6 +323,7 @@ exports.consultarColaboradores = async () => {
 exports.borrarEmpleado = async(data) => {
     var User = Parse.Object.extend(Parse.User);
     var query = new Parse.Query(User);
+    query.limit(999999);
     let result = await query.get(data.objectId, { useMasterKey: true });
     if (!result) new Error('Usuario no encontrado!');
 

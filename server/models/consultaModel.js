@@ -73,6 +73,7 @@ exports.obtenerConsulta = async(idConsulta) => {
 
     // Busca el resumen de consulta que tenga el idConsulta
     const queryConsulta = new Parse.Query(NotaMedica);
+    queryConsulta.limit(999999);
     queryConsulta.equalTo(CONSTANTS.OBJECTID, idConsulta);
 
     try {
